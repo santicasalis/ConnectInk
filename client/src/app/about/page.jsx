@@ -1,6 +1,9 @@
+import Nav from "@/components/nav/Nav";
+
 export default function About() {
     return (
         <>
+        <Nav/>
         <div className=" mx-4 my-8">
         <h1 className="text-4xl font-bold text-center mb-8">Sobre ConnectInk</h1>
         <p className="text-lg mb-4">
