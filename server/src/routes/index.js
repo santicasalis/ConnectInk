@@ -1,9 +1,8 @@
 const { Router } = require("express");
-
-//agregar routes
-
 const router = Router();
 
-//router.use
+const tattooArtistsRouter = require("./tattooArtistRouter");
+
+router.use("/tattooArtists", tattooArtistsRouter);
 
 module.exports = router;

@@ -33,7 +33,17 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 //AGREGAR MODELOS
-const { Customer } = sequelize.models;
+const {
+  Customer,
+  Admin,
+  Appointment,
+  Publication,
+  Review,
+  Tattoo,
+  TattooArtist,
+  TattooStyle,
+  TimeAvailability,
+} = sequelize.models;
 
 //DEFINIR RELACIONES
 // tatto_artist.belongsToMany(customer , { through: "", timestamps: false });
