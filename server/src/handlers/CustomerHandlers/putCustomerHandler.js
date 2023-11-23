@@ -1,6 +1,6 @@
 const updateCustomer = require('../../controllers/CustomerControllers/putCustomerController')
 
-const postCustomerHandler = async (req, res) => {
+const putCustomerHandler = async (req, res) => {
     const { id } = req.params
     const { name, lastName, email, password, phone } = req.body
     

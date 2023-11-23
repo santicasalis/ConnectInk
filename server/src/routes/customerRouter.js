@@ -4,9 +4,12 @@ const postCustomerHandler = require('../handlers/CustomerHandlers/postCustomerHa
 const putCustomerHandler = require('../handlers/CustomerHandlers/putCustomerHandler')
 const deleteCustomerHandler = require('../handlers/CustomerHandlers/deleteCustomerHandler')
 const getCustomersHandler = require('../handlers/CustomerHandlers/getCustomersHandler')
+const getCustomerByIdHandler = require('../handlers/CustomerHandlers/getCustomerByIdHandler')
+
 
 customerRouter.get('/', getCustomersHandler)
-customerRouter.post('/create', postCustomerHandler)
+customerRouter.get('/:id', getCustomerByIdHandler)
+customerRouter.post('/', postCustomerHandler)
 customerRouter.put('/:id', putCustomerHandler)
 customerRouter.put('/delete/:id', deleteCustomerHandler)
 

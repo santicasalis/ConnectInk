@@ -6,14 +6,14 @@ const updateCustomer = async (id, name, lastName, email, password, phone) => {
     if (customerFound) {
         await Customer.update(
             {
-                where: { id: id }
-            },
-            {
                 name: name,
                 lastName: lastName,
                 email: email,
                 password: password,
                 phone: phone
+            },
+            {
+                where: { id: id }
             }
         )
         return 'Update sucessful'
