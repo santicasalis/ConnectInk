@@ -13,7 +13,7 @@ const ArtistPost = () => {
     const formData = new FormData();
     formData.append('file', event.target.files[0]);
     
-    const response = await axios.post("/api/upload", formData, {headers: {"Content-Type": `multipart/form-data; boundary=${formData._boundary}`}})
+    const response = await axios.post("http://localhost:3000/api/upload", formData, {headers: {"Content-Type": `multipart/form-data; boundary=${formData._boundary}`}})
     setImage(response.data.url);
   };
   
