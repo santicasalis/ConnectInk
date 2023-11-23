@@ -5,9 +5,9 @@ const createTattooArtistHandler = async (req, res) => {
     name,
     lastName,
     email,
+    password,
     phone,
     location,
-    password,
     shopName,
     image
     //tattooStyle,
@@ -17,6 +17,7 @@ const createTattooArtistHandler = async (req, res) => {
       name,
       lastName,
       email,
+      password,
       phone,
       location,
       password,
