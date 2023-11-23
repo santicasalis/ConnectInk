@@ -8,18 +8,28 @@ const ArtistPost = () => {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    setImage(file);
-    console.log(file)
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await fetch("http://localhost:3001/image" ,{
+      method: "POST",
+      body: formData,
+    }) //RUTA
+    setImage(response);
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     //dispatch(postPosts({ image, description }));
-    const response = await fetch("http://localhost") // VER RUTA
-    method: "POST",
-    body({image, description})
+    const response = await fetch("http://localhost", {
+      method: "POST",
+      body: {image, description}
+    }) //RUTA
+  
   };
 
  const getImageUrl = ()=>{
