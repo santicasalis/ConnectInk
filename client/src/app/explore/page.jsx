@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { getArtists } from "../redux/features/artists/artistsSlice"
 import { useEffect } from "react"
 import Card from "@/components/card/Card"
+import Nav from "@/components/nav/Nav"
 
 export default function ExplorePage() {
 
@@ -16,6 +17,9 @@ export default function ExplorePage() {
     }, [])
 
     return (
+        <>
+        <Nav />
+       
         <div className="flex mt-20 flex-wrap justify-start">
             {artists.map(artist => 
                 artist.tattoos.map((tattoo) => {
@@ -28,6 +32,6 @@ export default function ExplorePage() {
                 })
             )}
         </div>
-        
+        </>
     )
 }
