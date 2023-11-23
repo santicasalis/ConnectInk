@@ -32,12 +32,12 @@ export default function Nav() {
             onMouseEnter={handleAccountHover}
             onMouseLeave={handleAccountLeave}
           >
-            <Button link="/tattoregform" text="Account" />
+            <Button link="/tattoregform" text="Ingresar como" />
             {isDropdownOpen && (
               <div className="absolute bg-black p-2 mt-2">
                 
-                <Button link="/login" text="Login" />
-                <Button link="/register" text="Register" />
+                <Button link="/login" text="Artista" />
+                <Button link="/register" text="Cliente" />
               </div>
             )}
           </li>
