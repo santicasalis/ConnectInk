@@ -4,9 +4,9 @@ const createTattooArtist = async (
   name,
   lastName,
   email,
+  password,
   phone,
   location,
-  password,
   shopName
   //tattooStyle
 ) => {
@@ -14,9 +14,9 @@ const createTattooArtist = async (
     name,
     lastName,
     email,
+    password,
     phone,
     location,
-    password,
     shopName,
   });
 
@@ -30,7 +30,6 @@ const createTattooArtist = async (
   newTattooArtist.addTattooStyle(tattooStyle)
   );*/
 
-  console.log(newTattooArtist);
   return newTattooArtist;
 };
 
