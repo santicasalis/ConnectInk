@@ -28,19 +28,21 @@ const ArtistPost = () => {
   
   };
 
- const getImageUrl = ()=>{
-  setImage(data.url) // VER 
- }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="file" onChange={handleImageChange} />
-      <textarea
+    <form className='w-full p-4 flex flex-col items-center' onSubmit={handleSubmit}>
+      <input className='p-8 ' type="file" onChange={handleImageChange} />
+      {image !== null && <img src={image} className='w-[200px] h-[200px] mb-8' />  }
+      
+      <textarea className='w-1/3 text-lg text-black mb-8' rows="10"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
         placeholder="Descripción"
       />
-      <button type="submit">Subir Post</button>
+      <button className={`py-2 px-4 bg-secondary-100 border border-500 rounded-lg transition duration-300 ease-in-out ${
+    !image ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white hover:text-black'
+  }`}
+  type="submit"
+  disabled={!image} >Subir Post</button>
     </form>
     
   );

@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
                           </Link >
                           <Link href='/home/tattoo-gallery'>
                             <button className="px-4 py-2  hover:bg-secondary-900">
-                              My Tattoo Gallery
+                              Create Tattoo
                             </button>
                           </Link>
                             <button className="px-4 py-2  hover:bg-secondary-900">
