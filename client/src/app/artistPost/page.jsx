@@ -21,7 +21,7 @@ const ArtistPost = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(postPosts({ image, description }));
-    const response = await fetch("http://localhost", {
+    const response = await fetch("http://localhost:3001", {
       method: "POST",
       body: {image, description}
     })
