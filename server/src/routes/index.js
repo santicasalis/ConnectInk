@@ -2,9 +2,10 @@ const { Router } = require("express");
 const router = Router();
 
 const tattooArtistsRouter = require("./tattooArtistRouter");
-const imageRouter = require("./imageRouter")
+const customerRouter = require("./customerRouter")
 
 router.use("/tattooArtists", tattooArtistsRouter);
-router.use("/image", imageRouter)
+router.use("/customer", customerRouter)
+
 
 module.exports = router;
