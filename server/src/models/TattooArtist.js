@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      adress:{
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -53,8 +53,9 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.STRING,
         isUrl: true,
-        defaultValue: "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg"      
-      }
+        defaultValue:
+          "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
+      },
     },
     { timestamps: false }
   );

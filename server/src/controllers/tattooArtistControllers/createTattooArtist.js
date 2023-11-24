@@ -6,10 +6,11 @@ const createTattooArtist = async (
   email,
   password,
   phone,
+  address,
   location,
   shopName,
-  image
-  //tattooStyle
+  image,
+  tattooStyle
 ) => {
   const newTattooArtist = await TattooArtist.create({
     name,
@@ -17,20 +18,21 @@ const createTattooArtist = async (
     email,
     password,
     phone,
+    address,
     location,
     shopName,
     image,
   });
 
-  /*const allTattooStyles = await TattooStyle.findAll({
+  const allTattooStyles = await TattooStyle.findAll({
     where: {
       name: tattooStyle,
     },
   });
-  
-  await allTattooStyles.map((tattooStyle) =>
-  newTattooArtist.addTattooStyle(tattooStyle)
-  );*/
+
+  await allTattooStyles?.map((tattooStyle) =>
+    newTattooArtist.addTattooStyle(tattooStyle)
+  );
 
   return newTattooArtist;
 };

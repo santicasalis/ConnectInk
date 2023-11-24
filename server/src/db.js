@@ -32,10 +32,9 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-//AGREGAR MODELOS
 const {
-  Customer,
   Admin,
+  Customer,
   Appointment,
   Publication,
   Review,
@@ -45,24 +44,47 @@ const {
   TimeAvailability,
 } = sequelize.models;
 
-//DEFINIR RELACIONES
-TattooArtist.belongsToMany(Customer , { through: Appointment, timestamps: false });
-Customer.belongsToMany(TattooArtist , { through: Appointment, timestamps: false });
+TattooArtist.belongsToMany(Customer, {
+  through: Appointment,
+  timestamps: false,
+});
+Customer.belongsToMany(TattooArtist, {
+  through: Appointment,
+  timestamps: false,
+});
 
-TattooArtist.belongsToMany(Customer , { through: Review, timestamps: false });
-Customer.belongsToMany(TattooArtist , { through: Review, timestamps: false });
+TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
+Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
 
-TattooArtist.belongsToMany(Customer , { through: Tattoo, timestamps: false });
-Customer.belongsToMany(TattooArtist , { through: Tattoo, timestamps: false });
+TattooArtist.belongsToMany(Customer, { through: Tattoo, timestamps: false });
+Customer.belongsToMany(TattooArtist, { through: Tattoo, timestamps: false });
 
-TattooArtist.belongsToMany(Publication, {through: "ArtistPublication", timestamps: false})
-Publication.belongsToMany(TattooArtist, {through: "ArtistPublication", timestamps: false})
+TattooArtist.belongsToMany(Publication, {
+  through: "ArtistPublication",
+  timestamps: false,
+});
+Publication.belongsToMany(TattooArtist, {
+  through: "ArtistPublication",
+  timestamps: false,
+});
 
-TattooArtist.belongsToMany(TattooStyle, {through: "ArtistStyle", timestamps: false})
-TattooStyle.belongsToMany(TattooArtist, {through: "ArtistStyle", timestamps: false})
+TattooArtist.belongsToMany(TattooStyle, {
+  through: "ArtistStyle",
+  timestamps: false,
+});
+TattooStyle.belongsToMany(TattooArtist, {
+  through: "ArtistStyle",
+  timestamps: false,
+});
 
-TattooArtist.belongsToMany(TimeAvailability, {through: "ArtistAvailability", timestamps: false})
-TimeAvailability.belongsToMany(TattooArtist, {through: "ArtistAvailability", timestamps: false})
+TattooArtist.belongsToMany(TimeAvailability, {
+  through: "ArtistAvailability",
+  timestamps: false,
+});
+TimeAvailability.belongsToMany(TattooArtist, {
+  through: "ArtistAvailability",
+  timestamps: false,
+});
 
 module.exports = {
   ...sequelize.models,

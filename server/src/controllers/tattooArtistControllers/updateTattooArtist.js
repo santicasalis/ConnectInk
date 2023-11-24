@@ -2,25 +2,27 @@ const { TattooArtist } = require("../../db");
 
 const updateTattooArtist = async (
   id,
-  newName,
-  newLastName,
-  newEmail,
-  newPassword,
-  newPhone,
-  newLocation,
-  newShopName
+  name,
+  lastName,
+  email,
+  password,
+  phone,
+  address,
+  location,
+  shopName
 ) => {
   const tattooArtistFound = await TattooArtist.findByPk(id);
   if (tattooArtistFound) {
     await TattooArtist.update(
       {
-        name: newName,
-        lastName: newLastName,
-        email: newEmail,
-        password: newPassword,
-        phone: newPhone,
-        location: newLocation,
-        shopName: newShopName,
+        name: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+        phone: phone,
+        address: address,
+        location: location,
+        shopName: shopName,
       },
       { where: { id: id } }
     );
