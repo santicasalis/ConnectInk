@@ -1,15 +1,15 @@
 "use client"
+
 import Button from "../button/Button";
 import React, { useState } from "react";
 
 export default function Nav() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
-  const handleDropdownEnter = () => {
-    setDropdownOpen(true);
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleDropdownLeave = () => {
+  const handleDropdownClose = () => {
     setDropdownOpen(false);
   };
 
@@ -25,23 +25,36 @@ export default function Nav() {
         <li>
           <Button link="/explore" text="Explore" />
         </li>
-        <li
-          onMouseEnter={handleDropdownEnter}
-          onMouseLeave={handleDropdownLeave}
-          className="relative" // Agregamos una posición relativa al contenedor
-        >
-          <Button link="/tattoregform" text="Ingresar como" />
-          {isDropdownOpen && (
-            <div className="absolute bg-black p-2 mt-2 flex flex-col"> 
-              {/* Cambiamos a flex y flex-col para mostrar los elementos uno debajo del otro */}
-              <Button link="/auth/register" text="Artista" />
-              <Button link="/register" text="Cliente" />
-            </div>
-          )}
+        <li>
+      
+          <div class="relative inline-block text-left">
+  <div>
+  <button onClick={handleDropdownToggle} className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-slate-500y px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-slate-400">
+      Ingresar como
+  </button>
+  </div>
+
+    {isDropdownOpen && (
+       <div
+          onBlur={handleDropdownClose}
+          className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1" role="none">
+                  <Button
+                    className="text-gray-700 block px-4 py-2 text-sm"
+                    link="/auth/register"
+                    text="Artista"
+                  />
+                  <Button
+                    className="text-gray-700 block px-4 py-2 text-sm"
+                    link="/auth"
+                    text="Cliente"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </li>
       </ul>
     </nav>
   );
 }
-
-//PENDIENTE VER ACCOUNT 
