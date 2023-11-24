@@ -1,4 +1,4 @@
-const deleteCustomer = require('../../controllers/CustomerControllers/deleteCustomerController')
+const deleteCustomer = require('../../controllers/customerControllers/deleteCustomerController')
 
 const deleteCustomerHandler = async (req, res) => {
     const { id } = req.params
