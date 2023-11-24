@@ -9,6 +9,6 @@ const deletePublicationHandler = require("../handlers/publicationHandlers/delete
 publicationRouter.get("/", getPublicationHandler);
 publicationRouter.get("/:id", getPublicationByIdHandler);
 publicationRouter.post("/", createPublicationHandler);
-publicationRouter.delete("/", deletePublicationHandler);
+publicationRouter.delete("/:id", deletePublicationHandler);
 
 module.exports = publicationRouter;

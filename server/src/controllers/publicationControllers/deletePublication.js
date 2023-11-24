@@ -1,9 +1,9 @@
-const {Publication} = require("../../db")
+const { Publication } = require("../../db");
 
-async function deletePub(id){
-    await Publication.destroy({where: {id}})
+const deletePublication = async (id) => {
+  await Publication.destroy({ where: { id } });
 
-    return "deleted with success"
-}
+  return "deleted with success";
+};
 
-module.exports = deletePub
+module.exports = deletePublication;

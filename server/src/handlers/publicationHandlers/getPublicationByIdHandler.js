@@ -2,9 +2,15 @@ const getPublicationById = require("../../controllers/publicationControllers/get
 
 const getPublicationByIdHandler = async (req, res) => {
   const { id } = req.params;
-
-  const publication = await getPublicationById(id);
-
-  return res.status(200).json(publication);
+  try {
+    const publication = await getPublicationById(id);
+    if (publication) {
+      return res.status(200).json(publication);
+    } else {
+      res.status(404).json({ message: "Publication not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 module.exports = getPublicationByIdHandler;
