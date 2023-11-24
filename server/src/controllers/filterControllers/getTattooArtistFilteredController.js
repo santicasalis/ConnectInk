@@ -1,13 +1,24 @@
 const { TattooArtist, TattooStyle } = require('../../db')
-const { Op, where } = require('sequelize')
+const { Op } = require('sequelize')
 
-
-const getTattooArtistFiltered = async (location, styles) => {
-
-    const tattooArtistsFound = await TattooArtist.findAll(
-        {where: {location: {[Op.iLike]: `%${location}%`}},
-        include: {model: TattooStyle, where: {[Op.iLike]: {[Op.any]: [...styles]} } }})
-
+    const getTattooArtistFiltered = async (location, styles) => {
+        const tattooArtistsFound = await TattooArtist.findAll({
+            where: {
+                location: {
+                    [Op.iLike]: `%${location}%`
+                }
+            },
+            include: [
+                {
+                    model: TattooStyle,
+                    where: {
+                        name: {
+                            [Op.in]: styles
+                        }
+                    }
+                }
+            ]
+        });
     return tattooArtistsFound
 
 }
