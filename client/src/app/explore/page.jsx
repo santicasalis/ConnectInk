@@ -14,6 +14,7 @@ export default function ExplorePage() {
 
     useEffect(() => {
         dispatch(getAllArtists())
+        
     }, [])
 
     return (
@@ -22,11 +23,12 @@ export default function ExplorePage() {
        
         <div className="flex flex-col mt-20 flex-wrap justify-start">
             {artists.map(artist => 
-                
                      <Card
-                    key={artist.name}
+                    key={artist.id}
                     name={artist.name}
+                    lastName={artist.lastName}
                     location={artist.location}
+                    shopName={artist.shopName}
                     tattoos={artist.tattoos}
                     />
                 

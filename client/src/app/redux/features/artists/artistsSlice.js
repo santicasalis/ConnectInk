@@ -12,7 +12,6 @@ export const artistsSlice = createSlice({
     initialState,
     reducers: {
         getArtists: (state, action) => {
-            console.log(action)
             state.people = action.payload
         },
        
