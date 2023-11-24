@@ -12,7 +12,7 @@ const deleteCustomer = async (id) => {
                 where: { id: id }
             }
         )
-        return 'successful deletion'
+        return 'Customer deleted successfully'
     } 
 }
 
