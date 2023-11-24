@@ -1,10 +1,14 @@
-const { TattooArtist, TattooStyle } = require("../../db");
+const { TattooArtist, TattooStyle, Publication } = require("../../db");
 
 const getTattooArtists = async () => {
   const allTattooArtists = await TattooArtist.findAll({
     where: { disabled: false },
-    include: [{ model: TattooStyle, attributes: ["name"] }],
+    include: [
+      { model: TattooStyle, attributes: ["name"] },
+      { model: Publication, attributes: ["description", "image"] },
+    ],
   });
+  console.log(allTattooArtists);
   const tattooArtistCleaner = allTattooArtists.map((tattooArtist) => ({
     id: tattooArtist.id,
     name: tattooArtist.name,
@@ -18,6 +22,12 @@ const getTattooArtists = async () => {
     tattooStyles: tattooArtist.TattooStyles?.map(
       (tattooStyle) => tattooStyle.name
     ),
+    publications: tattooArtist.Publications?.map((publication) => {
+      return {
+        description: publication.description,
+        image: publication.image,
+      };
+    }),
   }));
   return tattooArtistCleaner;
 };

@@ -1,11 +1,11 @@
-const createPub = require("../../controllers/publicationControllers/createPublicationController")
+const createPublication = require("../../controllers/publicationControllers/createPublication");
 
-async function createPublication(req, res){
-    const {description, image} = req.body
+const createPublicationHandler = async (req, res) => {
+  const { artist_id, description, image } = req.body;
 
-    const publication = await createPub(description, image)
+  const publication = await createPublication(artist_id, description, image);
 
-    return res.json(publication)
-}
+  return res.json(publication);
+};
 
-module.exports = createPublication
+module.exports = createPublicationHandler;
