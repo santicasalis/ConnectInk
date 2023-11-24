@@ -2,9 +2,11 @@
 
 import { configureStore } from "@reduxjs/toolkit"
 import artistReducer from "./features/artists/artistsSlice"
+import stylesReducer from "./features/styles/stylesSlice"
 
 export const store = configureStore({
     reducer: {
-        artists: artistReducer
+        artists: artistReducer,
+        styles: stylesReducer
     }
 })
