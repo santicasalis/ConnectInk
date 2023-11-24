@@ -1,4 +1,4 @@
-const updateCustomer = require('../../controllers/CustomerControllers/putCustomerController')
+const updateCustomer = require('../../controllers/CustomerControllers/updateCustomerController')
 
 const putCustomerHandler = async (req, res) => {
     const { id } = req.params
