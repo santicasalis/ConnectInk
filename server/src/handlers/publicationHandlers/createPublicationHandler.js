@@ -2,10 +2,16 @@ const createPublication = require("../../controllers/publicationControllers/crea
 
 const createPublicationHandler = async (req, res) => {
   const { artist_id, description, image } = req.body;
-
-  const publication = await createPublication(artist_id, description, image);
-
-  return res.json(publication);
+  try {
+    const newPublication = await createPublication(
+      artist_id,
+      description,
+      image
+    );
+    res.status(201).json(newPublication);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 module.exports = createPublicationHandler;

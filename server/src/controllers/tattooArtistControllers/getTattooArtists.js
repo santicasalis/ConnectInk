@@ -18,6 +18,7 @@ const getTattooArtists = async () => {
     location: tattooArtist.location,
     address: tattooArtist.address,
     shopName: tattooArtist.shopName,
+    image: tattooArtist.image,
     disabled: tattooArtist.disabled,
     tattooStyles: tattooArtist.TattooStyles?.map(
       (tattooStyle) => tattooStyle.name
