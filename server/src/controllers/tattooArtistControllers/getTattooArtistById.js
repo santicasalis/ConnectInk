@@ -14,6 +14,7 @@ const getTattooArtistById = async (id) => {
     phone: tattooArtist.phone,
     location: tattooArtist.location,
     shopName: tattooArtist.shopName,
+    disabled: tattooArtist.disabled,
     /*tattooStyle: tattooArtist.tattooStyles
       .map((tattooStyle) => tattooStyle.name)
       .join(", "),*/

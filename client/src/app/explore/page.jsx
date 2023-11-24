@@ -22,14 +22,14 @@ export default function ExplorePage() {
        
         <div className="flex flex-col mt-20 flex-wrap justify-start">
             {artists.map(artist => 
-                artist?.tattoos.map((tattoo) => {
-                    return <Card
-                    key={tattoo.src}
+                
+                     <Card
+                    key={artist.name}
                     name={artist.name}
                     location={artist.location}
-                    tattoo={tattoo}
+                    tattoos={artist.tattoos}
                     />
-                })
+                
             )}
         </div>
         </>

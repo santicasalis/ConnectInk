@@ -1,7 +1,9 @@
 const {Publication} = require("../../db")
 
-export default async function (description, image) {
+async function createPub (description, image) {
     const publication = await Publication.create({description, image})
 
-    
+    return publication
 }
+
+module.exports = createPub

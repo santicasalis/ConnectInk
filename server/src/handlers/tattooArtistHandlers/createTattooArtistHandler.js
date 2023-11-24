@@ -9,7 +9,7 @@ const createTattooArtistHandler = async (req, res) => {
     phone,
     location,
     shopName,
-    image
+    image,
     //tattooStyle,
   } = req.body;
   try {
@@ -20,7 +20,6 @@ const createTattooArtistHandler = async (req, res) => {
       password,
       phone,
       location,
-      password,
       shopName,
       image
       //tattooStyle
