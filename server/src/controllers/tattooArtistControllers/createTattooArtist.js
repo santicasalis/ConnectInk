@@ -7,6 +7,9 @@ const createTattooArtist = async (
   password,
   phone,
   location,
+  password,
+  shopName,
+  image,
   shopName
   //tattooStyle
 ) => {
@@ -18,6 +21,7 @@ const createTattooArtist = async (
     phone,
     location,
     shopName,
+    image
   });
 
   /*const allTattooStyles = await TattooStyle.findAll({

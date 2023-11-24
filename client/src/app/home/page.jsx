@@ -3,7 +3,8 @@ import React from 'react'
 const Home = () => {
   return (
     <div>
-      Home
+      <h1 className='text-4xl'> My Profile</h1>
+
     </div>
   )
 }
