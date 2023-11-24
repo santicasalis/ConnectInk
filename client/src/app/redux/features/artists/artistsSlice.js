@@ -14,8 +14,6 @@ export const artistsSlice = createSlice({
         getArtists: (state, action) => {
             state.people = action.payload
         },
-       
-
     }
 })
 
