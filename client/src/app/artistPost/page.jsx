@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { postPosts } from "../redux/features/artists/artistActions";
+import axios from "axios"
 
 const ArtistPost = () => {
   const dispatch = useDispatch();
@@ -9,26 +9,22 @@ const ArtistPost = () => {
   const [description, setDescription] = useState('');
 
   const handleImageChange = async (event) => {
-    const file = event.target.files[0];
     
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', event.target.files[0]);
     
-    const response = await fetch("http://localhost:3001/image" ,{
-      method: "POST",
-      body: formData,
-    }) //RUTA
-    setImage(response);
+    const response = await axios.post("http://localhost:3000/api/upload", formData, {headers: {"Content-Type": `multipart/form-data; boundary=${formData._boundary}`}})
+    setImage(response.data.url);
   };
   
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //dispatch(postPosts({ image, description }));
-    const response = await fetch("http://localhost", {
+    dispatch(postPosts({ image, description }));
+    const response = await fetch("http://localhost:3001", {
       method: "POST",
       body: {image, description}
-    }) //RUTA
+    })
   
   };
 
@@ -51,58 +47,3 @@ const ArtistPost = () => {
 };
 
 export default ArtistPost;
-
-
-// import { useState } from 'react';
-// import { v2 as cloudinary } from 'cloudinary';
-// import fs from "fs"
-
-// const MyForm = () => {
-//   const [file, setFile] = useState(null);
-
-//   const handleFileChange = (e) => {
-//     setFile(e.target.files[0]);
-//   };
-
-//   const handleSubmit = async () => {
-//     try {
-//       // Configurar Cloudinary (esto también podría ir en un archivo separado)
-//       cloudinary.config({
-//         cloud_name: 'tu_cloud_name',
-//         api_key: 'tu_api_key',
-//         api_secret: 'tu_api_secret',
-//       });
-
-//       // Subir la imagen a Cloudinary
-//       const formData = new FormData();
-//       formData.append('file', file);
-
-//       // const response = await fetch(`https://api.cloudinary.com/v1_1/tu_cloud_name/image/upload`, {
-//       //   method: 'POST',
-//       //   body: formData,
-//       // });
-
-//       console.log(formData)
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         console.log('URL de la imagen en Cloudinary:', data.secure_url);
-
-//         // Puedes manejar la URL de la imagen según tus necesidades
-//       } else {
-//         console.error('Error al subir la imagen a Cloudinary');
-//       }
-//     } catch (error) {
-//       console.error('Error de red:', error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <input type="file" onChange={handleFileChange} />
-//       <button onClick={handleSubmit}>Subir Imagen</button>
-//     </div>
-//   );
-// };
-
-// export default MyForm;
