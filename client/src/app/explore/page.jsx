@@ -9,7 +9,6 @@ import Nav from "@/components/nav/Nav"
 export default function ExplorePage() {
 
     const artists = useSelector((state) => state.artists.people)
-    console.log(artists)
 
     const dispatch = useDispatch()
 

@@ -11,10 +11,10 @@ const Header = () => {
   return (
     <header className='h-[8vh] md:h-[8vh] border-b border-gray-600 p-8 flex items-center justify-end'>
         <nav className='w-full flex items-center gap-x-4 justify-between'>
-            <button className='flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2'>
+            <Link href='/' className='flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2'>
                 <RiReplyLine className=''/>
                 Leave Dashboard
-            </button>
+            </Link>
             <div className='flex items-center gap-x-4'>
               <button className='relative hover:bg-secondary-100 p-2 rounded-lg transition-colors'>
                   <RiNotification3Line/>
