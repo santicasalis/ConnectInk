@@ -1,9 +1,9 @@
-const getPublicationController = require("../../controllers/publicationControllers/getPublicationController")
+const getPublication = require("../../controllers/publicationControllers/getPublication");
 
-async function getPublicationHandler (req, res) {
-    const response = await getPublicationController()
+const getPublicationHandler = async (req, res) => {
+  const response = await getPublication();
 
-    return res.status(200).json(response)
-}
+  return res.status(200).json(response);
+};
 
-module.exports = getPublicationHandler
+module.exports = getPublicationHandler;
