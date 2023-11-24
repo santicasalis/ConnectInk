@@ -1,7 +1,5 @@
 "use client";
 
-import { RiMailLine, RiLockLine, RiUserLine } from "react-icons/ri";
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
