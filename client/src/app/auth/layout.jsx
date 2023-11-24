@@ -1,13 +1,9 @@
 
 
-export default function RootLayout({ children }) {
+export default function AuthLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <div className='min-h-screen flex items-center justify-center p-4'>
-            {children}
-        </div>
-      </body>
-    </html>
+      <div className='min-h-screen flex items-center justify-center p-4'>
+          {children}
+      </div>
   )
 }

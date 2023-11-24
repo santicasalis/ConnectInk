@@ -37,3 +37,28 @@ body {
   scrollbar-width: thin; 
   scrollbar-color: #4a5568 #2d3748; 
 }
+
+/*Toast*/
+.toastSuccess{
+  background-color: rgb(29, 29, 30)!important;
+  color: rgb(173, 243, 152)mportant;
+  font-size: 19px!important;
+  border-radius: 9px!important;
+  font-family: 'Inter', sans-serif!important;
+  font-family: 'Kenia', sans-serif!important;
+  font-family: 'Montserrat', sans-serif!important;
+  font-family: 'Russo One', sans-serif!important;
+  box-shadow: 0 0 0 3px rgba(115, 250, 103, 0.2)!important;
+}
+
+.toastError{
+  background-color: rgb(29, 29, 30)!important;
+  color: rgb(242, 117, 133)!important;
+  font-size: 19px!important;
+  border-radius: 9px!important;
+  font-family: 'Inter', sans-serif!important;
+  font-family: 'Kenia', sans-serif!important;
+  font-family: 'Montserrat', sans-serif!important;
+  font-family: 'Russo One', sans-serif!important;
+  box-shadow: 0 0 0 3px rgba(250, 103, 122, 0.2)!important;
+}
