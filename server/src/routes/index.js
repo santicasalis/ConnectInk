@@ -7,4 +7,5 @@ const customerRouter = require("./customerRouter")
 router.use("/tattooArtists", tattooArtistsRouter);
 router.use("/customer", customerRouter)
 
+
 module.exports = router;

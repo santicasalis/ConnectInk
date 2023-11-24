@@ -4,9 +4,12 @@ const createTattooArtist = async (
   name,
   lastName,
   email,
+  password,
   phone,
   location,
   password,
+  shopName,
+  image
   shopName
   //tattooStyle
 ) => {
@@ -14,10 +17,11 @@ const createTattooArtist = async (
     name,
     lastName,
     email,
+    password,
     phone,
     location,
-    password,
     shopName,
+    image
   });
 
   /*const allTattooStyles = await TattooStyle.findAll({
@@ -30,7 +34,6 @@ const createTattooArtist = async (
   newTattooArtist.addTattooStyle(tattooStyle)
   );*/
 
-  console.log(newTattooArtist);
   return newTattooArtist;
 };
 

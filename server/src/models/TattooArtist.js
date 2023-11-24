@@ -46,6 +46,11 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      image: {
+        type: DataTypes.STRING,
+        isUrl: true,
+        defaultValue: "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg"      
+      }
     },
     { timestamps: false }
   );
