@@ -1,17 +1,17 @@
 const { Router } = require('express')
 const customerRouter = Router()
-const postCustomerHandler = require('../handlers/CustomerHandlers/postCustomerHandler')
-const putCustomerHandler = require('../handlers/CustomerHandlers/updateCustomerHandler')
-const deleteCustomerHandler = require('../handlers/CustomerHandlers/deleteCustomerHandler')
-const getCustomersHandler = require('../handlers/CustomerHandlers/getCustomersHandler')
-const getCustomerByIdHandler = require('../handlers/CustomerHandlers/getCustomerByIdHandler')
+const postCustomerHandler = require('../handlers/customerHandlers/postCustomerHandler')
+const putCustomerHandler = require('../handlers/customerHandlers/updateCustomerHandler')
+const deleteCustomerHandler = require('../handlers/customerHandlers/deleteCustomerHandler')
+const getCustomersHandler = require('../handlers/customerHandlers/getCustomersHandler')
+const getCustomerByIdHandler = require('../handlers/customerHandlers/getCustomerByIdHandler')
 
 
 customerRouter.get('/', getCustomersHandler)
 customerRouter.get('/:id', getCustomerByIdHandler)
 customerRouter.post('/', postCustomerHandler)
 customerRouter.put('/:id', putCustomerHandler)
-customerRouter.put('/delete/:id', deleteCustomerHandler)
+customerRouter.delete('/:id', deleteCustomerHandler)//
 
 
 module.exports = customerRouter
