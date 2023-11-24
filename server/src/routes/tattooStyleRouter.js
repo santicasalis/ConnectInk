@@ -1,7 +1,7 @@
 const { Router } = require("express");
-const getTattoStylesHandler = require("../handlers/tattooStyleHandlers/getTattoStylesHandler");
-const createTattoStyleHandler = require("../handlers/tattooStyleHandlers/createTattoStyleHandler");
-const deleteTattoStyleHandler = require("../handlers/tattooStyleHandlers/deleteTattoStyleHandler");
+const getTattoStylesHandler = require("../handlers/tattooStyleHandlers/getTattooStylesHandler");
+const createTattoStyleHandler = require("../handlers/tattooStyleHandlers/createTattooStyleHandler");
+const deleteTattoStyleHandler = require("../handlers/tattooStyleHandlers/deleteTattooStyleHandler");
 
 const tattoStyleRouter = Router();
 
