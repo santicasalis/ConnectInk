@@ -1,4 +1,4 @@
-const createTattoStyle = require("../../controllers/tattooStyleControllers/createTattoStyle");
+const createTattoStyle = require("../../controllers/tattooStyleControllers/createTattooStyle");
 
 const createTattoStyleHandler = async (req, res) => {
   const { name } = req.body;

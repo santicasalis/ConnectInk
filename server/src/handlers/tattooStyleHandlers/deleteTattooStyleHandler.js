@@ -1,4 +1,4 @@
-const deleteTattoStyle = require("../../controllers/tattooStyleControllers/deleteTattoStyle");
+const deleteTattoStyle = require("../../controllers/tattooStyleControllers/deleteTattooStyle");
 
 const deleteTattoStyleHandler = async (req, res) => {
   const { id } = req.params;
