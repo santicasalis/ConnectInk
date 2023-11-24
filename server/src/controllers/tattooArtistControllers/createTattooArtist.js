@@ -9,7 +9,7 @@ const createTattooArtist = async (
   location,
   password,
   shopName,
-  image
+  image,
   shopName
   //tattooStyle
 ) => {
