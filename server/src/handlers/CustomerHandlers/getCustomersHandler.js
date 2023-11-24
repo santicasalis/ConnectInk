@@ -1,4 +1,4 @@
-const getCustomers = require('../../controllers/CustomerControllers/getCustomersController')
+const getCustomers = require('../../controllers/customerControllers/getCustomersController')
 
 const getCustomersHandler = async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-const getCustomerById = require('../../controllers/CustomerControllers/getCustomerByIdController')
+const getCustomerById = require('../../controllers/customerControllers/getCustomerByIdController')
 
 const getCustomerByIdHandler = async (req, res) => {
     const { id } = req.params
