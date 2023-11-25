@@ -9,7 +9,8 @@ const updateTattooArtist = async (
   phone,
   address,
   location,
-  shopName
+  shopName,
+  image
 ) => {
   const tattooArtistFound = await TattooArtist.findByPk(id);
   if (tattooArtistFound) {
@@ -23,6 +24,7 @@ const updateTattooArtist = async (
         address: address,
         location: location,
         shopName: shopName,
+        image: image,
       },
       { where: { id: id } }
     );
