@@ -3,6 +3,8 @@ const getTattooArtistFiltered = require('../../controllers/filterControllers/get
 const getTattooArtistFilteredHandler = async (req, res) => {
 
     const { location, tattooStyle } = req.body
+    
+    console.log(req.body);
 
     try {
 
@@ -11,6 +13,7 @@ const getTattooArtistFilteredHandler = async (req, res) => {
         res.status(200).json(tattooArtistsFound)
 
     } catch (error) {
+        
         res.status(400).json({ error: error.message });
     }
 
