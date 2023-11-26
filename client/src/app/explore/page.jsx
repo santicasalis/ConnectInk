@@ -22,13 +22,6 @@ export default function ExplorePage() {
     const styles = useSelector((state) => state.styles.names)
     const [filters, setFilters] = useState({location: "", tattoStyle: []})
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getAllStyles())
-        dispatch(getAllArtists())
-    }, [])
-
     return (
         <>
         <Nav />

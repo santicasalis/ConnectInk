@@ -15,9 +15,11 @@ export const artistsSlice = createSlice({
             state.people = action.payload
             state.filtered = action.payload
         },
+
         filterArtist:(state,action)=>{
             state.filtered = action.payload
         }
+
 
     }
 })
