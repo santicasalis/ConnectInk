@@ -1,11 +1,13 @@
-const deletePub = require("../../controllers/publicationControllers/deletePublicationController")
+const deletePublication = require("../../controllers/publicationControllers/deletePublication");
 
-async function deletePublication(req, res){
-    const {id} = req.body
+const deletePublicationHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedPublication = await deletePublication(id);
+    res.status(200).json(deletedPublication);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-    const response = await deletePub(id)
-
-    return res.json(response)
-}
-
-module.exports = deletePublication
+module.exports = deletePublicationHandler;

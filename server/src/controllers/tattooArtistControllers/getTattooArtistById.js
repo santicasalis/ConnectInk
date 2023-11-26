@@ -1,8 +1,11 @@
-const { TattooArtist, TattooStyle } = require("../../db");
+const { TattooArtist, TattooStyle, Publication } = require("../../db");
 
 const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {
-    include: [{ model: TattooStyle, attributes: ["name"] }],
+    include: [
+      { model: TattooStyle, attributes: ["name"] },
+      { model: Publication, attributes: ["description", "image"] },
+    ],
   });
   return {
     id: tattooArtist.id,
@@ -13,10 +16,17 @@ const getTattooArtistById = async (id) => {
     location: tattooArtist.location,
     address: tattooArtist.address,
     shopName: tattooArtist.shopName,
+    image: tattooArtist.image,
     disabled: tattooArtist.disabled,
     tattooStyles: tattooArtist?.TattooStyles.map(
       (tattooStyle) => tattooStyle.name
     ),
+    publications: tattooArtist.Publications?.map((publication) => {
+      return {
+        description: publication.description,
+        image: publication.image,
+      };
+    }),
   };
 };
 

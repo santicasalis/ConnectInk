@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     people: [],
-    
+    filtered:[]
 }
 
 export const artistsSlice = createSlice({
@@ -12,15 +12,20 @@ export const artistsSlice = createSlice({
     initialState,
     reducers: {
         getArtists: (state, action) => {
-            console.log(action)
             state.people = action.payload
+            state.filtered = action.payload
         },
-       
+
+        filterArtist:(state,action)=>{
+            state.filtered = action.payload
+        }
+
 
     }
 })
 
-export const {getArtists} = artistsSlice.actions
+export const {getArtists, filterArtist} = artistsSlice.actions
+
 
 
 export default artistsSlice.reducer

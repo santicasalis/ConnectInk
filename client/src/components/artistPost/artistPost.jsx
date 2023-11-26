@@ -1,30 +1,24 @@
 "use client"
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios"
+import { uploadImage } from '@/app/utils/uploadImage';
 
 const ArtistPost = () => {
   const dispatch = useDispatch();
+  const artist_id = useSelector((state) => state.user.id)
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
 
   const handleImageChange = async (event) => {
-    
-    const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-    
-    const response = await axios.post("http://localhost:3000/api/upload", formData, {headers: {"Content-Type": `multipart/form-data; boundary=${formData._boundary}`}})
-    setImage(response.data.url);
+    const imageUrl = await uploadImage(event.target.files[0])
+    setImage(imageUrl)
   };
   
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(postPosts({ image, description }));
-    const response = await fetch("http://localhost:3001", {
-      method: "POST",
-      body: {image, description}
-    })
+    const response = await axios.post("http://localhost:3001/publications", {image, description, artist_id})
   
   };
 

@@ -1,14 +1,14 @@
 const { Router } = require("express");
 const publicationRouter = Router();
 
-const getPublicationHandler = require("../handlers/publicationHandlers/getPublicationsHandler")
-const getPublicationById = require("../handlers/publicationHandlers/getPublicationById")
-const createPublication = require("../handlers/publicationHandlers/createPublicationHandler")
-const deletePublication = require("../handlers/publicationHandlers/deletePublicationHandler")
+const getPublicationHandler = require("../handlers/publicationHandlers/getPublicationsHandler");
+const getPublicationByIdHandler = require("../handlers/publicationHandlers/getPublicationByIdHandler");
+const createPublicationHandler = require("../handlers/publicationHandlers/createPublicationHandler");
+const deletePublicationHandler = require("../handlers/publicationHandlers/deletePublicationHandler");
 
-publicationRouter.get("/", getPublicationHandler)
-publicationRouter.get("/:id", getPublicationById)
-publicationRouter.post("/", createPublication)
-publicationRouter.delete("/", deletePublication)
+publicationRouter.get("/", getPublicationHandler);
+publicationRouter.get("/:id", getPublicationByIdHandler);
+publicationRouter.post("/", createPublicationHandler);
+publicationRouter.delete("/:id", deletePublicationHandler);
 
 module.exports = publicationRouter;
