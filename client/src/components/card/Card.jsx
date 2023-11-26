@@ -2,7 +2,7 @@ import Image from "next/image"
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { FaMapMarkedAlt } from "react-icons/fa";
-import { CiStar } from "react-icons/ci";
+import { CiShop } from "react-icons/ci";
 import "swiper/css/navigation"
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
