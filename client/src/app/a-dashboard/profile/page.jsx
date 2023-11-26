@@ -1,20 +1,18 @@
+"use client"
+
 import React from 'react'
 import {RiEdit2Line} from "react-icons/ri"
+import { useSelector } from 'react-redux'
+import Image from 'next/image'
 
-const Home = () => {
-  const artistData = {
-    name:'Javier',
-    lastName:'Milei',
-    email:'gatito_mimoso@gmail.com',
-    password:'123456',
-    phone:'5491164216546',
-    address:'AAA, Av. Maipú 2001, B1636 Olivos, Provincia de Buenos Aires',
-    location:'Argentina',
-    shopName:'Tattoos La casta'
-  };
+const Profile = () => {
+  const user = useSelector((state) => state.user)
+  const imageLoader = ({src}) => {
+    return src
+  }
   return (
     <div className='bg-secondary-100 p-8 rounded-xl w-full'>
-      <h1 className='text-4xl'> My Profile</h1>
+      <h1 className='text-4xl'> Mi perfil</h1>
       <hr className='my-8 border-gray-500'/>
       <form>
         <div className='flex items-center mb-6'>
@@ -23,7 +21,7 @@ const Home = () => {
           </div>
           <div className='flex-1'>
               <div className='relative mb-2'>
-                  <img className='w-28 h-28 object-cover rounded-lg' src='https://elcomercio.pe/resizer/Nk5gbJwG_w5n5tk9fd-Fu_RaJS8=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/UNWTCT67INFF7BCND5UVRFQYIQ.webp' />
+                  <Image src={user.image} loader={imageLoader} width={80} height={80} alt={`${user.name} ${user.lastName} profile pic`} />
                   <label htmlFor='avatar' className='absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100'>
                       <RiEdit2Line />
                   </label>
@@ -40,10 +38,10 @@ const Home = () => {
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={artistData.name} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.name} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
               <div className='w-full'>
-                <input type="text" value={artistData.lastName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.lastName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -53,7 +51,7 @@ const Home = () => {
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={artistData.email} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.email} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -63,7 +61,7 @@ const Home = () => {
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={artistData.phone} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.phone} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -73,7 +71,7 @@ const Home = () => {
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={artistData.address} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.address} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -83,7 +81,7 @@ const Home = () => {
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={artistData.location} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.location} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -93,7 +91,7 @@ const Home = () => {
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={artistData.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -102,4 +100,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Profile

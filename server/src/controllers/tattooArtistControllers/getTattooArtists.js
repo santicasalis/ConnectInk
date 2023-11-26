@@ -8,7 +8,6 @@ const getTattooArtists = async () => {
       { model: Publication, attributes: ["description", "image"] },
     ],
   });
-  console.log(allTattooArtists);
   const tattooArtistCleaner = allTattooArtists.map((tattooArtist) => ({
     id: tattooArtist.id,
     name: tattooArtist.name,

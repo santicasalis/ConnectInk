@@ -1,58 +1,51 @@
 "use client"
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 import {RiArrowDownSLine} from "react-icons/ri";
 import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
+import { useSelector } from "react-redux";
 
 export default function Nav() {
+  const imageLoader = ({src}) => {
+    return src
+  }
+  const user = useSelector((state) => state.user)
+  {console.log(user)}
   return (
     <nav className="bg-secondary-900 py-5 px-8 text-white mb-[30px]">
       <ul className="flex justify-between gap-8">
         <div>
             <li>
               <Link href='/'>
-                <button className="text-2xl">Connect<span className="text-primary">Ink<span className="text-3xl">!</span></span></button>
+                <span className="text-2xl">Connect<span className="text-primary">Ink<span className="text-3xl">!</span></span></span>
               </Link>
             </li>
         </div>
         <div className="flex items-center gap-x-8">
             <li>
               <Link href='/about'>
-                  <button className="hover:text-primary">About</button>
+                  <span className="hover:text-primary">Acerca de nosotros</span>
               </Link>
             </li>
             <li>
               <Link href='/explore'>
-                  <button className="hover:text-primary">Explore</button>
+                  <span className="hover:text-primary">Explorar</span>
               </Link>
             </li>
             <li>
-                <Menu menuButton={<MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg'>
-                    <Link href='/' className="flex items-center hover:text-primary">
-                        <button > Ingresar Como</button>
-                        <RiArrowDownSLine/>
-                    </Link>
-                  </MenuButton>}
-                  menuStyle={{backgroundColor:'#252524', color:'white', padding:3, width:'250px'}}
-                  transition
-                  >
-                    <MenuItem>
-                        <Link href='/auth' className='flex flex-col  gap-2 text-sm py-1.5'>
-                            
-                            <span className="font-bold text-[16px]">Cliente</span>
-                            <span className="text-[11px] text-gray-300">Conoce el trabajo de los artistas, contactalos y fija una fecha para tu proximo Tattoo</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuItem>
-                        <Link href='' className='flex flex-col  gap-2 text-sm py-1.5'>
-                            
-                            <span  className="font-bold text-[16px]">Artista</span>
-                            <span className="text-[11px] text-gray-300">Gestiona tu TattooShop, mostra tus trabajos, gana mas publico</span>
-                        </Link>
-                    </MenuItem>
-                </Menu>  
+            {console.log(user)}
+            {user.email.length == 0 ? (
+              <Link href="/auth">
+                Ingresar
+              </Link>
+            ): (
+              <Link href="/a-dashboard/home">
+                <Image loader={imageLoader} src={user.image} width={25} height={25} alt={user.name} />
+              </Link>
+            )}
             </li>
         </div>
       </ul>

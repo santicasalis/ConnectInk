@@ -5,15 +5,31 @@ import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image';
+import { logOut } from '@/app/redux/features/user/userActions';
+import {useRouter} from 'next/navigation';
 
 const Header = () => {
+
+  const user = useSelector((state) => state.user)
+  const imageLoader = ({src}) => {
+    return src
+  }
+  const dispatch = useDispatch()
+  const router = useRouter()
+
+  const handleLogOut = () => {
+    dispatch(logOut())
+    router.replace("/")
+  }
   
   return (
     <header className='h-[8vh] md:h-[8vh] border-b border-gray-600 p-8 flex items-center justify-end'>
         <nav className='w-full flex items-center gap-x-4 justify-between'>
             <Link href='/' className='flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2'>
                 <RiReplyLine className=''/>
-                Leave Dashboard
+                Volver al inicio
             </Link>
             <div className='flex items-center gap-x-4'>
               <button className='relative hover:bg-secondary-100 p-2 rounded-lg transition-colors'>
@@ -24,11 +40,9 @@ const Header = () => {
               </button>
               
               <Menu menuButton={<MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg'>
-                <img src='https://elcomercio.pe/resizer/Nk5gbJwG_w5n5tk9fd-Fu_RaJS8=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/UNWTCT67INFF7BCND5UVRFQYIQ.webp'
-                  className='w-6 h-6 object-cover rounded-full'
-                  />
+                <Image src={user.image} loader={imageLoader} width={40} height={40} alt={`${user.name} ${user.lastName} profile pic`} />
                   <span>
-                      Javier Milei
+                      {`${user.name} ${user.lastName}`}
                   </span>
                   <RiArrowDownSLine />
               </MenuButton>}
@@ -36,13 +50,11 @@ const Header = () => {
               transition
               >
                 <MenuItem className="rounded-lg transition-colors border-b-2 border-gray-500/50">
-                    <Link href='' className='flex items-center gap-x-4'>
-                        <img src='https://elcomercio.pe/resizer/Nk5gbJwG_w5n5tk9fd-Fu_RaJS8=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/UNWTCT67INFF7BCND5UVRFQYIQ.webp'
-                          className='w-7 h-7 object-cover rounded-full'
-                        />
+                    <Link href='/a-dashboard/profile' className='flex items-center gap-x-4'>
+                      <Image src={user.image} loader={imageLoader} width={40} height={40} alt={`${user.name} ${user.lastName} profile pic`} />  
                         <div className='flex flex-col gap-1 text-sm'>
-                          <span>Javier Milei</span>
-                          <span className='text-[9px]'>javier@milei.com</span>
+                          <span>{`${user.name} ${user.lastName}`}</span>
+                          <span className='text-[9px]'>{user.email}</span>
                         </div>
                     </Link>
                 </MenuItem>
@@ -53,10 +65,10 @@ const Header = () => {
                     </Link>
                 </MenuItem>
                 <MenuItem>
-                    <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
-                        <RiLogoutCircleRLine />
-                        Logout
-                    </Link>
+                        <button onClick={handleLogOut}>
+                          <RiLogoutCircleRLine />
+                          Logout
+                        </button>
                 </MenuItem>
               </Menu>
             </div>
