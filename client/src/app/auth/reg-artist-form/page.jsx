@@ -89,17 +89,13 @@ const ArtistRegistrationForm = () => {
             const imageUrl = await uploadImage(values.profileImage);
             values.profileImage = imageUrl;
           }
-
-          console.log(values);
         } catch (error) {
           console.error("Error during form submission", error);
         }
         setSubmitting(false);
-
-      onSubmit={(values) => {
-        console.log(values);
-
       }}
+    >
+
     
       {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
         <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
