@@ -1,4 +1,8 @@
+
 import axios from 'axios'
+
+import axios from "axios";
+
 
 export const uploadImage = async (file) => {
     const formData = new FormData();

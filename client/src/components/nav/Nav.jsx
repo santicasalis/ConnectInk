@@ -13,25 +13,30 @@ export default function Nav() {
         <div>
             <li>
               <Link href='/'>
-                <button className="text-2xl">Connect<span className="text-primary">Ink<span className="text-3xl">!</span></span></button>
+                <span className="text-2xl">Connect<span className="text-primary">Ink<span className="text-3xl">!</span></span></span>
               </Link>
             </li>
         </div>
         <div className="flex items-center gap-x-8">
             <li>
               <Link href='/about'>
-                  <button className="hover:text-primary">About</button>
+                  <span className="hover:text-primary">About</span>
               </Link>
             </li>
             <li>
               <Link href='/explore'>
-                  <button className="hover:text-primary">Explore</button>
+                  <span className="hover:text-primary">Explore</span>
               </Link>
             </li>
             <li>
+              <Link href="/auth">
+                Ingresar
+              </Link>
+            </li>
+            {/* <li>
                 <Menu menuButton={<MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg'>
                     <Link href='/' className="flex items-center hover:text-primary">
-                        <button > Ingresar Como</button>
+                        <span > Ingresar Como</span>
                         <RiArrowDownSLine/>
                     </Link>
                   </MenuButton>}
@@ -53,7 +58,7 @@ export default function Nav() {
                         </Link>
                     </MenuItem>
                 </Menu>  
-            </li>
+            </li> */}
         </div>
       </ul>
     </nav>

@@ -1,11 +1,12 @@
 "use client"
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios"
 import { uploadImage } from '@/app/utils/uploadImage';
 
 const ArtistPost = () => {
   const dispatch = useDispatch();
+  const artist_id = useSelector((state) => state.user.id)
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
 
@@ -17,7 +18,6 @@ const ArtistPost = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(postPosts({ image, description }));
     const response = await axios.post("http://localhost:3001/publications", {image, description, artist_id})
   
   };

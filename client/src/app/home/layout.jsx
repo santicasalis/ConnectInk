@@ -19,9 +19,9 @@ export default function HomeLayout({ children }) {
                             <span className="px-4 py-2  hover:bg-secondary-900">
                               My Tattoo Gallery
                             </span>
-                            <button className="px-4 py-2  hover:bg-secondary-900">
+                            <span className="px-4 py-2  hover:bg-secondary-900">
                               Create Tattoo
-                            </button>
+                            </span>
                           </Link>
                             <span className="px-4 py-2  hover:bg-secondary-900">
                               Option 3

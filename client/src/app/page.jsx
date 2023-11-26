@@ -1,7 +1,20 @@
+"use client"
+
 import Link from 'next/link'
 import Nav from '@/components/nav/Nav'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { getAllStyles } from './redux/features/styles/stylesActions'
+import { getAllArtists } from './redux/features/artists/artistActions'
 
 export default function Home() {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+      dispatch(getAllStyles())
+      dispatch(getAllArtists())
+  }, [])
   return (
     <div className='flex flex-col h-scren'>
       <Nav/>
