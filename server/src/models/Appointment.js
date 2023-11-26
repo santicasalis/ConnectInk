@@ -1,19 +1,16 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-    sequelize.define(
-        'Appointment', {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-            allowNull: false,
-        },
-        dateAndTime: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
+  sequelize.define("Appointment", {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
     },
-        { timestamps: false }
-    );
+    dateAndTime: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+  });
 };
