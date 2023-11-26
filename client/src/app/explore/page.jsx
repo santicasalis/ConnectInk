@@ -17,16 +17,13 @@ export default function ExplorePage() {
 
     const {people, filtered} = useSelector((state) => state.artists)
    
-console.log(filtered,"FILTERED")
-   
     const styles = useSelector((state) => state.styles.names)
     const [filters, setFilters] = useState({location: "", tattoStyle: []})
 
     return (
         <div className="w-full">
         <Nav />
-        
-        { <div>
+        <div>
             <section className="grid grid-cols-2 text-center h-[300px] ">
                 <div className="col-span-1">
                     <h2 className="font-bold text-4xl">Bienvenidos al Reino de la Inspiracion <span className="text-primary">Ink</span>orporada</h2>
@@ -64,15 +61,22 @@ console.log(filtered,"FILTERED")
 
             </section>
             <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
-        </div> }
                
-        <div className=" justify-center mt-[75px] mx-4 my-4 flex flex-col lg:flex-row px-4 ">
-            <div className=" ">
-                 <FilterSideBar />
+          <div className=" justify-center mt-[75px] mx-4 my-4 flex flex-col lg:flex-row px-4 ">
+              <div className=" ">
+                   <FilterSideBar />
             </div>
             <div className="gap-x-2 ml-4 lg:w-3/4 w-full ">
-                 {/*filtered?.map((filter) => (
-                     
+                 filtered?.map((filter) => (
+        </div>
+               
+        <div className="grid grid-cols-5 justify-center mt-10 mx-4 my-4 gap-x-4">
+            <div className="col-span-1 ">
+                 <FilterSideBar />
+            </div>
+            <div className="col-span-4 grid grid-cols-2 gap-x-2 ">
+                 {filtered?.map((filter) => (
+                      <div key={filter.id} className="mb-4">
                         <Card
                             key={filter.id}
                             name={filter.name}
@@ -82,34 +86,10 @@ console.log(filtered,"FILTERED")
                             tattoos={filter.Publications}
                             image={filter.image}
                         />
-                
-                 ))*/}
-                    <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
-                        Jared Delgado
-                        <img src="https://i.pinimg.com/550x/09/90/fe/0990fe16f61df266c4fc0923bff98c3b.jpg"/>
-                    </div>
-                    <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
-                        Jared Delgado
-                        <img src="https://i.pinimg.com/550x/09/90/fe/0990fe16f61df266c4fc0923bff98c3b.jpg"/>
-                    </div>
-                    <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
-                        Jared Delgado
-                        <img src="https://i.pinimg.com/550x/09/90/fe/0990fe16f61df266c4fc0923bff98c3b.jpg"/>
-                    </div>
-                    <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
-                        Jared Delgado
-                        <img src="https://i.pinimg.com/550x/09/90/fe/0990fe16f61df266c4fc0923bff98c3b.jpg"/>
-                    </div>
-                    <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
-                        Jared Delgado
-                        <img src="https://i.pinimg.com/550x/09/90/fe/0990fe16f61df266c4fc0923bff98c3b.jpg"/>
-                    </div>
-                    <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
-                        Jared Delgado
-                        <img src="https://i.pinimg.com/550x/09/90/fe/0990fe16f61df266c4fc0923bff98c3b.jpg"/>
-                    </div>
+                       </div>
+                 ))}
             </div>
         </div>
-        </div>
-    )
+    </div>
+</div>
 }

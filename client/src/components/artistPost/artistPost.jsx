@@ -1,3 +1,10 @@
+
+"use client";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { uploadImage } from "@/app/utils/uploadImage";
+
 "use client"
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,12 +26,14 @@ const ArtistPost = () => {
     setLoading(false);
   };
   
-  console.log(loading);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:3001/publications", {image, description, artist_id})
-  
+    const response = await axios.post("http://localhost:3001/publications", {
+      image,
+      description,
+      artist_id,
+    });
   };
 
   return (
@@ -63,9 +72,9 @@ const ArtistPost = () => {
         type="submit"
         disabled={!image} >
             Subir Post
+
       </button>
     </form>
-    
   );
 };
 
