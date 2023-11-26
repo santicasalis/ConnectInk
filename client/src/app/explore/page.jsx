@@ -70,7 +70,7 @@ console.log(filtered,"FILTERED")
             <div className=" ">
                  <FilterSideBar />
             </div>
-            <div className="gap-x-2 ml-4 lg:w-3/4 w-full ">
+            <div className="gap-x-2 ml-4 lg:w-3/4 ">
                  {filtered?.map((filter) => (
                      
                         <Card
