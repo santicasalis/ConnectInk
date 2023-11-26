@@ -1,4 +1,4 @@
-const { TattooArtist, TattooStyle } = require('../../db')
+const { TattooArtist, TattooStyle, Publication } = require('../../db')
 const { Op } = require('sequelize')
 
     const getTattooArtistFiltered = async (location , styles) => {
@@ -19,7 +19,8 @@ const { Op } = require('sequelize')
                                     [Op.in]: styles
                                 }
                             }
-                        }
+                        } , 
+                        { model: Publication, attributes: ["description", "image"] }
                     ]
                 });
 
@@ -37,7 +38,10 @@ const { Op } = require('sequelize')
                         [Op.iLike]: `%${location}%`
                     }
                 },
-
+                include: [
+                    { model: TattooStyle, attributes: ["name"] },
+                    { model: Publication, attributes: ["description", "image"] }
+                  ]
             });
 
             return tattooArtistsFound
