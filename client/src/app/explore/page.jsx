@@ -17,15 +17,12 @@ export default function ExplorePage() {
 
     const {people, filtered} = useSelector((state) => state.artists)
    
-console.log(filtered,"FILTERED")
-   
     const styles = useSelector((state) => state.styles.names)
     const [filters, setFilters] = useState({location: "", tattoStyle: []})
 
     return (
         <div className="w-full">
         <Nav />
-        
         <div>
             <section className="grid grid-cols-2 text-center h-[300px] ">
                 <div className="col-span-1">
@@ -64,6 +61,13 @@ console.log(filtered,"FILTERED")
 
             </section>
             <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
+               
+          <div className=" justify-center mt-[75px] mx-4 my-4 flex flex-col lg:flex-row px-4 ">
+              <div className=" ">
+                   <FilterSideBar />
+            </div>
+            <div className="gap-x-2 ml-4 lg:w-3/4 w-full ">
+                 filtered?.map((filter) => (
         </div>
                
         <div className="grid grid-cols-5 justify-center mt-10 mx-4 my-4 gap-x-4">
@@ -82,10 +86,10 @@ console.log(filtered,"FILTERED")
                             tattoos={filter.Publications}
                             image={filter.image}
                         />
-                    </div>
-                ))}
+                       </div>
+                 ))}
             </div>
         </div>
-        </div>
-    )
+    </div>
+</div>
 }

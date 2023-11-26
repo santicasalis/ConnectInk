@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import React from 'react'
-import { RiHeart3Line, RiHeart3Fill, RiEditFill, RiDeleteBin6Fill, RiMoreFill } from "react-icons/ri";
+import { RiHeart3Line, RiHeart3Fill, RiEditFill, RiDeleteBin6Fill, RiMoreFill, RiMessage3Line } from "react-icons/ri";
 import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
