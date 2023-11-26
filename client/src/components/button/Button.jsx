@@ -3,9 +3,9 @@ import Link from "next/link";
 const Button = ({ link, text, className }) => {
     return (
         <Link href={link}>
-            <button className={className}>
+            <span className={className}>
                 {text}
-            </button>
+            </span>
         </Link>
     );
 };

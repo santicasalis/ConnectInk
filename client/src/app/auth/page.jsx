@@ -6,8 +6,12 @@ import Link from "next/link"
 import {useRouter} from "next/navigation"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserId } from '../redux/features/user/userActions';
 
 const Login = () => {
+  const artists = useSelector((state) => state.artists.people)
+  const dispatch = useDispatch()
   const email = 'prueba.prueba@gmail.com'
   const password = 'prueba123456'
   const router = useRouter()
@@ -21,22 +25,28 @@ const Login = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    if(data.email == email && data.password == password){
-      toast.success('You logged in correctly', {
-        className:'toastSuccess',
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
-      router.replace("/home");
-    }else{
-      toast.error("You couldn't log in", {
-        className:'toastError',
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
-    }
+    const found = artists.map((artist) => {
+      if(artist.email == data.email){
+        dispatch(getUserId(data.email))
+        return true
+      }
+      return false
+    })
+
+    found && router.replace("/home");
+    // if(data.email == email && data.password == password){
+    //   toast.success('You logged in correctly', {
+    //     className:'toastSuccess',
+    //     position: toast.POSITION.BOTTOM_RIGHT,
+    //     autoClose: 3000,
+    //     hideProgressBar: true,
+    //   });
+    !found && toast.error("You couldn't log in", {
+      className:'toastError',
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 3000,
+      hideProgressBar: true,
+    });
   }
   return (
     <div className="bg-secondary-100 p-8 rounded-xl shadow-xl w-auto lg:w-[450px]">
