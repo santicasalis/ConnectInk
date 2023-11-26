@@ -26,7 +26,7 @@ console.log(filtered,"FILTERED")
         <div className="w-full">
         <Nav />
         
-        {/* <div>
+        <div>
             <section className="grid grid-cols-2 text-center h-[300px] ">
                 <div className="col-span-1">
                     <h2 className="font-bold text-4xl">Bienvenidos al Reino de la Inspiracion <span className="text-primary">Ink</span>orporada</h2>
@@ -64,15 +64,15 @@ console.log(filtered,"FILTERED")
 
             </section>
             <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
-        </div> */}
+        </div>
                
-        <div className=" justify-center mt-[75px] mx-4 my-4 flex flex-col lg:flex-row px-4 ">
-            <div className=" ">
+        <div className="grid grid-cols-5 justify-center mt-10 mx-4 my-4 gap-x-4">
+            <div className="col-span-1 ">
                  <FilterSideBar />
             </div>
-            <div className="gap-x-2 ml-4 lg:w-3/4 ">
+            <div className="col-span-4 grid grid-cols-2 gap-x-2 ">
                  {filtered?.map((filter) => (
-                     
+                      <div key={filter.id} className="mb-4">
                         <Card
                             key={filter.id}
                             name={filter.name}
@@ -82,7 +82,7 @@ console.log(filtered,"FILTERED")
                             tattoos={filter.Publications}
                             image={filter.image}
                         />
-                    
+                    </div>
                 ))}
             </div>
         </div>

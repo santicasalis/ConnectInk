@@ -64,13 +64,13 @@ console.log(styles , "estilos")
             <input className="mb-8 mx-auto" list="cities" id="city" name="location" onChange={handleChange} />
           </div>
           <div className="flex flex-col items-center justify-center mb-8">
-            <label className='text-lg font-weight:800 text flex items-center gap-4 px-4 py-1 justify-center mb-8' htmlFor="style">
+            <label className='text-lg font-weight:800 text flex items-center gap-4 px-4 py-1 justify-center mb-6' htmlFor="style">
               Estilo de Tatuaje:
             </label>
-            <div className="grid-cols-2 gap-4 mb-8 flex items-center">
+            <div className="grid grid-cols-2 gap-4 mb-8">
               {
                 styles.map((style)=>{
-                 return <label htmlFor={style.name} key={style.name}>
+                 return <label className="flex items-center gap-2" htmlFor={style.name} key={style.name}>
                     <input
                       type="checkbox"
                       key={style.id}
@@ -88,7 +88,7 @@ console.log(styles , "estilos")
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <button type="submit" className="bg-primary text-white px-4 py-2 rounded">Filtrar</button>
+            <button type="submit" className="bg-primary text-white px-4 py-2 rounded ">Filtrar</button>
           </div>
         </form>
       </div>
