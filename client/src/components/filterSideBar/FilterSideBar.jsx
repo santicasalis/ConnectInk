@@ -54,11 +54,11 @@ export default function FilterSideBar() {
   return (
     <div>
     
-      <div className={`xl:h-[100vh] overflow-y-scroll xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full bg-secondary-100 p-4 flex flex-col transition-all`}>
+      <div className={` bg-secondary-100 p-4 flex flex-col transition-all`}>
         <h2 className='text-center text-2xl font-bold mb-[50px]'> Filtros <span className='text-primary text-4xl'>.</span></h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center mb-8">
-            <label className='text-lg font-weight:800 text flex items-center gap-4 px-4 py-1 justify-center' htmlFor="city">
+            <label className='text-lg font-weight:800 flex items-center  px-4 py-1 justify-center' htmlFor="city">
               Ciudad:
             </label>
             <input className="mb-8 mx-auto" list="cities" id="city" name="location" onChange={handleChange} />
