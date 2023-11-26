@@ -1,7 +1,17 @@
 "use client";
 
+
+import React from "react";
+
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
+
+import { uploadImage } from "../../utils/uploadImage";
+
+
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
+import * as Yup from "yup";
+
 
 const ArtistRegistrationForm = () => {
   //hardcodeado por el momento
@@ -27,6 +37,19 @@ const ArtistRegistrationForm = () => {
     largePrice: Yup.number().required("Required"),
     bio: Yup.string().max(500, "Max 500 characters"),
     profileImage: Yup.mixed().required("A profile image is required"),
+
+    // password: Yup.string()
+    //   .required("Required")
+    //   .matches(
+    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
+    //     "Must contain 6-15 characters, one uppercase, one lowercase, one number and one special character"
+    //   )
+    //   .max(15),
+    // passwordConfirm: Yup.string()
+    //   .required("Required")
+    //   .oneOf([Yup.ref("password"), null], "Passwords must match")
+    //   .max(15),
+
     password: Yup.string()
       .required("Required")
       .matches(
@@ -38,6 +61,7 @@ const ArtistRegistrationForm = () => {
       .required("Required")
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .max(15),
+
   });
 
   return (
@@ -58,10 +82,25 @@ const ArtistRegistrationForm = () => {
         passwordConfirm: "",
       }}
       validationSchema={validationSchema}
+
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          if (values.profileImage) {
+            const imageUrl = await uploadImage(values.profileImage);
+            values.profileImage = imageUrl;
+          }
+
+          console.log(values);
+        } catch (error) {
+          console.error("Error during form submission", error);
+        }
+        setSubmitting(false);
+
       onSubmit={(values) => {
         console.log(values);
+
       }}
-    >
+    
       {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
         <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
           <div className="info-artist mb-4">
@@ -254,3 +293,4 @@ const ArtistRegistrationForm = () => {
 };
 
 export default ArtistRegistrationForm;
+
