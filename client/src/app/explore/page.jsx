@@ -81,6 +81,7 @@ export default function ExplorePage() {
                     location={artist.location}
                     shopName={artist.shopName}
                     tattoos={artist.publications}
+                    image={artist.image}
                     />
                     </div>
                 

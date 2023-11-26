@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css';
 
-export default function Card ({name, lastName, location, shopName, tattoos}){
+export default function Card ({name, lastName, location, shopName, tattoos, image}){
     const imageLoader = ({src}) => {
         return src
     }
@@ -19,8 +19,7 @@ export default function Card ({name, lastName, location, shopName, tattoos}){
                 <h1 className="font-bold ml-[35px] mt-[10px] col-span-1 ">{name}  {lastName} </h1>
                 <p className="col-span-1 text-right text-2xl mr-4">☆☆☆☆☆</p>
                 </div>
-                
-                <img src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg" className="rounded-full w-[120px] h-[120px] object-cover m-4"></img>
+                <Image src={image} loader={imageLoader} width={120} height={120} alt={`${name} ${lastName} profile pic`}/>
                 <div className="grid grid-cols-2 w-[165px] ">
                 <FaMapMarkedAlt className=" text-primary w-20 col-span-1" />
                 <p className="col-span-1 text-left  absolute  translate-x-[60px]">{location}</p>
@@ -33,10 +32,10 @@ export default function Card ({name, lastName, location, shopName, tattoos}){
                 
                 className="text-center "
                 style={{ maxWidth: '1100px', margin: 'auto', marginTop: "80px", marginLeft: "400px"   }}>
-                {tattoos.map((tattoo) => {
-                    return <SwiperSlide key={tattoo.image} className="ml-[90px]"><img className="w-[160px] h-[160px]" src={tattoo.image}></img></SwiperSlide>
+                {tattoos.map((tattoo, index) => {
+                    return <SwiperSlide key={tattoo.image} className="ml-[90px]"><Image loader={imageLoader} src={tattoo.image} width={160} height={160} alt={`tattoo ${index}`}/></SwiperSlide>
                 })}
-            </Swiper>
+                </Swiper>
                 </div>
                 
             </div>
