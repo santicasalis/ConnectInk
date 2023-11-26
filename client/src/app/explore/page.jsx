@@ -17,16 +17,15 @@ export default function ExplorePage() {
 
     const {people, filtered} = useSelector((state) => state.artists)
    
-
+console.log(filtered,"FILTERED")
    
     const styles = useSelector((state) => state.styles.names)
     const [filters, setFilters] = useState({location: "", tattoStyle: []})
 
     return (
-        <>
+        <div className="w-full">
         <Nav />
         
-
         <div>
             <section className="grid grid-cols-2 text-center h-[300px] ">
                 <div className="col-span-1">
@@ -50,7 +49,7 @@ export default function ExplorePage() {
                       }}
                       
                       modules={[Parallax, Autoplay, Pagination, Navigation]}
-                     className="w-[450px] flex justify-center items-center bg-secondary-100 h-[320px] w-[700px]
+                     className="w-[450px] flex justify-center items-center bg-secondary-100 h-[320px]
                       bg-[url(https://vean-tattoo.es/media/images/Den_rozhd.2e16d0ba.fill-700x320-c0.format-jpeg.jpg)]
                        bg-cover rounded   "
                      >
@@ -66,28 +65,27 @@ export default function ExplorePage() {
             </section>
             <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
         </div>
-        
-       
-        <div className="flex justify-center mt-[75px] grid grid-cols-5 mx-[25px] my-[25px]  ">
-            <div className="grid grid-cols-1 flex-1"><FilterSideBar/></div>
-            
-        <div className="grid grid-cols-4 gap-8 col-span-4">
-            {filtered.map(artist => 
-            <div key={artist.id} className="col-span-2">
-                    <Card
-                    key={artist.id}
-                    name={artist.name}
-                    lastName={artist.lastName}
-                    location={artist.location}
-                    shopName={artist.shopName}
-                    tattoos={artist.publications}
-                    image={artist.image}
-                    />
+               
+        <div className="grid grid-cols-5 justify-center mt-10 mx-4 my-4 gap-x-4">
+            <div className="col-span-1 ">
+                 <FilterSideBar />
+            </div>
+            <div className="col-span-4 grid grid-cols-2 gap-x-2 ">
+                 {filtered?.map((filter) => (
+                      <div key={filter.id} className="mb-4">
+                        <Card
+                            key={filter.id}
+                            name={filter.name}
+                            lastName={filter.lastName}
+                            location={filter.location}
+                            shopName={filter.shopName}
+                            tattoos={filter.Publications}
+                            image={filter.image}
+                        />
                     </div>
-                
-            )}
+                ))}
             </div>
         </div>
-        </>
+        </div>
     )
 }
