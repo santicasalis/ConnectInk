@@ -12,8 +12,9 @@ export default function Card ({name, lastName, location, shopName, tattoos, imag
     const imageLoader = ({src}) => {
         return src
     }
+    
     return (
-        <div className=" m-5  h-[300px] w-[800px]  bg-secondary-100 rounded shadow-lg  text-white transition-transform transform hover:scale-105 ">
+        <div className=" m-5  h-[300px] w-[800px] overflow-hidden bg-secondary-100 rounded shadow-lg  text-white transition-transform transform ">
             <div>
                 <div className="grid grid-cols-2">
                 <h1 className="font-bold ml-[35px] mt-[10px] col-span-1 ">{name}  {lastName} </h1>
@@ -32,7 +33,7 @@ export default function Card ({name, lastName, location, shopName, tattoos, imag
                 
                 className="text-center "
                 style={{ maxWidth: '1100px', margin: 'auto', marginTop: "80px", marginLeft: "400px"   }}>
-                {tattoos.map((tattoo, index) => {
+                {tattoos?.map((tattoo, index) => {
                     return <SwiperSlide key={tattoo.image} className="ml-[90px]"><Image loader={imageLoader} src={tattoo.image} width={160} height={160} alt={`tattoo ${index}`}/></SwiperSlide>
                 })}
                 </Swiper>

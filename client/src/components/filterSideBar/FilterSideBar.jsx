@@ -46,14 +46,13 @@ export default function FilterSideBar() {
   }
 
   useEffect(()=>{
+     setFilters({...filters,tattooStyle:styleSelected});
    
-      setFilters({...filters,tattooStyle:styleSelected});
-
-    
   },[styleSelected])
 
+console.log(styles , "estilos")
   return (
-    <div className="w-[300px]">
+    <div className="w-full">
     
       <div className={`xl:h-[100vh] overflow-y-scroll fixed xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full top-0 bg-secondary-100 p-4 flex flex-col transition-all`}>
         <h2 className='text-center text-2xl font-bold mb-[50px]'> Filtros <span className='text-primary text-4xl'>.</span></h2>
