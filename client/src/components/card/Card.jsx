@@ -34,4 +34,7 @@ export default function Card ({name, lastName, location, shopName, tattoos, imag
             ))}
           </Swiper>
            </div>
+        </div>
+        </div>
+    )
 }

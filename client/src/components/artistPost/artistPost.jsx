@@ -1,10 +1,3 @@
-
-"use client";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { uploadImage } from "@/app/utils/uploadImage";
-
 "use client"
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
