@@ -25,6 +25,7 @@ const Login = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
+
     const found = artists.map((artist) => {
       if(artist.email == data.email){
         dispatch(getUserId(data.email))

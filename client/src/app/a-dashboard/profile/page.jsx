@@ -1,7 +1,7 @@
 import React from 'react'
 import {RiEdit2Line} from "react-icons/ri"
 
-const Home = () => {
+const Profile = () => {
   const artistData = {
     name:'Javier',
     lastName:'Milei',
@@ -102,4 +102,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Profile
