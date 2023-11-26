@@ -28,7 +28,7 @@ const Login = () => {
         autoClose: 3000,
         hideProgressBar: true,
       });
-      router.replace("/home");
+      router.replace("/a-dashboard/home");
     }else{
       toast.error("You couldn't log in", {
         className:'toastError',
