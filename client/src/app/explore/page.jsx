@@ -15,11 +15,17 @@ import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
 
 export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
+  
 
-  console.log(filtered, "FILTERED");
+  const dispatch = useDispatch();  
 
   const styles = useSelector((state) => state.styles.names);
   const [filters, setFilters] = useState({ location: "", tattoStyle: [] });
+
+  useEffect(() => {
+    dispatch(getAllStyles());
+    dispatch(getAllArtists());
+  }, []);
 
   return (
     <div className="w-full">
@@ -84,20 +90,23 @@ export default function ExplorePage() {
         <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
 
         <div className="flex flex-col md:flex-row justify-center mt-10 mx-4 my-4 gap-x-4">
-          <div className="md:flex-1">
+          <div className="md:w-1/4">
             <FilterSideBar />
           </div>
 
-          <div className="md:flex-[3] flex flex-wrap gap-x-2">
+          <div className="md:w-3/4 flex flex-wrap gap-x-2">
             {filtered?.map((filter) => (
-              <div key={filter.id} className="mb-4 w-full md:w-1/2">
+              <div key={filter.id} className="mb-4 w-full">
+      
+                
+                
                 <Card
                   key={filter.id}
                   name={filter.name}
                   lastName={filter.lastName}
                   location={filter.location}
                   shopName={filter.shopName}
-                  tattoos={filter.Publications}
+                  tattoos={filter.publications}
                   image={filter.image}
                 />
               </div>

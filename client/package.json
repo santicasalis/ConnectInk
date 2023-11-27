@@ -24,8 +24,6 @@
 
     "swiper": "^11.0.5",
 
-    "swiper": "^10.0.0",
-
     "yup": "^1.3.2"
   },
   "devDependencies": {
