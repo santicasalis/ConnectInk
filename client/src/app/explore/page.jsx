@@ -13,13 +13,12 @@ import "swiper/css/pagination";
 import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
 
-import '../explore/page.css'
+import "../explore/page.css";
 
 export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
-  
 
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
 
   const styles = useSelector((state) => state.styles.names);
   const [filters, setFilters] = useState({ location: "", tattoStyle: [] });
@@ -89,9 +88,9 @@ export default function ExplorePage() {
           </div>
         </section>
 
-        <hr className="mt-[50px] border-primary/30 ml-[50px] mr-[50px]"></hr>
+        <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
 
-        <section>
+        <section className="flex h-[680px]">
           <div className="flex flex-col md:flex-row justify-center mt-8 mx-4 my-4 gap-x-4">
             <div className="md:w-1/4">
               <FilterSideBar />
@@ -120,5 +119,3 @@ export default function ExplorePage() {
     </div>
   );
 }
-
-
