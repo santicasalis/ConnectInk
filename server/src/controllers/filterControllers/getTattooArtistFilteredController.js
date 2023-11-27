@@ -8,8 +8,8 @@ const getTattooArtistFiltered = async (location, styles) => {
         where: {
           location: {
             [Op.iLike]: `%${location}%`,
-            disabled:false 
           },
+          disabled:false 
         },
         include: [
           {
@@ -55,8 +55,8 @@ const getTattooArtistFiltered = async (location, styles) => {
         where: {
           location: {
             [Op.iLike]: `%${location}%`, 
-            disabled:false 
           },
+          disabled:false 
         },
         include: [
           { model: TattooStyle, attributes: ["name"] },
