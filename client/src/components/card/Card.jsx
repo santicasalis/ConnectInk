@@ -23,24 +23,31 @@ export default function Card({
 
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
 
-  const nextSlide = () => {
-    setCurrentStartIndex((prevIndex) => {
-      const nextIndex = prevIndex + 1;
-      return nextIndex > tattoos.length - 2 ? 0 : nextIndex;
-    });
-  };
+ const nextSlide = () => {
+   setCurrentStartIndex((prevIndex) => {
+     let nextIndex = prevIndex + 1;
+    
+     if (nextIndex > tattoos.length - 1) {
+       nextIndex = 0;
+     }
+     return nextIndex;
+   });
+ };
 
-  const prevSlide = () => {
-    setCurrentStartIndex((prevIndex) => {
-      const nextIndex = prevIndex - 1;
-      return nextIndex < 0 ? tattoos.length - 2 : nextIndex;
-    });
-  };
+ const prevSlide = () => {
+   setCurrentStartIndex((prevIndex) => {
+     let nextIndex = prevIndex - 1;
+    
+     if (nextIndex < 0) {
+       nextIndex = tattoos.length - 1;
+     }
+     return nextIndex;
+   });
+ };
 
-  console.log(tattoos, "ufdilsadhjld")
 
   return (
-    <div className="m-5 p-4 hover:scale-105 bg-secondary-100 rounded shadow-lg text-white transition-transform transform">
+    <div className="m-5 p-4 bg-secondary-100 rounded shadow-lg text-white transition-transform transform">
       <div className="w-full mb-4">
         <div className="flex justify-between items-center">
           <div className="flex gap-x-1 items-center">
@@ -64,19 +71,26 @@ export default function Card({
         <button onClick={prevSlide}>
           <RiArrowLeftSLine />
         </button>
-        <div className="flex justify-center items-center gap-x-4">
-          {tattoos? tattoos
-            .slice(currentStartIndex, currentStartIndex + 2)
-            .map((tattoo, index) => (
-              <Image
-                key={tattoo.image}
-                loader={imageLoader}
-                src={tattoo.image}
-                width={160}
-                height={160}
-                alt={`tattoo ${index}`}
-              />
-            )): <div> <p>Cargando informacion... </p> </div> }
+        <div className="flex justify-center items-center gap-x-8">
+          {tattoos && tattoos.length > 0 ? (
+            [...tattoos, ...tattoos, ...tattoos] 
+              .slice(currentStartIndex, currentStartIndex + 3) 
+              .map((tattoo, index) => (
+                <Image
+                  key={index} 
+                  loader={imageLoader}
+                  src={tattoo.image}
+                  width={200}
+                  height={200}
+                  alt={`tattoo ${index}`}
+                />
+              ))
+          ) : (
+            <div>
+              {" "}
+              <p>Cargando informacion... </p>{" "}
+            </div>
+          )}
         </div>
         <button onClick={nextSlide}>
           <RiArrowRightSLine />
