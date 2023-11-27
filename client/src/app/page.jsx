@@ -30,7 +30,7 @@ export default function Home() {
             Los mejores artistas y
           </h1>
           <h1 className="font-rocksalt mb-10" style={{ fontSize: "4rem" }}>
-            TATOOS
+            TATTOOS
           </h1>
           <p className="text-primary/80 mb-10 font-newrocker text-[25px]">
             ConnectInk es el lugar
