@@ -8,6 +8,7 @@ const getTattooArtistFiltered = async (location, styles) => {
         where: {
           location: {
             [Op.iLike]: `%${location}%`,
+            disabled:false 
           },
         },
         include: [
@@ -53,7 +54,8 @@ const getTattooArtistFiltered = async (location, styles) => {
       const tattooArtistsFound = await TattooArtist.findAll({
         where: {
           location: {
-            [Op.iLike]: `%${location}%`,
+            [Op.iLike]: `%${location}%`, 
+            disabled:false 
           },
         },
         include: [
