@@ -12,7 +12,6 @@ export default function Card ({name, lastName, location, shopName, tattoos, imag
     const imageLoader = ({src}) => {
         return src
     }
-    console.log(image, "IMAGEN********")
     return (
         <div className="m-5 p-4 h-[400px] w-[400px] hover:scale-105 bg-secondary-100 rounded shadow-lg text-white transition-transform transform relative">
            
