@@ -12,6 +12,8 @@ const ArtistPost = () => {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
+  const [created, setCreated] = useState(false)
+  const [response, setResponse] = useState(false)
 
   const handleImageChange = async (event) => {
     setLoading(true);
@@ -28,9 +30,18 @@ const ArtistPost = () => {
       description,
       artist_id,
     });
+    setCreated(true)
+    setResponse(response.data)
   };
 
+  const handleNextPublication = () => {
+    setCreated(false)
+    setImage(null)
+    setDescription("")
+  }
+
   return (
+
     <form className='w-full p-4 flex flex-col items-center' onSubmit={handleSubmit}>
       <div className='grid md:grid-cols-2 grid-cols-1 items-center gap-x-10'>
 
@@ -61,9 +72,15 @@ const ArtistPost = () => {
               {
                 (loading && image == null) && <div className='flex items-center justify-center w-full h-full bg-black opacity-70 text-[30px] text-white absolute transform-translate z-10'>Cargando...</div>
               }
+
               
-              <input className='hidden' id='post' type="file" onChange={handleImageChange} />
+              <textarea className='md:col-span-1 flex justify-center items-center text-lg text-black mb-8 p-3 outline-none rounded-lg' rows="10"
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                placeholder="Descripción"
+              />
           </div>
+
 
           
       </div>
@@ -74,8 +91,11 @@ const ArtistPost = () => {
         disabled={!image} >
             Subir Post
 
-      </button>
-    </form>
+
+          </button>
+        </form>
+      )}
+    </div>
   );
 };
 
