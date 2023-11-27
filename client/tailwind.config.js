@@ -8,11 +8,15 @@ module.exports = {
   theme: {
     extend: {
       colors : {
-        primary : "#33E8BC",
+        primary : "#20C6DA",
         secondary : {
-          900 : "#181817",
-          100 : "#252524",
+          900 : "#101010",
+          100 : "#1C1C1C",
         }
+      },
+      fontFamily : {
+        rocksalt:['Rock Salt'],
+        newrocker:['New Rocker'],
       }
     },
   },
