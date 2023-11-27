@@ -31,7 +31,7 @@ const getTattooArtists = async () => {
         updatedAt: publication.updatedAt
       };
     }),
-    timeAvailabilitys: tattooArtist.TimeAvailabilitys?.map((timeAvailability) => {
+    timeAvailabilities: tattooArtist.TimeAvailabilities?.map((timeAvailability) => {
       return {
         date: timeAvailability.date,
         initialHour: timeAvailability.initialHour,
