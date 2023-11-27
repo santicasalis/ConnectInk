@@ -28,7 +28,6 @@ const Login = () => {
     let found = false
 
     artists.map((artist) => {
-      console.log(artist)
       if(artist.email == data.email){
         dispatch(getUserId(data.email))
         found = true

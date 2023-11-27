@@ -22,7 +22,29 @@ const getTattooArtistFiltered = async (location, styles) => {
           { model: Publication, attributes: ["description", "image"] },
         ],
       });
-      return tattooArtistsFound;
+
+      const tattooArtistsFoundCleaner = tattooArtistsFound.map((artist) => ({
+        id: artist.id,
+        name: artist.name,
+        lastName: artist.lastName,
+        email: artist.email,
+        phone: artist.phone,
+        location: artist.location,
+        address: artist.address,
+        shopName: artist.shopName,
+        image: artist.image,
+        disabled: artist.disabled,
+        tattooStyles: artist.TattooStyles?.map(
+          (tattooStyle) => tattooStyle.name
+        ),
+        publications: artist.Publications?.map((publication) => {
+          return {
+            description: publication.description,
+            image: publication.image,
+          };
+        }),
+      }))
+      return tattooArtistsFoundCleaner;
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -40,7 +62,29 @@ const getTattooArtistFiltered = async (location, styles) => {
         ],
       });
 
-      return tattooArtistsFound;
+      const tattooArtistsFoundCleaner = tattooArtistsFound.map((artist) => ({
+        id: artist.id,
+        name: artist.name,
+        lastName: artist.lastName,
+        email: artist.email,
+        phone: artist.phone,
+        location: artist.location,
+        address: artist.address,
+        shopName: artist.shopName,
+        image: artist.image,
+        disabled: artist.disabled,
+        tattooStyles: artist.TattooStyles?.map(
+          (tattooStyle) => tattooStyle.name
+        ),
+        publications: artist.Publications?.map((publication) => {
+          return {
+            description: publication.description,
+            image: publication.image,
+          };
+        }),
+      }))
+
+      return tattooArtistsFoundCleaner;
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
