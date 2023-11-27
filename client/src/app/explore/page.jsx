@@ -89,9 +89,9 @@ export default function ExplorePage() {
           </div>
         </section>
 
-        <hr className="mt-[50px] border-primary/30 ml-[50px] mr-[50px]"></hr>
+        <hr className="mt-[50px] border-primary ml-[50px] mr-[50px]"></hr>
 
-        <section>
+        <section className="flex h-[680px]">
           <div className="flex flex-col md:flex-row justify-center mt-8 mx-4 my-4 gap-x-4">
             <div className="md:w-1/4">
               <FilterSideBar />

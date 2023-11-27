@@ -1,10 +1,8 @@
-"use client"
+"use client";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllArtists, filterAllArtists } from "../../app/redux/features/artists/artistActions";
 import { useEffect, useState } from "react";
+import { filterAllArtists } from "../../app/redux/features/artists/artistActions";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
-
-
 
 export default function FilterSideBar() {
   const dispatch = useDispatch();
@@ -16,12 +14,11 @@ export default function FilterSideBar() {
   });
 
   useEffect(() => {
-    dispatch(filterAllArtists(filters)); //
+    dispatch(filterAllArtists(filters));
   }, [filters]);
 
-  const handleChange = async (event) => {
+  const handleChange = (event) => {
     let value = event.target.value;
-
     setFilters({
       ...filters,
       [event.target.name]: value,
@@ -32,13 +29,11 @@ export default function FilterSideBar() {
     event.preventDefault();
   };
 
-  const handleStyleChange = (event) => {
-    if (styleSelected.includes(event.target.value)) {
-      setStyleSelected(
-        styleSelected.filter((style) => style !== event.target.value)
-      );
+  const handleStyleChange = (styleName) => {
+    if (styleSelected.includes(styleName)) {
+      setStyleSelected(styleSelected.filter((style) => style !== styleName));
     } else {
-      setStyleSelected([...styleSelected, event.target.value]);
+      setStyleSelected([...styleSelected, styleName]);
     }
   };
 
@@ -48,9 +43,8 @@ export default function FilterSideBar() {
 
   return (
     <div>
-      <div className={`bg-secondary-100 p-4 flex flex-col transition-all`}>
+      <div className="bg-secondary-100 p-4 flex flex-col transition-all">
         <h2 className="text-center text-2xl font-bold mb-[50px]">
-          {" "}
           Filtros <span className="text-primary text-4xl">.</span>
         </h2>
         <form onSubmit={handleSubmit}>
@@ -62,7 +56,7 @@ export default function FilterSideBar() {
               Ciudad:
             </label>
             <input
-              className="mb-8 mx-auto"
+              className="mb-8 mx-auto text-black"
               list="cities"
               id="city"
               name="location"
@@ -71,84 +65,33 @@ export default function FilterSideBar() {
           </div>
           <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 text flex items-center gap-4 px-4 py-1 justify-center mb-6"
+              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
               htmlFor="style"
             >
               Estilo de Tatuaje:
             </label>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               {styles.map((style) => {
+                const isSelected = styleSelected.includes(style.name);
                 return (
                   <label
-                    className="flex items-center gap-2"
+                    className={`flex items-center gap-2 px-3 py-1 border rounded cursor-pointer ${
+                      isSelected
+                        ? "bg-blue-500 text-white"
+                        : "bg-white text-black"
+                    }`}
                     htmlFor={style.name}
                     key={style.name}
+                    onClick={() => handleStyleChange(style.name)}
                   >
-                    <input
-                      type="checkbox"
-                      key={style.id}
-                      id={style.name}
-                      name="tattooStyle"
-                      value={style.name}
-                      checked={styleSelected.includes(style.name)}
-                      onChange={handleStyleChange}
-                    />
                     {style.name}
                   </label>
                 );
               })}
             </div>
           </div>
-         
-            
-          
         </form>
       </div>
     </div>
   );
 }
-
-  // return (
-  //   <div>
-    
-  //     <div className={` bg-secondary-100 p-4 flex flex-col transition-all`}>
-  //       <h2 className='text-center text-2xl font-bold mb-[50px]'> Filtros <span className='text-primary text-4xl'>.</span></h2>
-  //       <form onSubmit={handleSubmit}>
-  //         <div className="flex flex-col items-center justify-center mb-8">
-  //           <label className='text-lg font-weight:800 flex items-center  px-4 py-1 justify-center' htmlFor="city">
-  //             Ciudad:
-  //           </label>
-  //           <input className="mb-8 mx-auto" list="cities" id="city" name="location" onChange={handleChange} />
-  //         </div>
-  //         <div className="flex flex-col items-center justify-center mb-8">
-  //           <label className='text-lg font-weight:800 text flex items-center gap-4 px-4 py-1 justify-center mb-6' htmlFor="style">
-  //             Estilo de Tatuaje:
-  //           </label>
-  //           <div className="grid grid-cols-2 gap-4 mb-8">
-  //             {
-  //               styles.map((style)=>{
-  //                return <label className="flex items-center gap-2" htmlFor={style.name} key={style.name}>
-  //                   <input
-  //                     type="checkbox"
-  //                     key={style.id}
-  //                     id={style.name}
-  //                     name="tattooStyle"
-  //                     value={style.name}
-  //                     checked={styleSelected.includes(style.name)}
-  //                     onChange={handleStyleChange}
-  //                   />
-  //                   {style.name}
-  //                 </label>
-  //               })
-  //             }
-                         
-  //           </div>
-  //         </div>
-  //         <div className="flex items-center justify-center">
-  //           <button type="submit" className="bg-primary text-white px-4 py-2 rounded ">Filtrar</button>
-  //         </div>
-  //       </form>
-  //     </div>
-    
-  // </div>
-  // );

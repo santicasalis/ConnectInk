@@ -1,7 +1,7 @@
 .scroll-fade {
   position: relative;
   overflow: hidden;
-  height: 555px; 
+  /* height: 555px;  */
 }
 
 .scroll-content {
