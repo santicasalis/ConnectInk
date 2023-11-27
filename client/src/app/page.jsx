@@ -15,6 +15,7 @@ export default function Home() {
     dispatch(getAllArtists());
   }, []);
   return (
+
     <div className="flex flex-col w-full min-h-screen p-0 overflow-hidden bg-secondary-900">
       <Nav />
       <div
@@ -41,6 +42,7 @@ export default function Home() {
             src="https://images3.alphacoders.com/866/866852.jpg"
           />
           <div className="absolute top-0 left-0 w-full h-full custom-gradient"></div>
+
         </div>
       </div>
     </div>

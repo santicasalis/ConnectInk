@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -31,8 +32,15 @@
   background-color: transparent; 
 }
 
+html{
+  margin: 0;
+  padding: 0;
+  overflow:hidden;
+}
 
 body {
+  margin: 0;
+  padding: 0;
   overflow-y: auto; 
   scrollbar-width: thin; 
   scrollbar-color: #4a5568 #2d3748; 
@@ -61,4 +69,10 @@ body {
   font-family: 'Montserrat', sans-serif!important;
   font-family: 'Russo One', sans-serif!important;
   box-shadow: 0 0 0 3px rgba(250, 103, 122, 0.2)!important;
+}
+.custom-gradient{
+  background: linear-gradient(to bottom, #101010, rgba(0, 0, 0, 0));
+}
+.gotic{
+  font-family: 'UnifrakturMaguntia', cursive!important;
 }
