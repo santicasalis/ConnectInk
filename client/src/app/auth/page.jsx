@@ -96,6 +96,7 @@ const Login = () => {
           <button
             type="submit"
             className="bg-black opacity-50 text-white uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:bg-primary/90 transition-colors"
+            disabled={!data.email || !data.password }
           >
             Ingresar
           </button>
