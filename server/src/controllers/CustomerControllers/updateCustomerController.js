@@ -18,7 +18,7 @@ const updateCustomer = async (id, name, lastName, email, password, phone) => {
         )
         return 'Update sucessful'
     } else {
-        return 'cliente not found'
+        return 'customer not found'
     }
 }
 
