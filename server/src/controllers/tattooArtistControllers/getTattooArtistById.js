@@ -4,7 +4,7 @@ const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {
     include: [
       { model: TattooStyle, attributes: ["name"] },
-      { model: Publication, attributes: ["description", "image"] },
+      { model: Publication, attributes: ["description", "image", "createdAt", "updatedAt"] },
     ],
   });
   return {
@@ -25,6 +25,8 @@ const getTattooArtistById = async (id) => {
       return {
         description: publication.description,
         image: publication.image,
+        createdAt: publication.createdAt,
+        updatedAt: publication.updatedAt
       };
     }),
   };
