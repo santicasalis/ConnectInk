@@ -1,12 +1,15 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { filterAllArtists } from "../../app/redux/features/artists/artistActions";
+import { filterAllArtists, getAllArtists, OrderAllArtists } from "../../app/redux/features/artists/artistActions";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
 
 export default function FilterSideBar() {
   const dispatch = useDispatch();
   const styles = useSelector((state) => state.styles.names);
+  const { people, filtered } = useSelector((state) => state.artists);
+ 
+  const [artistOrder , setArtistOrder]= useState("")
   const [styleSelected, setStyleSelected] = useState([]);
   const [filters, setFilters] = useState({
     location: "",
@@ -25,6 +28,7 @@ export default function FilterSideBar() {
     });
   };
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
   };
@@ -40,6 +44,17 @@ export default function FilterSideBar() {
   useEffect(() => {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
+
+  useEffect(() => {
+    dispatch(OrderAllArtists(artistOrder));
+  }, [artistOrder]);
+
+  const handleSortChange = (event) => {
+    const order = event.target.value;
+    setArtistOrder(order)
+     
+  };
+
 
   return (
     <div>
@@ -63,6 +78,26 @@ export default function FilterSideBar() {
               onChange={handleChange}
             />
           </div>
+          <div className="flex flex-col items-center justify-center mb-8">
+            <label
+              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
+              htmlFor="sort"
+            >
+              Ordenar:
+            </label>
+            <select
+              className="mb-8 mx-auto text-black"
+              id="sort"
+              name="sort"
+              onChange={handleSortChange}
+            >
+              <option value="">Sin orden</option>
+              <option value="asc">A-Z</option>
+              <option value="desc">Z-A</option>
+            </select>
+          </div>
+
+
           <div className="flex flex-col items-center justify-center mb-8">
             <label
               className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
