@@ -22,33 +22,33 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userInformation = {
-          uid: user.uid,
-          nombreCompleto: user.displayName || "Nombredefault",
-          image:
-            user.photoURL ||
-            "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
-          email: user.email,
-          phoneNumber: user.phoneNumber || "123456789",
-          provider: user.providerId,
-        };
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const userInformation = {
+  //         uid: user.uid,
+  //         nombreCompleto: user.displayName || "Nombredefault",
+  //         image:
+  //           user.photoURL ||
+  //           "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
+  //         email: user.email,
+  //         phoneNumber: user.phoneNumber || "123456789",
+  //         provider: user.providerId,
+  //         currentData: user.userMetadata,
+  //       };
+  //       console.log(auth);
 
-        setUserInfo(userInformation);
-      } else {
-        // No hay usuario autenticado
-        setUserInfo(null);
-      }
-    });
+  //       setUserInfo(userInformation);
+  //       console.log(userInformation);
+  //     } else {
+  //       // No hay usuario autenticado
+  //       setUserInfo(null);
+  //     }
+  //   });
+  // }, [auth]);
 
-    // Desvincula el listener cuando el componente se desmonta
-  }, [auth]);
-
-  console.log(userInfo);
   const imageLoader = ({ src }) => {
     return src;
   };
@@ -58,11 +58,9 @@ const Header = () => {
   const handleLogOut = () => {
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
         alert("sign out ok");
       })
       .catch((error) => {
-        // An error happened.
         throw error;
       });
     dispatch(logOut());

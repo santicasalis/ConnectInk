@@ -43,9 +43,16 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      const user = result.user;
-
-      router.replace("/a-dashboard/home");
+      const user = result.user.metadata.createdAt;
+      const userLastLog = result.user.metadata.lastLoginAt;
+      console.log(user);
+      console.log(userLastLog);
+      if (Number(user) + 1 == userLastLog || user == userLastLog) {
+        router.replace("/auth/register");
+      } else {
+        //ruta  para crear user viendo si es artist o customer
+        router.replace("/a-dashboard/home");
+      }
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -61,29 +68,8 @@ const Login = () => {
       throw error;
     }
   };
-  // const emailLogIn = async () => {
-  //   try {
-  //     const userCredential = await createUserWithEmailAndPassword(
-  //       auth,
-  //       data.email,
-  //       data.password
-  //     );
 
-  //     const user = userCredential.user;
-  //     console.log(user);
-  //     router.replace("/a-dashboard/home");
-  //   } catch (error) {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     toast.error(`${errorMessage}`, {
-  //       className: "toastError",
-  //       position: toast.POSITION.BOTTOM_RIGHT,
-  //       autoClose: 3000,
-  //       hideProgressBar: true,
-  //     });
-  //     console.error(`Error al iniciar sesión ${errorCode} - ${errorMessage}`);
-  //   }
-  // };
+  //  INICO DE SESION
 
   const emailLogIn = async () => {
     try {
@@ -91,25 +77,13 @@ const Login = () => {
 
       const user = auth.currentUser;
       router.replace("/a-dashboard/home");
-    } catch (signInError) {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
+    } catch (createUserError) {
+      const errorCode = createUserError.code;
+      const errorMessage = createUserError.message;
 
-        const user = userCredential.user;
-        router.replace("/a-dashboard/home");
-        o;
-      } catch (createUserError) {
-        const errorCode = createUserError.code;
-        const errorMessage = createUserError.message;
-
-        console.error(
-          `Error al crear un nuevo usuario: ${errorCode} - ${errorMessage}`
-        );
-      }
+      console.error(
+        `Error al crear un nuevo usuario: ${errorCode} - ${errorMessage}`
+      );
     }
   };
   return (
@@ -121,6 +95,12 @@ const Login = () => {
         />
         Ingresar con Google
       </button>
+      <Link
+        href="/auth/register"
+        className="text-primary hover:text-gray-100 transition-colors"
+      >
+        Registrate
+      </Link>
       <div className="bg-black absolute opacity-75 w-full h-full ">
         <img className="object-cover" src=" /dsgnlogin4.png " alt="" />
       </div>
