@@ -13,7 +13,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../redux/features/user/userActions";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../firebase.js";
 
 const Login = () => {
@@ -31,43 +36,80 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-  let found = false;
-
-  artists.map((artist) => {
-    if (artist.email == data.email) {
-      dispatch(getUserId(data.email));
-      found = true;
-    }
-  });
-
-  found && router.replace("/a-dashboard/home");
-  !found &&
-    toast.error("You couldn't log in", {
-      className: "toastError",
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 3000,
-      hideProgressBar: true,
-    });
 
   const googleLogIn = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      // console.log(result);
-      // Esto te proporciona un token de acceso de Google. Puedes usarlo para acceder a la API de Google.
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      // console.log(user);
-      // console.log(auth.currentUser);
-      // console.log(token);
+
       router.replace("/a-dashboard/home");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
+      toast.error(`${errorMessage}`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+
       throw error;
+    }
+  };
+  // const emailLogIn = async () => {
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(
+  //       auth,
+  //       data.email,
+  //       data.password
+  //     );
+
+  //     const user = userCredential.user;
+  //     console.log(user);
+  //     router.replace("/a-dashboard/home");
+  //   } catch (error) {
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     toast.error(`${errorMessage}`, {
+  //       className: "toastError",
+  //       position: toast.POSITION.BOTTOM_RIGHT,
+  //       autoClose: 3000,
+  //       hideProgressBar: true,
+  //     });
+  //     console.error(`Error al iniciar sesión ${errorCode} - ${errorMessage}`);
+  //   }
+  // };
+
+  const emailLogIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+
+      const user = auth.currentUser;
+      router.replace("/a-dashboard/home");
+    } catch (signInError) {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+
+        const user = userCredential.user;
+        router.replace("/a-dashboard/home");
+        o;
+      } catch (createUserError) {
+        const errorCode = createUserError.code;
+        const errorMessage = createUserError.message;
+
+        console.error(
+          `Error al crear un nuevo usuario: ${errorCode} - ${errorMessage}`
+        );
+      }
     }
   };
   return (
@@ -87,18 +129,7 @@ const Login = () => {
         Ingresar
       </h1>
       <form onSubmit={handleSubmit} className="mb-7">
-        {/* <button
-          onClick={googleLogIn}
-          className="flex items-center justify-center gap-4 mb-8 bg-secondary-900 w-full py-3 px-4 rounded-xl text-gray-100"
-        >
-          <img
-            src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-            className="w-4 h-4"
-          />
-          Ingresar con Google
-        </button> */}
         <div className="relative mb-3">
-          <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type="email"
             name="email"
@@ -108,7 +139,6 @@ const Login = () => {
           />
         </div>
         <div className="relative mb-4">
-          <RiLockLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type={showPassword ? "text" : "password"}
             name="password"
@@ -133,6 +163,7 @@ const Login = () => {
             type="submit"
             className="bg-black opacity-50 text-white uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:bg-primary/90 transition-colors"
             disabled={!data.email || !data.password}
+            onClick={emailLogIn}
           >
             Ingresar
           </button>

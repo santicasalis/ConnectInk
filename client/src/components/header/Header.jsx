@@ -25,14 +25,16 @@ const Header = () => {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         const userInformation = {
           uid: user.uid,
-          nombreCompleto: user.displayName,
-          image: user.photoURL,
+          nombreCompleto: user.displayName || "Nombredefault",
+          image:
+            user.photoURL ||
+            "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
           email: user.email,
-          phoneNumber: user.phoneNumber,
+          phoneNumber: user.phoneNumber || "123456789",
           provider: user.providerId,
         };
 
@@ -88,7 +90,13 @@ const Header = () => {
           <Menu
             menuButton={
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
-                {/* <Image src={user.image} loader={imageLoader} width={40} height={40} alt={`${user.name} ${user.lastName} profile pic`} /> */}
+                <Image
+                  src={userInfo?.image}
+                  loader={imageLoader}
+                  width={40}
+                  height={40}
+                  alt={`${userInfo?.nombreCompleto} profile pic`}
+                />
                 <span>{`${userInfo?.nombreCompleto}`}</span>
                 <RiArrowDownSLine />
               </MenuButton>
