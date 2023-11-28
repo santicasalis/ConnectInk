@@ -7,7 +7,7 @@ export default function RegisteredLayout({ children }) {
     return (
       <div className='bg-secondary-900 p-8 rounded-xl w-full'>
           <div className="flex ">
-              <h1 className='text-4xl font-rocksalt'>Artistas</h1>
+              <h1 className='text-4xl font-rocksalt'> Tatuadores </h1>
               
           </div>
          
