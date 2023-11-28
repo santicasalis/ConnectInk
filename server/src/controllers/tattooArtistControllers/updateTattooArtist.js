@@ -2,8 +2,7 @@ const { TattooArtist } = require("../../db");
 
 const updateTattooArtist = async (
   id,
-  name,
-  lastName,
+  fullName,
   email,
   password,
   phone,
@@ -16,8 +15,7 @@ const updateTattooArtist = async (
   if (tattooArtistFound) {
     await TattooArtist.update(
       {
-        name: name,
-        lastName: lastName,
+        fullName: fullName,
         email: email,
         password: password,
         phone: phone,

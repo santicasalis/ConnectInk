@@ -1,15 +1,16 @@
 const createCustomer = require('../../controllers/customerControllers/createCustomerController')
 
 const createCustomerHandler = async (req, res) => {
-    const { name, lastName, email, password, phone } = req.body
+    const { tokenId, fullName, email, password, phone, image } = req.body
 
     try {
         const newCustomer = await createCustomer(
-            name,
-            lastName,
+            tokenId,
+            fullName,
             email,
             password,
-            phone
+            phone,
+            image
         )
         res.status(200).json(newCustomer)
     } catch (error) {

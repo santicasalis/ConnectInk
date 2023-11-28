@@ -1,8 +1,8 @@
 const { TattooArtist, TattooStyle } = require("../../db");
 
 const createTattooArtist = async (
-  name,
-  lastName,
+  tokenId,
+  fullName,
   email,
   password,
   phone,
@@ -13,8 +13,8 @@ const createTattooArtist = async (
   tattooStyle
 ) => {
   const newTattooArtist = await TattooArtist.create({
-    name,
-    lastName,
+    tokenId,
+    fullName,
     email,
     password,
     phone,

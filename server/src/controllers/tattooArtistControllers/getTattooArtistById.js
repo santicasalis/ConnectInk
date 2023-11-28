@@ -9,8 +9,8 @@ const getTattooArtistById = async (id) => {
   });
   return {
     id: tattooArtist.id,
-    name: tattooArtist.name,
-    lastName: tattooArtist.lastName,
+    tokenId: tattooArtist.tokenId,
+    fullName: tattooArtist.fullName,
     email: tattooArtist.email,
     phone: tattooArtist.phone,
     location: tattooArtist.location,

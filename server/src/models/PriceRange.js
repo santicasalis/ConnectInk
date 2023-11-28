@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("Tattoo", {
+  sequelize.define("PriceRange", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -9,18 +9,14 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     size: {
-      type: DataTypes.ENUM("small", "medium", "large"),
+      type: DataTypes.ENUM("pequeño", "pequeño a color", "mediano", "mediano a color", "grande", "grande a color"),
       allowNull: false,
     },
-    image: {
-      type: DataTypes.STRING,
+    priceMin: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    bodyPlace: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    duration: {
+    priceMax: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

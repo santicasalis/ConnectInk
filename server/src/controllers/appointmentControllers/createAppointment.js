@@ -1,6 +1,6 @@
 const { TattooArtist, Appointment, Customer } = require("../../db");
 
-const createAppointment = async (artistId, customerId, dateAndTime) => {
+const createAppointment = async (artistId, customerId, size, image, bodyPlace, description, dateAndTime) => {
   const tattooArtist = await TattooArtist.findByPk(artistId);
   const customer = await Customer.findByPk(customerId)
 
@@ -8,8 +8,8 @@ const createAppointment = async (artistId, customerId, dateAndTime) => {
     dateAndTime
   });
 
-  customer.addAppointment(appointment)
-  tattooArtist.addAppointment(appointment);
+  customer.addAppointment(appointment) // a chequear
+  tattooArtist.addAppointment(appointment); // a chequear
 
 
   return "created appointment";
