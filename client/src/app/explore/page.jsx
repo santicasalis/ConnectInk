@@ -13,13 +13,12 @@ import "swiper/css/pagination";
 import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
 
-import '../explore/page.css'
+import "../explore/page.css";
 
 export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
-  
 
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
 
   const styles = useSelector((state) => state.styles.names);
   const [filters, setFilters] = useState({ location: "", tattoStyle: [] });
@@ -120,5 +119,3 @@ export default function ExplorePage() {
     </div>
   );
 }
-
-

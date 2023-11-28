@@ -9,6 +9,7 @@ const getTattooArtistFiltered = async                      (location, styles) =>
           location: {
             [Op.iLike]: `%${location}%`,
           },
+          disabled: false
         },
         include: [
           {
@@ -46,15 +47,16 @@ const getTattooArtistFiltered = async                      (location, styles) =>
       }))
       return tattooArtistsFoundCleaner;
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      throw Error(error.message)
     }
   } else {
     try {
       const tattooArtistsFound = await TattooArtist.findAll({
         where: {
           location: {
-            [Op.iLike]: `%${location}%`,
+            [Op.iLike]: `%${location}%`, 
           },
+          disabled: false
         },
         include: [
           { model: TattooStyle, attributes: ["name"] },
@@ -86,7 +88,7 @@ const getTattooArtistFiltered = async                      (location, styles) =>
 
       return tattooArtistsFoundCleaner;
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      throw Error(error.message)
     }
   }
 };

@@ -8,7 +8,7 @@ const PostsDashboard = () => {
   const user = useSelector((state) => state.user)
   return (
     <div className='flex flex-col items-center w-full '>
-      {user.publications.map((publication) => {
+      {user?.publications.map((publication) => {
         return <PostDashboard publication={publication} image={user.image} name={user.name} lastName={user.lastName} />
       })}
     </div>
