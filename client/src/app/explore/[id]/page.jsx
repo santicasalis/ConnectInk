@@ -1,42 +1,38 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 
 import React from "react";
 import Nav from "@/components/nav/Nav";
 import axios from "axios";
 
-export default function Page({params}) {
-
+export default function Page({ params }) {
   const [artist, setArtist] = useState(null);
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-   const URL_BASE = "http://localhost:3001";
+  const URL_BASE = "http://localhost:3001";
 
-   useEffect(() => {
-     if (params.id) {
-       setLoading(true);
-       axios
-         .get(`${URL_BASE}/tattooArtists/${params.id}`)
-         .then((response) => {
-           setArtist(response.data);
-           setLoading(false);
-         })
-         .catch((error) => {
-           console.error("Error al obtener los datos del tatuador", error);
-           setError(error);
-           setLoading(false);
-         });
-     }
-   }, [params.id]);
+  useEffect(() => {
+    if (params.id) {
+      setLoading(true);
+      axios
+        .get(`${URL_BASE}/tattooArtists/${params.id}`)
+        .then((response) => {
+          setArtist(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los datos del tatuador", error);
+          setError(error);
+          setLoading(false);
+        });
+    }
+  }, [params.id]);
 
-   if (loading) return <div>Cargando...</div>;
-   if (error) return <div>Error al cargar los datos</div>;
-   if (!artist) return <div>No se encontró el tatuador</div>;
-
-   
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>Error al cargar los datos</div>;
+  if (!artist) return <div>No se encontró el tatuador</div>;
 
   return (
     <div className="bg-secondary-100 shadow-lg">
@@ -47,7 +43,7 @@ export default function Page({params}) {
       </div>
 
       <div className="flex flex-wrap md:flex-nowrap shadow-lg">
-        <div className="w-full md:w-1/3 p-4 shadow-lg">
+        <div className=" md:w-1/3 p-4 shadow-lg">
           <div className="p-4 rounded border-primary border-[2px] shadow-lg">
             <img
               src={artist.image}
@@ -57,8 +53,16 @@ export default function Page({params}) {
             <h2 className="text-center text-2xl font-bold mt-4">
               {artist.name}
             </h2>
-            <h2 className="text-2xl font-bold mb-4">Tienda</h2>
-            <p className="mb-4">{artist.shopName}</p>
+
+            <div className="flex flex-wrap justify-around">
+              
+                <h2 className="text-2xl font-bold">
+                  Tienda: <p>{artist.shopName}</p>
+                </h2>
+              
+
+              <button>Reservar</button>
+            </div>
           </div>
         </div>
 
@@ -133,4 +137,4 @@ export default function Page({params}) {
       </div>
     </div>
   );
-};
+}
