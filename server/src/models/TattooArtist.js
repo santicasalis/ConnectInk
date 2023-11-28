@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       location: {
         type: DataTypes.STRING,
@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
       },
       shopName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       image: {
         type: DataTypes.STRING,
