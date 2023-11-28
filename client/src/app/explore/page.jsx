@@ -120,7 +120,7 @@ export default function ExplorePage() {
                   currentPage={currentPage} 
                   onPageChange={onPageChange}
                 />
-                {filtered?.map((filter) => (
+                {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full">
                     <Card
                       key={filter.id}
