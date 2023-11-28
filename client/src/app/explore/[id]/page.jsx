@@ -1,19 +1,14 @@
 "use client";
 
-// import { useRouter } from "next/router";
+
 import { useEffect, useState } from "react";
-// import { getArtistById } from "@/app/redux/features/artists/artistActions";
+
 import React from "react";
 import Nav from "@/components/nav/Nav";
 import axios from "axios";
 
 export default function Page({params}) {
 
-
-console.log("no se cargaaaaaaaaaaaaaaaa")
-
-  // const router = useRouter();
-  // const { id } = router.query;
   const [artist, setArtist] = useState(null);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
@@ -68,27 +63,26 @@ console.log("no se cargaaaaaaaaaaaaaaaa")
         </div>
 
         <div className="w-full md:w-2/3 p-4 shadow-lg">
-          {/* <div className="p-4 rounded border-primary border-[2px] shadow-lg">
+          <div className="p-4 rounded border-primary border-[2px] shadow-lg">
             <h3 className="text-xl font-bold mb-2">Tattoo Styles</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {tatuador.tattooStyles.map((style, index) => (
+              {artist.tattooStyles.map((style, index) => (
                 <p key={index} className="flex items-center">
                   {style}
                 </p>
               ))}
             </div>
-          </div> */}
+          </div>
 
           <div className="flex flex-wrap justify-around  p-4 rounded mt-4 border-primary border-[2px] shadow-lg">
-            {/* <div className=" p-4 border-primary border-[2px]">
+            <div className=" p-4 border-primary border-[2px]">
               <h3 className="text-xl font-bold mb-2  ">Contacto</h3>
-              <p>FullName: {tatuador.nombre}</p>
-              <p>Email: {tatuador.email}</p>
-              <p>Mobile: {tatuador.numero}</p>
-              <p>Address: {tatuador.adress}</p>
-              <p>City: {tatuador.city}</p>
-              <p>Post Code: {tatuador.postCode}</p>
-            </div> */}
+              <p>FullName: {artist.name}</p>
+              <p>Email: {artist.email}</p>
+              <p>Mobile: {artist.phone}</p>
+              <p>Address: {artist.address}</p>
+              <p>City: {artist.location}</p>
+            </div>
 
             <div className="border-primary border-[2px] p-4">
               <p>Instagram</p>
@@ -115,6 +109,25 @@ console.log("no se cargaaaaaaaaaaaaaaaa")
 
           <div className="border-primary border-[2px] p-4">
             <h3>PUBLICACIONES</h3>
+            <div className="flex flex-wrap justify-around gap-4">
+              {artist.publications.map((publication, index) => (
+                <div
+                  key={index}
+                  className="card bg-white rounded-lg shadow-lg p-4 w-full md:w-1/2 lg:w-1/3"
+                >
+                  <img
+                    src={publication.image}
+                    alt={`Publicación de ${artist.name}`}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  <div className="p-4">
+                    <p className="text-md font-semibold">
+                      {publication.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
