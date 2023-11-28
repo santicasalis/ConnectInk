@@ -8,7 +8,7 @@ const loginHandler = async (req, res) => {
       res.status(400).send("Missing data");
     } else {
       const user = await login(email, password);
-      if (!user) return res.status(404).send("Usuario no registrado");
+      if (!user) return res.status(404).send("Usuario y contraseña incorrecta");
 
       const hashedPassword = crypto
         .createHash("sha256")
@@ -29,7 +29,7 @@ const loginHandler = async (req, res) => {
 
         return res.status(200).json({ access: true, user: userInfo });
       } else {
-        res.status(403).send("Contraseña incorrecta");
+        res.status(403).send("Usuario y contraseña incorrecta");
       }
     }
   } catch (error) {
