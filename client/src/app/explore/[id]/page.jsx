@@ -1,59 +1,74 @@
 "use client";
 
-import React, {useState} from "react";
+// import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+// import { getArtistById } from "@/app/redux/features/artists/artistActions";
+import React from "react";
+import Nav from "@/components/nav/Nav";
+import axios from "axios";
 
-//HOOKS DEL CALENDARIO
-import Datetime from "react-datetime";
-import "react-datetime/css/react-datetime.css";
-import moment from "moment";
+export default function Page({params}) {
 
 
-const TatuadorDetail = () => {
+console.log("no se cargaaaaaaaaaaaaaaaa")
 
- 
+  // const router = useRouter();
+  // const { id } = router.query;
+  const [artist, setArtist] = useState(null);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState(null);
 
-  // Simulamos datos de un tatuador
-  const tatuador = {
-    id: "1",
-    nombre: "Juan González",
-    imagen:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0PsOfnvaXEPcVlx14EvW-sVzI9Zs6TEVU-4Z5g0uJynqC49S9H2gko1aT3sG3fx_XOWQ&usqp=CAU",
-    about:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut justo id odio gravida dapibus nec non lacus.",
-    tattooStyles: ["Realismo", "Geométrico", "Minimalista"],
-    numero: "+543814556565",
-    email: "juanGonzales@gmail.com",
-    adress: "9 de julio",
-    city: "Buenos Aires",
-    postCode: "1212",
-  };
+   const URL_BASE = "http://localhost:3001";
 
-  
+   useEffect(() => {
+     if (params.id) {
+       setLoading(true);
+       axios
+         .get(`${URL_BASE}/tattooArtists/${params.id}`)
+         .then((response) => {
+           setArtist(response.data);
+           setLoading(false);
+         })
+         .catch((error) => {
+           console.error("Error al obtener los datos del tatuador", error);
+           setError(error);
+           setLoading(false);
+         });
+     }
+   }, [params.id]);
+
+   if (loading) return <div>Cargando...</div>;
+   if (error) return <div>Error al cargar los datos</div>;
+   if (!artist) return <div>No se encontró el tatuador</div>;
+
+   
 
   return (
-    <div className="bg-secondary-100 p-8 shadow-lg">
-      <div className="bg-black text-white text-center text-6xl font-bold p-10 h-40 shadow-lg">
-        DETAIL
+    <div className="bg-secondary-100 shadow-lg">
+      <Nav />
+
+      <div className="bg-black text-white text-center text-6xl font-bold p-10 h-29 shadow-lg">
+        Artista
       </div>
 
       <div className="flex flex-wrap md:flex-nowrap shadow-lg">
         <div className="w-full md:w-1/3 p-4 shadow-lg">
           <div className="p-4 rounded border-primary border-[2px] shadow-lg">
             <img
-              src={tatuador.imagen}
-              alt={tatuador.nombre}
+              src={artist.image}
+              alt={artist.name}
               className="w-48 h-48 object-cover rounded-full mx-auto"
             />
             <h2 className="text-center text-2xl font-bold mt-4">
-              {tatuador.nombre}
+              {artist.name}
             </h2>
-            <h2 className="text-2xl font-bold mb-4">Title</h2>
-            <p className="mb-4">{tatuador.about}</p>
+            <h2 className="text-2xl font-bold mb-4">Tienda</h2>
+            <p className="mb-4">{artist.shopName}</p>
           </div>
         </div>
 
         <div className="w-full md:w-2/3 p-4 shadow-lg">
-          <div className="p-4 rounded border-primary border-[2px] shadow-lg">
+          {/* <div className="p-4 rounded border-primary border-[2px] shadow-lg">
             <h3 className="text-xl font-bold mb-2">Tattoo Styles</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {tatuador.tattooStyles.map((style, index) => (
@@ -62,10 +77,10 @@ const TatuadorDetail = () => {
                 </p>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-wrap justify-around  p-4 rounded mt-4 border-primary border-[2px] shadow-lg">
-            <div className=" p-4 border-primary border-[2px]">
+            {/* <div className=" p-4 border-primary border-[2px]">
               <h3 className="text-xl font-bold mb-2  ">Contacto</h3>
               <p>FullName: {tatuador.nombre}</p>
               <p>Email: {tatuador.email}</p>
@@ -73,7 +88,7 @@ const TatuadorDetail = () => {
               <p>Address: {tatuador.adress}</p>
               <p>City: {tatuador.city}</p>
               <p>Post Code: {tatuador.postCode}</p>
-            </div>
+            </div> */}
 
             <div className="border-primary border-[2px] p-4">
               <p>Instagram</p>
@@ -98,14 +113,11 @@ const TatuadorDetail = () => {
             </div>
           </div>
 
-          
+          <div className="border-primary border-[2px] p-4">
+            <h3>PUBLICACIONES</h3>
+          </div>
         </div>
       </div>
     </div>
   );
-
-
 };
-
-export default TatuadorDetail;
-

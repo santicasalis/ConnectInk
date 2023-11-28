@@ -15,4 +15,3 @@ export const getUserId = (email) => async (dispatch) =>{
 export const logOut = () => (dispatch) => {
     dispatch(cleanUser())
 }
-

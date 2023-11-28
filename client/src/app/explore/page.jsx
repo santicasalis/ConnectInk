@@ -101,6 +101,7 @@ export default function ExplorePage() {
                 {filtered?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full">
                     <Card
+                      id={filter.id}
                       key={filter.id}
                       name={filter.name}
                       lastName={filter.lastName}

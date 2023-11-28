@@ -18,6 +18,7 @@ const bookAppointment = () => {
     turno5: "21hs",
   };
 
+
   const [horarioNoDisponible, setHorarioNoDisponible] = useState(null);
 
   const actualizarFecha = (fecha) => {
@@ -38,7 +39,7 @@ const bookAppointment = () => {
     setHorarioSeleccionado(horario);
   };
 
-  /* HASTA ACA SE TIENE QUE BORRAR CUANDO YA TENGAMOS LA CONEXION CON LA DB */
+
 
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
   const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);

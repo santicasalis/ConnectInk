@@ -17,3 +17,9 @@ export const filterAllArtists = (filter) => async (dispatch) =>{
 
 }
 
+// export const getArtistById = (id) => async (dispatch) => {
+
+//     const artistFound = (await axios.get(`${URL_BASE}/${id}`)).data
+//     dispatch(artistFound)
+
+// }
