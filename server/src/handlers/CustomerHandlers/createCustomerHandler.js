@@ -1,6 +1,6 @@
-const createCustomer = require('../../controllers/customerControllers/postCustomerController')
+const createCustomer = require('../../controllers/customerControllers/createCustomerController')
 
-const postCustomerHandler = async (req, res) => {
+const createCustomerHandler = async (req, res) => {
     const { name, lastName, email, password, phone } = req.body
 
     try {
@@ -17,4 +17,4 @@ const postCustomerHandler = async (req, res) => {
     }
 }
 
-module.exports = postCustomerHandler
+module.exports = createCustomerHandler
