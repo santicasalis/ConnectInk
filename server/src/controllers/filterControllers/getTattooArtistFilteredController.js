@@ -2,17 +2,17 @@ const { TattooArtist, TattooStyle, Publication } = require("../../db");
 const { Op } = require("sequelize");
 
 const getTattooArtistFiltered = async (location, name, styles) => {
-
   if (styles.length > 0) {
     try {
-      const tattooArtistsFound = await                    TattooArtist.findAll({
+      const tattooArtistsFound = await TattooArtist.findAll({
         where: {
           location: {
             [Op.iLike]: `%${location}%`,
           },
-          name: {
-            [Op.iLike]: `%${name}%`,
-          },
+          [Op.or]: [
+            { fullName: { [Op.iLike]: `%${name}%` } },
+            { shopName: { [Op.iLike]: `%${name}%` } },
+          ],
           disabled: false,
         },
         include: [
@@ -30,10 +30,11 @@ const getTattooArtistFiltered = async (location, name, styles) => {
 
       const tattooArtistsFoundCleaner = tattooArtistsFound.map((artist) => ({
         id: artist.id,
-        name: artist.name,
-        lastName: artist.lastName,
+        fullName: artist.fullName,
         email: artist.email,
         phone: artist.phone,
+        instagram: artist.instagram,
+        description: artist.description,
         location: artist.location,
         address: artist.address,
         shopName: artist.shopName,
@@ -60,9 +61,10 @@ const getTattooArtistFiltered = async (location, name, styles) => {
           location: {
             [Op.iLike]: `%${location}%`,
           },
-          name: {
-            [Op.iLike]: `%${name}%`,
-          },
+          [Op.or]: [
+            { fullName: { [Op.iLike]: `%${name}%` } },
+            { shopName: { [Op.iLike]: `%${name}%` } },
+          ],
           disabled: false,
         },
         include: [
@@ -73,10 +75,11 @@ const getTattooArtistFiltered = async (location, name, styles) => {
 
       const tattooArtistsFoundCleaner = tattooArtistsFound.map((artist) => ({
         id: artist.id,
-        name: artist.name,
-        lastName: artist.lastName,
+        fullName: artist.fullName,
         email: artist.email,
         phone: artist.phone,
+        instagram: artist.instagram,
+        description: artist.description,
         location: artist.location,
         address: artist.address,
         shopName: artist.shopName,

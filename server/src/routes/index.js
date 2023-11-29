@@ -4,26 +4,27 @@ const router = Router();
 const tattooArtistsRouter = require("./tattooArtistRouter");
 const customerRouter = require("./customerRouter");
 const publicationRouter = require("./publicationRouter");
-const tattooRouter = require("./tattooRouter");
+const PriceRangeRouter = require("./priceRangeRouter");
 const tattoStyleRouter = require("./tattooStyleRouter");
 const filterRouter = require("./filterRouter");
-
-// const loginRouter = require("./loginRouter");
-
-
+const timeAvailabilityRouter = require("./timeAvailabilityRouter");
+const appointmentRouter = require("./appointmentRouter");
+const loginRouter = require("./loginRouter");
 const nodemailerRouter = require("./nodemailerRouter");
-
+const adminRouter = require("./adminRouter")
+const reviewRouter = require("./reviewRouter")
 
 router.use("/tattooStyles", tattoStyleRouter);
 router.use("/tattooArtists", tattooArtistsRouter);
-router.use("/tattoos", tattooRouter);
+router.use("/priceRange", PriceRangeRouter);
 router.use("/publications", publicationRouter);
 router.use("/customers", customerRouter);
 router.use("/filters", filterRouter);
-
-// router.use("/auth", loginRouter);
-
+router.use("/timeAvailabilities", timeAvailabilityRouter);
+router.use("/appointments", appointmentRouter);
+router.use("/auth", loginRouter);
 router.use("/nodemailer", nodemailerRouter);
-
+router.use("/admins", adminRouter )
+router.use("/reviews", reviewRouter)
 
 module.exports = router;

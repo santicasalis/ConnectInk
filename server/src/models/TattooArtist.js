@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
       },
       tokenId: {
         type: DataTypes.STRING,
+        allowNull: true,
       },
       fullName: {
         type: DataTypes.STRING,
@@ -58,7 +59,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         isUrl: true,
         defaultValue:
-          "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
+        "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
       },
       disabled: {
         type: DataTypes.BOOLEAN,

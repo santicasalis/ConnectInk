@@ -2,6 +2,7 @@ const { TattooArtist, Publication } = require("../../db");
 
 const createPublication = async (artist_id, description, image) => {
   const publication = await Publication.create({
+    title,
     description,
     image,
   });

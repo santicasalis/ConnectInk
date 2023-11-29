@@ -1,10 +1,11 @@
 const createPublication = require("../../controllers/publicationControllers/createPublication");
 
 const createPublicationHandler = async (req, res) => {
-  const { artist_id, description, image } = req.body;
+  const { artist_id, title, description, image } = req.body;
   try {
     const newPublication = await createPublication(
       artist_id,
+      title,
       description,
       image
     );

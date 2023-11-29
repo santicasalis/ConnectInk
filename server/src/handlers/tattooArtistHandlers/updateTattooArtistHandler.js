@@ -3,11 +3,12 @@ const updateTattooArtist = require("../../controllers/tattooArtistControllers/up
 const updateTattooArtistHandler = async (req, res) => {
   const { id } = req.params;
   const {
-    name,
-    lastName,
+    fullName,
     email,
     password,
     phone,
+    instagram,
+    description,
     address,
     location,
     shopName,
@@ -16,11 +17,12 @@ const updateTattooArtistHandler = async (req, res) => {
   try {
     const updatedTattooArtist = await updateTattooArtist(
       id,
-      name,
-      lastName,
+      fullName,
       email,
       password,
       phone,
+      instagram,
+      description,
       address,
       location,
       shopName,
