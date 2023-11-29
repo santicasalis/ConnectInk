@@ -3,9 +3,9 @@ const getAdminById = require("../../controllers/adminControllers/getAdminById");
 const getAdminByIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
-    const AdminById = await getAdminById(id);
-    if (AdminById) {
-      res.status(200).json(AdminById);
+    const adminById = await getAdminById(id);
+    if (adminById) {
+      res.status(200).json(adminById);
     } else {
       res.status(404).json({ message: "Admin not found" });
     }
