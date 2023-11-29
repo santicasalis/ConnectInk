@@ -53,6 +53,28 @@ export default function FilterSideBar() {
   //   dispatch(OrderAllArtists(artistOrder));
   // }, [artistOrder]);
 
+
+  useEffect(() => {
+    const orderAndFilter = async () => {
+        const filters = {
+            location: filters.location,
+            tattooStyle: styleSelected,
+            artistName: filters.artistName,
+        };
+
+        const sortCriteria = {
+            tag: artistOrder,
+        };
+
+        dispatch(OrderAndFilterArtists(filters, sortCriteria));
+    };
+
+    orderAndFilter();
+}, [artistOrder, filters.location, styleSelected, filters.artistName]);
+
+
+
+
   // const handleSortChange = (event) => {
   //   const order = event.target.value;
   //   setArtistOrder(order);
@@ -96,25 +118,6 @@ export default function FilterSideBar() {
               onChange={handleChange}
             />
           </div>
-
-          {/* <div className="flex flex-col items-center justify-center mb-8">
-            <label
-              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
-              htmlFor="sort"
-            >
-              Ordenar:
-            </label>
-            <select
-              className="mb-8 mx-auto text-black"
-              id="sort"
-              name="sort"
-              onChange={handleSortChange}
-            >
-              <option value="">Sin orden</option>
-              <option value="asc">A-Z</option>
-              <option value="desc">Z-A</option>
-            </select>
-          </div> */}
 
           <div className="flex flex-col items-center justify-center mb-8">
             <label
