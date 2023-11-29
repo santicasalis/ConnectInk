@@ -3,11 +3,11 @@ import { SlOptions } from "react-icons/sl";
 import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
-import { RiHeart3Line, RiHeart3Fill, RiEditFill, RiDeleteBin6Fill, RiMoreFill, RiMessage3Line, RiEyeLine  } from "react-icons/ri";
+import { RiMoreFill,  RiEyeLine  } from "react-icons/ri";
 import { MdBlock } from "react-icons/md";
 import Link from "next/link";
 
-export default function AdminCard({name,lastName,location,shopName,image}){
+export default function AdminCard({fullName,location,shopName,image}){
     
     const imageLoader = ({ src }) => {
         return src;
@@ -24,10 +24,10 @@ export default function AdminCard({name,lastName,location,shopName,image}){
               loader={imageLoader}
               width={40}
               height={40}
-              alt={`${name} ${lastName} profile pic`}
+              alt={`${fullName} profile pic`}
             />
             <h1 className="font-bold col-span-2">
-              {name} {lastName}
+              {fullName}
             </h1>
          
            <div className='p-2 flex items-center justify-center ml-auto'>
