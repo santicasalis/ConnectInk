@@ -99,7 +99,7 @@ const Login = () => {
         Registrate
       </Link>
       <div className="bg-black absolute opacity-75 w-full h-full ">
-        <img className="object-cover" src=" /dsgnlogin4.png " alt="" />
+        <img className="object-cover" src="  " alt="" />
       </div>
 
       <h1 className="text-3xl text-center font-bold tracking-[3px] text-white mb-8">
@@ -146,7 +146,7 @@ const Login = () => {
           </button>
         </div>
       </form>
-      <div className="flex flex-col gap-3 items-center">
+      {/* <div className="flex flex-col gap-3 items-center">
         <Link
           href="/auth/forgot-password"
           className="text-gray-200 hover:text-primary transition-colors"
@@ -162,7 +162,7 @@ const Login = () => {
             Registrate
           </Link>
         </span>
-      </div>
+      </div> */}
       <div></div>
     </div>
   );
