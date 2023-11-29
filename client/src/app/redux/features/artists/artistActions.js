@@ -17,6 +17,7 @@ export const filterAllArtists = (filter) => async (dispatch) =>{
 
 }
 
+
 export const OrderAllArtists = (tag)=>(dispatch)=> {
     dispatch(orderArtist(tag))
 }
@@ -28,3 +29,4 @@ export const OrderAndFilterArtists = (filters, sortCriteria) => (dispatch) => {
 // export const OrderAllArtistsRating = (tag)=>(dispatch)=> {
 //     dispatch(orderArtistRating(tag))
 // }
+

@@ -2,9 +2,10 @@ const { TattooArtist, TattooStyle, Publication } = require("../../db");
 const { Op } = require("sequelize");
 
 const getTattooArtistFiltered = async (location, name, styles) => {
+
   if (styles.length > 0) {
     try {
-      const tattooArtistsFound = await TattooArtist.findAll({
+      const tattooArtistsFound = await                    TattooArtist.findAll({
         where: {
           location: {
             [Op.iLike]: `%${location}%`,
