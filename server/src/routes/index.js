@@ -11,6 +11,7 @@ const timeAvailabilityRouter = require("./timeAvailabilityRouter");
 const appointmentRouter = require("./appointmentRouter");
 const loginRouter = require("./loginRouter");
 //const nodemailerRouter = require("./nodemailerRouter");
+const adminRouter = require("./adminRouter")
 
 router.use("/tattooStyles", tattoStyleRouter);
 router.use("/tattooArtists", tattooArtistsRouter);
@@ -22,5 +23,6 @@ router.use("/timeAvailabilities", timeAvailabilityRouter);
 router.use("/appointments", appointmentRouter);
 router.use("/auth", loginRouter);
 //router.use("/nodemailer", nodemailerRouter);
+router.use("/admins", adminRouter )
 
 module.exports = router;
