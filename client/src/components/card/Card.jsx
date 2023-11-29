@@ -10,6 +10,7 @@ import { CiShop } from "react-icons/ci";
 
 
 export default function Card({
+  id,
   name,
   lastName,
   location,
@@ -45,6 +46,8 @@ export default function Card({
    });
  };
 
+ 
+
 
   return (
     <div className="m-5 p-4 bg-secondary-100 rounded shadow-lg text-white transition-transform transform">
@@ -59,9 +62,11 @@ export default function Card({
               height={40}
               alt={`${name} ${lastName} profile pic`}
             />
-            <h1 className="font-bold col-span-2">
-              {name} {lastName}
-            </h1>
+            
+              <h1 className="font-bold col-span-2">
+                {name} {lastName}
+              </h1>
+            
           </div>
           <p className="text-right text-2xl col-span-2">☆☆☆☆☆</p>
         </div>
@@ -73,11 +78,11 @@ export default function Card({
         </button>
         <div className="flex justify-center items-center gap-x-8">
           {tattoos && tattoos.length > 0 ? (
-            [...tattoos, ...tattoos, ...tattoos] 
-              .slice(currentStartIndex, currentStartIndex + 3) 
+            [...tattoos, ...tattoos, ...tattoos]
+              .slice(currentStartIndex, currentStartIndex + 3)
               .map((tattoo, index) => (
                 <Image
-                  key={index} 
+                  key={index}
                   loader={imageLoader}
                   src={tattoo.image}
                   width={200}

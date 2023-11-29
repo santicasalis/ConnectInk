@@ -2,7 +2,6 @@ const getTattooArtistFiltered = require("../../controllers/filterControllers/get
 
 const getTattooArtistFilteredHandler = async (req, res) => {
   const { location, name, tattooStyle } = req.body;
-
   try {
     const tattooArtistsFound = await getTattooArtistFiltered(
       location,

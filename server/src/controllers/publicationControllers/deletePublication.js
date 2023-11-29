@@ -1,9 +1,18 @@
 const { Publication } = require("../../db");
 
 const deletePublication = async (id) => {
-  await Publication.destroy({ where: { id } });
-
-  return "deleted with success";
+  const publicationFound = await Publication.findByPk(id);
+  if (publicationFound) {
+    await Publication.update(
+      {
+        disabled: true,
+      },
+      { where: { id: id } }
+    );
+    return "Publication deleted successfully";
+  } else {
+    return "Not found";
+  }
 };
 
 module.exports = deletePublication;
