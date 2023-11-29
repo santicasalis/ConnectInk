@@ -45,8 +45,7 @@ const Login = () => {
       const token = credential.accessToken;
       const user = result.user.metadata.createdAt;
       const userLastLog = result.user.metadata.lastLoginAt;
-      console.log(user);
-      console.log(userLastLog);
+
       if (Number(user) + 1 == userLastLog || user == userLastLog) {
         router.replace("/auth/register");
       } else {
@@ -68,8 +67,6 @@ const Login = () => {
       throw error;
     }
   };
-
-  //  INICO DE SESION
 
   const emailLogIn = async () => {
     try {

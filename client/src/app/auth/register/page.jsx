@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
-
-import React, { useEffect } from "react";
-
-import { uploadImage } from "../../utils/uploadImage";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { getAllStyles } from "@/app/redux/features/styles/stylesActions";
-import { auth } from "../../../firebase";
+
 import CustomerRegister from "@/components/customerRegister/CustomerRegister";
 import TattoArtistRegister from "@/components/tattooArtistRegister/TattoArtistRegister";
+
+const { onAuthStateChanged } = require("firebase/auth");
+import { auth } from "../../../firebase";
 
 const RegistrationForm = () => {
   const [client, setClient] = useState(null);
@@ -20,9 +20,6 @@ const RegistrationForm = () => {
     email: "",
     phoneNumber: "",
   });
-  const urlBase = "localhost:3001";
-
-  const { onAuthStateChanged } = require("firebase/auth");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

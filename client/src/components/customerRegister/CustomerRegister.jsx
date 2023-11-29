@@ -8,39 +8,14 @@ import {
   FieldArray,
   useField,
 } from "formik";
+
 import { auth } from "../../firebase";
 
-import * as Yup from "yup";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
+import { emailSignUp } from "../../app/utils/emailSignUp";
+import axios from "axios";
 
 const CustomerRegister = ({ userInformation }) => {
-  const validationSchemaClient = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Required").max(30),
-    password: Yup.string()
-      .required("Required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
-        "Must contain 6-15 characters, one uppercase, one lowercase, one number and one special character"
-      )
-      .max(15),
-    passwordConfirm: Yup.string()
-      .required("Required")
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .max(30),
-    fullName: Yup.string().required("Required").max(30),
-
-    mobile: Yup.string()
-      .matches(/^[0-9]+$/, "Only numbers are allowed")
-      .nullable()
-      .max(30),
-
-    image: Yup.mixed().nullable(),
-
-    privacyPolicy: Yup.boolean().oneOf(
-      ['"on"'],
-      "You must accept the privacy policy"
-    ),
-  });
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
     return (
@@ -55,26 +30,7 @@ const CustomerRegister = ({ userInformation }) => {
       </div>
     );
   };
-  const emailSignUp = async (email, password) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
 
-      const user = userCredential.user;
-      console.log(user);
-      return user.uid;
-    } catch (createUserError) {
-      const errorCode = createUserError.code;
-      const errorMessage = createUserError.message;
-
-      console.error(
-        `Error al crear un nuevo usuario: ${errorCode} - ${errorMessage}`
-      );
-    }
-  };
   return (
     <div>
       <Formik
@@ -100,10 +56,7 @@ const CustomerRegister = ({ userInformation }) => {
               } else {
                 values.image = userInformation?.image;
               }
-              //const response = await axios.post(
-              //`${urlBase}/customers`,
-              //</div> values
-              //);
+              const response = await axios.post(`${urlBase}/customers`);
             } catch (error) {
               console.error("Error during form submission", error);
             }
@@ -115,39 +68,6 @@ const CustomerRegister = ({ userInformation }) => {
       >
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
-            <Field
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="email"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-            <Field
-              type="password"
-              name="password"
-              placeholder="Password (6-15 characters, include numbers and symbols)"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-            <Field
-              type="password"
-              name="passwordConfirm"
-              placeholder="Confirm Password"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="passwordConfirm"
-              component="div"
-              className="text-red-500 text-sm"
-            />
             <Field
               type="text"
               name="fullName"
@@ -161,9 +81,20 @@ const CustomerRegister = ({ userInformation }) => {
             />
 
             <Field
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="p-2 mb-3 shadow-md"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+            <Field
               type="text"
               name="mobile"
-              placeholder="Mobile Number"
+              placeholder="Teléfono"
               className="p-2 mb-3 shadow-md"
               pattern="\d*"
             />
@@ -173,6 +104,29 @@ const CustomerRegister = ({ userInformation }) => {
               component="div"
               className="text-red-500 text-sm"
             />
+            <Field
+              type="password"
+              name="password"
+              placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
+              className="p-2 mb-3 shadow-md"
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+            <Field
+              type="password"
+              name="passwordConfirm"
+              placeholder="Confirmar contraseña"
+              className="p-2 mb-3 shadow-md"
+            />
+            <ErrorMessage
+              name="passwordConfirm"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+
             <div className="mb-4">
               <label htmlFor="image" className="font-bold">
                 Profile Image

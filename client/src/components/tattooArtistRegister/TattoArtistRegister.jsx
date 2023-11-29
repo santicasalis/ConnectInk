@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import * as Yup from "yup";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getAllStyles } from "@/app/redux/features/styles/stylesActions";
+
+import { auth } from "../../firebase";
+import { uploadImage } from "@/app/utils/uploadImage";
+import { validationSchemaArtist } from "../../components/tattooArtistRegister/validationSchemaArtist";
+import { emailSignUp } from "../../app/utils/emailSignUp";
 
 const TattoArtistRegister = ({ userInformation }) => {
   const styles = useSelector((state) => state.styles.names);
@@ -14,69 +18,40 @@ const TattoArtistRegister = ({ userInformation }) => {
     dispatch(getAllStyles());
   }, []);
 
-  const validationSchemaArtist = Yup.object().shape({
-    shopName: Yup.string().required("Required").max(30),
-    address: Yup.string().required("Required").max(30),
-    city: Yup.string().required("Required").max(30),
-    postcode: Yup.string().required("Required").max(30),
-    // instagram: Yup.string().max(30),
-    tattooStyles: Yup.array()
-      .of(Yup.string())
-      .required("At least one style is required"),
-    // // smallPrice: Yup.number().required("Required"),
-    // // mediumPrice: Yup.number().required("Required"),
-    // largePrice: Yup.number().required("Required"),
-    bio: Yup.string().max(500, "Max 500 characters"),
-    image: Yup.mixed().required("A profile image is required"),
-
-    password: Yup.string()
-      .required("Required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
-        "Must contain 6-15 characters, one uppercase, one lowercase, one number and one special character"
-      )
-      .max(15),
-    passwordConfirm: Yup.string()
-      .required("Required")
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .max(15),
-  });
-
   return (
     <div>
       <Formik
         initialValues={{
-          shopName: "",
-          name: "",
-          address: "",
-          city: "",
+          fullName: "",
           email: userInformation?.email || "",
-          postcode: "",
-          instagram: "",
-          tattooStyles: [],
-          smallPrice: "",
-          mediumPrice: "",
-          largePrice: "",
-          bio: "",
+          address: "",
+          location: "",
+          shopName: "",
           image: null,
           password: "",
           passwordConfirm: "",
+          tattooStyles: [],
           tokenId: userInformation?.tokenId || "",
         }}
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
           if (userInformation) {
             try {
-              if (typeof values.profileImage === "object") {
+              if (values.image && typeof values.image === "object") {
                 const imageUrl = await uploadImage(values.profileImage);
                 values.profileImage = imageUrl;
+              } else {
+                values.image = userInformation?.image;
               }
-              // const response = await axios.post(`${urlBase}/tattooArtists`, info);
+              const response = await axios.post(
+                `${urlBase}/tattooArtists`,
+                info
+              );
             } catch (error) {
               console.error("Error during form submission", error);
             }
           } else {
-            const tokenId = emailLogIn(values.email, values.password);
+            const tokenId = emailSignUp(values.email, values.password);
           }
           setSubmitting(false);
         }}
@@ -84,6 +59,17 @@ const TattoArtistRegister = ({ userInformation }) => {
         {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
             <div className="info-artist mb-4">
+              <Field
+                type="email"
+                name="email"
+                placeholder="Email"
+                className="p-2 mb-3 shadow-md"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm"
+              />
               <Field
                 type="text"
                 name="shopName"
@@ -99,7 +85,7 @@ const TattoArtistRegister = ({ userInformation }) => {
               <Field
                 type="text"
                 name="address"
-                placeholder="Address"
+                placeholder="Dirección"
                 className="p-2 mb-3 shadow-md block w-full"
               />
               <ErrorMessage
@@ -110,36 +96,12 @@ const TattoArtistRegister = ({ userInformation }) => {
 
               <Field
                 type="text"
-                name="city"
-                placeholder="City"
+                name="location"
+                placeholder="Ubicación"
                 className="p-2 mb-3 shadow-md block w-full"
               />
               <ErrorMessage
-                name="city"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-
-              <Field
-                type="text"
-                name="postcode"
-                placeholder="Postcode"
-                className="p-2 mb-3 shadow-md block w-full"
-              />
-              <ErrorMessage
-                name="postcode"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-
-              <Field
-                type="text"
-                name="instagram"
-                placeholder="Instagram"
-                className="p-2 mb-3 shadow-md block w-full"
-              />
-              <ErrorMessage
-                name="instagram"
+                name="location"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -177,31 +139,9 @@ const TattoArtistRegister = ({ userInformation }) => {
               />
             </div>
 
-            <div className="artist-services mb-4">
-              <h3 className="text-lg mb-3 font-bold">Price</h3>
-              <Field
-                type="number"
-                name="smallPrice"
-                placeholder="Small Tattoo Price"
-                className="p-2 mb-3 shadow-md block w-full"
-              />
-              <Field
-                type="number"
-                name="mediumPrice"
-                placeholder="Medium Tattoo Price"
-                className="p-2 mb-3 shadow-md block w-full"
-              />
-              <Field
-                type="number"
-                name="largePrice"
-                placeholder="Large Tattoo Price"
-                className="p-2 mb-3 shadow-md block w-full"
-              />
-            </div>
-
             <div className="mb-4">
               <label htmlFor="image" className="font-bold">
-                Profile Image
+                Imagen de perfil
               </label>
               <input
                 type="file"
@@ -221,19 +161,6 @@ const TattoArtistRegister = ({ userInformation }) => {
                 </button>
               )}
             </div>
-
-            <Field
-              as="textarea"
-              name="bio"
-              placeholder="Bio (max 500 characters)"
-              className="p-2 mb-3 shadow-md block w-full"
-              maxLength="500"
-            />
-            <ErrorMessage
-              name="bio"
-              component="div"
-              className="text-red-500 text-sm"
-            />
 
             <Field
               type="password"
