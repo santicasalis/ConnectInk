@@ -15,6 +15,8 @@ const getTattooArtists = async () => {
     lastName: tattooArtist.lastName,
     email: tattooArtist.email,
     phone: tattooArtist.phone,
+    instagram: tattooArtist.instagram,
+    description: tattooArtist.description,
     location: tattooArtist.location,
     address: tattooArtist.address,
     shopName: tattooArtist.shopName,

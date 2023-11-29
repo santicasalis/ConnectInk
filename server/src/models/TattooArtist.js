@@ -33,6 +33,15 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      instagram:{
+        type: DataTypes.STRING,
+        isUrl: true,
+        allowNull: true
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
       address: {
         type: DataTypes.STRING,
         allowNull: false,

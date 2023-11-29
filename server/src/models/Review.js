@@ -10,7 +10,12 @@ module.exports = (sequelize) => {
     },
     comment: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+    },
+    image: {
+      type: DataTypes.STRING,
+      isUrl: true,
+      allowNull: true
     },
     rating: {
       type: DataTypes.INTEGER,
