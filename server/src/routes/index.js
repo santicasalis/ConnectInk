@@ -8,7 +8,7 @@ const tattooRouter = require("./tattooRouter");
 const tattoStyleRouter = require("./tattooStyleRouter");
 const filterRouter = require("./filterRouter");
 
-// const loginRouter = require("./loginRouter");
+const loginRouter = require("./loginRouter");
 
 
 const nodemailerRouter = require("./nodemailerRouter");
@@ -21,9 +21,8 @@ router.use("/publications", publicationRouter);
 router.use("/customers", customerRouter);
 router.use("/filters", filterRouter);
 
-// router.use("/auth", loginRouter);
-
-router.use("/nodemailer", nodemailerRouter);
+router.use("/auth", loginRouter);
+ router.use("/nodemailer", nodemailerRouter);
 
 
 module.exports = router;
