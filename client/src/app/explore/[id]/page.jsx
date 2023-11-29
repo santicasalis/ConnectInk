@@ -91,15 +91,15 @@ export default function Page({ params }) {
 
             <div className="p-4 rounded ">
               <div className="flex flex-col items-center">
-                <label className="text-md font-semibold">Pequeño</label>
+                <label className="text-md font-semibold">Pequeñoo</label>
                 <span className="text-gray-600">$</span>
               </div>
               <div className="flex flex-col items-center mt-2">
-                <label className="text-md font-semibold">Mediano</label>
+                <label className="text-md font-semibold">Medianoo</label>
                 <span className="text-gray-600">$$</span>
               </div>
               <div className="flex flex-col items-center mt-2">
-                <label className="text-md font-semibold">Grande</label>
+                <label className="text-md font-semibold">Grandee</label>
                 <span className="text-gray-600">$$$</span>
               </div>
             </div>
