@@ -2,11 +2,13 @@ const createTattooArtist = require("../../controllers/tattooArtistControllers/cr
 
 const createTattooArtistHandler = async (req, res) => {
   const {
-    name,
-    lastName,
+    tokenId,
+    fullName,
     email,
     password,
     phone,
+    instagram,
+    description,
     address,
     location,
     shopName,
@@ -15,11 +17,13 @@ const createTattooArtistHandler = async (req, res) => {
   } = req.body;
   try {
     const newTattooArtist = await createTattooArtist(
-      name,
-      lastName,
+      tokenId,
+      fullName,
       email,
       password,
       phone,
+      instagram,
+      description,
       address,
       location,
       shopName,
