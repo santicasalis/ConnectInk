@@ -12,21 +12,37 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
-
+import Paginate from "@/components/paginate/Paginate";
 import "../explore/page.css";
 
 export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
-
+  
   const dispatch = useDispatch();
-
+  
   const styles = useSelector((state) => state.styles.names);
-  const [filters, setFilters] = useState({ location: "", tattoStyle: [] });
+  const [filters, setFilters] = useState({ 
+    location: "",
+    tattoStyle: [] 
+    });
 
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
   }, []);
+
+  //paginado
+  const [currentPage, setCurrentPage] = useState(1);
+  const artistsPerPage = 5;
+  const indexOfLastArtist = currentPage * artistsPerPage;
+  const indexOfFirstArtist = indexOfLastArtist - artistsPerPage;
+  const artistsToDisplay = filtered.slice( indexOfFirstArtist,indexOfLastArtist );
+  const totalArtists = filtered.length;
+  
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
 
   return (
     <div className="w-full">
@@ -98,7 +114,13 @@ export default function ExplorePage() {
 
             <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
               <div className="scroll-content w-full">
-                {filtered?.map((filter) => (
+                <Paginate 
+                  artistsPerPage={artistsPerPage} 
+                  totalArtists={totalArtists} 
+                  currentPage={currentPage} 
+                  onPageChange={onPageChange}
+                />
+                {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full">
                     <Card
                       id={filter.id}
@@ -116,6 +138,7 @@ export default function ExplorePage() {
             </div>
           </div>
         </section>
+      
       </div>
     </div>
   );

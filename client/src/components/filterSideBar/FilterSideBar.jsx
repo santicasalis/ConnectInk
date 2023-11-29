@@ -1,15 +1,23 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { filterAllArtists } from "../../app/redux/features/artists/artistActions";
+import {
+  filterAllArtists,
+  getAllArtists,
+  OrderAllArtists,
+} from "../../app/redux/features/artists/artistActions";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
 
 export default function FilterSideBar() {
   const dispatch = useDispatch();
   const styles = useSelector((state) => state.styles.names);
+  const { people, filtered } = useSelector((state) => state.artists);
+
+  const [artistOrder, setArtistOrder] = useState("");
   const [styleSelected, setStyleSelected] = useState([]);
   const [filters, setFilters] = useState({
     location: "",
+    name: "",
     tattooStyle: [],
   });
 
@@ -41,6 +49,37 @@ export default function FilterSideBar() {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
 
+  // useEffect(() => {
+  //   dispatch(OrderAllArtists(artistOrder));
+  // }, [artistOrder]);
+
+
+  useEffect(() => {
+    const orderAndFilter = async () => {
+        const filters = {
+            location: filters.location,
+            tattooStyle: styleSelected,
+            artistName: filters.artistName,
+        };
+
+        const sortCriteria = {
+            tag: artistOrder,
+        };
+
+        dispatch(OrderAndFilterArtists(filters, sortCriteria));
+    };
+
+    orderAndFilter();
+}, [artistOrder, filters.location, styleSelected, filters.artistName]);
+
+
+
+
+  // const handleSortChange = (event) => {
+  //   const order = event.target.value;
+  //   setArtistOrder(order);
+  // };
+
   return (
     <div>
       <div className="bg-secondary-100 p-4 flex flex-col transition-all">
@@ -63,6 +102,23 @@ export default function FilterSideBar() {
               onChange={handleChange}
             />
           </div>
+
+          <div className="flex flex-col items-center justify-center mb-8">
+            <label
+              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
+              htmlFor="name"
+            >
+              Nombre:
+            </label>
+            <input
+              className="mb-8 mx-auto text-black"
+              list="names"
+              id="name"
+              name="name"
+              onChange={handleChange}
+            />
+          </div>
+
           <div className="flex flex-col items-center justify-center mb-8">
             <label
               className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
