@@ -10,8 +10,9 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      tokenId:{
-        type: DataTypes.STRING
+      tokenId: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       fullName: {
         type: DataTypes.STRING,
@@ -33,14 +34,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      instagram:{
+      instagram: {
         type: DataTypes.STRING,
         isUrl: true,
-        allowNull: true
+        allowNull: true,
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: true,
       },
       address: {
         type: DataTypes.STRING,
