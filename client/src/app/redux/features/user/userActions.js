@@ -17,7 +17,7 @@ export const getUserByEmail =
         router.replace("/a-dashboard/home");
       }
     } catch (error) {
-      toast.error(error.response.data, {
+      toast.error("Usuario y/o contraseña incorrectos", {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
