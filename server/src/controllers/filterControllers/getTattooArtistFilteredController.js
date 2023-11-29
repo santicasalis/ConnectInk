@@ -1,7 +1,7 @@
 const { TattooArtist, TattooStyle, Publication } = require("../../db");
 const { Op } = require("sequelize");
 
-const getTattooArtistFiltered = async (location, styles) => {
+const getTattooArtistFiltered = async (location, name, styles) => {
   if (styles.length > 0) {
     try {
       const tattooArtistsFound = await TattooArtist.findAll({
@@ -9,7 +9,11 @@ const getTattooArtistFiltered = async (location, styles) => {
           location: {
             [Op.iLike]: `%${location}%`,
           },
-          disabled:false 
+          [Op.or]: [
+            { fullName: { [Op.iLike]: `%${name}%` } },
+            { shopName: { [Op.iLike]: `%${name}%` } },
+          ],
+          disabled: false,
         },
         include: [
           {
@@ -26,10 +30,11 @@ const getTattooArtistFiltered = async (location, styles) => {
 
       const tattooArtistsFoundCleaner = tattooArtistsFound.map((artist) => ({
         id: artist.id,
-        name: artist.name,
-        lastName: artist.lastName,
+        fullName: artist.fullName,
         email: artist.email,
         phone: artist.phone,
+        instagram: artist.instagram,
+        description: artist.description,
         location: artist.location,
         address: artist.address,
         shopName: artist.shopName,
@@ -44,19 +49,23 @@ const getTattooArtistFiltered = async (location, styles) => {
             image: publication.image,
           };
         }),
-      }))
+      }));
       return tattooArtistsFoundCleaner;
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      throw Error(error.message);
     }
   } else {
     try {
       const tattooArtistsFound = await TattooArtist.findAll({
         where: {
           location: {
-            [Op.iLike]: `%${location}%`, 
+            [Op.iLike]: `%${location}%`,
           },
-          disabled:false 
+          [Op.or]: [
+            { fullName: { [Op.iLike]: `%${name}%` } },
+            { shopName: { [Op.iLike]: `%${name}%` } },
+          ],
+          disabled: false,
         },
         include: [
           { model: TattooStyle, attributes: ["name"] },
@@ -66,10 +75,11 @@ const getTattooArtistFiltered = async (location, styles) => {
 
       const tattooArtistsFoundCleaner = tattooArtistsFound.map((artist) => ({
         id: artist.id,
-        name: artist.name,
-        lastName: artist.lastName,
+        fullName: artist.fullName,
         email: artist.email,
         phone: artist.phone,
+        instagram: artist.instagram,
+        description: artist.description,
         location: artist.location,
         address: artist.address,
         shopName: artist.shopName,
@@ -84,11 +94,11 @@ const getTattooArtistFiltered = async (location, styles) => {
             image: publication.image,
           };
         }),
-      }))
+      }));
 
       return tattooArtistsFoundCleaner;
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      throw Error(error.message);
     }
   }
 };
