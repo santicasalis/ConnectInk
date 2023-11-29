@@ -8,7 +8,7 @@ import {
 } from "../../app/redux/features/artists/artistActions";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
 
-export default function FilterSideBar() {
+const TopBarOptions = () => {
   const dispatch = useDispatch();
   const styles = useSelector((state) => state.styles.names);
   const { people, filtered } = useSelector((state) => state.artists);
@@ -49,42 +49,34 @@ export default function FilterSideBar() {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
 
-  // useEffect(() => {
-  //   dispatch(OrderAllArtists(artistOrder));
-  // }, [artistOrder]);
-
   useEffect(() => {
-    const orderAndFilter = async () => {
-        const filters = {
-            location: filters.location,
-            tattooStyle: styleSelected,
-            artistName: filters.artistName,
-        };
-
-        const sortCriteria = {
-            tag: artistOrder,
-        };
-
-        dispatch(OrderAndFilterArtists(filters, sortCriteria));
-    };
-
-    orderAndFilter();
-}, [artistOrder, filters.location, styleSelected, filters.artistName]);
-
-
+    dispatch(OrderAllArtists(artistOrder));
+  }, [artistOrder]);
 
   const handleSortChange = (event) => {
     const order = event.target.value;
     setArtistOrder(order);
   };
 
+
   return (
-    <div>
-      <div className="bg-secondary-100 p-4 flex flex-col transition-all">
-        <h2 className="text-center text-2xl font-bold mb-[50px]">
-          Filtros <span className="text-primary text-4xl">.</span>
-        </h2>
-        <form onSubmit={handleSubmit}>
+    <div className='  bg-secondary-900 rounded-lg mb-8 '>
+        <nav className="flex gap-x-5 items-center">
+        <div className="flex flex-col items-center justify-center mb-8">
+            <label
+              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
+              htmlFor="name"
+            >
+              Nombre:
+            </label>
+            <input
+              className="mb-8 mx-auto text-black"
+              list="names"
+              id="name"
+              name="name"
+              onChange={handleChange}
+            />
+          </div>
           <div className="flex flex-col items-center justify-center mb-8">
             <label
               className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
@@ -100,29 +92,30 @@ export default function FilterSideBar() {
               onChange={handleChange}
             />
           </div>
-
-          <div className="flex flex-col items-center justify-center mb-8">
-            <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
-              htmlFor="name"
-            >
-              Nombre:
-            </label>
-            <input
-              className="mb-8 mx-auto text-black"
-              list="names"
-              id="name"
-              name="name"
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="flex flex-col items-center justify-center mb-8">
+            <div className="flex flex-col items-center justify-center mb-8">
             <label
               className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
               htmlFor="sort"
             >
-              Ordenar:
+              Rating:
+            </label>
+            <select
+              className="mb-8 mx-auto text-black"
+              id="sort"
+              name="sort"
+              onChange={handleSortChange}
+            >
+              <option value="">Rating</option>
+              <option value="asc">1-5</option>
+              <option value="desc">5-1</option>
+            </select>
+          </div>
+            <div className="flex flex-col items-center justify-center mb-8">
+            <label
+              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
+              htmlFor="sort"
+            >
+              Alfabetico:
             </label>
             <select
               className="mb-8 mx-auto text-black"
@@ -135,36 +128,9 @@ export default function FilterSideBar() {
               <option value="desc">Z-A</option>
             </select>
           </div>
-
-          <div className="flex flex-col items-center justify-center mb-8">
-            <label
-              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
-              htmlFor="style"
-            >
-              Estilo de Tatuaje:
-            </label>
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              {styles.map((style) => {
-                const isSelected = styleSelected.includes(style.name);
-                return (
-                  <label
-                    className={`flex items-center gap-2 px-3 py-1 border rounded cursor-pointer ${
-                      isSelected
-                        ? "bg-blue-500 text-white"
-                        : "bg-white text-black"
-                    }`}
-                    htmlFor={style.name}
-                    key={style.name}
-                    onClick={() => handleStyleChange(style.name)}
-                  >
-                    {style.name}
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-        </form>
-      </div>
+        </nav>
     </div>
-  );
+  )
 }
+
+export default TopBarOptions
