@@ -40,32 +40,37 @@ const Header = () => {
               </button>
               
               <Menu menuButton={<MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg'>
-                <Image src={user.image} loader={imageLoader} width={40} height={40} alt={`${user.name} ${user.lastName} profile pic`} />
+                  <div className='w-[40px] h-[40px] overflow-hidden rounded-full'>
+                    <Image src={user.image} loader={imageLoader} style={{borderRadius:'50%', width:'100%',height:'100%'}} width={40} height={40} alt={`${user.name} ${user.lastName} profile pic`} />
+                  </div>
+                
                   <span>
                       {`${user.name} ${user.lastName}`}
                   </span>
                   <RiArrowDownSLine />
               </MenuButton>}
-              menuStyle={{backgroundColor:'#252524', color:'white', padding:3}}
+              menuStyle={{backgroundColor:'#252524', color:'white', padding:3, width:'220px'}}
               transition
               >
-                <MenuItem className="rounded-lg transition-colors border-b-2 border-gray-500/50">
-                    <Link href='/a-dashboard/profile' className='flex items-center gap-x-4'>
-                      <Image src={user.image} loader={imageLoader} width={40} height={40} alt={`${user.name} ${user.lastName} profile pic`} />  
+                <MenuItem className="rounded-lg transition-colors  border-b-2 border-gray-500/50 hover:bg-secondary-100 w-full h-full">
+                    <Link href='/a-dashboard/profile' className='flex items-center gap-x-4 w-full h-[40px]'>
+                        <div className='rounded-full w-[25px] h-[25px] overflow-hidden'>
+                            <Image src={user.image} loader={imageLoader} width={25} height={25} style={{width:'100%', height:'100%' }} alt={`${user.name} ${user.lastName} profile pic`} />
+                        </div>
                         <div className='flex flex-col gap-1 text-sm'>
-                          <span>{`${user.name} ${user.lastName}`}</span>
-                          <span className='text-[9px]'>{user.email}</span>
+                            <span>{`${user.name} ${user.lastName}`}</span>
+                            <span className='text-[9px]'>{user.email}</span>
                         </div>
                     </Link>
                 </MenuItem>
-                <MenuItem>
-                    <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
+                <MenuItem className='hover:bg-secondary-100'>
+                    <Link href='' className='flex items-center gap-2  py-1.5'>
                         <RiSettings5Fill />
                         Settings
                     </Link>
                 </MenuItem>
-                <MenuItem>
-                        <button onClick={handleLogOut}>
+                <MenuItem className='hover:bg-secondary-100 '>
+                        <button onClick={handleLogOut} className='flex gap-x-2'>
                           <RiLogoutCircleRLine />
                           Logout
                         </button>

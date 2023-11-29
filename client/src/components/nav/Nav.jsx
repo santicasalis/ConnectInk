@@ -43,7 +43,9 @@ export default function Nav() {
               </Link>
             ): (
               <Link href="/a-dashboard/home">
-                <Image loader={imageLoader} src={user.image} width={25} height={25} alt={user.name} />
+                <div className="w-[40px] h-[40px] rounded-full">
+                    <Image loader={imageLoader} src={user.image} width={40} height={40} alt={user.name} style={{borderRadius:'50%', width:'100%',height:'100%'}} />
+                </div>
               </Link>
             )}
             </li>

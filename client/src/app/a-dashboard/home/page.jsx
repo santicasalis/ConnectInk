@@ -1,11 +1,10 @@
-import TopBarOptions from '@/components/topBarOptions/TopBarOptions'
+import PostsDashboard from '@/components/postsDashboard/PostsDashboard'
 import React from 'react'
 
 const Home = () => {
-  
   return (
     <div>
-      Inicio
+        <PostsDashboard />
     </div>
   )
 }
