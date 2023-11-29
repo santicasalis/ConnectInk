@@ -9,7 +9,7 @@ const createCustomerHandler = async (req, res) => {
             fullName,
             email,
             password,
-            phone,
+            phone, 
             image
         )
         res.status(200).json(newCustomer)

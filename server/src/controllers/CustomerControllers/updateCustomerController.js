@@ -1,6 +1,6 @@
 const { Customer } = require('../../db')
 
-const updateCustomer = async (id, fullName, email, password, phone,image) => {
+const updateCustomer = async (id, fullName, email, password, phone, image) => {
     const customerFound = await Customer.findByPk(id)
 
     if (customerFound) {
