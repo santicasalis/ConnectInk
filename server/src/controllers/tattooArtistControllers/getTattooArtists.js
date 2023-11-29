@@ -1,4 +1,4 @@
-const { TattooArtist, TattooStyle, Publication, TimeAvailability } = require("../../db");
+const { TattooArtist, TattooStyle, Publication, TimeAvailability, PriceRange } = require("../../db");
 
 const getTattooArtists = async () => {
   const allTattooArtists = await TattooArtist.findAll({
@@ -6,7 +6,8 @@ const getTattooArtists = async () => {
     include: [
       { model: TattooStyle, attributes: ["name"] },
       { model: Publication, attributes: ["description", "image", "createdAt", "updatedAt"] },
-      { model: TimeAvailability, attributes: ["date", "initialHour", "finalHour"] }
+      { model: TimeAvailability, attributes: ["date", "initialHour", "finalHour"] },
+      { model: PriceRange, attributes: ["size", "priceMin", "priceMax"] }
     ],
   });
   const tattooArtistCleaner = allTattooArtists.map((tattooArtist) => ({
@@ -38,6 +39,13 @@ const getTattooArtists = async () => {
         date: timeAvailability.date,
         initialHour: timeAvailability.initialHour,
         finalHour: timeAvailability.finalHour
+      }
+    }),
+    priceRanges: tattooArtist.PriceRanges?.map((priceRange) => {
+      return {
+        size: priceRange.size,
+        priceMin: priceRange.priceMin,
+        priceMax: priceRange.priceMax,
       }
     })
   }));
