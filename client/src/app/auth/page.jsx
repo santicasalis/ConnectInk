@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { getUserByEmail } from "../redux/features/user/userActions";
 
 const Login = () => {
+  const artists = useSelector((state) => state.artists.people);
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
@@ -42,15 +44,7 @@ const Login = () => {
         Ingresar
       </h1>
       <form onSubmit={handleSubmit} className="mb-7">
-        <button className="flex items-center justify-center gap-4 mb-8 bg-secondary-900 w-full py-3 px-4 rounded-xl text-gray-100">
-          <img
-            src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-            className="w-4 h-4"
-          />
-          Ingresar con Google
-        </button>
         <div className="relative mb-3">
-          <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type="email"
             name="email"
@@ -60,7 +54,6 @@ const Login = () => {
           />
         </div>
         <div className="relative mb-4">
-          <RiLockLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type={showPassword ? "text" : "password"}
             name="password"
@@ -90,7 +83,7 @@ const Login = () => {
           </button>
         </div>
       </form>
-      <div className="flex flex-col gap-3 items-center">
+      {/* <div className="flex flex-col gap-3 items-center">
         <Link
           href="/auth/forgot-password"
           className="text-gray-200 hover:text-primary transition-colors"
@@ -106,7 +99,8 @@ const Login = () => {
             Registrate
           </Link>
         </span>
-      </div>
+      </div> */}
+      <div></div>
     </div>
   );
 };
