@@ -2,11 +2,13 @@ const { TattooArtist, TattooStyle } = require("../../db");
 const crypto = require("crypto");
 
 const createTattooArtist = async (
-  name,
-  lastName,
+  tokenId,
+  fullName,
   email,
   password,
   phone,
+  instagram,
+  description,
   address,
   location,
   shopName,
@@ -14,11 +16,13 @@ const createTattooArtist = async (
   tattooStyle
 ) => {
   const newTattooArtist = await TattooArtist.create({
-    name,
-    lastName,
+    tokenId,
+    fullName,
     email,
     password: crypto.createHash("sha256").update(password).digest("hex"),
     phone,
+    instagram,
+    description,
     address,
     location,
     shopName,

@@ -7,6 +7,8 @@ const publicationRouter = require("./publicationRouter");
 const tattooRouter = require("./tattooRouter");
 const tattoStyleRouter = require("./tattooStyleRouter");
 const filterRouter = require("./filterRouter");
+const timeAvailabilityRouter = require("./timeAvailabilityRouter")
+const appointmentRouter = require("./appointmentRouter")
 
 // const loginRouter = require("./loginRouter");
 
@@ -20,6 +22,8 @@ router.use("/tattoos", tattooRouter);
 router.use("/publications", publicationRouter);
 router.use("/customers", customerRouter);
 router.use("/filters", filterRouter);
+router.use("/timeAvailabilities", timeAvailabilityRouter)
+router.use("/appointments", appointmentRouter)
 
 // router.use("/auth", loginRouter);
 
