@@ -1,15 +1,19 @@
 const { TattooArtist, TattooStyle, Publication } = require("../../db");
 const { Op } = require("sequelize");
 
-const getTattooArtistFiltered = async (location, styles) => {
+const getTattooArtistFiltered = async (location, name, styles) => {
+
   if (styles.length > 0) {
     try {
-      const tattooArtistsFound = await TattooArtist.findAll({
+      const tattooArtistsFound = await                    TattooArtist.findAll({
         where: {
           location: {
             [Op.iLike]: `%${location}%`,
-            disabled:false 
           },
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+          disabled: false,
         },
         include: [
           {
@@ -44,19 +48,22 @@ const getTattooArtistFiltered = async (location, styles) => {
             image: publication.image,
           };
         }),
-      }))
+      }));
       return tattooArtistsFoundCleaner;
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      throw Error(error.message);
     }
   } else {
     try {
       const tattooArtistsFound = await TattooArtist.findAll({
         where: {
           location: {
-            [Op.iLike]: `%${location}%`, 
-            disabled:false 
+            [Op.iLike]: `%${location}%`,
           },
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+          disabled: false,
         },
         include: [
           { model: TattooStyle, attributes: ["name"] },
@@ -84,11 +91,11 @@ const getTattooArtistFiltered = async (location, styles) => {
             image: publication.image,
           };
         }),
-      }))
+      }));
 
       return tattooArtistsFoundCleaner;
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      throw Error(error.message);
     }
   }
 };
