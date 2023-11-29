@@ -2,10 +2,10 @@ const updateCustomer = require('../../controllers/customerControllers/updateCust
 
 const putCustomerHandler = async (req, res) => {
     const { id } = req.params
-    const { name, lastName, email, password, phone } = req.body
+    const { fullName, email, password, phone, image } = req.body
     
     try {
-        const result = await updateCustomer(id, name, lastName, email, password, phone);
+        const result = await updateCustomer(id, fullName, email, password, phone, image);
 
         res.status(200).json(result)
     } catch (error) {

@@ -3,11 +3,12 @@ const { Customer } = require('../../db')
 const getCustomerById = async (id) => {
     const customer = await Customer.findByPk(id)
     return {
-        id: customer.id,
-        name: customer.name,
+        tokenId: customer.tokenId,
+        fullName: customer.fullName,
         lastName: customer.lastName,
         email: customer.email,
-        phone: customer.phone
+        phone: customer.phone,
+        image: customer.image
     }
 }
 module.exports = getCustomerById

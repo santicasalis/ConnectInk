@@ -9,11 +9,7 @@ module.exports = (sequelize) => {
             primaryKey: true,
             allowNull: false,
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        lastName: {
+        fullName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -29,6 +25,14 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        admin: {
+            type: DataTypes.STRING,
+            defaultValue: true
+        },
+        disabled: {
+            type: DataTypes.STRING,
+            defaultValue: false
+        }
     },
         { timestamps: false }
     );

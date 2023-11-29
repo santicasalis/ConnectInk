@@ -1,29 +1,72 @@
-"use client"
-import React from 'react'
-import {RiNotification3Line,RiArrowDownSLine, RiSettings5Fill,RiLogoutCircleRLine, RiReplyLine} from "react-icons/ri";
-import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
-import '@szhsin/react-menu/dist/index.css'
-import '@szhsin/react-menu/dist/transitions/slide.css'
-import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux';
-import Image from 'next/image';
-import { logOut } from '@/app/redux/features/user/userActions';
-import {useRouter} from 'next/navigation';
+"use client";
+import React, { useEffect, useState } from "react";
+import {
+  RiNotification3Line,
+  RiArrowDownSLine,
+  RiSettings5Fill,
+  RiLogoutCircleRLine,
+  RiReplyLine,
+} from "react-icons/ri";
+import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
+import { logOut } from "@/app/redux/features/user/userActions";
+import { useRouter } from "next/navigation";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
+
+import { onAuthStateChanged } from "firebase/auth";
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
+  // const [userInfo, setUserInfo] = useState(null);
 
-  const user = useSelector((state) => state.user)
-  const imageLoader = ({src}) => {
-    return src
-  }
-  const dispatch = useDispatch()
-  const router = useRouter()
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const userInformation = {
+  //         uid: user.uid,
+  //         nombreCompleto: user.displayName || "Nombredefault",
+  //         image:
+  //           user.photoURL ||
+  //           "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
+  //         email: user.email,
+  //         phoneNumber: user.phoneNumber || "123456789",
+  //         provider: user.providerId,
+  //         currentData: user.userMetadata,
+  //       };
+  //       console.log(auth);
+
+  //       setUserInfo(userInformation);
+  //       console.log(userInformation);
+  //     } else {
+  //       // No hay usuario autenticado
+  //       setUserInfo(null);
+  //     }
+  //   });
+  // }, [auth]);
+
+  const imageLoader = ({ src }) => {
+    return src;
+  };
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleLogOut = () => {
-    dispatch(logOut())
-    router.replace("/")
-  }
-  
+    signOut(auth)
+      .then(() => {
+        alert("sign out ok");
+      })
+      .catch((error) => {
+        throw error;
+      });
+    dispatch(logOut());
+    router.replace("/");
+  };
+
   return (
     <header className=' bg-secondary-900 h-[8vh] md:h-[8vh] border-b border-gray-600 p-8 flex items-center justify-end'>
         <nav className='w-full flex items-center gap-x-4 justify-between'>
@@ -80,7 +123,7 @@ const Header = () => {
           
         </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

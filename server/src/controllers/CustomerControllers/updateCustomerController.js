@@ -1,16 +1,16 @@
 const { Customer } = require('../../db')
 
-const updateCustomer = async (id, name, lastName, email, password, phone) => {
+const updateCustomer = async (id, fullName, email, password, phone, image) => {
     const customerFound = await Customer.findByPk(id)
 
     if (customerFound) {
         await Customer.update(
             {
-                name: name,
-                lastName: lastName,
+                fullName: fullName,
                 email: email,
                 password: password,
-                phone: phone
+                phone: phone,
+                image: image
             },
             {
                 where: { id: id }
@@ -18,7 +18,7 @@ const updateCustomer = async (id, name, lastName, email, password, phone) => {
         )
         return 'Update sucessful'
     } else {
-        return 'cliente not found'
+        return 'customer not found'
     }
 }
 

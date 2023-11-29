@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllStyles } from "./redux/features/styles/stylesActions";
 import { getAllArtists } from "./redux/features/artists/artistActions";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -12,9 +14,15 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   }, []);
   return (
-
     <div className="flex flex-col w-full min-h-screen p-0 overflow-hidden bg-secondary-900">
       <Nav />
       <div
@@ -29,7 +37,7 @@ export default function Home() {
             Los mejores artistas y
           </h1>
           <h1 className="font-rocksalt mb-10" style={{ fontSize: "4rem" }}>
-            TATOOS
+            TATTOOS
           </h1>
           <p className="text-primary/80 mb-10 font-newrocker text-[25px]">
             ConnectInk es el lugar
@@ -41,7 +49,6 @@ export default function Home() {
             src="https://images3.alphacoders.com/866/866852.jpg"
           />
           <div className="absolute top-0 left-0 w-full h-full custom-gradient"></div>
-
         </div>
       </div>
     </div>
