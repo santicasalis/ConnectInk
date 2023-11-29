@@ -6,22 +6,34 @@ import { useState } from "react";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
+import axios from "axios"
+
+const URL_BASE = "http://localhost:3001"
 
 
 const bookAppointment = () => {
   //hardcodeo horarios
   const horarios = {
-    turno1: "13hs",
-    turno2: "15hs",
-    turno3: "17hs",
-    turno4: "19hs",
-    turno5: "21hs",
+    turno1: "13",
+    turno2: "15",
+    turno3: "17",
+    turno4: "19",
+    turno5: "21",
   };
 
 
+
+
   const [horarioNoDisponible, setHorarioNoDisponible] = useState(null);
+  const [day, setDay] = useState("")
+  const [month, setMonth] = useState("")
+  const [year, setYear] = useState("")
 
   const actualizarFecha = (fecha) => {
+    const date = fecha._d
+    setDay(date.getDate())
+    setMonth(date.getMonth())
+    setYear(date.getYear() + 1900)
     setFechaSeleccionada(fecha);
     setHorarioSeleccionado(null);
     //seleccionar un horario al azar como no disponible
@@ -53,6 +65,14 @@ const bookAppointment = () => {
   // const seleccionarHorario = (horario) => {
   //   setHorarioSeleccionado(horario);
   // };
+
+  const reservarTurno = async() => {
+    const date = new Date(year, month, day, horarioSeleccionado)
+
+    const response = await axios.post(`${URL_BASE}/appointments`, {dateAndTime: date})
+    console.log(response)
+
+  }
 
   return (
     <div className="w-full md:w-2/3 p-4 shadow-lg">
@@ -88,12 +108,13 @@ const bookAppointment = () => {
                 }`}
                 onClick={() => seleccionarHorario(horario)}
               >
-                {horario}
+                {`${horario}hs`}
               </button>
             ))}
           </div>
         )}
       </div>
+      <button onClick={reservarTurno}>Reservar turno</button>
     </div>
   );
 }

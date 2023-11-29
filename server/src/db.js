@@ -45,13 +45,19 @@ const {
 } = sequelize.models;
 
 TattooArtist.belongsToMany(Customer, {
-  through: Appointment,
+  through: "Appointment",
   timestamps: false,
+  unique: false
 });
 Customer.belongsToMany(TattooArtist, {
-  through: Appointment,
+  through: "Appointment",
   timestamps: false,
+  unique: false
 });
+Customer.hasMany(Appointment);
+Appointment.belongsTo(Customer);
+TattooArtist.hasMany(Appointment);
+Appointment.belongsTo(TattooArtist);
 
 TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
 Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
