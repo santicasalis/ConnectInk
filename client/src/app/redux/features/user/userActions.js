@@ -26,6 +26,6 @@ export const getUserByEmail =
     }
   };
 
-
+export const logOut = () => async dispatch =>{
   dispatch(cleanUser());
-};
+}
