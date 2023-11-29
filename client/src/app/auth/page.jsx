@@ -48,7 +48,6 @@ const Login = () => {
         router.replace("/a-dashboard/home");
       }
     } catch (error) {
-      const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
