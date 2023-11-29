@@ -17,5 +17,9 @@ module.exports = (sequelize) => {
       isUrl: true,
       allowNull: false,
     },
+    disabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   });
 };

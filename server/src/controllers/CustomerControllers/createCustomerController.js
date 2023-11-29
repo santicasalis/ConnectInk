@@ -1,18 +1,20 @@
 const {Customer} = require('../../db')
 
 const createCustomer = async (
-    name,
-    lastName,
+  tokenId,
+  fullName,
     email,
     password,
-    phone
+    phone,
+    image
   ) => {
     const newCustomer = await Customer.create({
-        name,
-        lastName,
+      tokenId,
+      fullName,
         email,
         password,
-        phone
+        phone,
+        image
     })
     return newCustomer
 }

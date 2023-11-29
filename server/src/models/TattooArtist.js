@@ -10,11 +10,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      tokenId:{
+        type: DataTypes.STRING
       },
-      lastName: {
+      fullName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -34,9 +33,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      instagram:{
+        type: DataTypes.STRING,
+        isUrl: true,
+        allowNull: true
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
       address: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       location: {
         type: DataTypes.STRING,
@@ -44,17 +52,17 @@ module.exports = (sequelize) => {
       },
       shopName: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      disabled: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        allowNull: true,
       },
       image: {
         type: DataTypes.STRING,
         isUrl: true,
         defaultValue:
-          "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
+        "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
+      },
+      disabled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     { timestamps: false }

@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 
 const fs = require("fs");
 const path = require("path");
-const { DB_DEPLOY} = process.env;
+const { DB_DEPLOY } = process.env;
 
 const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
@@ -36,9 +36,9 @@ const {
   Admin,
   Customer,
   Appointment,
+  PriceRange,
   Publication,
   Review,
-  Tattoo,
   TattooArtist,
   TattooStyle,
   TimeAvailability,
@@ -55,9 +55,6 @@ Customer.belongsToMany(TattooArtist, {
 
 TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
 Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
-
-TattooArtist.belongsToMany(Customer, { through: Tattoo, timestamps: false });
-Customer.belongsToMany(TattooArtist, { through: Tattoo, timestamps: false });
 
 TattooArtist.belongsToMany(Publication, {
   through: "ArtistPublication",
@@ -83,6 +80,15 @@ TattooArtist.belongsToMany(TimeAvailability, {
 });
 TimeAvailability.belongsToMany(TattooArtist, {
   through: "ArtistAvailability",
+  timestamps: false,
+});
+
+TattooArtist.belongsToMany(PriceRange, {
+  through: "ArtistPriceRange",
+  timestamps: false,
+});
+PriceRange.belongsToMany(TattooArtist, {
+  through: "ArtistPriceRange",
   timestamps: false,
 });
 
