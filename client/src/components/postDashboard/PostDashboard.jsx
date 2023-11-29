@@ -20,50 +20,78 @@ const PostDashboard = ({publication, name, lastName, image}) => {
         return src
     }
     return (
-    <div className=' flex flex-col xl:w-[60%] bg-secondary-900 rounded-md overflow-hidden m-5'>
+      <div className=" flex flex-col xl:w-[60%] bg-secondary-900 rounded-md overflow-hidden m-5">
         <div>
-            <div className='flex justify-between'>
-                <div className='flex gap-x-2 p-2 items-center'>
-                    <Image loader={imageLoader} src={image} height={32} width={32} alt={name}/>
-                    <span className='text-[15px]'>{`${name} ${lastName}`}</span>
-                </div>
-                <div className='p-2 flex items-center justify-center'>
-                    <Menu menuButton={
-                        <MenuButton >  
-                            <RiMoreFill className='text-white text-[25px] cursor-pointer'/>
-                        </MenuButton>}
-                    transition
-                    menuClassName={'hover:bg-red text-red-500'}>
-                        <MenuItem>
-                            <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
-                                <RiEditFill />
-                                Editar
-                            </Link>
-                        </MenuItem>
-                        <MenuItem>
-                            <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
-                                <RiDeleteBin6Fill />
-                                Eliminar
-                            </Link>
-                        </MenuItem>
-                    </Menu>
-                </div>
+          <div className="flex justify-between">
+            <div className="flex gap-x-2 p-2 items-center">
+              <Image
+                loader={imageLoader}
+                src={image}
+                height={32}
+                width={32}
+                alt={name}
+              />
+              <span className="text-[15px]">{`${name} ${lastName}`}</span>
             </div>
-            <div className="w-[100%] aspect-w-16 aspect-h-9 mb-2">
-                <Image src={publication.image} loader={imageLoader} width={500} height={500} alt={publication.description} />
+            <div className="p-2 flex items-center justify-center">
+              <Menu
+                menuButton={
+                  <MenuButton>
+                    <RiMoreFill className="text-white text-[25px] cursor-pointer" />
+                  </MenuButton>
+                }
+                transition
+                menuClassName={"hover:bg-red text-red-500"}
+              >
+                <MenuItem>
+                  <Link
+                    href=""
+                    className="flex items-center gap-2 text-sm py-1.5"
+                  >
+                    <RiEditFill />
+                    Editar
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    href=""
+                    className="flex items-center gap-2 text-sm py-1.5"
+                  >
+                    <RiDeleteBin6Fill />
+                    Eliminar
+                  </Link>
+                </MenuItem>
+              </Menu>
             </div>
-            <div onClick={handleClick} className='cursor-pointer text-[25px] flex gap-x-2'>
-            {
-                    isLike
-                    ? <RiHeart3Fill className='text-red-500'/>
-                    : <RiHeart3Line />
-            }
+          </div>
 
-            </div>
+          <div className=" flex justify-center items-center overflow-hidden w-[500px] mb-2">
+            <Image
+              src={publication.image}
+              loader={imageLoader}
+              width={500}
+              height={500}
+              alt={publication.description}
+            />
+          </div>
+
+          <div
+            onClick={handleClick}
+            className="cursor-pointer text-[25px] flex gap-x-2"
+          >
+            {isLike ? (
+              <RiHeart3Fill className="text-red-500" />
+            ) : (
+              <RiHeart3Line />
+            )}
+          </div>
+
+          <div>
+            <p>{publication.description} <span className='text-primary'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam voluptas, quisquam sint quos quo doloribus, officiis quaerat illum perspiciatis unde odit aliquid cupiditate magni in sapiente ea ut, ab eaque.</span> </p>
+          </div>
         </div>
-        
-    </div>
-  )
+      </div>
+    );
 }
 
 export default PostDashboard

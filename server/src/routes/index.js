@@ -10,6 +10,12 @@ const filterRouter = require("./filterRouter");
 const timeAvailabilityRouter = require("./timeAvailabilityRouter")
 const appointmentRouter = require("./appointmentRouter")
 
+// const loginRouter = require("./loginRouter");
+
+
+const nodemailerRouter = require("./nodemailerRouter");
+
+
 router.use("/tattooStyles", tattoStyleRouter);
 router.use("/tattooArtists", tattooArtistsRouter);
 router.use("/tattoos", tattooRouter);
@@ -18,5 +24,10 @@ router.use("/customers", customerRouter);
 router.use("/filters", filterRouter);
 router.use("/timeAvailabilities", timeAvailabilityRouter)
 router.use("/appointments", appointmentRouter)
+
+// router.use("/auth", loginRouter);
+
+router.use("/nodemailer", nodemailerRouter);
+
 
 module.exports = router;

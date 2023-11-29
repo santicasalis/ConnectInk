@@ -1,54 +1,42 @@
-"use client"
+"use client";
 
-import React, {useState} from 'react'
-import { RiMailLine,RiLockLine,RiEyeLine,RiEyeOffLine } from "react-icons/ri";
-import Link from "next/link"
-import {useRouter} from "next/navigation"
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserId } from '../redux/features/user/userActions';
-
+import React, { useState } from "react";
+import {
+  RiMailLine,
+  RiLockLine,
+  RiEyeLine,
+  RiEyeOffLine,
+} from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getUserByEmail } from "../redux/features/user/userActions";
 
 const Login = () => {
-  const artists = useSelector((state) => state.artists.people)
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
+  const dispatch = useDispatch();
+
   const handleChange = (event) => {
     setData({
       ...data,
-      [event.target.name] : event.target.value
-    })
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    let found = false
-
-    artists.map((artist) => {
-      if(artist.email == data.email){
-        dispatch(getUserId(data.email))
-        found = true
-      }
-    })
-
-    found && router.replace("/a-dashboard/home");
-    !found && toast.error("You couldn't log in", {
-      className:'toastError',
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 3000,
-      hideProgressBar: true,
+      [event.target.name]: event.target.value,
     });
-  }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(getUserByEmail(data.email, data.password, router, toast));
+  };
+
   return (
     <div className=" div-img relative rounded-xl shadow-xl w-full xl:w-1/3 lg:w-1/4 md:w-1/2">
-
-      <div className='bg-black absolute opacity-75 w-full h-full '>
-        <img className='object-cover' src=" /dsgnlogin4.png " alt="" />
+      <div className="bg-black absolute opacity-75 w-full h-full ">
+        <img className="object-cover" src=" /dsgnlogin4.png " alt="" />
       </div>
-
 
       <h1 className="text-3xl text-center font-bold tracking-[3px] text-white mb-8">
         Ingresar
@@ -96,7 +84,7 @@ const Login = () => {
           <button
             type="submit"
             className="bg-black opacity-50 text-white uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:bg-primary/90 transition-colors"
-            disabled={!data.email || !data.password }
+            disabled={!data.email || !data.password}
           >
             Ingresar
           </button>
@@ -121,6 +109,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;
