@@ -1,4 +1,4 @@
-import { getArtists, filterArtist } from "./artistsSlice";
+import { getArtists, filterArtist, orderArtist,orderArtistRating, orderAndFilterArtists } from "./artistsSlice";
 import axios from "axios";
 
 const URL_BASE = "http://localhost:3001"
@@ -17,9 +17,11 @@ export const filterAllArtists = (filter) => async (dispatch) =>{
 
 }
 
-// export const getArtistById = (id) => async (dispatch) => {
 
-//     const artistFound = (await axios.get(`${URL_BASE}/${id}`)).data
-//     dispatch(artistFound)
+export const OrderAllArtists = (tag)=>(dispatch)=> {
+    dispatch(orderArtist(tag))
+}
 
-// }
+export const OrderAndFilterArtists = (filters, sortCriteria) => (dispatch) => {
+    dispatch(orderAndFilterArtists({ filters, sortCriteria }));
+};

@@ -19,9 +19,12 @@ export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
 
   const dispatch = useDispatch();
-
+  
   const styles = useSelector((state) => state.styles.names);
-  const [filters, setFilters] = useState({ location: "", tattoStyle: [] });
+  const [filters, setFilters] = useState({ 
+    location: "",
+    tattoStyle: [] 
+    });
 
   useEffect(() => {
     dispatch(getAllStyles());
@@ -116,6 +119,7 @@ export default function ExplorePage() {
             </div>
           </div>
         </section>
+      
       </div>
     </div>
   );
