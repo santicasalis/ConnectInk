@@ -58,7 +58,7 @@ const TattoArtistRegister = () => {
           location: "",
           shopName: "",
           phone: userInformation?.phone || "",
-          image: null,
+          image: "",
           password: "",
           passwordConfirm: "",
           tattooStyle: [],
