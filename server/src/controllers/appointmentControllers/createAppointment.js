@@ -5,6 +5,10 @@ const createAppointment = async (artistId, customerId, size, image, bodyPlace, d
   const customer = await Customer.findByPk(customerId)
 
   const appointment = await Appointment.create({
+    size, 
+    image, 
+    bodyPlace, 
+    description,
     dateAndTime
   });
 

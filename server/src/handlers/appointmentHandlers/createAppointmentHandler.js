@@ -1,12 +1,16 @@
 const createAppointment = require("../../controllers/appointmentControllers/createAppointment");
 
 const createAppointmentHandler = async (req, res) => {
-  const { artistId, customerId, dateAndTime } = req.body;
+  const { artistId, customerId, size, image, bodyPlace, description, dateAndTime } = req.body;
   try {
     const newCreateAppointment = await createAppointment(
-        artistId, 
-        customerId, 
-        dateAndTime
+      artistId,
+      customerId,
+      size,
+      image,
+      bodyPlace,
+      description,
+      dateAndTime
     );
     res.status(201).json(newCreateAppointment);
   } catch (error) {
