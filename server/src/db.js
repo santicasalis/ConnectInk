@@ -32,7 +32,6 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-//AGREGAR MODELOS
 const {
   Customer,
   Admin,
