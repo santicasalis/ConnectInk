@@ -133,6 +133,7 @@ export default function ExplorePage() {
                 />
                 {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full flex flex-col items-center justify-center">
+                    
                     <Card
                       id={filter.id}
                       fullName={filter.fullName}
