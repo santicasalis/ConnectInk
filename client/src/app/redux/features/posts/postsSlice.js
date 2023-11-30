@@ -13,6 +13,7 @@ export const postsSlice = createSlice({
     reducers: {
         getPosts: (state, action) => {
             state.posts = action.payload
+            
         },
        
 

@@ -49,36 +49,7 @@ export default function FilterSideBar() {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
 
-  // useEffect(() => {
-  //   dispatch(OrderAllArtists(artistOrder));
-  // }, [artistOrder]);
-
-
-  useEffect(() => {
-    const orderAndFilter = async () => {
-        const filters = {
-            location: filters.location,
-            tattooStyle: styleSelected,
-            artistName: filters.artistName,
-        };
-
-        const sortCriteria = {
-            tag: artistOrder,
-        };
-
-        dispatch(OrderAndFilterArtists(filters, sortCriteria));
-    };
-
-    orderAndFilter();
-}, [artistOrder, filters.location, styleSelected, filters.artistName]);
-
-
-
-
-  // const handleSortChange = (event) => {
-  //   const order = event.target.value;
-  //   setArtistOrder(order);
-  // };
+  
 
   return (
     <div>
