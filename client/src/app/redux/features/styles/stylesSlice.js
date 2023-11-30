@@ -14,12 +14,18 @@ export const stylesSlice = createSlice({
         getStyles: (state, action) => {
             state.names = action.payload
         },
+        addStyle: (state, action) => {
+            state.names.push(action.payload);
+        },
+        deleteStyle: (state, action) => {
+            state.names = state.names.filter((style) => style.id !== action.payload);
+        },
        
 
     }
 })
 
-export const {getStyles} = stylesSlice.actions
+export const {getStyles, addStyle, deleteStyle} = stylesSlice.actions
 
 
 export default stylesSlice.reducer
