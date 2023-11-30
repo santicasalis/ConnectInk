@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
-    dispatch(getAllPosts)
+    dispatch(getAllPosts())
     // signOut(auth)
     //   .then(() => {
     //     // Sign-out successful.

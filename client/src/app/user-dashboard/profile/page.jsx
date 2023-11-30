@@ -21,7 +21,7 @@ const Profile = () => {
           </div>
           <div className='flex-1'>
               <div className='relative mb-2'>
-                  <Image src={user.image} loader={imageLoader} width={80} height={80} alt={`${user.name} ${user.lastName} profile pic`} />
+                  <Image src={user.image} loader={imageLoader} width={80} height={80} alt={`${user.fullName} profile pic`} />
                   <label htmlFor='avatar' className='absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100'>
                       <RiEdit2Line />
                   </label>
@@ -34,15 +34,15 @@ const Profile = () => {
         </div>
         <div className='flex items-center mb-4'>
           <div className='w-1/4'>
-              <p >Nombres Completos: <span className='text-red-500'>*</span></p>
+              <p >Nombre Completo: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={user.name} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.fullName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
-              <div className='w-full'>
+              {/* <div className='w-full'>
                 <input type="text" value={user.lastName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
-              </div>
+              </div> */}
           </div>
         </div>
         <div className='flex items-center mb-4'>
@@ -57,7 +57,7 @@ const Profile = () => {
         </div>
         <div className='flex items-center mb-4'>
           <div className='w-1/4'>
-              <p>Phone: <span className='text-red-500'>*</span></p>
+              <p> Telefono: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
@@ -65,17 +65,17 @@ const Profile = () => {
               </div>
           </div>
         </div>
-        <div className='flex items-center mb-4'>
+        {/* <div className='flex items-center mb-4'>
           <div className='w-1/4'>
-              <p>Address: <span className='text-red-500'>*</span></p>
+              <p>Dirección: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
                 <input type="text" value={user.address} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
-        </div>
-        <div className='flex items-center mb-4'>
+        </div> */}
+        {/* <div className='flex items-center mb-4'>
           <div className='w-1/4'>
               <p>Location: <span className='text-red-500'>*</span></p>
           </div>
@@ -84,17 +84,8 @@ const Profile = () => {
                 <input type="text" value={user.location} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
-        </div>
-        <div className='flex items-center mb-4'>
-          <div className='w-1/4'>
-              <p>Shop Name: <span className='text-red-500'>*</span></p>
-          </div>
-          <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
-                <input type="text" value={user.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
-              </div>
-          </div>
-        </div>
+        </div> */}
+      
       </form>
     </div>
   )
