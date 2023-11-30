@@ -66,6 +66,8 @@ export default function Page({ params }) {
               </button>
             </div>
           </div>
+
+          <div>Cuadrado de la publicacion mas votada, mejorn rankeada</div>
         </div>
 
         <div className="w-full md:w-1/2 p-4 flex flex-col">
