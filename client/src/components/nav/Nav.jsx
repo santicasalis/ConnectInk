@@ -15,7 +15,7 @@ export default function Nav() {
   const user = useSelector((state) => state.user)
   {console.log(user)}
   return (
-    <nav className="bg-secondary-900 py-8 px-8 text-gray-200 mb-[30px] ">
+    <nav className="bg-transparent py-8 px-8 text-gray-200 mb-[30px] ">
       <ul className="flex justify-between gap-8">
         <div>
             <li>

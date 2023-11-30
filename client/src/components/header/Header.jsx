@@ -24,30 +24,29 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   // const [userInfo, setUserInfo] = useState(null);
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       const userInformation = {
-  //         uid: user.uid,
-  //         nombreCompleto: user.displayName || "Nombredefault",
-  //         image:
-  //           user.photoURL ||
-  //           "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
-  //         email: user.email,
-  //         phoneNumber: user.phoneNumber || "123456789",
-  //         provider: user.providerId,
-  //         currentData: user.userMetadata,
-  //       };
-  //       console.log(auth);
+  useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userInformation = {
+          uid: user.uid,
+          nombreCompleto: user.displayName || "Nombredefault",
+          image:
+            user.photoURL ||
+            "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
+          email: user.email,
+          phoneNumber: user.phoneNumber || "123456789",
+          provider: user.providerId,
+          currentData: user.userMetadata,
+        };
+        console.log(auth);
 
-  //       setUserInfo(userInformation);
-  //       console.log(userInformation);
-  //     } else {
-  //       // No hay usuario autenticado
-  //       setUserInfo(null);
-  //     }
-  //   });
-  // }, [auth]);
+        setUserInfo(userInformation);
+        console.log(userInformation);
+      } else {
+        setUserInfo(null);
+      }
+    });
+  }, [auth]);
 
   const imageLoader = ({ src }) => {
     return src;

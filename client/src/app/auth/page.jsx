@@ -93,8 +93,8 @@ const Login = () => {
     }
   };
   return (
-    <div className=" div-img relative rounded-xl shadow-xl w-full xl:w-1/3 lg:w-1/4 md:w-1/2">
-      <button onClick={googleLogIn} className="">
+    <div className="bg-secondary-900 opacity-60 absolute rounded-xl w-full xl:w-1/3 lg:w-1/4 md:w-1/2 p-9">
+      <button onClick={googleLogIn} className="w-full ">
         <img
           src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
           className="w-4 h-4"
@@ -107,13 +107,10 @@ const Login = () => {
       >
         Registrate
       </Link>
-      <div className="bg-black absolute opacity-75 w-full h-full ">
+      <div className=" absolute opacity-75 w-full h-full ">
         <img className="object-cover" src="  " alt="" />
       </div>
 
-      <h1 className="text-3xl text-center font-bold tracking-[3px] text-white mb-8">
-        Ingresar
-      </h1>
       <form onSubmit={handleSubmit} className="mb-7">
         <div className="relative mb-3">
           <input
