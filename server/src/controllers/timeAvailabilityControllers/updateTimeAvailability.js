@@ -1,23 +1,23 @@
-const { TimeAvailability } = require('../../db')
+const { TimeAvailability } = require("../../db");
 
-const updateTimeAvailability = async (id, date, initialHour, finalHour) => {
-    const timeAvailabilityFound = await TimeAvailability.findByPk(id)
+const updateTimeAvailability = async (id, day, initialHour, finalHour) => {
+  const timeAvailabilityFound = await TimeAvailability.findByPk(id);
 
-    if (timeAvailabilityFound) {
-        await TimeAvailability.update(
-            {
-                date: date,
-                initialHour: initialHour, 
-                finalHour: finalHour
-            },
-            {
-                where: { id: id }
-            }
-        )
-        return 'Update sucessful'
-    } else {
-        return 'Time availability not found'
-    }
-}
+  if (timeAvailabilityFound) {
+    await TimeAvailability.update(
+      {
+        day: day,
+        initialHour: initialHour,
+        finalHour: finalHour,
+      },
+      {
+        where: { id: id },
+      }
+    );
+    return "Time availability update sucessfully";
+  } else {
+    return "Time availability not found";
+  }
+};
 
-module.exports = updateTimeAvailability
+module.exports = updateTimeAvailability;

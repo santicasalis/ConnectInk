@@ -1,21 +1,23 @@
 const { TattooArtist, TimeAvailability } = require("../../db");
 
-const createTimeAvailability = async (artistId, date, initialHour, finalHour) => {
-  
-  const tattooArtist = await TattooArtist.findByPk(artistId);
+const createTimeAvailability = async (
+  tattooArtistId,
+  day,
+  initialHour,
+  finalHour
+) => {
+  const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (!tattooArtist) {
-    throw new Error("Artist not found");
+    throw new Error("Tattoo artist not found");
   }
-
   const timeAvailability = await TimeAvailability.create({
-    date,
+    day,
     initialHour,
     finalHour,
   });
 
   tattooArtist.addTimeAvailability(timeAvailability);
-
-  return "saved time availability";
+  return "Saved time availability";
 };
 
 module.exports = createTimeAvailability;
