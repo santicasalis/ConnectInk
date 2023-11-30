@@ -1,21 +1,14 @@
 import React from "react";
 import { uploadImage } from "@/app/utils/uploadImage";
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-  FieldArray,
-  useField,
-} from "formik";
-
-import { auth } from "../../firebase";
+import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 
 import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import axios from "axios";
 
 const CustomerRegister = ({ userInformation }) => {
+  const urlBase = "http://localhost:3001";
+
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
     return (
@@ -35,14 +28,14 @@ const CustomerRegister = ({ userInformation }) => {
     <div>
       <Formik
         initialValues={{
-          email: userInformation?.email || "",
-          password: "",
-          passwordConfirm: "",
           fullName: "",
           userName: userInformation?.userName || "",
+          email: userInformation?.email || "",
           mobile: "",
-          tokenId: userInformation?.tokenId || "",
           image: "",
+          password: "",
+          passwordConfirm: "",
+          tokenId: userInformation?.tokenId || "",
         }}
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {

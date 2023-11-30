@@ -1,11 +1,9 @@
-const { Publication } = require("../../db")
+const { Publication } = require("../../db");
 
 async function getPublicationController() {
-    const publications = Publication.findAll(
-        {where:{disabled:false}}
-    )
+  const publications = Publication.findAll({ where: { disabled: false } });
 
-    return publications
+  return publications;
 }
 
-module.exports = getPublicationController
+module.exports = getPublicationController;

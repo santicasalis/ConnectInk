@@ -1,16 +1,20 @@
-const updateTimeAvailability = require('../../controllers/timeAvailabilityControllers/updateTimeAvailability')
+const updateTimeAvailability = require("../../controllers/timeAvailabilityControllers/updateTimeAvailability");
 
 const updateTimeAvailabilityHandler = async (req, res) => {
-    const { id } = req.params
-    const { date, initialHour, finalHour } = req.body
-    
-    try {
-        const result = await updateTimeAvailability(id, date, initialHour, finalHour);
+  const { id } = req.params;
+  const { day, initialHour, finalHour } = req.body;
 
-        res.status(200).json(result)
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-}
+  try {
+    const updatedTimeAvailability = await updateTimeAvailability(
+      id,
+      day,
+      initialHour,
+      finalHour
+    );
+    res.status(200).json(updatedTimeAvailability);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-module.exports = updateTimeAvailabilityHandler
+module.exports = updateTimeAvailabilityHandler;

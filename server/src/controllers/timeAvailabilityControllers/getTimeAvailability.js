@@ -1,9 +1,9 @@
-const { TimeAvailability } = require("../../db")
+const { TimeAvailability } = require("../../db");
 
-async function getTimeAvailabilityController() {
-    const timeAvailability = TimeAvailability.findAll()
+const getTimeAvailability = async () => {
+  const timeAvailability = TimeAvailability.findAll();
 
-    return timeAvailability
-}
+  return timeAvailability;
+};
 
-module.exports = getTimeAvailabilityController
+module.exports = getTimeAvailability;

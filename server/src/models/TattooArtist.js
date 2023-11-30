@@ -10,8 +10,8 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      tokenId:{
-        type: DataTypes.STRING
+      tokenId: {
+        type: DataTypes.STRING,
       },
       fullName: {
         type: DataTypes.STRING,
@@ -33,14 +33,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      instagram:{
+      instagram: {
         type: DataTypes.STRING,
         isUrl: true,
-        allowNull: true
+        allowNull: true,
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: true,
       },
       address: {
         type: DataTypes.STRING,
@@ -58,7 +58,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         isUrl: true,
         defaultValue:
-        "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
+          "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
       },
       disabled: {
         type: DataTypes.BOOLEAN,
