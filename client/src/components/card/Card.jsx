@@ -8,14 +8,12 @@ import {
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { CiShop } from "react-icons/ci";
 
-
 export default function Card({
   id,
-  name,
-  lastName,
+  fullName,
   location,
   shopName,
-  tattoos,
+  publications,
   image,
 }) {
   const imageLoader = ({ src }) => {
@@ -24,30 +22,27 @@ export default function Card({
 
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
 
- const nextSlide = () => {
-   setCurrentStartIndex((prevIndex) => {
-     let nextIndex = prevIndex + 1;
-    
-     if (nextIndex > tattoos.length - 1) {
-       nextIndex = 0;
-     }
-     return nextIndex;
-   });
- };
+  const nextSlide = () => {
+    setCurrentStartIndex((prevIndex) => {
+      let nextIndex = prevIndex + 1;
 
- const prevSlide = () => {
-   setCurrentStartIndex((prevIndex) => {
-     let nextIndex = prevIndex - 1;
-    
-     if (nextIndex < 0) {
-       nextIndex = tattoos.length - 1;
-     }
-     return nextIndex;
-   });
- };
+      if (nextIndex > tattoos.length - 1) {
+        nextIndex = 0;
+      }
+      return nextIndex;
+    });
+  };
+  console.log(publications);
+  const prevSlide = () => {
+    setCurrentStartIndex((prevIndex) => {
+      let nextIndex = prevIndex - 1;
 
- 
-
+      if (nextIndex < 0) {
+        nextIndex = tattoos.length - 1;
+      }
+      return nextIndex;
+    });
+  };
 
   return (
     <div className="m-5 p-4 bg-secondary-100 rounded shadow-lg text-white transition-transform transform">
@@ -60,13 +55,10 @@ export default function Card({
               loader={imageLoader}
               width={40}
               height={40}
-              alt={`${name} ${lastName} profile pic`}
+              alt={`${fullName} profile pic`}
             />
-            
-              <h1 className="font-bold col-span-2">
-                {name} {lastName}
-              </h1>
-            
+
+            <h1 className="font-bold col-span-2">{fullName}</h1>
           </div>
           <p className="text-right text-2xl col-span-2">☆☆☆☆☆</p>
         </div>
@@ -76,9 +68,10 @@ export default function Card({
         <button onClick={prevSlide}>
           <RiArrowLeftSLine />
         </button>
+
         <div className="flex justify-center items-center gap-x-8">
-          {tattoos && tattoos.length > 0 ? (
-            [...tattoos, ...tattoos, ...tattoos]
+          {publications && publications.length > 0 ? (
+            [...publications, ...publications, ...publications]
               .slice(currentStartIndex, currentStartIndex + 3)
               .map((tattoo, index) => (
                 <Image
@@ -109,5 +102,3 @@ export default function Card({
     </div>
   );
 }
-
-
