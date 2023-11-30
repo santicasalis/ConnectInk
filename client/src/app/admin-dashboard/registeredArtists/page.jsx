@@ -23,6 +23,7 @@ const RegisteredArtist = () => {
                   <div key={filter.id} className="mb-4 w-full">
                     <AdminCard
                       key={filter.id}
+                      id={filter.id}
                       name={filter.name}
                       lastName={filter.lastName}
                       location={filter.location}
