@@ -1,8 +1,7 @@
 const { TimeAvailabilityException } = require("../../db");
 
 const getTimeAvailabilityExceptionById = async (id) => {
-  const timeAvailabilityException = await TimeAvailabilityException.findByPk(
-    id
+  const timeAvailabilityException = await TimeAvailabilityException.findAll({where: {TattooArtistId: id}}
   );
 
   return timeAvailabilityException;

@@ -10,6 +10,11 @@ import {
 } from "react-icons/ri";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { CiShop } from "react-icons/ci";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Pagination, Navigation, Autoplay, Parallax } from 'swiper/modules';
 
 export default function Card({
   id,
@@ -73,35 +78,34 @@ export default function Card({
         </div>
       </div>
 
-      <div className="w-full p-2 flex justify-center items-center mb-10">
-        <button onClick={prevSlide}>
-          <RiArrowLeftSLine />
-        </button>
-
-        <div className="flex justify-center items-center gap-x-8">
-          {publications && publications.length > 0 ? (
-            [...publications, ...publications, ...publications]
-              .slice(currentStartIndex, currentStartIndex + 3)
-              .map((tattoo, index) => (
-                <Image
-                  key={index}
-                  loader={imageLoader}
-                  src={tattoo.image}
-                  width={200}
-                  height={200}
-                  alt={`tattoo ${index}`}
-                />
-              ))
-          ) : (
-            <div>
-              {" "}
-              <p>Cargando informacion... </p>{" "}
-            </div>
-          )}
-        </div>
-        <button onClick={nextSlide}>
-          <RiArrowRightSLine />
-        </button>
+      <div className="w-full h-[180px] p-2 flex justify-center items-center mb-10 ">
+      <Swiper
+                    spaceBetween={25}
+                    parallax={true}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 2000,
+                      disableOnInteraction: false,
+                    }}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    navigation={true}
+                    modules={[Parallax, Autoplay, Pagination, Navigation]}
+                    className="w-[50%] flex justify-center items-center relative  p-5  h-[250px] rounded "
+                  >
+                    {publications.map( publi => {
+                      return (
+                        <SwiperSlide className="object-cover">
+                          <img 
+                          src={publi.image}
+                          alt={` error al cargar img`}
+                          
+                          />
+                        </SwiperSlide>
+                      )
+                    })}
+                  </Swiper>
       </div>
 
       <div className="flex justify-center items-center w-full gap-x-2">
