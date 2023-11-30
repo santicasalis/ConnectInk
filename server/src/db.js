@@ -3,11 +3,13 @@ const { Sequelize } = require("sequelize");
 
 const fs = require("fs");
 const path = require("path");
+const Exception = require("./models/TimeAvailabilityException");
 const { DB_DEPLOY } = process.env;
 
 const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
+  //timezone: "America/Buenos_Aires",
 });
 
 const basename = path.basename(__filename);
@@ -42,17 +44,18 @@ const {
   TattooArtist,
   TattooStyle,
   TimeAvailability,
+  TimeAvailabilityException,
 } = sequelize.models;
 
 TattooArtist.belongsToMany(Customer, {
   through: "Appointment",
   timestamps: false,
-  unique: false
+  unique: false,
 });
 Customer.belongsToMany(TattooArtist, {
   through: "Appointment",
   timestamps: false,
-  unique: false
+  unique: false,
 });
 Customer.hasMany(Appointment);
 Appointment.belongsTo(Customer);
@@ -62,15 +65,7 @@ Appointment.belongsTo(TattooArtist);
 TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
 Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
 
-TattooArtist.belongsToMany(Publication, {
-  through: "ArtistPublication",
-  timestamps: false,
-});
-Publication.belongsToMany(TattooArtist, {
-  through: "ArtistPublication",
-  timestamps: false,
-});
-
+// TattooArtist - TattooStyles relation:
 TattooArtist.belongsToMany(TattooStyle, {
   through: "ArtistStyle",
   timestamps: false,
@@ -80,23 +75,21 @@ TattooStyle.belongsToMany(TattooArtist, {
   timestamps: false,
 });
 
-TattooArtist.belongsToMany(TimeAvailability, {
-  through: "ArtistAvailability",
-  timestamps: false,
-});
-TimeAvailability.belongsToMany(TattooArtist, {
-  through: "ArtistAvailability",
-  timestamps: false,
-});
+// TattooArtist - Publication relation:
+TattooArtist.hasMany(Publication);
+Publication.belongsTo(TattooArtist);
 
-TattooArtist.belongsToMany(PriceRange, {
-  through: "ArtistPriceRange",
-  timestamps: false,
-});
-PriceRange.belongsToMany(TattooArtist, {
-  through: "ArtistPriceRange",
-  timestamps: false,
-});
+// TattooArtist - TimeAvailability relation:
+TattooArtist.hasMany(TimeAvailability);
+TimeAvailability.belongsTo(TattooArtist);
+
+// TattooArtist - TimeAvailabilityException relation:
+TattooArtist.hasMany(TimeAvailabilityException);
+TimeAvailabilityException.belongsTo(TattooArtist);
+
+// TattooArtist - PriceRange relation:
+TattooArtist.hasMany(PriceRange);
+PriceRange.belongsTo(TattooArtist);
 
 module.exports = {
   ...sequelize.models,

@@ -7,7 +7,7 @@ const getTimeAvailabilityByIdHandler = async (req, res) => {
     if (timeAvailability) {
       return res.status(200).json(timeAvailability);
     } else {
-      res.status(404).json({ message: "timeAvailability not found" });
+      res.status(404).json({ message: "Time availability not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
