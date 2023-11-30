@@ -18,17 +18,17 @@ const createAppointmentHandler = async (req, res) => {
   //   res.status(400).json({ error: error.message });
   // }
 
-  const artistId = "f2c9231e-259b-42ce-953e-9007e26de11c"
-  const customerId = "c1afee1b-6705-49b7-a7c5-2e296a73a2ec"
+  const artistId = "300ca293-b849-4cd4-8d9d-042ae7f39927"
+  const customerId = "6b3c1e56-9cb1-40d0-bee7-28f59e65d851"
 
   try{
     const newCreateAppointment = await createAppointment(
       {
         artistId,
         customerId,
-        size: "pequeño",
-        bodyPlace: "brazo",
-        description: "descripcion",
+        size: "grande",
+        bodyPlace: "pierna",
+        description: "nhjsacjdosa",
         dateAndTime,
         duration: 6
       }
