@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   RiMailLine,
   RiLockLine,
@@ -17,11 +17,19 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { getAllArtists } from "../redux/features/artists/artistActions.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
+  const allArtist = useSelector((state) => state.artists);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllArtists());
+  }, []);
+
   const handleChange = (event) => {
     setData({
       ...data,
@@ -66,7 +74,15 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const user = auth.currentUser;
-      router.replace("/a-dashboard/home");
+      const emailFounded = allArtist.people.some(
+        (us) => us.email === user.email
+      );
+
+      if (emailFounded) {
+        router.replace("/a-dashboard/home");
+      } else {
+        router.replace("/user-dashboard/home");
+      }
     } catch (createUserError) {
       const errorCode = createUserError.code;
       const errorMessage = createUserError.message;
