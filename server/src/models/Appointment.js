@@ -1,4 +1,6 @@
 const { DataTypes } = require("sequelize");
+const {TattooArtist} = require("../models/TattooArtist")
+const {Customer} = require("../models/Customer")
 
 module.exports = (sequelize) => {
   sequelize.define("Appointment", {
@@ -31,6 +33,20 @@ module.exports = (sequelize) => {
     duration: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
+    // CustomerId: {
+    //   type: DataTypes.UUID,
+    //   references: {
+    //     model: Customer,
+    //     key: "id",
+    //   }
+    // },
+    // TattooArtistId: {
+    //   type: DataTypes.UUID,
+    //   references: {
+    //     model: TattooArtist,
+    //     key: "id",
+    //   }
+    // },
   });
 };

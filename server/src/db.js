@@ -37,6 +37,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const {
   Admin,
   Customer,
+  CustomerTattooArtistAppointment,
   Appointment,
   PriceRange,
   Publication,
@@ -47,20 +48,20 @@ const {
   TimeAvailabilityException,
 } = sequelize.models;
 
-TattooArtist.belongsToMany(Customer, {
-  through: "Appointment",
-  timestamps: false,
-  unique: false,
-});
-Customer.belongsToMany(TattooArtist, {
-  through: "Appointment",
-  timestamps: false,
-  unique: false,
-});
-Customer.hasMany(Appointment);
-Appointment.belongsTo(Customer);
-TattooArtist.hasMany(Appointment);
-Appointment.belongsTo(TattooArtist);
+// TattooArtist.belongsToMany(Customer, {
+//   through: "Appointment",
+//   timestamps: false,
+//   unique: false
+// });
+// Customer.belongsToMany(TattooArtist, {
+//   through: "Appointment",
+//   timestamps: false,
+//   unique: false
+// });
+Customer.belongsToMany(TattooArtist, { through: CustomerTattooArtistAppointment });
+TattooArtist.belongsToMany(Customer, { through: CustomerTattooArtistAppointment });
+CustomerTattooArtistAppointment.belongsTo(Appointment);
+Appointment.hasOne(CustomerTattooArtistAppointment);
 
 TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
 Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
