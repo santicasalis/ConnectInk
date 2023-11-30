@@ -11,13 +11,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { auth } from "../../firebase.js";
 import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../../firebase.js";
 
 const Login = () => {
   const router = useRouter();
@@ -43,7 +42,7 @@ const Login = () => {
       const userLastLog = result.user.metadata.lastLoginAt;
 
       if (Number(user) + 1 == userLastLog || user == userLastLog) {
-        Router.replace("/auth/register");
+        router.replace("/auth/register");
       } else {
         router.replace("/a-dashboard/home");
       }

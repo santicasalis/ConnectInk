@@ -7,10 +7,12 @@ import { getAllStyles } from "@/app/redux/features/styles/stylesActions";
 
 import { uploadImage } from "@/app/utils/uploadImage";
 import { validationSchemaArtist } from "../../components/tattooArtistRegister/validationSchemaArtist";
-import { emailSignUp } from "../../app/utils/emailSignUp";
+
 import axios from "axios";
-import { onAuthStateChanged } from "firebase/auth";
+
 import { auth } from "../../firebase";
+import { emailSignUp } from "../../app/utils/emailSignUp";
+import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -32,21 +34,21 @@ const TattoArtistRegister = () => {
     phone: "",
   });
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserInformation({
-          tokenId: user.uid,
-          userName: user.displayName,
-          image: user.photoURL,
-          email: user.email,
-          phone: user.phoneNumber,
-        });
-      } else {
-        setUserInformation(null);
-      }
-    });
-  }, [auth]);
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setUserInformation({
+  //         tokenId: user.uid,
+  //         userName: user.displayName,
+  //         image: user.photoURL,
+  //         email: user.email,
+  //         phone: user.phoneNumber,
+  //       });
+  //     } else {
+  //       setUserInformation(null);
+  //     }
+  //   });
+  // }, [auth]);
 
   return (
     <div>
@@ -72,11 +74,35 @@ const TattoArtistRegister = () => {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
               } else {
-                values.image = userInformation?.image;
+                values.image =
+                  userInformation?.image ||
+                  "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
 
               values.tokenId = await emailSignUp(values.email, values.password);
-              console.log(values);
+
+              // onAuthStateChanged(auth, (user) => {
+
+              //   if (user) {
+              //     // Si el usuario está autenticado, a
+              //     setUserInformation({
+              //       tokenId: user.uid,
+              //       userName: user.displayName,
+              //       image: user.photoURL,
+              //       email: user.email,
+              //       phone: user.phoneNumber,
+              //     });
+              //   } else {
+              //     // Si el usuario no está autenticado
+              //     setUserInformation({
+              //       tokenId: null,
+              //       userName: null,
+              //       image: null,
+              //       email: null,
+              //       phone: null,
+              //     });
+              //   }
+              // });
 
               await axios.post(`${urlBase}/tattooArtists`, values);
               toast.success(
