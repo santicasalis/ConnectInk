@@ -1,21 +1,21 @@
-const updateTimeAvailability = require("../../controllers/timeAvailabilityControllers/updateTimeAvailabilityException");
+const updateTimeAvailabilityException = require("../../controllers/timeAvailabilityExceptionControllers/updateTimeAvailabilityException");
 
-const updateTimeAvailabilityHandler = async (req, res) => {
+const updateTimeAvailabilityExceptionHandler = async (req, res) => {
   const { id } = req.params;
   const { date, initialHour, finalHour } = req.body;
 
   try {
-    const result = await updateTimeAvailability(
+    const timeAvailabilityException = await updateTimeAvailabilityException(
       id,
       date,
       initialHour,
       finalHour
     );
 
-    res.status(200).json(result);
+    res.status(200).json(timeAvailabilityException);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = updateTimeAvailabilityHandler;
+module.exports = updateTimeAvailabilityExceptionHandler;

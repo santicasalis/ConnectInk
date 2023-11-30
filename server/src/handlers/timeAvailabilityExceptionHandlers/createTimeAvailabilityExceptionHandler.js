@@ -1,18 +1,18 @@
-const createTimeAvailability = require("../../controllers/timeAvailabilityControllers/createTimeAvailabilityException");
+const createTimeAvailabilityException = require("../../controllers/timeAvailabilityExceptionControllers/createTimeAvailabilityException");
 
-const createTimeAvailabilityHandler = async (req, res) => {
-  const { artistId, date, initialHour, finalHour } = req.body;
+const createTimeAvailabilityExceptionHandler = async (req, res) => {
+  const { tattooArtistId, date, initialHour, finalHour } = req.body;
   try {
-    const timeAvailability = await createTimeAvailability(
-      artistId,
+    const timeAvailabilityException = await createTimeAvailabilityException(
+      tattooArtistId,
       date,
       initialHour,
       finalHour
     );
-    res.status(201).json(timeAvailability);
+    res.status(201).json(timeAvailabilityException);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = createTimeAvailabilityHandler;
+module.exports = createTimeAvailabilityExceptionHandler;

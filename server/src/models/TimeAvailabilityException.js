@@ -4,6 +4,12 @@ module.exports = (sequelize) => {
   sequelize.define(
     "TimeAvailabilityException",
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       date: {
         type: DataTypes.DATEONLY,
         allowNull: false,

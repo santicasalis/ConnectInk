@@ -4,7 +4,13 @@ module.exports = (sequelize) => {
   sequelize.define(
     "TimeAvailability",
     {
-      days: {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
+      day: {
         type: DataTypes.ENUM(
           "Lunes",
           "Martes",

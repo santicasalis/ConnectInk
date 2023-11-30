@@ -1,11 +1,13 @@
-const getTimeAvailabilityById = require("../../controllers/timeAvailabilityControllers/getTimeAvailabilityExceptionById");
+const getTimeAvailabilityExceptionById = require("../../controllers/timeAvailabilityExceptionControllers/getTimeAvailabilityExceptionById");
 
-const getTimeAvailabilityByIdHandler = async (req, res) => {
+const getTimeAvailabilityExceptionByIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
-    const timeAvailability = await getTimeAvailabilityById(id);
-    if (timeAvailability) {
-      return res.status(200).json(timeAvailability);
+    const timeAvailabilityException = await getTimeAvailabilityExceptionById(
+      id
+    );
+    if (timeAvailabilityException) {
+      return res.status(200).json(timeAvailabilityException);
     } else {
       res
         .status(404)
@@ -15,4 +17,4 @@ const getTimeAvailabilityByIdHandler = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-module.exports = getTimeAvailabilityByIdHandler;
+module.exports = getTimeAvailabilityExceptionByIdHandler;

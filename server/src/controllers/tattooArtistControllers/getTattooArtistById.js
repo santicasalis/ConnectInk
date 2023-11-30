@@ -1,10 +1,27 @@
-const { TattooArtist, TattooStyle, Publication } = require("../../db");
+const {
+  TattooArtist,
+  TattooStyle,
+  Publication,
+  TimeAvailability,
+  TimeAvailabilityException,
+} = require("../../db");
 
 const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {
     include: [
       { model: TattooStyle, attributes: ["name"] },
-      { model: Publication, attributes: ["description", "image", "createdAt", "updatedAt"] },
+      {
+        model: Publication,
+        attributes: ["description", "image", "createdAt", "updatedAt"],
+      },
+      {
+        model: TimeAvailability,
+        attributes: ["day", "initialHour", "finalHour"],
+      },
+      {
+        model: TimeAvailabilityException,
+        attributes: ["date", "initialHour", "finalHour"],
+      },
     ],
   });
   return {
@@ -28,9 +45,27 @@ const getTattooArtistById = async (id) => {
         description: publication.description,
         image: publication.image,
         createdAt: publication.createdAt,
-        updatedAt: publication.updatedAt
+        updatedAt: publication.updatedAt,
       };
     }),
+    timeAvailabilities: tattooArtist.TimeAvailabilities?.map(
+      (timeAvailability) => {
+        return {
+          day: timeAvailability.day,
+          initialHour: timeAvailability.initialHour,
+          finalHour: timeAvailability.finalHour,
+        };
+      }
+    ),
+    timeAvailabilityExceptions: tattooArtist.TimeAvailabilityExceptions?.map(
+      (timeAvailabilityException) => {
+        return {
+          date: timeAvailabilityException.date,
+          initialHour: timeAvailabilityException.initialHour,
+          finalHour: timeAvailabilityException.finalHour,
+        };
+      }
+    ),
   };
 };
 

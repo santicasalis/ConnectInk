@@ -9,6 +9,7 @@ const { DB_DEPLOY } = process.env;
 const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
+  //timezone: "America/Buenos_Aires",
 });
 
 const basename = path.basename(__filename);
@@ -64,15 +65,16 @@ Appointment.belongsTo(TattooArtist);
 TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
 Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
 
-TattooArtist.belongsToMany(Publication, {
-  through: "ArtistPublication",
+TattooArtist.belongsToMany(PriceRange, {
+  through: "ArtistPriceRange",
   timestamps: false,
 });
-Publication.belongsToMany(TattooArtist, {
-  through: "ArtistPublication",
+PriceRange.belongsToMany(TattooArtist, {
+  through: "ArtistPriceRange",
   timestamps: false,
 });
 
+// TattooArtist - TattooStyles relation:
 TattooArtist.belongsToMany(TattooStyle, {
   through: "ArtistStyle",
   timestamps: false,
@@ -82,23 +84,9 @@ TattooStyle.belongsToMany(TattooArtist, {
   timestamps: false,
 });
 
-TattooArtist.belongsToMany(TimeAvailability, {
-  through: "ArtistAvailability",
-  timestamps: false,
-});
-TimeAvailability.belongsToMany(TattooArtist, {
-  through: "ArtistAvailability",
-  timestamps: false,
-});
-
-TattooArtist.belongsToMany(PriceRange, {
-  through: "ArtistPriceRange",
-  timestamps: false,
-});
-PriceRange.belongsToMany(TattooArtist, {
-  through: "ArtistPriceRange",
-  timestamps: false,
-});
+// TattooArtist - Publication relation:
+TattooArtist.hasMany(Publication);
+Publication.belongsTo(TattooArtist);
 
 // TattooArtist - TimeAvailability relation:
 TattooArtist.hasMany(TimeAvailability);
