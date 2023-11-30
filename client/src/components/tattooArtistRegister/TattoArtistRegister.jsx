@@ -114,6 +114,7 @@ const TattoArtistRegister = () => {
                   hideProgressBar: true,
                 }
               );
+              await axios.post(`${urlBase}/nodemailer/welcome`, {email: values.email, name: values.name})
               router.replace("/a-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);

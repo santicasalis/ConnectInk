@@ -1,9 +1,9 @@
 require("dotenv").config();
 const { Router } = require("express");
-const transporter = require("../../config/nodemailer");
 const nodemailerRouter = Router();
-const { NODEMAILER_USER } = process.env;
 
-//nodemailerRouter.post()
+const welcomeHandler = require("../handlers/nodemailer/welcomeHandler")
+
+nodemailerRouter.post("/welcome", welcomeHandler)
 
 module.exports = nodemailerRouter;
