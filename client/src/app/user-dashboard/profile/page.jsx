@@ -17,7 +17,7 @@ const Profile = () => {
       <form>
         <div className='flex items-center mb-6'>
           <div className='w-1/4'>
-              <p >Foto de Pefil:</p>
+              <p >Foto de Pefil</p>
           </div>
           <div className='flex-1'>
               <div className='relative mb-2'>
