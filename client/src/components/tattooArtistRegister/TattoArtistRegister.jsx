@@ -1,22 +1,54 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllStyles } from "@/app/redux/features/styles/stylesActions";
 
-import { auth } from "../../firebase";
 import { uploadImage } from "@/app/utils/uploadImage";
 import { validationSchemaArtist } from "../../components/tattooArtistRegister/validationSchemaArtist";
-import { emailSignUp } from "../../app/utils/emailSignUp";
 
-const TattoArtistRegister = ({ userInformation }) => {
+import axios from "axios";
+
+import { auth } from "../../firebase";
+import { emailSignUp } from "../../app/utils/emailSignUp";
+import { onAuthStateChanged } from "firebase/auth";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
   const dispatch = useDispatch();
+  const urlBase = "http://localhost:3001";
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(getAllStyles());
   }, []);
+
+  const [userInformation, setUserInformation] = useState({
+    tokenId: "",
+    userName: "",
+    image: "",
+    email: "",
+    phone: "",
+  });
+
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setUserInformation({
+  //         tokenId: user.uid,
+  //         userName: user.displayName,
+  //         image: user.photoURL,
+  //         email: user.email,
+  //         phone: user.phoneNumber,
+  //       });
+  //     } else {
+  //       setUserInformation(null);
+  //     }
+  //   });
+  // }, [auth]);
 
   return (
     <div>
@@ -27,10 +59,11 @@ const TattoArtistRegister = ({ userInformation }) => {
           address: "",
           location: "",
           shopName: "",
-          image: null,
+          phone: userInformation?.phone || "",
+          image: "",
           password: "",
           passwordConfirm: "",
-          tattooStyles: [],
+          tattooStyle: [],
           tokenId: userInformation?.tokenId || "",
         }}
         validationSchema={validationSchemaArtist}
@@ -38,20 +71,53 @@ const TattoArtistRegister = ({ userInformation }) => {
           if (userInformation) {
             try {
               if (values.image && typeof values.image === "object") {
-                const imageUrl = await uploadImage(values.profileImage);
-                values.profileImage = imageUrl;
+                const imageUrl = await uploadImage(values.image);
+                values.image = imageUrl;
               } else {
-                values.image = userInformation?.image;
+                values.image =
+                  userInformation?.image ||
+                  "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
-              const response = await axios.post(
-                `${urlBase}/tattooArtists`,
-                info
+
+              values.tokenId = await emailSignUp(values.email, values.password);
+
+              // onAuthStateChanged(auth, (user) => {
+
+              //   if (user) {
+              //     // Si el usuario está autenticado, a
+              //     setUserInformation({
+              //       tokenId: user.uid,
+              //       userName: user.displayName,
+              //       image: user.photoURL,
+              //       email: user.email,
+              //       phone: user.phoneNumber,
+              //     });
+              //   } else {
+              //     // Si el usuario no está autenticado
+              //     setUserInformation({
+              //       tokenId: null,
+              //       userName: null,
+              //       image: null,
+              //       email: null,
+              //       phone: null,
+              //     });
+              //   }
+              // });
+
+              await axios.post(`${urlBase}/tattooArtists`, values);
+              toast.success(
+                `${values.fullName} se ha registrado existosamente`,
+                {
+                  className: "toastSuccess",
+                  position: toast.POSITION.BOTTOM_RIGHT,
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                }
               );
+              router.replace("/a-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
             }
-          } else {
-            const tokenId = emailSignUp(values.email, values.password);
           }
           setSubmitting(false);
         }}
@@ -60,10 +126,22 @@ const TattoArtistRegister = ({ userInformation }) => {
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
             <div className="info-artist mb-4">
               <Field
+                type="text"
+                name="fullName"
+                placeholder="Nombre completo"
+                className="p-2 mb-3 shadow-md block w-full"
+              />
+              <ErrorMessage
+                name="fullName"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+
+              <Field
                 type="email"
                 name="email"
                 placeholder="Email"
-                className="p-2 mb-3 shadow-md"
+                className="p-2 mb-3 shadow-md block w-full"
               />
               <ErrorMessage
                 name="email"
@@ -108,7 +186,7 @@ const TattoArtistRegister = ({ userInformation }) => {
 
               <h3 className="text-lg mb-3 font-bold">Tattoo Styles</h3>
               <FieldArray
-                name="tattooStyles"
+                name="tattooStyle"
                 render={(arrayHelpers) => (
                   <div>
                     {styles.map((style) => (
@@ -117,12 +195,12 @@ const TattoArtistRegister = ({ userInformation }) => {
                           name="tattooStyles"
                           type="checkbox"
                           value={style.name}
-                          checked={values.tattooStyles.includes(style.name)}
+                          checked={values.tattooStyle.includes(style.name)}
                           onChange={(e) => {
                             if (e.target.checked) arrayHelpers.push(style.name);
                             else
                               arrayHelpers.remove(
-                                values.tattooStyles.indexOf(style.name)
+                                values.tattooStyle.indexOf(style.name)
                               );
                           }}
                         />
@@ -133,7 +211,7 @@ const TattoArtistRegister = ({ userInformation }) => {
                 )}
               />
               <ErrorMessage
-                name="tattooStyles"
+                name="tattooStyle"
                 component="div"
                 className="text-red-500 text-sm"
               />

@@ -17,14 +17,14 @@ import "../explore/page.css";
 
 export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
-  
+
   const dispatch = useDispatch();
-  
+
   const styles = useSelector((state) => state.styles.names);
-  const [filters, setFilters] = useState({ 
+  const [filters, setFilters] = useState({
     location: "",
-    tattoStyle: [] 
-    });
+    tattoStyle: [],
+  });
 
   useEffect(() => {
     dispatch(getAllStyles());
@@ -36,13 +36,16 @@ export default function ExplorePage() {
   const artistsPerPage = 5;
   const indexOfLastArtist = currentPage * artistsPerPage;
   const indexOfFirstArtist = indexOfLastArtist - artistsPerPage;
-  const artistsToDisplay = filtered.slice( indexOfFirstArtist,indexOfLastArtist );
+  const artistsToDisplay = filtered.slice(
+    indexOfFirstArtist,
+    indexOfLastArtist
+  );
+  console.log(artistsToDisplay);
   const totalArtists = filtered.length;
-  
+  console.log(totalArtists);
   const onPageChange = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  }
-
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="w-full">
@@ -114,23 +117,23 @@ export default function ExplorePage() {
 
             <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
               <div className="scroll-content w-full">
-                <Paginate 
-                  artistsPerPage={artistsPerPage} 
-                  totalArtists={totalArtists} 
-                  currentPage={currentPage} 
+                <Paginate
+                  artistsPerPage={artistsPerPage}
+                  totalArtists={totalArtists}
+                  currentPage={currentPage}
                   onPageChange={onPageChange}
                 />
                 {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full">
                     <Card
                       id={filter.id}
-                      key={filter.id}
-                      name={filter.name}
-                      lastName={filter.lastName}
+                      fullName={filter.fullName}
                       location={filter.location}
                       shopName={filter.shopName}
-                      tattoos={filter.publications}
-                      image={filter.image}
+                      publications={filter.publications}
+                      image={
+                        "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg"
+                      }
                     />
                   </div>
                 ))}
@@ -138,7 +141,6 @@ export default function ExplorePage() {
             </div>
           </div>
         </section>
-      
       </div>
     </div>
   );

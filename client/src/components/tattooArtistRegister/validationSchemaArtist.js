@@ -2,14 +2,15 @@ import * as Yup from "yup";
 
 export const validationSchemaArtist = Yup.object().shape({
   shopName: Yup.string().required("Required").max(30),
+  fullName: Yup.string().required("Required").max(30),
   address: Yup.string().required("Required").max(30),
   location: Yup.string().required("Required").max(30),
 
-  tattooStyles: Yup.array()
+  tattooStyle: Yup.array()
     .of(Yup.string())
     .required("At least one style is required"),
 
-  image: Yup.mixed().required("A profile image is required"),
+  // image: Yup.mixed().required("A profile image is required"),
 
   password: Yup.string()
     .required("Required")

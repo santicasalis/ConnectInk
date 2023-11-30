@@ -27,8 +27,7 @@ const getTattooArtists = async () => {
   });
   const tattooArtistCleaner = allTattooArtists.map((tattooArtist) => ({
     id: tattooArtist.id,
-    name: tattooArtist.name,
-    lastName: tattooArtist.lastName,
+    fullName: tattooArtist.fullName,
     email: tattooArtist.email,
     phone: tattooArtist.phone,
     instagram: tattooArtist.instagram,
