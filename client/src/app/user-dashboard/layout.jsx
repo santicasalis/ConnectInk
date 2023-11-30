@@ -14,6 +14,7 @@ export default function DashboardLayout({ children }) {
                     <Header/>
                     <div className="h-[92vh] overflow-y-scroll p-8 flex flex-col items-center font-bold text-gray-300 text-sm w-full">
                         {children}
+                        
                     </div>
 
                 </div>
