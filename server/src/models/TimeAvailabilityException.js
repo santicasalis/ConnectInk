@@ -2,18 +2,10 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "TimeAvailability",
+    "TimeAvailabilityException",
     {
-      days: {
-        type: DataTypes.ENUM(
-          "Lunes",
-          "Martes",
-          "Miércoles",
-          "Jueves",
-          "Viernes",
-          "Sábado",
-          "Domingo"
-        ),
+      date: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       initialHour: {

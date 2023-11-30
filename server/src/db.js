@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 
 const fs = require("fs");
 const path = require("path");
+const Exception = require("./models/TimeAvailabilityException");
 const { DB_DEPLOY } = process.env;
 
 const sequelize = new Sequelize(DB_DEPLOY, {
@@ -42,17 +43,18 @@ const {
   TattooArtist,
   TattooStyle,
   TimeAvailability,
+  TimeAvailabilityException,
 } = sequelize.models;
 
 TattooArtist.belongsToMany(Customer, {
   through: "Appointment",
   timestamps: false,
-  unique: false
+  unique: false,
 });
 Customer.belongsToMany(TattooArtist, {
   through: "Appointment",
   timestamps: false,
-  unique: false
+  unique: false,
 });
 Customer.hasMany(Appointment);
 Appointment.belongsTo(Customer);
@@ -97,6 +99,14 @@ PriceRange.belongsToMany(TattooArtist, {
   through: "ArtistPriceRange",
   timestamps: false,
 });
+
+// TattooArtist - TimeAvailability relation:
+TattooArtist.hasMany(TimeAvailability);
+TimeAvailability.belongsTo(TattooArtist);
+
+// TattooArtist - TimeAvailabilityException relation:
+TattooArtist.hasMany(TimeAvailabilityException);
+TimeAvailabilityException.belongsTo(TattooArtist);
 
 module.exports = {
   ...sequelize.models,

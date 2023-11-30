@@ -1,4 +1,4 @@
-const deleteTimeAvailability = require("../../controllers/timeAvailabilityControllers/deleteTimeAvailability");
+const deleteTimeAvailability = require("../../controllers/timeAvailabilityControllers/deleteTimeAvailabilityException");
 
 const deleteTimeAvailabilityHandler = async (req, res) => {
   const { id } = req.params;

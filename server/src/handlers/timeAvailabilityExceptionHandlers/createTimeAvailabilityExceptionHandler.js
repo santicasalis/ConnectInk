@@ -1,13 +1,13 @@
-const createTimeAvailability = require("../../controllers/timeAvailabilityControllers/createTimeAvailability");
+const createTimeAvailability = require("../../controllers/timeAvailabilityControllers/createTimeAvailabilityException");
 
 const createTimeAvailabilityHandler = async (req, res) => {
-  const {artistId, date, initialHour, finalHour } = req.body;
+  const { artistId, date, initialHour, finalHour } = req.body;
   try {
     const timeAvailability = await createTimeAvailability(
-        artistId,
-        date,
-        initialHour,
-        finalHour,
+      artistId,
+      date,
+      initialHour,
+      finalHour
     );
     res.status(201).json(timeAvailability);
   } catch (error) {
