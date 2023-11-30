@@ -65,15 +65,6 @@ Appointment.belongsTo(TattooArtist);
 TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
 Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
 
-TattooArtist.belongsToMany(PriceRange, {
-  through: "ArtistPriceRange",
-  timestamps: false,
-});
-PriceRange.belongsToMany(TattooArtist, {
-  through: "ArtistPriceRange",
-  timestamps: false,
-});
-
 // TattooArtist - TattooStyles relation:
 TattooArtist.belongsToMany(TattooStyle, {
   through: "ArtistStyle",
@@ -95,6 +86,10 @@ TimeAvailability.belongsTo(TattooArtist);
 // TattooArtist - TimeAvailabilityException relation:
 TattooArtist.hasMany(TimeAvailabilityException);
 TimeAvailabilityException.belongsTo(TattooArtist);
+
+// TattooArtist - PriceRange relation:
+TattooArtist.hasMany(PriceRange);
+PriceRange.belongsTo(TattooArtist);
 
 module.exports = {
   ...sequelize.models,
