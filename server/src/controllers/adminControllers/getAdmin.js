@@ -1,6 +1,6 @@
 const {Admin} = require("../../db")
 
-async function getAppointmentController(){
+async function getAdminController(){
     const admins = Admin.findAll()
 
     return admins

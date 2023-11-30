@@ -8,7 +8,7 @@ const SideBar = () => {
   const [showMenu,setShowMenu] = useState(false)
   return (
     <>
-        <div className={`xl:h-[100vh] overflow-y-scroll fixed xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full top-0 bg-secondary-900 p-4 flex flex-col justify-between z-50 ${showMenu ? "left-0" : "-left-full"} transition-all`}>
+        <div className={`xl:h-[100vh] overflow-y-scroll fixed xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full top-0 bg-secondary-900 p-4 flex flex-col justify-between z-30 ${showMenu ? "left-0" : "-left-full"} transition-all`}>
           <div>
             <h1 className='text-center text-2xl font-bold mb-10 font-rocksalt'>
                 Admin<span className='text-primary text-4xl'>.</span>

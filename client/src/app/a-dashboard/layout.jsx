@@ -1,18 +1,24 @@
+'use client'
+
 import SideBar from "@/components/sidebar/SideBar";
 import Header from "@/components/header/Header";
-import Link from 'next/link'
+import Modal from "@/components/modal/Modal";
+import ModalCreate from "@/components/modal/ModalCreate";
 
 export default function DashboardLayout({ children }) {
     return (
-          <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6">
+          <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6 relative">
+                <Modal className='absolute '/>
+                <ModalCreate className='absolute' />
                 <SideBar />
                 <div className="xl:col-span-5 ">
                     <Header/>
                     <div className="h-[92vh] overflow-y-scroll p-8 flex flex-col items-center font-bold text-gray-300 text-sm w-full">
                         {children}
                     </div>
+
                 </div>
           </div>
     )
-  }
+}
   

@@ -5,7 +5,7 @@ const putCustomerHandler = async (req, res) => {
     const { fullName, email, password, phone, image } = req.body
     
     try {
-        const result = await updateCustomer(id, name, lastName, email, password, phone);
+        const result = await updateCustomer(id, fullName, email, password, phone, image);
 
         res.status(200).json(result)
     } catch (error) {
