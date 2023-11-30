@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllStyles } from "./redux/features/styles/stylesActions";
 import { getAllArtists } from "./redux/features/artists/artistActions";
+import { getPostsAction } from "./redux/features/posts/PostsActions";
 // import { signOut } from "firebase/auth";
 // import { auth } from "../firebase";
 
@@ -14,6 +15,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
+    dispatch(getPostsAction());
     // signOut(auth)
     //   .then(() => {
     //     // Sign-out successful.
