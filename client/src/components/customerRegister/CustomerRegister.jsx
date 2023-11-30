@@ -5,9 +5,12 @@ import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const CustomerRegister = ({ userInformation }) => {
   const urlBase = "http://localhost:3001";
+  const router = useRouter();
 
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
@@ -36,25 +39,38 @@ const CustomerRegister = ({ userInformation }) => {
           password: "",
           passwordConfirm: "",
           tokenId: userInformation?.tokenId || "",
+          acceptedTerms: false,
         }}
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log(userInformation);
-          if (userInformation) {
+          if (values) {
             try {
               console.log(values.image);
               if (values.image && typeof values.image === "object") {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
               } else {
-                values.image = userInformation?.image;
+                values.image =
+                  userInformation?.image ||
+                  "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
-              const response = await axios.post(`${urlBase}/customers`);
+
+              values.tokenId = await emailSignUp(values.email, values.password);
+              const response = await axios.post(`${urlBase}/customers`, values);
+
+              toast.success(
+                `${values.fullName} se ha registrado existosamente`,
+                {
+                  className: "toastSuccess",
+                  position: toast.POSITION.BOTTOM_RIGHT,
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                }
+              );
+              router.replace("/user-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
             }
-          } else {
-            const tokenId = emailSignUp(values.email, values.password);
           }
           setSubmitting(false);
         }}

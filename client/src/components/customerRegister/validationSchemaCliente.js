@@ -22,8 +22,7 @@ export const validationSchemaClient = Yup.object().shape({
 
   image: Yup.mixed().nullable(),
 
-  privacyPolicy: Yup.boolean().oneOf(
-    ['"on"'],
-    "You must accept the privacy policy"
-  ),
+  acceptedTerms: Yup.boolean()
+    .oneOf([true], "You must accept the privacy policy")
+    .required("Required"),
 });
