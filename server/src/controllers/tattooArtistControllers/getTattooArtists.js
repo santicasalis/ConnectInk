@@ -4,6 +4,7 @@ const {
   Publication,
   TimeAvailability,
   TimeAvailabilityException,
+  PriceRange
 } = require("../../db");
 
 const getTattooArtists = async () => {
@@ -23,6 +24,10 @@ const getTattooArtists = async () => {
         model: TimeAvailabilityException,
         attributes: ["date", "initialHour", "finalHour"],
       },
+      {
+        model: PriceRange,
+        attributes: ["size", "priceMin", "priceMax"]
+      }
     ],
   });
   const tattooArtistCleaner = allTattooArtists.map((tattooArtist) => ({
@@ -66,6 +71,16 @@ const getTattooArtists = async () => {
         };
       }
     ),
+    priceRanges: tattooArtist.PriceRanges?.map(
+      (priceRange) => {
+        return {
+          size: priceRange.size,
+          priceMin: priceRange.priceMin,
+          priceMax: priceRange.priceMax
+        }
+
+      }
+    )
   }));
 
   return tattooArtistCleaner;
