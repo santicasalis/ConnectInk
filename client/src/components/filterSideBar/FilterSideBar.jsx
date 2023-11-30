@@ -54,25 +54,6 @@ export default function FilterSideBar() {
   // }, [artistOrder]);
 
 
-  useEffect(() => {
-    const orderAndFilter = async () => {
-        const filters = {
-            location: filters.location,
-            tattooStyle: styleSelected,
-            artistName: filters.artistName,
-        };
-
-        const sortCriteria = {
-            tag: artistOrder,
-        };
-
-        dispatch(OrderAndFilterArtists(filters, sortCriteria));
-    };
-
-    orderAndFilter();
-}, [artistOrder, filters.location, styleSelected, filters.artistName]);
-
-
 
 
   // const handleSortChange = (event) => {
@@ -82,46 +63,48 @@ export default function FilterSideBar() {
 
   return (
     <div>
-      <div className="bg-secondary-100 p-4 flex flex-col transition-all">
-        <h2 className="text-center text-2xl font-bold mb-[50px]">
+      <div className="bg-secondary-900 p-4 flex flex-col transition-all pt-10">
+        <h2 className="text-center text-[35px] font-bold mb-[50px] font-rocksalt">
           Filtros <span className="text-primary text-4xl">.</span>
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center justify-center mb-8">
+          <div className="flex flex-col items-center w-full justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
+              className="text-[22px] font-weight:800 flex items-center px-4 py-1 justify-center font-newrocker"
               htmlFor="city"
             >
               Ciudad:
             </label>
             <input
-              className="mb-8 mx-auto text-black"
+              className="mb-8 w-[60%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               list="cities"
               id="city"
               name="location"
               onChange={handleChange}
+              placeholder="Buscar por ciudad"
             />
           </div>
 
           <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
+              className="text-[22px] font-weight:800 flex items-center px-4 py-1 justify-center font-newrocker"
               htmlFor="name"
             >
               Nombre:
             </label>
             <input
-              className="mb-8 mx-auto text-black"
+              className="mb-8 w-[60%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               list="names"
               id="name"
               name="name"
               onChange={handleChange}
+              placeholder="Buscar por nombre"
             />
           </div>
 
           <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
+              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6 font-newrocker text-[22px]"
               htmlFor="style"
             >
               Estilo de Tatuaje:
@@ -131,10 +114,10 @@ export default function FilterSideBar() {
                 const isSelected = styleSelected.includes(style.name);
                 return (
                   <label
-                    className={`flex items-center gap-2 px-3 py-1 border rounded cursor-pointer ${
+                    className={`flex items-center gap-2 px-3 py-1 border font-newrocker rounded cursor-pointer ${
                       isSelected
-                        ? "bg-blue-500 text-white"
-                        : "bg-white text-black"
+                        ? "bg-primary/75 text-black border-primary border-[1px]"
+                        : "bg-transparent border-[1px] border-primary text-primary rounded-lg"
                     }`}
                     htmlFor={style.name}
                     key={style.name}

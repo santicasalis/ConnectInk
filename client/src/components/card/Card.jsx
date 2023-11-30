@@ -1,4 +1,7 @@
+'use client'
+
 import React, { useState } from "react";
+import { RiStarLine } from "react-icons/ri";
 import Image from "next/image";
 import {
   RiArrowRightSLine,
@@ -45,7 +48,7 @@ export default function Card({
   };
 
   return (
-    <div className="m-5 p-4 bg-secondary-100 rounded shadow-lg text-white transition-transform transform">
+    <div className="w-[900px] mb-5 p-4 bg-secondary-900 rounded-2xl  text-white transition-transform transform">
       <div className="w-full mb-4">
         <div className="flex justify-between items-center">
           <div className="flex gap-x-1 items-center">
@@ -60,7 +63,13 @@ export default function Card({
 
             <h1 className="font-bold col-span-2">{fullName}</h1>
           </div>
-          <p className="text-right text-2xl col-span-2">☆☆☆☆☆</p>
+          <div className="flex gap-x-0.5">
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+          </div>
         </div>
       </div>
 
