@@ -1,14 +1,47 @@
-import React from 'react'
+"use client"
+import React, { useEffect , useState} from 'react'
 import {RiEdit2Line} from "react-icons/ri"
+import { useSelector,useDispatch } from 'react-redux'
+import PostCards from '@/components/postCards/PostCards'
+import { getAllPosts } from '../redux/features/posts/postsActions'
 
-const ADashboard = () => {
+const UDashboard = () => {
+  const dispatch = useDispatch()
   
+  // const [publications, setPublications]= useState([])
+  const[loading, setLoading]= useState(true)
+
+  useEffect(() => {
+    dispatch(getAllPosts())
+  }, [])
+  const posts = useSelector((state)=>state.posts)
+  console.log(posts, "METENESCANSADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+  // useEffect(()=>{
+  //   setPublications(posts)
+  // },[posts])
+
+
   return (
     <div className='bg-secondary-900 p-8 rounded-xl w-full'>
-      <h1 className='text-4xl'> Home</h1>
+      <h1 className='text-4xl'> Incio </h1>
       <hr className='my-8 border-gray-500'/>
+        <div>
+          { posts &&
+            posts?.map((post) => (
+              <PostCards
+                key={post.id}
+                id={post.id}
+                fullName={post.fullName}
+                image={post.image}
+                description={post.description}
+              />
+            ))
+            
+            }
+          
+        </div>
     </div>
   )
 }
 
-export default ADashboard
+export default UDashboard

@@ -6,6 +6,7 @@ import stylesReducer from "./features/styles/stylesSlice"
 import userReducer from "./features/user/userSlice"
 import modalEditReducer from "./features/modalEdit/modalEditSlice"
 import modalCreateReducer from "./features/modalCreate/modalCreateSlice"
+import postsReducer from "./features/posts/postsSlice"
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
         user: userReducer,
         modalEdit: modalEditReducer,
         modalCreate: modalCreateReducer,
+        posts: postsReducer,
     }
 })
