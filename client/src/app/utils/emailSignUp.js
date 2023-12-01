@@ -11,6 +11,8 @@ export const emailSignUp = async (email, password) => {
 
     const user = userCredential.user;
 
+    console.log(user)
+
     return user.uid;
   } catch (createUserError) {
     const errorCode = createUserError.code;

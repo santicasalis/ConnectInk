@@ -9,7 +9,7 @@ const login = async (tokenId) => {
       { model: TattooStyle, attributes: ["name"] },
       {
         model: Publication,
-        attributes: ["description", "image", "createdAt", "updatedAt"],
+        attributes: ["id", "description", "image", "createdAt", "updatedAt"],
       },
       {
         model: TimeAvailability,
@@ -39,11 +39,13 @@ const login = async (tokenId) => {
       shopName: user.shopName,
       image: user.image,
       disabled: user.disabled,
+      userType: user.userType,
       tattooStyles: user.TattooStyles?.map(
         (tattooStyle) => tattooStyle.name
       ),
       publications: user.Publications?.map((publication) => {
         return {
+          id: publication.id,
           description: publication.description,
           image: publication.image,
           createdAt: publication.createdAt,

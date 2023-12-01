@@ -24,6 +24,7 @@ const RegistrationForm = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user)
         setUserInformation({
           tokenId: user.uid,
           userName: user.displayName,

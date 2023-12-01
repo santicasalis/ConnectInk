@@ -16,7 +16,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const TattoArtistRegister = () => {
+const TattoArtistRegister = ({userInformation}) => {
   const styles = useSelector((state) => state.styles.names);
   const dispatch = useDispatch();
   const urlBase = "http://localhost:3001";
@@ -26,35 +26,12 @@ const TattoArtistRegister = () => {
     dispatch(getAllStyles());
   }, []);
 
-  const [userInformation, setUserInformation] = useState({
-    tokenId: "",
-    userName: "",
-    image: "",
-    email: "",
-    phone: "",
-  });
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setUserInformation({
-  //         tokenId: user.uid,
-  //         userName: user.displayName,
-  //         image: user.photoURL,
-  //         email: user.email,
-  //         phone: user.phoneNumber,
-  //       });
-  //     } else {
-  //       setUserInformation(null);
-  //     }
-  //   });
-  // }, [auth]);
-
   return (
     <div>
       <Formik
         initialValues={{
           fullName: "",
+          userName: userInformation?.userName || "",
           email: userInformation?.email || "",
           address: "",
           location: "",
@@ -150,6 +127,7 @@ const TattoArtistRegister = () => {
                 className="text-red-500 text-sm"
               />
               <Field
+                value={values.email}
                 type="text"
                 name="shopName"
                 placeholder="Shop Name"
@@ -172,7 +150,7 @@ const TattoArtistRegister = () => {
                 component="div"
                 className="text-red-500 text-sm"
               />
-
+              {console.log(values)}
               <Field
                 type="text"
                 name="location"
@@ -241,29 +219,34 @@ const TattoArtistRegister = () => {
               )}
             </div>
 
-            <Field
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="p-2 mb-3 shadow-md block w-full"
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500 text-sm"
-            />
 
-            <Field
-              type="password"
-              name="passwordConfirm"
-              placeholder="Confirm Password"
-              className="p-2 mb-3 shadow-md block w-full"
-            />
-            <ErrorMessage
-              name="passwordConfirm"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            {!userInformation?.email &&
+            <div>
+              <Field
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="p-2 mb-3 shadow-md block w-full"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+  
+              <Field
+                type="password"
+                name="passwordConfirm"
+                placeholder="Confirm Password"
+                className="p-2 mb-3 shadow-md block w-full"
+              />
+              <ErrorMessage
+                name="passwordConfirm"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+            }
 
             <button
               type="submit"

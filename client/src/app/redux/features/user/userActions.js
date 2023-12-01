@@ -10,6 +10,8 @@ export const getUserById =
         tokenId
       });
 
+      console.log(response.data)
+      
       dispatch(getUser(response.data))
       localStorage.setItem("user", JSON.stringify(response.data))
     } catch (error) {

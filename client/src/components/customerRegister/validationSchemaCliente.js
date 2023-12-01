@@ -2,17 +2,23 @@ import * as Yup from "yup";
 
 export const validationSchemaClient = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required").max(30),
-  password: Yup.string()
+  password: Yup.string().when("userName", {
+    is: false,
+    then: Yup.string()
     .required("Required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
       "Must contain 6-15 characters, one uppercase, one lowercase, one number and one special character"
     )
-    .max(15),
-  passwordConfirm: Yup.string()
+    .max(15)
+  }),
+  passwordConfirm: Yup.string().when("userName", {
+    is: false,
+    then: Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .max(30),
+    .max(30)
+  }),
   fullName: Yup.string().required("Required").max(30),
 
   mobile: Yup.string()

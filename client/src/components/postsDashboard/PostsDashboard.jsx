@@ -5,10 +5,10 @@ import PostDashboard from "../postDashboard/PostDashboard";
 import { useSelector } from "react-redux";
 
 const PostsDashboard = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.logedInUser);
   return (
     <div className="flex flex-col items-center w-full ">
-      {user?.publications.length > 0 ? (
+      {user?.publications?.length > 0 ? (
         user.publications.map((publication) => (
           <PostDashboard
             key={publication.id}
