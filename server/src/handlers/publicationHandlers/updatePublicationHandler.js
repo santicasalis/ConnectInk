@@ -2,9 +2,9 @@ const updatePublication = require("../../controllers/publicationControllers/upda
 
 const updatePublicationHandler = async (req, res) => {
   const { id } = req.params;
-  const { title, description } = req.body;
+  const { description } = req.body;
   try {
-    const updatedPublication = await updatePublication(id, title, description);
+    const updatedPublication = await updatePublication(id, description);
     res.status(200).json(updatedPublication);
   } catch (error) {
     res.status(400).json({ error: error.message });
