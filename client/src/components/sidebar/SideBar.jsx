@@ -15,7 +15,7 @@ const SideBar = () => {
       >
         <div>
           <h1 className="text-center text-2xl font-bold mb-10 font-rocksalt">
-            Admin<span className="text-primary text-4xl">.</span>
+            Artista<span className="text-primary text-4xl">.</span>
           </h1>
           <ul>
             <li>
@@ -36,20 +36,20 @@ const SideBar = () => {
                 </span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href=""
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20  hover:bg-secondary-100 transition-colors"
               >
                 <RiBarChart2Line className="text-primary" /> Analytic
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href=""
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
               >
-                <RiStarLine className="text-primary" /> Reviews
+                <RiStarLine className="text-primary" /> Reseñas
               </Link>
             </li>
             <li>
@@ -57,7 +57,7 @@ const SideBar = () => {
                 href=""
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
               >
-                <RiMessage3Line className="text-primary" /> Message
+                <RiMessage3Line className="text-primary" /> Precios
               </Link>
             </li>
             <li>
@@ -65,7 +65,7 @@ const SideBar = () => {
                 href="/a-dashboard/calendar"
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
               >
-                <RiCalendarCheckLine className="text-primary" /> Calendar
+                <RiCalendarCheckLine className="text-primary" /> Calendario
               </Link>
             </li>
           </ul>

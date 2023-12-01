@@ -70,7 +70,7 @@ const Header = () => {
     <header className=" bg-secondary-900 h-[8vh] md:h-[8vh] border-b border-gray-600 p-8 flex items-center justify-end">
       <nav className="w-full flex items-center gap-x-4 justify-between">
         <Link
-          href="/"
+          href="/explore"
           className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2"
         >
           <RiReplyLine className="" />
