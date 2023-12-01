@@ -75,7 +75,7 @@ body {
 }
 
 .custom-gradient-login{
-  background: linear-gradient(to bottom, #0a0a0a, rgba(0, 0, 0, 0.7));
+  background: linear-gradient(to bottom, #383838bb, rgba(0, 0, 0, 0.4));
 }
 
 .gotic{

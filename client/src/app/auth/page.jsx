@@ -94,7 +94,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-secondary-900 opacity-60 absolute rounded-xl w-full xl:w-1/3 lg:w-1/4 md:w-1/2 p-9">
+    <div className="bg-secondary-900 absolute rounded-xl w-full xl:w-1/3 lg:w-1/4 md:w-1/2 p-9">
       <button onClick={googleLogIn} className="w-full ">
         <img
           src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"

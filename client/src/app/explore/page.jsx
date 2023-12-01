@@ -71,7 +71,7 @@ export default function ExplorePage() {
                   </p>
                 </div>
                 
-                <div className="flex-1 rounded-lg overflow-hidden shadow-2xl" >
+                <div className="flex-1 rounded-lg  shadow-2xl" >
                   <Swiper
                     spaceBetween={25}
                     parallax={true}
