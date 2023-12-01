@@ -64,6 +64,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      userType: {
+        type: DataTypes.STRING,
+        defaultValue: "artist",
+      }
     },
     { timestamps: false }
   );

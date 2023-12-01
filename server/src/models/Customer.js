@@ -41,6 +41,10 @@ module.exports = (sequelize) => {
     disabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    userType: {
+      type: DataTypes.STRING,
+      defaultValue: "customer",
     }
   },
     { timestamps: false }

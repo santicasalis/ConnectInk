@@ -25,9 +25,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        admin: {
+        userType: {
             type: DataTypes.STRING,
-            defaultValue: true
+            defaultValue: "admin",
         },
         disabled: {
             type: DataTypes.STRING,
