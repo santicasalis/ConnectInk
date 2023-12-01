@@ -124,8 +124,8 @@ const TopBarOptions = () => {
               onChange={handleSortChange}
             >
               <option value="">Sin orden</option>
-              <option value="asc">A-Z</option>
-              <option value="desc">Z-A</option>
+              <option value="asc">Z-A</option>
+              <option value="desc">A-Z</option>
             </select>
           </div>
         </nav>

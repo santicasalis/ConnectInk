@@ -24,10 +24,12 @@ export const artistsSlice = createSlice({
         orderArtist:(state,action)=>{
             switch(action.payload){
                 case "asc":
-                state.filtered = state.filtered.sort((a, b) => a.name.localeCompare(b.name));
+                state.filtered = state.filtered.sort((a, b) => a.fullName.localeCompare(b.fullName));
                 break;
                 case "desc":
-                state.filtered = state.filtered.sort((a, b) => b.name.localeCompare(a.name));
+                state.filtered = state.filtered.sort((a, b) =>
+                  b.fullName.localeCompare(a.fullName)
+                );
                 break;
             }
         },
