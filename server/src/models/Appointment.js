@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-const {TattooArtist} = require("../models/TattooArtist")
-const {Customer} = require("../models/Customer")
 
 module.exports = (sequelize) => {
   sequelize.define("Appointment", {
@@ -11,7 +9,14 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     size: {
-      type: DataTypes.ENUM("pequeño", "pequeño a color", "mediano", "mediano a color", "grande", "grande a color"),
+      type: DataTypes.ENUM(
+        "Pequeño",
+        "Pequeño a color",
+        "Mediano",
+        "Mediano a color",
+        "Grande",
+        "Grande a color"
+      ),
       allowNull: false,
     },
     image: {
@@ -22,7 +27,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description:{
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -34,19 +39,5 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    // CustomerId: {
-    //   type: DataTypes.UUID,
-    //   references: {
-    //     model: Customer,
-    //     key: "id",
-    //   }
-    // },
-    // TattooArtistId: {
-    //   type: DataTypes.UUID,
-    //   references: {
-    //     model: TattooArtist,
-    //     key: "id",
-    //   }
-    // },
   });
 };

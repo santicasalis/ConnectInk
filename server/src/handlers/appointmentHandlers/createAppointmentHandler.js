@@ -1,22 +1,35 @@
 const createAppointment = require("../../controllers/appointmentControllers/createAppointment");
 
 const createAppointmentHandler = async (req, res) => {
-  const { artistId, customerId, size, image, bodyPlace, description, dateAndTime } = req.body;
+  const {
+    tattooArtistId,
+    customerId,
+    size,
+    image,
+    bodyPlace,
+    description,
+    dateAndTime,
+  } = req.body;
   try {
-    const newCreateAppointment = await createAppointment(
-      {artistId,
+    const newAppointment = await createAppointment({
+      tattooArtistId,
       customerId,
       size,
       image,
       bodyPlace,
       description,
-      dateAndTime}
-    );
-    res.status(201).json(newCreateAppointment);
+      dateAndTime,
+    });
+    if (newAppointment.code === 201) {
+      res
+        .status(201)
+        .json({ message: newAppointment.message, data: newAppointment.data });
+    } else {
+      res.status(newAppointment.code).json({ error: newAppointment.error });
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
 };
 
 module.exports = createAppointmentHandler;
