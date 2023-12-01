@@ -71,8 +71,13 @@ body {
   box-shadow: 0 0 0 3px rgba(250, 103, 122, 0.2)!important;
 }
 .custom-gradient{
-  background: linear-gradient(to bottom, #101010, rgba(0, 0, 0, 0));
+  background: linear-gradient(to bottom, #101010, rgba(0, 0, 0, 0.7));
 }
+
+.custom-gradient-login{
+  background: linear-gradient(to bottom, #0a0a0a, rgba(0, 0, 0, 0.7));
+}
+
 .gotic{
   font-family: 'UnifrakturMaguntia', cursive!important;
 }

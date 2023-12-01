@@ -7,7 +7,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import PostsDashboard from '@/components/postsDashboard/PostsDashboard'
 
 
-
 const Home = () => {
   return (
     <div>

@@ -31,6 +31,7 @@ const Header = () => {
     dispatch(getAllArtists());
   }, [auth]);
 
+
   let userEmail = auth.currentUser?.email;
   let username = userEmail?.split("@")[0];
 
@@ -46,6 +47,7 @@ const Header = () => {
     imgUser =
       "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
   }
+
 
   const imageLoader = ({ src }) => {
     return src;
