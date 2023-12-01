@@ -43,16 +43,18 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      const user = result.user.metadata.createdAt;
+      const userFireBase = result.user.metadata.createdAt;
       const userLastLog = result.user.metadata.lastLoginAt;
 
       
 
-      if (Number(user) + 1 == userLastLog || user == userLastLog) {
+      if (Number(userFireBase) + 1 == userLastLog || userFireBase == userLastLog) {
         router.replace("/auth/register");
       } else {
         dispatch(getUserById(token))
-        router.replace("/a-dashboard/home");
+        if(user.logedInUser.userType == "artist")router.replace("/a-dashboard/home");
+        if(user.logedInUser.userType == "customer")router.replace("/user-dashboard/home");
+        if(user.logedInUser.userType == "admin")router.replace("/admin-dashboard/home");
       }
     } catch (error) {
       const errorMessage = error.message;
@@ -73,17 +75,15 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
-      const user = auth.currentUser;
-      const token = user.reloadUserInfo.localId
+      const userFireBase = auth.currentUser;
+      const token = userFireBase.reloadUserInfo.localId
 
       dispatch(getUserById(token))
       
 
-      if (user) {
-        router.replace("/a-dashboard/home");
-      } else {
-        router.replace("/user-dashboard/home");
-      }
+      if(user.logedInUser.userType == "artist")router.replace("/a-dashboard/home");
+      if(user.logedInUser.userType == "customer")router.replace("/user-dashboard/home");
+      if(user.logedInUser.userType == "admin")router.replace("/admin-dashboard/home");
     } catch (createUserError) {
       const errorCode = createUserError.code;
       const errorMessage = createUserError.message;
