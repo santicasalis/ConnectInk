@@ -8,17 +8,16 @@ import { getAllPosts } from '../redux/features/posts/postsActions'
 const UDashboard = () => {
   const dispatch = useDispatch()
   
-  // const [publications, setPublications]= useState([])
+
   const[loading, setLoading]= useState(true)
 
   useEffect(() => {
     dispatch(getAllPosts())
   }, [])
+  
   const posts = useSelector((state)=>state.posts)
   console.log(posts, "METENESCANSADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-  // useEffect(()=>{
-  //   setPublications(posts)
-  // },[posts])
+
 
 
   return (
@@ -28,13 +27,14 @@ const UDashboard = () => {
         <div>
           { posts &&
             posts?.map((post) => (
-              <PostCards
-                key={post.id}
-                id={post.id}
-                fullName={post.fullName}
-                image={post.image}
-                description={post.description}
-              />
+              // <PostCards
+              //   key={post.id}
+              //   id={post.id}
+              //   fullName={post.fullName}
+              //   image={post.image}
+              //   description={post.description}
+              // />
+              <p> HOLA </p>
             ))
             
             }
