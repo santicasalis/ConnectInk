@@ -3,26 +3,17 @@ import axios from "axios";
 
 const URL_BASE = "http://localhost:3001";
 
-export const getUserByEmail =
-  (email, password, router, toast) => async (dispatch) => {
+export const getUserById =
+  (tokenId) => async (dispatch) => {
     try {
       const response = await axios.post(`${URL_BASE}/auth`, {
-        email: email,
-        password: password,
+        tokenId
       });
 
-      if (response.data.access) {
-        const user = response.data.user;
-        dispatch(getUser(user));
-        router.replace("/a-dashboard/home");
-      }
+      dispatch(getUser(response.data))
+      localStorage.setItem("user", JSON.stringify(response.data))
     } catch (error) {
-      toast.error("Usuario y/o contraseña incorrectos", {
-        className: "toastError",
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+      console.log(error)
     }
   };
 

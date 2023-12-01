@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import { openModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
 
-const PostDashboard = ({publication, name, lastName, image}) => {
+const PostDashboard = ({publication, name, image}) => {
     const [isLike, setIsLike] = useState(false);
     const [textCommend, setTextCommend] = useState('');
 
@@ -48,7 +48,7 @@ const PostDashboard = ({publication, name, lastName, image}) => {
                         <div className='rounded-full w-[32px] h-[32px] bg-red-600 overflow-hidden'>
                             <Image loader={imageLoader} src={image} height={32} width={32} alt={name} style={{width:'100%', height:'100%' }}/>
                         </div>
-                        <span className='text-[15px]'>{`${name} ${lastName}`}</span>
+                        <span className='text-[15px]'>{`${name}`}</span>
                         <p className='text-white/50 text-[13px]'>• {formatDistance(publication.createdAt)}</p>
                     </div>
                     <div className='p-2 flex items-center justify-center'>
@@ -90,7 +90,7 @@ const PostDashboard = ({publication, name, lastName, image}) => {
                 </div>
                 <div className='flex flex-col'>
                     <p className='mb-1'>Les gusta a 218 personas</p>
-                    <p className='mb-1'><span className='font-bold text-white text-[16px] mr-2'>{name} {lastName}</span>{publication?.description}</p>
+                    <p className='mb-1'><span className='font-bold text-white text-[16px] mr-2'>{name}</span>{publication?.description}</p>
                     <p className='text-white/50 cursor-pointer mb-1'>Ver comentarios</p>
                     <form className='m-0 p-0'>
                         <div className='flex justify-between gap-x-3'>

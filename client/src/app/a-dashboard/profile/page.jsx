@@ -34,14 +34,11 @@ const Profile = () => {
         </div>
         <div className='flex items-center mb-4'>
           <div className='w-1/4'>
-              <p >Nombres Completos: <span className='text-red-500'>*</span></p>
+              <p >Nombre Completo: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
               <div className='w-full'>
-                <input type="text" value={user.name} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
-              </div>
-              <div className='w-full'>
-                <input type="text" value={user.lastName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                <input type="text" value={user.fullName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -94,6 +91,7 @@ const Profile = () => {
                 <input type="text" value={user.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
+          {console.log(localStorage)}
         </div>
       </form>
     </div>

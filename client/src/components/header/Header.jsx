@@ -22,8 +22,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getAllArtists } from "@/app/redux/features/artists/artistActions";
 
 const Header = () => {
-  const [userInfo, setUserInfo] = useState(null);
-  const allArtist = useSelector((state) => state.artists);
+  const user = useSelector((state) => state.user)
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -31,21 +30,21 @@ const Header = () => {
     dispatch(getAllArtists());
   }, [auth]);
 
-  let userEmail = auth.currentUser?.email;
-  let username = userEmail?.split("@")[0];
+  // let userEmail = auth.currentUser?.email;
+  // let username = userEmail?.split("@")[0];
 
-  let usuarioEncontrado = allArtist.people.find(
-    (usuario) => usuario.email === userEmail
-  );
+  // let usuarioEncontrado = allArtist.people.find(
+  //   (usuario) => usuario.email === userEmail
+  // );
 
-  let imgUser = auth.currentUser?.photoURL;
-  if (!imgUser) {
-    imgUser = usuarioEncontrado?.image;
-  }
-  if (!imgUser) {
-    imgUser =
-      "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
-  }
+  // let imgUser = auth.currentUser?.photoURL;
+  // if (!imgUser) {
+  //   imgUser = usuarioEncontrado?.image;
+  // }
+  // if (!imgUser) {
+  //   imgUser =
+  //     "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
+  // }
 
   const imageLoader = ({ src }) => {
     return src;
@@ -87,7 +86,7 @@ const Header = () => {
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
                 <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
                   <Image
-                    src={imgUser}
+                    src={user.image}
                     loader={imageLoader}
                     style={{
                       borderRadius: "50%",
@@ -96,11 +95,11 @@ const Header = () => {
                     }}
                     width={40}
                     height={40}
-                    alt={username}
+                    alt={user.fullName}
                   />
                 </div>
 
-                <span>{`${username}`}</span>
+                <span>{`${user.fullName}`}</span>
                 <RiArrowDownSLine />
               </MenuButton>
             }
@@ -119,17 +118,17 @@ const Header = () => {
               >
                 <div className="rounded-full w-[25px] h-[25px] overflow-hidden">
                   <Image
-                    src={imgUser}
+                    src={user.image}
                     loader={imageLoader}
                     width={25}
                     height={25}
                     style={{ width: "100%", height: "100%" }}
-                    alt={`${username} profile pic`}
+                    alt={`${user.fullName} profile pic`}
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-sm">
-                  <span>{`${username}`}</span>
-                  <span className="text-[9px]">{userEmail}</span>
+                  <span>{`${user.fullName}`}</span>
+                  <span className="text-[9px]">{user.email}</span>
                 </div>
               </Link>
             </MenuItem>
