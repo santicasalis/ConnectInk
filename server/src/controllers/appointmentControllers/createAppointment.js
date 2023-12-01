@@ -1,4 +1,4 @@
-const { TattooArtist, Appointment, Customer } = require("../../db");
+const { TattooArtist, Appointment, Customer, CustomerTattooArtistAppointment } = require("../../db");
 
 const createAppointment = async ({artistId, customerId, size, image, bodyPlace, description, dateAndTime, duration}) => {
   const tattooArtist = await TattooArtist.findByPk(artistId);
@@ -11,13 +11,11 @@ const createAppointment = async ({artistId, customerId, size, image, bodyPlace, 
       bodyPlace, 
       description,
       dateAndTime,
-      duration,
-      CustomerId: customerId,
-      TattooArtistId: tattooArtist.id
+      duration
     });
+
+    await CustomerTattooArtistAppointment.create({CustomerId: customerId, TattooArtistId: artistId, AppointmentId: appointment.id})
   
-    // appointment.addTattooArtist(tattooArtist) // a chequear
-    // appointment.addCustomer(customer); // a chequear
   } catch (error){
     console.log(error)
   }

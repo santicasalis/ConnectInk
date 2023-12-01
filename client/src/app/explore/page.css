@@ -22,7 +22,7 @@
   z-index: 10;
 }
 
-.scroll-fade::before {
+/* .scroll-fade::before {
   top: 0;
   background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(255, 255, 255, 0) 100%);
 }
@@ -30,4 +30,4 @@
 .scroll-fade::after {
   bottom: 0;
   background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(255,255,255,0) 100%);
-}
+} */

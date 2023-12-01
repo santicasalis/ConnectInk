@@ -8,11 +8,13 @@ import { MdBlock } from "react-icons/md";
 import { DeleteArtists } from "@/app/redux/features/artists/artistActions";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { RiCloseFill } from "react-icons/ri";
+import Modal from 'react-modal';
 import Link from "next/link";
 
 export default function AdminCard({fullName,location,shopName,image, id}){
 
-  const [showWarning, setShowWarning]= useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     
@@ -22,19 +24,23 @@ export default function AdminCard({fullName,location,shopName,image, id}){
 
       const dispatch = useDispatch();
 
-      const handleBanArtist = () => {
-        setShowWarning(true); // Mostrar el modal de advertencia
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
+       
+
+      const openModal = () => {
+        setIsModalOpen(true);
       };
     
       const confirmDelete = () => {
         dispatch(DeleteArtists(id));
-        setShowWarning(false); // Ocultar el modal después de confirmar
+        closeModal();
+         
       };
     
-      const cancelDelete = () => {
-        setShowWarning(false); // Ocultar el modal si se cancela
-      };
-   
+     
+
 
     return (
         <div>
@@ -66,7 +72,7 @@ export default function AdminCard({fullName,location,shopName,image, id}){
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <button onClick={handleBanArtist} className='flex items-center gap-2 text-sm py-1.5'>
+                            <button onClick={openModal} className='flex items-center gap-2 text-sm py-1.5'>
                                 <MdBlock  />
                                 Bannear artista
                             </button>
@@ -86,18 +92,25 @@ export default function AdminCard({fullName,location,shopName,image, id}){
           </div>
         
             </div>
-            {showWarning && (
-        
-          <div className="bg-secondary-100 w-[550px] ml-[10px] text-center">
-            <p>¿Estás seguro de que quieres borrar este artista?</p>
-            <div className="gap-[20px] flex items-center">
-            <button onClick={confirmDelete}>Sí</button>
-            <button onClick={cancelDelete}>No</button>
+            
+            <Modal
+             isOpen={isModalOpen}
+             onRequestClose={closeModal}
+            
+             className="w-1/4 mx-auto p-4 border rounded-md bg-secondary-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+             >
+
+            <div className="bg-secondary-100   text-center h-[50px] rounded">
+            <p className="font-bold" >¿Estás seguro de que quieres bannear este artista?</p>
+            <div className="gap-[20px] flex items-center justify-center">
+            <button onClick={confirmDelete} className="text-green-500">Sí</button>
+            <button onClick={closeModal} className="text-red-500">No</button>
                </div>
            
           </div>
-        
-      )}
+            </Modal>
+           
+           
         </div>
     )
 }

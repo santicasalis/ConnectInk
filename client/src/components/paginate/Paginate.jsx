@@ -7,7 +7,7 @@ const Paginate = ({onPageChange, totalArtists, currentPage, artistsPerPage}) => 
     }
     
      return (
-        <div className='flex justify-center mt-4  text-primary text-xl font-bold hover:underline focus:outline-none"'>
+        <div className='flex justify-center mt-4 mb-9  text-primary text-xl font-bold hover:underline focus:outline-none"'>
         <nav>
             <ul className="flex space-x-2">
                 {currentPage > 1 && (
@@ -22,8 +22,8 @@ const Paginate = ({onPageChange, totalArtists, currentPage, artistsPerPage}) => 
                     <li className="" key={number} >
                         <button className={`text-xl font-bold ${
                             currentPage === number
-                                ? 'border border-primary text-white bg-primary'
-                                : 'text-primary hover:underline'
+                                ? 'border-[2px] border-primary text-black bg-primary rounded-2xl'
+                                : 'border-[2px] border-primary text-primary bg-transparent rounded-2xl'
                             } px-4 py-2 focus:outline-none`}
                             onClick={() => onPageChange(number)}
                         >

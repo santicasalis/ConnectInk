@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   RiMailLine,
   RiLockLine,
@@ -11,18 +11,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { auth } from "../../firebase.js";
 import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../../firebase.js";
+import { getAllArtists } from "../redux/features/artists/artistActions.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
+  const allArtist = useSelector((state) => state.artists);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllArtists());
+  }, []);
+
   const handleChange = (event) => {
     setData({
       ...data,
@@ -43,7 +50,7 @@ const Login = () => {
       const userLastLog = result.user.metadata.lastLoginAt;
 
       if (Number(user) + 1 == userLastLog || user == userLastLog) {
-        Router.replace("/auth/register");
+        router.replace("/auth/register");
       } else {
         router.replace("/a-dashboard/home");
       }
@@ -67,7 +74,15 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const user = auth.currentUser;
-      router.replace("/a-dashboard/home");
+      const emailFounded = allArtist.people.some(
+        (us) => us.email === user.email
+      );
+
+      if (emailFounded) {
+        router.replace("/a-dashboard/home");
+      } else {
+        router.replace("/user-dashboard/home");
+      }
     } catch (createUserError) {
       const errorCode = createUserError.code;
       const errorMessage = createUserError.message;

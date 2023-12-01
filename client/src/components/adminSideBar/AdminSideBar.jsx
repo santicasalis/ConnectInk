@@ -14,6 +14,11 @@ const AdminSideBar = () => {
                 Admin<span className='text-primary text-4xl'>.</span>
             </h1>
             <ul>
+            <li>
+                  <Link href='' className='flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
+                    <RiStore3Line className='text-primary '/> Home
+                  </Link>
+              </li>
               <li>
                   <Link href='/admin-dashboard/profile' className='flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
                     <RiStore3Line className='text-primary '/> Perfil
@@ -28,8 +33,8 @@ const AdminSideBar = () => {
               </li>
                        
               <li>
-                  <Link href='' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors'>
-                    <RiMessage3Line className='text-primary'/> Otros
+                  <Link href='/admin-dashboard/tattooStyles' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors'>
+                    <RiMessage3Line className='text-primary'/> Estilos de tatuaje
                   </Link>
               </li>
               <li>

@@ -1,4 +1,7 @@
+'use client'
+
 import React, { useState } from "react";
+import { RiStarLine } from "react-icons/ri";
 import Image from "next/image";
 import {
   RiArrowRightSLine,
@@ -7,15 +10,18 @@ import {
 } from "react-icons/ri";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { CiShop } from "react-icons/ci";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Pagination, Navigation, Autoplay, Parallax } from 'swiper/modules';
 
 export default function Card({
   id,
-  name,
-  lastName,
+  fullName,
   location,
   shopName,
-  tattoos,
+  publications,
   image,
 }) {
   const imageLoader = ({ src }) => {
@@ -24,33 +30,30 @@ export default function Card({
 
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
 
- const nextSlide = () => {
-   setCurrentStartIndex((prevIndex) => {
-     let nextIndex = prevIndex + 1;
-    
-     if (nextIndex > tattoos.length - 1) {
-       nextIndex = 0;
-     }
-     return nextIndex;
-   });
- };
+  const nextSlide = () => {
+    setCurrentStartIndex((prevIndex) => {
+      let nextIndex = prevIndex + 1;
 
- const prevSlide = () => {
-   setCurrentStartIndex((prevIndex) => {
-     let nextIndex = prevIndex - 1;
-    
-     if (nextIndex < 0) {
-       nextIndex = tattoos.length - 1;
-     }
-     return nextIndex;
-   });
- };
+      if (nextIndex > tattoos.length - 1) {
+        nextIndex = 0;
+      }
+      return nextIndex;
+    });
+  };
+  console.log(publications);
+  const prevSlide = () => {
+    setCurrentStartIndex((prevIndex) => {
+      let nextIndex = prevIndex - 1;
 
- 
-
+      if (nextIndex < 0) {
+        nextIndex = tattoos.length - 1;
+      }
+      return nextIndex;
+    });
+  };
 
   return (
-    <div className="m-5 p-4 bg-secondary-100 rounded shadow-lg text-white transition-transform transform">
+    <div className="w-[900px] mb-5 p-4 bg-secondary-900 rounded-2xl  text-white transition-transform transform">
       <div className="w-full mb-4">
         <div className="flex justify-between items-center">
           <div className="flex gap-x-1 items-center">
@@ -60,46 +63,49 @@ export default function Card({
               loader={imageLoader}
               width={40}
               height={40}
-              alt={`${name} ${lastName} profile pic`}
+              alt={`${fullName} profile pic`}
             />
-            
-              <h1 className="font-bold col-span-2">
-                {name} {lastName}
-              </h1>
-            
+
+            <h1 className="font-bold col-span-2">{fullName}</h1>
           </div>
-          <p className="text-right text-2xl col-span-2">☆☆☆☆☆</p>
+          <div className="flex gap-x-0.5">
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+                <RiStarLine className="text-[20px]"/>
+          </div>
         </div>
       </div>
 
-      <div className="w-full p-2 flex justify-center items-center mb-10">
-        <button onClick={prevSlide}>
-          <RiArrowLeftSLine />
-        </button>
-        <div className="flex justify-center items-center gap-x-8">
-          {tattoos && tattoos.length > 0 ? (
-            [...tattoos, ...tattoos, ...tattoos]
-              .slice(currentStartIndex, currentStartIndex + 3)
-              .map((tattoo, index) => (
-                <Image
-                  key={index}
-                  loader={imageLoader}
-                  src={tattoo.image}
-                  width={200}
-                  height={200}
-                  alt={`tattoo ${index}`}
-                />
-              ))
-          ) : (
-            <div>
-              {" "}
-              <p>Cargando informacion... </p>{" "}
-            </div>
-          )}
-        </div>
-        <button onClick={nextSlide}>
-          <RiArrowRightSLine />
-        </button>
+      <div className="w-full h-[180px] p-2 flex justify-center items-center mb-10 ">
+      <Swiper
+                    spaceBetween={25}
+                    parallax={true}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 2000,
+                      disableOnInteraction: false,
+                    }}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    navigation={true}
+                    modules={[Parallax, Autoplay, Pagination, Navigation]}
+                    className="w-[50%] flex justify-center items-center relative  p-5  h-[250px] rounded "
+                  >
+                    {publications.map( publi => {
+                      return (
+                        <SwiperSlide className="object-cover">
+                          <img 
+                          src={publi.image}
+                          alt={` error al cargar img`}
+                          
+                          />
+                        </SwiperSlide>
+                      )
+                    })}
+                  </Swiper>
       </div>
 
       <div className="flex justify-center items-center w-full gap-x-2">
@@ -109,5 +115,3 @@ export default function Card({
     </div>
   );
 }
-
-

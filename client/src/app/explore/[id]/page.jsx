@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Nav from "@/components/nav/Nav";
 import "./style.css"; 
+import MapComponent from "@/components/map/Map"
+
 
 export default function Page({ params }) {
   const [artist, setArtist] = useState(null);
@@ -64,24 +66,31 @@ export default function Page({ params }) {
               </button>
             </div>
           </div>
+
+          <div>Cuadrado de la publicacion mas votada, mejorn rankeada</div>
         </div>
 
         <div className="w-full md:w-1/2 p-4 flex flex-col">
           <div className="p-4 rounded border-2 border-primary boxShadow flex-grow">
-            <h3 className="text-xl font-bold mb-2">Estilos de tatuaje</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {artist.tattooStyles.map((style, index) => (
-                <p key={index} className="flex items-center">
-                  {style}
-                </p>
-              ))}
-            </div>
+            <h3 className="text-xl font-bold mb-2">Direccion</h3>
+            <MapComponent location={artist.location} address={artist.address} />
           </div>
 
           <div className="flex flex-wrap justify-around p-4 rounded mt-4 border-2 border-primary boxShadow">
+            <div>
+              <h3 className="text-xl font-bold mb-2">Estilos de tatuaje</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {artist.tattooStyles.map((style, index) => (
+                  <p key={index} className="flex items-center">
+                    {style}
+                  </p>
+                ))}
+              </div>
+            </div>
+
             <div className="p-4 ">
               <h3 className="text-xl font-bold mb-2">Contacto</h3>
-              {/* <p> {artist.fullName}</p> */}
+              <p> {artist.fullName}</p>
               <p>{artist.email}</p>
               <p>{artist.phone}</p>
               <p>{artist.address}</p>

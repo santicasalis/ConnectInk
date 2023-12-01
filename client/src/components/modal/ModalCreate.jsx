@@ -38,7 +38,7 @@ const ModalCreate = () => {
         const response = await axios.post("http://localhost:3001/publications", {
             image,
             description,
-            artist_id:artist.id,
+            tattooArtistId:artist.id,
         }); 
         toast.success("Tu publicación se subió con éxito", {
             className:'toastSuccess',

@@ -9,9 +9,9 @@ import PostsDashboard from '@/components/postsDashboard/PostsDashboard'
 const Home = () => {
   return (
     <div>
-        <PostsDashboard />
+      <PostsDashboard />
     </div>
-  )
-}
+  );
+};
 
 export default Home;
