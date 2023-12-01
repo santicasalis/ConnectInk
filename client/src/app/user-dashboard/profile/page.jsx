@@ -4,9 +4,12 @@ import React from 'react'
 import {RiEdit2Line} from "react-icons/ri"
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
+import {   RiMailLine,  RiLockLine,  RiEyeLine,  RiEyeOffLine,} from "react-icons/ri";
+import { useState } from 'react'
 
 const Profile = () => {
   const user = useSelector((state) => state.user)
+  const [showPassword, setShowPassword] = useState(false);
   const imageLoader = ({src}) => {
     return src
   }
@@ -21,7 +24,7 @@ const Profile = () => {
           </div>
           <div className='flex-1'>
               <div className='relative mb-2'>
-                  <Image src={user.image} loader={imageLoader} width={80} height={80} alt={`${user.name} ${user.lastName} profile pic`} />
+                  <Image src={user.image} loader={imageLoader} width={80} height={80} alt={`${user.Fullname} profile pic`} />
                   <label htmlFor='avatar' className='absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100'>
                       <RiEdit2Line />
                   </label>
@@ -34,14 +37,23 @@ const Profile = () => {
         </div>
         <div className='flex items-center mb-4'>
           <div className='w-1/4'>
-              <p >Nombres Completos: <span className='text-red-500'>*</span></p>
+              <p >Nombre Completo: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
-                <input type="text" value={user.name} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+              <div className='w-1/2'>
+                <input type="text" value={user.FullName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
-              <div className='w-full'>
-                <input type="text" value={user.lastName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+              
+          </div>
+        </div>
+        
+        <div className='flex items-center mb-4'>
+          <div className='w-1/4'>
+              <p>Telefono: <span className='text-red-500'>*</span></p>
+          </div>
+          <div className='flex-1 flex items-center gap-4'>
+              <div className='w-1/2'>
+                <input type="text" value={user.phone} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
@@ -50,51 +62,33 @@ const Profile = () => {
               <p>Email: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
+              <div className='w-1/2'>
                 <input type="text" value={user.email} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
         </div>
         <div className='flex items-center mb-4'>
           <div className='w-1/4'>
-              <p>Phone: <span className='text-red-500'>*</span></p>
+              <p>Constraseña: <span className='text-red-500'>*</span></p>
           </div>
           <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
-                <input type="text" value={user.phone} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+              <div className='w-1/2 relative'>
+                <input type={showPassword ? "text" : "password"} value={user.password} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
+                {showPassword ? (
+            <RiEyeOffLine
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
+            />
+          ) : (
+            <RiEyeLine
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
+            />
+          )}
               </div>
           </div>
-        </div>
-        <div className='flex items-center mb-4'>
-          <div className='w-1/4'>
-              <p>Address: <span className='text-red-500'>*</span></p>
-          </div>
-          <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
-                <input type="text" value={user.address} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
-              </div>
-          </div>
-        </div>
-        <div className='flex items-center mb-4'>
-          <div className='w-1/4'>
-              <p>Location: <span className='text-red-500'>*</span></p>
-          </div>
-          <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
-                <input type="text" value={user.location} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
-              </div>
-          </div>
-        </div>
-        <div className='flex items-center mb-4'>
-          <div className='w-1/4'>
-              <p>Shop Name: <span className='text-red-500'>*</span></p>
-          </div>
-          <div className='flex-1 flex items-center gap-4'>
-              <div className='w-full'>
-                <input type="text" value={user.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
-              </div>
-          </div>
-        </div>
+        </div>  
+        
       </form>
     </div>
   )
