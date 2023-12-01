@@ -6,14 +6,15 @@ const initialState = {
     id: "",
     image: "",
     publications: "",
-    name: "",
-    lastName: "",
+    fullName: "",
     email: "",
     phone: "",
     address: "",
     location: "",
     shopName: "",
-    password: ""
+    priceRanges: [],
+    timeAvailabilities: [],
+    timeAvailabilityExceptions: []
 
 }
 
@@ -23,16 +24,17 @@ export const userSlice = createSlice({
     reducers: {
         getUser: (state, action) => {
             state.id = action.payload.id,
-            state.name = action.payload.name,
-            state.lastName = action.payload.lastName,
-            state.password = action.payload.password,
+            state.fullName = action.payload.fullName,
             state.email = action.payload.email,
             state.phone = action.payload.phone,
             state.address = action.payload.address,
             state.location = action.payload.location,
-            state.shopName = action.payload.phone,
+            state.shopName = action.payload.shopName,
             state.publications = action.payload.publications,
-            state.image = action.payload.image
+            state.image = action.payload.image,
+            state.priceRanges = action.payload.priceRanges,
+            state.timeAvailabilities = action.payload.timeAvailabilities,
+            state.timeAvailabilityExceptions = action.payload.timeAvailabilityExceptions
         },
         cleanUser: (state) => {
             state.id = "",

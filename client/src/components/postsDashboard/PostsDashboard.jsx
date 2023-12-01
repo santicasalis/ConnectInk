@@ -14,8 +14,7 @@ const PostsDashboard = () => {
             key={publication.id}
             publication={publication}
             image={user.image}
-            name={user.name}
-            lastName={user.lastName}
+            name={user.fullName}
           />
         ))
       ) : (

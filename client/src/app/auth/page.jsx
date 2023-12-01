@@ -19,16 +19,13 @@ import {
 } from "firebase/auth";
 import { getAllArtists } from "../redux/features/artists/artistActions.js";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "../redux/features/user/userActions.js";
 
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
-  const allArtist = useSelector((state) => state.artists);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllArtists());
-  }, []);
 
   const handleChange = (event) => {
     setData({
@@ -49,9 +46,12 @@ const Login = () => {
       const user = result.user.metadata.createdAt;
       const userLastLog = result.user.metadata.lastLoginAt;
 
+      
+
       if (Number(user) + 1 == userLastLog || user == userLastLog) {
         router.replace("/auth/register");
       } else {
+        dispatch(getUserById(token))
         router.replace("/a-dashboard/home");
       }
     } catch (error) {
@@ -74,11 +74,12 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const user = auth.currentUser;
-      const emailFounded = allArtist.people.some(
-        (us) => us.email === user.email
-      );
+      const token = user.reloadUserInfo.localId
 
-      if (emailFounded) {
+      dispatch(getUserById(token))
+      
+
+      if (user) {
         router.replace("/a-dashboard/home");
       } else {
         router.replace("/user-dashboard/home");
