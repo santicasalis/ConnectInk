@@ -21,6 +21,11 @@ export const artistsSlice = createSlice({
         filterArtist:(state,action)=>{
             state.filtered = action.payload
         },
+        deleteArtist: (state, action) => {
+            const deletedId = action.payload;
+            state.people = state.people.filter(artist => artist.id !== deletedId);
+            state.filtered = state.filtered.filter(artist => artist.id !== deletedId);
+        },
         orderArtist:(state,action)=>{
             switch(action.payload){
                 case "asc":
@@ -84,7 +89,7 @@ export const artistsSlice = createSlice({
     }
 })
 
-export const {getArtists, filterArtist, orderArtist, orderArtistRating, orderAndFilterArtists} = artistsSlice.actions
+export const {getArtists, filterArtist, orderArtist, orderArtistRating, orderAndFilterArtists, deleteArtist} = artistsSlice.actions
 
 
 

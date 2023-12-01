@@ -1,4 +1,4 @@
-import { getArtists, filterArtist, orderArtist,orderArtistRating, orderAndFilterArtists } from "./artistsSlice";
+import { getArtists, filterArtist, orderArtist,orderArtistRating, orderAndFilterArtists, deleteArtist } from "./artistsSlice";
 import axios from "axios";
 
 const URL_BASE = "http://localhost:3001"
@@ -25,6 +25,11 @@ export const OrderAllArtists = (tag)=>(dispatch)=> {
 export const OrderAndFilterArtists = (filters, sortCriteria) => (dispatch) => {
     dispatch(orderAndFilterArtists({ filters, sortCriteria }));
 };
+
+export const DeleteArtists = (id) => async (dispatch) => {
+      await axios.delete(`${URL_BASE}/tattooArtists/${id}`)
+    dispatch(deleteArtist(id))
+}
 
 // export const OrderAllArtistsRating = (tag)=>(dispatch)=> {
 //     dispatch(orderArtistRating(tag))

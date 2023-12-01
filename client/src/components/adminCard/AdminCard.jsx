@@ -5,13 +5,41 @@ import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 import { RiMoreFill,  RiEyeLine  } from "react-icons/ri";
 import { MdBlock } from "react-icons/md";
+import { DeleteArtists } from "@/app/redux/features/artists/artistActions";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { RiCloseFill } from "react-icons/ri";
+import Modal from 'react-modal';
 import Link from "next/link";
 
-export default function AdminCard({fullName,location,shopName,image}){
+export default function AdminCard({fullName,location,shopName,image, id}){
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
     
     const imageLoader = ({ src }) => {
         return src;
       };
+
+      const dispatch = useDispatch();
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
+       
+
+      const openModal = () => {
+        setIsModalOpen(true);
+      };
+    
+      const confirmDelete = () => {
+        dispatch(DeleteArtists(id));
+        closeModal();
+         
+      };
+    
+     
 
 
     return (
@@ -44,10 +72,10 @@ export default function AdminCard({fullName,location,shopName,image}){
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
+                            <button onClick={openModal} className='flex items-center gap-2 text-sm py-1.5'>
                                 <MdBlock  />
                                 Bannear artista
-                            </Link>
+                            </button>
                         </MenuItem>
                     </Menu>
                 </div>
@@ -62,7 +90,27 @@ export default function AdminCard({fullName,location,shopName,image}){
           <div className="mt-[40px] ml-[10px]">
           ☆☆☆☆☆	
           </div>
+        
             </div>
+            
+            <Modal
+             isOpen={isModalOpen}
+             onRequestClose={closeModal}
+            
+             className="w-1/4 mx-auto p-4 border rounded-md bg-secondary-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+             >
+
+            <div className="bg-secondary-100   text-center h-[50px] rounded">
+            <p className="font-bold" >¿Estás seguro de que quieres bannear este artista?</p>
+            <div className="gap-[20px] flex items-center justify-center">
+            <button onClick={confirmDelete} className="text-green-500">Sí</button>
+            <button onClick={closeModal} className="text-red-500">No</button>
+               </div>
+           
+          </div>
+            </Modal>
+           
+           
         </div>
     )
 }
