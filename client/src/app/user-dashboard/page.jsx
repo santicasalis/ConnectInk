@@ -25,7 +25,7 @@ const UDashboard = () => {
       <h1 className='text-4xl'> Incio </h1>
       <hr className='my-8 border-gray-500'/>
         <div>
-          { posts &&
+          {/* { posts &&
             posts?.map((post) => (
               // <PostCards
               //   key={post.id}
@@ -37,7 +37,7 @@ const UDashboard = () => {
               <p> HOLA </p>
             ))
             
-            }
+            } */}
           
         </div>
     </div>
