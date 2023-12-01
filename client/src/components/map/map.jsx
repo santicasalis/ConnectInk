@@ -3,26 +3,37 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const MapComponent = ({ address }) => {
+const MapComponent = ({ address, location }) => {
   const [position, setPosition] = useState(null);
 
-  useEffect(() => {
-
-    if (typeof window !== 'undefined') {
-      //NOMINATIM
-      fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${address}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.length > 0) {
-            const coords = [data[0].lat, data[0].lon];
-            setPosition(coords);
-          }
-        });
-    }
+useEffect(() => {
+  if (typeof window !== "undefined") {
     
-  }, [address]);
+    const query = `${address}${location ? ", " + location : ""}`;
+
+    fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        query
+      )}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length > 0) {
+          const coords = [data[0].lat, data[0].lon];
+          setPosition(coords);
+        } else {
+        
+          console.log(
+            "No se encontraron coordenadas para la dirección y provincia proporcionadas."
+          );
+        }
+      })
+      .catch((error) => {
+     
+        console.error("Error al buscar la dirección y provincia:", error);
+      });
+  }
+}, [address, location]); 
 
   const customIcon = new L.divIcon({
     className: "custom-div-icon",
@@ -42,9 +53,7 @@ const MapComponent = ({ address }) => {
       style={{ height: "500px", width: "100%" }}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={position} icon={customIcon}>
-       
-      </Marker>
+      <Marker position={position} icon={customIcon}></Marker>
     </MapContainer>
   );
 };
