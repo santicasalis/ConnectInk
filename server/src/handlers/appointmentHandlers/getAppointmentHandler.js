@@ -2,9 +2,9 @@ const getAppointment = require("../../controllers/appointmentControllers/getAppo
 
 const getAppointmentHandler = async (req, res) => {
   try {
-    const Appointments = await getAppointment();
-    if (Appointments.length > 0) {
-      return res.status(200).json(Appointments);
+    const appointments = await getAppointment();
+    if (appointments.length > 0) {
+      return res.status(200).json(appointments);
     } else {
       res.status(404).json({ message: "Appointments not found" });
     }
