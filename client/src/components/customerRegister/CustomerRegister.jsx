@@ -7,13 +7,14 @@ import { emailSignUp } from "../../app/utils/emailSignUp";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "@/app/redux/features/user/userActions";
 
-const CustomerRegister = ({ userInformation }) => {
+const CustomerRegister = () => {
   const urlBase = "http://localhost:3001";
   const router = useRouter();
   const dispatch = useDispatch()
+  const userInformation = useSelector((state) => state.user.fireBaseUser)
 
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
@@ -35,7 +36,7 @@ const CustomerRegister = ({ userInformation }) => {
       <Formik
         initialValues={{
           fullName: "",
-          userName: userInformation?.userName || "",
+          userName: userInformation?.userName ? true : false,
           email: userInformation?.email || "",
           mobile: "",
           image: "",
@@ -47,7 +48,6 @@ const CustomerRegister = ({ userInformation }) => {
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {
             try {
-              console.log(values.image);
               if (values.image && typeof values.image === "object") {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
@@ -59,7 +59,6 @@ const CustomerRegister = ({ userInformation }) => {
 
               if(!values.userName){
                 values.tokenId = await emailSignUp(values.email, values.password);
-                console.log(values.tokenId)
               }
             
               const response = await axios.post(`${urlBase}/customers`, values);
@@ -73,6 +72,7 @@ const CustomerRegister = ({ userInformation }) => {
                   hideProgressBar: true,
                 }
               );
+              
               dispatch(getUserById(values.tokenId))
               router.replace("/user-dashboard/home");
             } catch (error) {

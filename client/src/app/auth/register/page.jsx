@@ -10,33 +10,9 @@ import TattoArtistRegister from "@/components/tattooArtistRegister/TattoArtistRe
 
 const { onAuthStateChanged } = require("firebase/auth");
 import { auth } from "../../../firebase";
-
+import { getUserInformation } from "@/app/redux/features/user/userActions";
 const RegistrationForm = () => {
   const [client, setClient] = useState(null);
-  const [userInformation, setUserInformation] = useState({
-    tokenId: "",
-    userName: "",
-    image: "",
-    email: "",
-    phoneNumber: "",
-  });
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user)
-        setUserInformation({
-          tokenId: user.uid,
-          userName: user.displayName,
-          image: user.photoURL,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-        });
-      } else {
-        setUserInformation(null);
-      }
-    });
-  }, [auth]);
 
   const styles = useSelector((state) => state.styles.names);
   const dispatch = useDispatch();
@@ -71,7 +47,7 @@ const RegistrationForm = () => {
             pestaña favoritos, y tener comunicacion directa con el artista luego
             de reservar tu turno
           </p>
-          <CustomerRegister userInformation={userInformation} />
+          <CustomerRegister  />
         </div>
       ) : (
         <div>
@@ -79,7 +55,7 @@ const RegistrationForm = () => {
             Como artista, podrás dar a conocer tu trabajo, y ponerte a
             disposicion de nuestros clientes para la reserva de turnos.
           </p>
-          <TattoArtistRegister userInformation={userInformation} />
+          <TattoArtistRegister  />
         </div>
       )}
     </div>

@@ -89,11 +89,6 @@ const login = async (tokenId) => {
     })
   }
 
-  if(!cleanUser){
-    cleanUser = await Admin.findOne({
-      where: {tokenId}
-    })
-  }
 
   return cleanUser;
 };

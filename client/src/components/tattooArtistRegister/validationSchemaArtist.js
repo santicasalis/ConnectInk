@@ -14,7 +14,7 @@ export const validationSchemaArtist = Yup.object().shape({
 
   password: Yup.string().when("userName", {
     is: false,
-    then: Yup.string()
+    then: () => Yup.string()
     .required("Required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
@@ -24,7 +24,7 @@ export const validationSchemaArtist = Yup.object().shape({
   }),
   passwordConfirm: Yup.string().when("userName", {
     is: false,
-    then: Yup.string()
+    then: () => Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .max(30)

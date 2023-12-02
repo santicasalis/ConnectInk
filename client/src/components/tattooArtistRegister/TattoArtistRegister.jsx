@@ -10,14 +10,15 @@ import { validationSchemaArtist } from "../../components/tattooArtistRegister/va
 
 import axios from "axios";
 
-import { auth } from "../../firebase";
 import { emailSignUp } from "../../app/utils/emailSignUp";
-import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const TattoArtistRegister = ({userInformation}) => {
+import { getUserById } from "@/app/redux/features/user/userActions";
+
+const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
+  const userInformation = useSelector((state) => state.user.fireBaseUser)
   const dispatch = useDispatch();
   const urlBase = "http://localhost:3001";
   const router = useRouter();
@@ -31,8 +32,8 @@ const TattoArtistRegister = ({userInformation}) => {
       <Formik
         initialValues={{
           fullName: "",
-          userName: userInformation?.userName || "",
-          email: userInformation?.email || "",
+          userName: userInformation?.userName ? true : false,
+          email: userInformation.email || "",
           address: "",
           location: "",
           shopName: "",
@@ -56,32 +57,13 @@ const TattoArtistRegister = ({userInformation}) => {
                   "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
 
-              values.tokenId = await emailSignUp(values.email, values.password);
+              if(!values.userName){
+                values.tokenId = await emailSignUp(values.email, values.password);
+              }
 
-              // onAuthStateChanged(auth, (user) => {
-
-              //   if (user) {
-              //     // Si el usuario está autenticado, a
-              //     setUserInformation({
-              //       tokenId: user.uid,
-              //       userName: user.displayName,
-              //       image: user.photoURL,
-              //       email: user.email,
-              //       phone: user.phoneNumber,
-              //     });
-              //   } else {
-              //     // Si el usuario no está autenticado
-              //     setUserInformation({
-              //       tokenId: null,
-              //       userName: null,
-              //       image: null,
-              //       email: null,
-              //       phone: null,
-              //     });
-              //   }
-              // });
-
+              
               await axios.post(`${urlBase}/tattooArtists`, values);
+
               toast.success(
                 `${values.fullName} se ha registrado existosamente`,
                 {
@@ -92,6 +74,7 @@ const TattoArtistRegister = ({userInformation}) => {
                 }
               );
               await axios.post(`${urlBase}/nodemailer/welcome`, {email: values.email, name: values.name})
+              dispatch(getUserById(values.tokenId))
               router.replace("/a-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
@@ -127,7 +110,6 @@ const TattoArtistRegister = ({userInformation}) => {
                 className="text-red-500 text-sm"
               />
               <Field
-                value={values.email}
                 type="text"
                 name="shopName"
                 placeholder="Shop Name"
@@ -150,7 +132,7 @@ const TattoArtistRegister = ({userInformation}) => {
                 component="div"
                 className="text-red-500 text-sm"
               />
-              {console.log(values)}
+
               <Field
                 type="text"
                 name="location"

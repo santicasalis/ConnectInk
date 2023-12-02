@@ -4,7 +4,7 @@ export const validationSchemaClient = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required").max(30),
   password: Yup.string().when("userName", {
     is: false,
-    then: Yup.string()
+    then: () => Yup.string()
     .required("Required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
@@ -14,7 +14,7 @@ export const validationSchemaClient = Yup.object().shape({
   }),
   passwordConfirm: Yup.string().when("userName", {
     is: false,
-    then: Yup.string()
+    then: () => Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .max(30)
