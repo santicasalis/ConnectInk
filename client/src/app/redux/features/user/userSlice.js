@@ -22,11 +22,14 @@ export const userSlice = createSlice({
         },
         cleanFireBaseInfo: (state) => {
             state.fireBaseUser = {}
+        },
+        getUserPosts: (state, action) => {
+            state.logedInUser.publications = action.payload
         }
     }
 })
 
-export const {getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo} = userSlice.actions
+export const {getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo, getUserPosts} = userSlice.actions
 
 
 export default userSlice.reducer
