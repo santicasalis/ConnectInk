@@ -19,4 +19,5 @@ export const getUserById =
 
 export const logOut = () => async dispatch =>{
   dispatch(cleanUser());
+  localStorage.setItem("user", JSON.stringify({}))
 }

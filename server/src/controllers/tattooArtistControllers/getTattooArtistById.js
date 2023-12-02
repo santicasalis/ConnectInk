@@ -13,7 +13,8 @@ const getTattooArtistById = async (id) => {
       { model: TattooStyle, attributes: ["name"] },
       {
         model: Publication,
-        attributes: ["description", "image", "createdAt", "updatedAt"],
+        attributes: ["id", "description", "image", "createdAt", "updatedAt"],
+        where: { disabled: false },
       },
       {
         model: TimeAvailability,
@@ -25,8 +26,8 @@ const getTattooArtistById = async (id) => {
       },
       {
         model: PriceRange,
-        attributes: ["size", "priceMin", "priceMax"]
-      }
+        attributes: ["size", "priceMin", "priceMax"],
+      },
     ],
   });
   return {
@@ -45,8 +46,9 @@ const getTattooArtistById = async (id) => {
     tattooStyles: tattooArtist?.TattooStyles.map(
       (tattooStyle) => tattooStyle.name
     ),
-    publications: tattooArtist.Publications?.map((publication) => {
+    publications: tattooArtist.Publications?.filter((publication) => !publication.disabled).map((publication) => {
       return {
+        id: publication.id,
         description: publication.description,
         image: publication.image,
         createdAt: publication.createdAt,

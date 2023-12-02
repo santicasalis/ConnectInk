@@ -34,6 +34,7 @@ const RegisteredArtist = () => {
   return (
     <div>
       
+
       <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
               <div className="scroll-content w-full">
                 
@@ -47,6 +48,12 @@ const RegisteredArtist = () => {
                 />
                 {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full ">
+
+      <div className="scroll-fade md:w-3/4 ">
+              <div className="scroll-fade grid  md:grid-cols-1  lg:grid-cols-2 gap-x-[200px] ">
+                {filtered?.map((filter) => (
+                  <div key={filter.id} className="mb-4 w-full  ">
+
                     <AdminCard
                       key={filter.id}
                       id={filter.id}

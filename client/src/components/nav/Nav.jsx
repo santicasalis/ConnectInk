@@ -12,8 +12,7 @@ export default function Nav() {
   const imageLoader = ({src}) => {
     return src
   }
-  const user = useSelector((state) => state.user)
-  {console.log(user)}
+  const user = useSelector((state) => state.user.logedInUser)
   return (
     <nav className="bg-transparent py-8 px-8 text-gray-200 mb-[30px] ">
       <ul className="flex justify-between gap-8">
@@ -36,8 +35,7 @@ export default function Nav() {
               </Link>
             </li>
             <li>
-            {console.log(user)}
-            {user.email.length == 0 ? (
+            {!user.email ? (
               <Link href="/auth">
                 <span className="hover:bg-black hover:text-primary hover:border-primary p-2 rounded-lg font-newrocker text-[19px] border-[2px]  border-gray-200">Ingresar</span>
               </Link>
