@@ -15,12 +15,12 @@ const UserSideBar = () => {
             </h1>
             <ul>
               <li>
-                  <Link href='/admin-dashboard/profile' className='flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
+                  <Link href='/user-dashboard/profile' className='flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
                     <RiStore3Line className='text-primary '/> Home
                   </Link>
               </li>
               <li>
-                  <Link href='/admin-dashboard/registeredArtists' className='w-full flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
+                  <Link href='/user-dashboard/profile' className='w-full flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
                     <span className='flex items-center gap-4'>
                         <RiSpeakLine className='text-primary'/> Perfil
                     </span>
@@ -28,12 +28,12 @@ const UserSideBar = () => {
               </li>
                        
               <li>
-                  <Link href='' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors'>
+                  <Link href='/user-dashboard/misFavoritos' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors'>
                     <RiMessage3Line className='text-primary'/> Mis favoritos
                   </Link>
               </li>
               <li>
-                  <Link href='' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors'>
+                  <Link href='/user-dashboard/reservas' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors'>
                     <RiCalendarCheckLine className='text-primary'/> Reservas
                   </Link>
               </li>

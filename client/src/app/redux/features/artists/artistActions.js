@@ -6,8 +6,7 @@ const URL_BASE = "http://localhost:3001"
 
 export const getAllArtists = () => async (dispatch) =>{
     const allArtists = (await axios(`${URL_BASE}/tattooArtists`)).data
-    console.log(allArtists, "MOSTRATE")
-    dispatch(getArtists(allArtists))
+        dispatch(getArtists(allArtists))
 }
 
 export const filterAllArtists = (filter) => async (dispatch) =>{

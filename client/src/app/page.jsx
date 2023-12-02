@@ -1,8 +1,27 @@
 "use client";
 
-import Nav from "../components/nav/Nav";
+import Nav from "@/components/nav/Nav";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getAllStyles } from "./redux/features/styles/stylesActions";
+import { getAllArtists } from "./redux/features/artists/artistActions";
+import { getAllPosts } from "./redux/features/posts/postsActions";
+// import { signOut } from "firebase/auth";
+// import { auth } from "../firebase";
 
 export default function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllStyles());
+    dispatch(getAllArtists());
+
+    dispatch(getAllPosts());
+    console.log(localStorage)
+
+
+  }, []);
+
   return (
     <div className="flex flex-col w-full max-h-screen p-0 overflow-hidden relative">
         <div className="w-full h-full relative overflow-hidden ">

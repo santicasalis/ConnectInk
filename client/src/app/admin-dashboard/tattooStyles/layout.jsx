@@ -44,7 +44,7 @@ export default function TattooStylesLayout({ children }) {
         </div>
       </div>
       <hr className='my-8 border-gray-500'/>
-      <AdminTopBarStyles />
+      {/* <AdminTopBarStyles /> */}
       {children}
 
      
