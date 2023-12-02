@@ -7,10 +7,14 @@ import { emailSignUp } from "../../app/utils/emailSignUp";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "@/app/redux/features/user/userActions";
 
-const CustomerRegister = ({ userInformation }) => {
+const CustomerRegister = () => {
   const urlBase = "http://localhost:3001";
   const router = useRouter();
+  const dispatch = useDispatch()
+  const userInformation = useSelector((state) => state.user.fireBaseUser)
 
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
@@ -32,7 +36,7 @@ const CustomerRegister = ({ userInformation }) => {
       <Formik
         initialValues={{
           fullName: "",
-          userName: userInformation?.userName || "",
+          userName: userInformation?.userName ? true : false,
           email: userInformation?.email || "",
           mobile: "",
           image: "",
@@ -43,9 +47,7 @@ const CustomerRegister = ({ userInformation }) => {
         }}
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {
-          if (values) {
             try {
-              console.log(values.image);
               if (values.image && typeof values.image === "object") {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
@@ -55,9 +57,12 @@ const CustomerRegister = ({ userInformation }) => {
                   "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
 
-              values.tokenId = await emailSignUp(values.email, values.password);
+              if(!values.userName){
+                values.tokenId = await emailSignUp(values.email, values.password);
+              }
+            
               const response = await axios.post(`${urlBase}/customers`, values);
-
+              
               toast.success(
                 `${values.fullName} se ha registrado existosamente`,
                 {
@@ -67,11 +72,12 @@ const CustomerRegister = ({ userInformation }) => {
                   hideProgressBar: true,
                 }
               );
+              
+              dispatch(getUserById(values.tokenId))
               router.replace("/user-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
             }
-          }
           setSubmitting(false);
         }}
       >
@@ -113,28 +119,33 @@ const CustomerRegister = ({ userInformation }) => {
               component="div"
               className="text-red-500 text-sm"
             />
-            <Field
-              type="password"
-              name="password"
-              placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-            <Field
-              type="password"
-              name="passwordConfirm"
-              placeholder="Confirmar contraseña"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="passwordConfirm"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+
+            {!userInformation?.email &&
+            <div>
+              <Field
+                type="password"
+                name="password"
+                placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
+                className="p-2 mb-3 shadow-md"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+              <Field
+                type="password"
+                name="passwordConfirm"
+                placeholder="Confirmar contraseña"
+                className="p-2 mb-3 shadow-md"
+              />
+              <ErrorMessage
+                name="passwordConfirm"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+            }
 
             <div className="mb-4">
               <label htmlFor="image" className="font-bold">

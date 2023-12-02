@@ -58,6 +58,7 @@ export default function Card({
         <div className="flex justify-between items-center">
           <div className="flex gap-x-1 items-center">
             <Image
+            unoptimized
               className="rounded-full object-cover"
               src={image}
               loader={imageLoader}
