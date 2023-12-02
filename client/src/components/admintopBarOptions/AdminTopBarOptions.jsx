@@ -6,6 +6,9 @@ import {
   getAllArtists,
   OrderAllArtists,
 } from "../../app/redux/features/artists/artistActions";
+import { CgProfile } from "react-icons/cg";
+import { MdAbc } from "react-icons/md";
+import { FaMapPin, FaRegStar } from "react-icons/fa";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
 
 const TopBarOptions = () => {
@@ -61,31 +64,31 @@ const TopBarOptions = () => {
 
   return (
     <div className='  bg-secondary-900 rounded-lg mb-8 '>
-        <nav className="flex gap-x-5 items-center">
+        <nav className="flex gap-x-10 items-center">
         <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
+              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center font-rocksalt mb-[15px]"
               htmlFor="name"
             >
-              Nombre:
+             <CgProfile className="mr-[8px] text-primary/75"/>Nombre:
             </label>
             <input
-              className="mb-8 mx-auto text-black"
+              className="mb-8 mx-auto text-black rounded"
               list="names"
               id="name"
               name="name"
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col items-center justify-center mb-8">
+          <div className="flex flex-col items-center justify-center mb-8 gap">
             <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center"
+              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center font-rocksalt mb-[15px]"
               htmlFor="city"
             >
-              Ciudad:
+              <FaMapPin className="mr-[8px] text-primary/75"/> Ciudad:
             </label>
             <input
-              className="mb-8 mx-auto text-black"
+              className="mb-8 mx-auto text-black rounded"
               list="cities"
               id="city"
               name="location"
@@ -94,13 +97,13 @@ const TopBarOptions = () => {
           </div>
             <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
+              className="text-lg font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-rocksalt"
               htmlFor="sort"
             >
-              Rating:
+              <FaRegStar className="mr-[8px] text-primary/75" />Valoracion:
             </label>
             <select
-              className="mb-8 mx-auto text-black"
+              className="mb-8 mx-auto text-black w-full rounded"
               id="sort"
               name="sort"
               onChange={handleSortChange}
@@ -112,13 +115,13 @@ const TopBarOptions = () => {
           </div>
             <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6"
+              className="text-lg font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-rocksalt"
               htmlFor="sort"
             >
-              Alfabetico:
+              <MdAbc className="mr-[8px] text-primary/75" />Alfabetico:
             </label>
             <select
-              className="mb-8 mx-auto text-black"
+              className="mb-8 mx-auto text-black w-full rounded"
               id="sort"
               name="sort"
               onChange={handleSortChange}
