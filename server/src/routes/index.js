@@ -14,7 +14,6 @@ const nodemailerRouter = require("./nodemailerRouter");
 const timeAvailabilityExceptionRouter= require("./timeAvailabilityExceptionRouter")
 const adminRouter= require("./adminRouter")
 const reviewRouter = require("./reviewRouter")
-const appointmentByArtistRouter = require("./appointmentByArtistRouter")
 
 router.use("/tattooStyles", tattoStyleRouter);
 router.use("/tattooArtists", tattooArtistsRouter);
@@ -29,6 +28,5 @@ router.use("/auth", loginRouter);
 router.use("/nodemailer", nodemailerRouter);
 router.use("/admins", adminRouter);
 router.use("/reviews", reviewRouter);
-router.use("/appointmentsByArtists", appointmentByArtistRouter);
 
 module.exports = router;
