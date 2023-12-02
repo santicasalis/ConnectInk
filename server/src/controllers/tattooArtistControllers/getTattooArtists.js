@@ -16,6 +16,7 @@ const getTattooArtists = async () => {
         model: Publication,
         attributes: ["id","description", "image", "createdAt", "updatedAt"],
         where: { disabled: false },
+        required: false
       },
       {
         model: TimeAvailability,
