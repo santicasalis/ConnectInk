@@ -16,11 +16,11 @@ module.exports = (sequelize) => {
       },
       initialHour: {
         type: DataTypes.TIME,
-        allowNull: false,
+        allowNull: true,
       },
       finalHour: {
         type: DataTypes.TIME,
-        allowNull: false,
+        allowNull: true,
       },
     },
     { timestamps: false }

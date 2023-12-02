@@ -14,7 +14,6 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
-    console.log(localStorage)
   }, []);
   return (
     <div className="flex flex-col w-full max-h-screen p-0 overflow-hidden relative">

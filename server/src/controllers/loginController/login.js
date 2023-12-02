@@ -1,7 +1,9 @@
-const { TattooArtist, TattooStyle, Publication, TimeAvailability, TimeAvailabilityException, PriceRange } = require("../../db");
+const { TattooArtist, TattooStyle, Publication, TimeAvailability, TimeAvailabilityException, PriceRange, Customer, Admin } = require("../../db");
 
 const login = async (tokenId) => {
-  const user = await TattooArtist.findOne({
+  let user = {}
+  let cleanUser = {}
+  user = await TattooArtist.findOne({
     where: {tokenId}, 
     include: [
       { model: TattooStyle, attributes: ["name"] },
@@ -50,32 +52,72 @@ const login = async (tokenId) => {
     }),
     timeAvailabilities: user.TimeAvailabilities?.map(
       (timeAvailability) => {
+=======
+  if(user){
+    cleanUser = {
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phone,
+      instagram: user.instagram,
+      description: user.description,
+      location: user.location,
+      address: user.address,
+      shopName: user.shopName,
+      image: user.image,
+      disabled: user.disabled,
+      tattooStyles: user.TattooStyles?.map(
+        (tattooStyle) => tattooStyle.name
+      ),
+      publications: user.Publications?.map((publication) => {
         return {
-          day: timeAvailability.day,
-          initialHour: timeAvailability.initialHour,
-          finalHour: timeAvailability.finalHour,
+          description: publication.description,
+          image: publication.image,
+          createdAt: publication.createdAt,
+          updatedAt: publication.updatedAt,
         };
-      }
-    ),
-    timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
-      (timeAvailabilityException) => {
-        return {
-          date: timeAvailabilityException.date,
-          initialHour: timeAvailabilityException.initialHour,
-          finalHour: timeAvailabilityException.finalHour,
-        };
-      }
-    ),
-    priceRanges: user.PriceRanges?.map(
-      (priceRange) => {
-        return {
-          size: priceRange.size,
-          priceMin: priceRange.priceMin,
-          priceMax: priceRange.priceMax
+      }),
+      timeAvailabilities: user.TimeAvailabilities?.map(
+        (timeAvailability) => {
+          return {
+            day: timeAvailability.day,
+            initialHour: timeAvailability.initialHour,
+            finalHour: timeAvailability.finalHour,
+          };
         }
+      ),
+      timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
+        (timeAvailabilityException) => {
+          return {
+            date: timeAvailabilityException.date,
+            initialHour: timeAvailabilityException.initialHour,
+            finalHour: timeAvailabilityException.finalHour,
+          };
+        }
+      ),
+      priceRanges: user.PriceRanges?.map(
+        (priceRange) => {
+          return {
+            size: priceRange.size,
+            priceMin: priceRange.priceMin,
+            priceMax: priceRange.priceMax
+          }
+  
+        }
+      )
+    }
+  }
 
-      }
-    )
+  if(!user){
+    cleanUser = await Customer.findOne({
+      where: {tokenId},
+    })
+  }
+
+  if(!cleanUser){
+    cleanUser = await Admin.findOne({
+      where: {tokenId}
+    })
   }
 
   return cleanUser;
