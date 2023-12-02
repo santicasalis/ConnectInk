@@ -14,6 +14,7 @@ import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
 import Paginate from "@/components/paginate/Paginate";
 import "../explore/page.css";
+import Link from "next/link";
 
 export default function ExplorePage() {
   const { people, filtered } = useSelector((state) => state.artists);
@@ -40,9 +41,7 @@ export default function ExplorePage() {
     indexOfFirstArtist,
     indexOfLastArtist
   );
-  console.log(artistsToDisplay);
   const totalArtists = filtered.length;
-  console.log(totalArtists);
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -134,16 +133,16 @@ export default function ExplorePage() {
                 {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full flex flex-col items-center justify-center">
                     
-                    <Card
-                      id={filter.id}
-                      fullName={filter.fullName}
-                      location={filter.location}
-                      shopName={filter.shopName}
-                      publications={filter.publications}
-                      image={
-                        "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg"
-                      }
-                    />
+                      <Card
+                        id={filter.id}
+                        fullName={filter.fullName}
+                        location={filter.location}
+                        shopName={filter.shopName}
+                        publications={filter.publications}
+                        image={
+                          "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg"
+                        }
+                      />
                   </div>
                 ))}
               </div>

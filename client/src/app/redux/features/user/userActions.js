@@ -1,4 +1,4 @@
-import { getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo } from "./userSlice";
+import { getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo, getUserPosts} from "./userSlice";
 import axios from "axios";
 
 const URL_BASE = "http://localhost:3001";
@@ -25,4 +25,9 @@ export const logOut = () => async dispatch =>{
 
 export const getUserInformation = (user) => async dispatch => {
   dispatch(getFirebaseInfo(user))
+}
+
+export const bringUserPosts = (id) => async dispatch => {
+  const response = await axios.post(`${URL_BASE}/publications/tattooArtistId`, {id})
+  dispatch(getUserPosts(response.data))
 }

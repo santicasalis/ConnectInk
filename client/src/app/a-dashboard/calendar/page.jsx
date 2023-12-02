@@ -68,13 +68,14 @@ const Page = () => {
         {Object.entries(timeAvailability).map(([day, { inicio, fin }]) => (
           <div key={day}>
             <label>{day}: </label>
-            <select
+            <select 
               value={inicio}
               onChange={(e) => handleTimeChange(day, "inicio", e.target.value)}
             >
               {generateTimeOptions()}
             </select>
             <select
+            
               value={fin}
               onChange={(e) => handleTimeChange(day, "fin", e.target.value)}
             >
