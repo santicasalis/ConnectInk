@@ -3,7 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    logedInUser: JSON.parse(localStorage.getItem("user")) || {}
+    logedInUser: JSON.parse(localStorage.getItem("user")) || {},
+    fireBaseUser: {}
 }
 
 export const userSlice = createSlice({
@@ -15,11 +16,17 @@ export const userSlice = createSlice({
         },
         cleanUser: (state) => {
             state.logedInUser = {}
+        },
+        getFirebaseInfo: (state, action) =>{
+            state.fireBaseUser = action.payload
+        },
+        cleanFireBaseInfo: (state) => {
+            state.fireBaseUser = {}
         }
     }
 })
 
-export const {getUser, cleanUser} = userSlice.actions
+export const {getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo} = userSlice.actions
 
 
 export default userSlice.reducer

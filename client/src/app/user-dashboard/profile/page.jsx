@@ -8,8 +8,10 @@ import {   RiMailLine,  RiLockLine,  RiEyeLine,  RiEyeOffLine,} from "react-icon
 import { useState } from 'react'
 
 const Profile = () => {
+
   const user = useSelector((state) => state.user)
   const [showPassword, setShowPassword] = useState(false);
+
   const imageLoader = ({src}) => {
     return src
   }
@@ -24,7 +26,9 @@ const Profile = () => {
           </div>
           <div className='flex-1'>
               <div className='relative mb-2'>
+
                   <Image src={user.image} loader={imageLoader} width={80} height={80} alt={`${user.Fullname} profile pic`} />
+
                   <label htmlFor='avatar' className='absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100'>
                       <RiEdit2Line />
                   </label>

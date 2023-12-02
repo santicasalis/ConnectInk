@@ -47,6 +47,7 @@ export default function AdminCard({fullName,location,shopName,image, id}){
             <div className="bg-secondary-100 w-[550px] h-[250px] ml-[10px] mb-[10px] rounded-xl">
             <div className="flex gap-x-1 items-center p-4">
             <Image
+            unoptimized
               className="rounded-full object-cover"
               src={image}
               loader={imageLoader}

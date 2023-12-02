@@ -4,7 +4,9 @@ const {
   Publication,
   TimeAvailability,
   TimeAvailabilityException,
-  PriceRange
+  PriceRange,
+  CustomerTattooArtistAppointment,
+  Appointment
 } = require("../../db");
 
 const getTattooArtistById = async (id) => {
@@ -27,6 +29,14 @@ const getTattooArtistById = async (id) => {
       {
         model: PriceRange,
         attributes: ["size", "priceMin", "priceMax"],
+      },
+    ],
+  });
+  const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+    where: {TattooArtistId: id},
+    include: [
+      {
+        model: Appointment,
       },
     ],
   });
@@ -82,7 +92,8 @@ const getTattooArtistById = async (id) => {
         }
 
       }
-    )
+    ),
+    appointments: appointmentsByArtist?.map(appointment => appointment.Appointment)
   };
 };
 

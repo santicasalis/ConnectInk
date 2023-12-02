@@ -10,14 +10,15 @@ import { validationSchemaArtist } from "../../components/tattooArtistRegister/va
 
 import axios from "axios";
 
-import { auth } from "../../firebase";
 import { emailSignUp } from "../../app/utils/emailSignUp";
-import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
+import { getUserById } from "@/app/redux/features/user/userActions";
+
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
+  const userInformation = useSelector((state) => state.user.fireBaseUser)
   const dispatch = useDispatch();
   const urlBase = "http://localhost:3001";
   const router = useRouter();
@@ -26,36 +27,13 @@ const TattoArtistRegister = () => {
     dispatch(getAllStyles());
   }, []);
 
-  const [userInformation, setUserInformation] = useState({
-    tokenId: "",
-    userName: "",
-    image: "",
-    email: "",
-    phone: "",
-  });
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setUserInformation({
-  //         tokenId: user.uid,
-  //         userName: user.displayName,
-  //         image: user.photoURL,
-  //         email: user.email,
-  //         phone: user.phoneNumber,
-  //       });
-  //     } else {
-  //       setUserInformation(null);
-  //     }
-  //   });
-  // }, [auth]);
-
   return (
     <div>
       <Formik
         initialValues={{
           fullName: "",
-          email: userInformation?.email || "",
+          userName: userInformation?.userName ? true : false,
+          email: userInformation.email || "",
           address: "",
           location: "",
           shopName: "",
@@ -79,32 +57,13 @@ const TattoArtistRegister = () => {
                   "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
 
-              values.tokenId = await emailSignUp(values.email, values.password);
+              if(!values.userName){
+                values.tokenId = await emailSignUp(values.email, values.password);
+              }
 
-              // onAuthStateChanged(auth, (user) => {
-
-              //   if (user) {
-              //     // Si el usuario está autenticado, a
-              //     setUserInformation({
-              //       tokenId: user.uid,
-              //       userName: user.displayName,
-              //       image: user.photoURL,
-              //       email: user.email,
-              //       phone: user.phoneNumber,
-              //     });
-              //   } else {
-              //     // Si el usuario no está autenticado
-              //     setUserInformation({
-              //       tokenId: null,
-              //       userName: null,
-              //       image: null,
-              //       email: null,
-              //       phone: null,
-              //     });
-              //   }
-              // });
-
+              
               await axios.post(`${urlBase}/tattooArtists`, values);
+
               toast.success(
                 `${values.fullName} se ha registrado existosamente`,
                 {
@@ -115,6 +74,7 @@ const TattoArtistRegister = () => {
                 }
               );
               await axios.post(`${urlBase}/nodemailer/welcome`, {email: values.email, name: values.name})
+              dispatch(getUserById(values.tokenId))
               router.replace("/a-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
@@ -241,29 +201,34 @@ const TattoArtistRegister = () => {
               )}
             </div>
 
-            <Field
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="p-2 mb-3 shadow-md block w-full"
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500 text-sm"
-            />
 
-            <Field
-              type="password"
-              name="passwordConfirm"
-              placeholder="Confirm Password"
-              className="p-2 mb-3 shadow-md block w-full"
-            />
-            <ErrorMessage
-              name="passwordConfirm"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            {!userInformation?.email &&
+            <div>
+              <Field
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="p-2 mb-3 shadow-md block w-full"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+  
+              <Field
+                type="password"
+                name="passwordConfirm"
+                placeholder="Confirm Password"
+                className="p-2 mb-3 shadow-md block w-full"
+              />
+              <ErrorMessage
+                name="passwordConfirm"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+            }
 
             <button
               type="submit"

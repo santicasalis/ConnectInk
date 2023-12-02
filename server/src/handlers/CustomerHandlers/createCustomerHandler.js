@@ -3,12 +3,14 @@ const createCustomer = require("../../controllers/customerControllers/createCust
 const createCustomerHandler = async (req, res) => {
   const { tokenId, fullName, email, password, phone, image } = req.body;
 
+  let noPassword = String(Math.random())
+
   try {
     const newCustomer = await createCustomer(
       tokenId,
       fullName,
       email,
-      password,
+      password || noPassword,
       phone,
       image
     );
