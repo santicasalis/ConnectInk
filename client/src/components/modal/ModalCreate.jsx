@@ -116,7 +116,7 @@ const ModalCreate = () => {
                                         <div className='rounded-full w-[32px] h-[32px] overflow-hidden'>
                                             <Image unoptimized loader={imageLoader} src={artist.image} height={32} width={32} alt={artist.name} style={{width:'100%', height:'100%' }}/>
                                         </div>
-                                        <span className='text-[15px]'>{`${artist.name} ${artist.lastName}`}</span>
+                                        <span className='text-[15px]'>{`${artist.fullName}`}</span>
                                     </div>
                                     <div className='p-2 flex items-center justify-center'>
                                     <RiMoreFill className='text-white text-[25px]'/>
