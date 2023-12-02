@@ -26,7 +26,7 @@ const login = async (tokenId) => {
     ]
   });
 
-  const cleanUser = {
+   cleanUser = {
     id: user.id,
     fullName: user.fullName,
     email: user.email,
@@ -52,7 +52,34 @@ const login = async (tokenId) => {
     }),
     timeAvailabilities: user.TimeAvailabilities?.map(
       (timeAvailability) => {
-=======
+        return {
+          day: timeAvailability.day,
+          initialHour: timeAvailability.initialHour,
+          finalHour: timeAvailability.finalHour,
+        };
+      }
+    ),
+    timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
+      (timeAvailabilityException) => {
+        return {
+          date: timeAvailabilityException.date,
+          initialHour: timeAvailabilityException.initialHour,
+          finalHour: timeAvailabilityException.finalHour,
+        };
+      }
+    ),
+    priceRanges: user.PriceRanges?.map(
+      (priceRange) => {
+        return {
+          size: priceRange.size,
+          priceMin: priceRange.priceMin,
+          priceMax: priceRange.priceMax
+        }
+
+      }
+    )
+   }
+
   if(user){
     cleanUser = {
       id: user.id,
