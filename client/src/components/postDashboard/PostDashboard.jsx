@@ -11,6 +11,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import { openModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
+import { openModalDeleteAction } from '@/app/redux/features/modalDelete/modalDeleteAction';
 
 const PostDashboard = ({publication, name, image}) => {
     const [isLike, setIsLike] = useState(false);
@@ -65,10 +66,10 @@ const PostDashboard = ({publication, name, image}) => {
                                         <RiEditFill />
                                         Editar
                                     </Link>
-                                 </div>
+                                </div>
                                 
                             </MenuItem>
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full'>
+                            <MenuItem className='hover:bg-secondary-100 w-full h-full' onClick={() => dispatch(openModalDeleteAction(publication))}>
                                 <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
                                     <RiDeleteBin6Fill />
                                     Eliminar

@@ -3,6 +3,8 @@
 import React,{useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiCloseFill, RiEmotionHappyLine, RiCheckFill  } from "react-icons/ri";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { closeModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
 import axios from 'axios';
 
@@ -10,10 +12,12 @@ const Modal = () => {
   const URL_BASE = "http://localhost:3001"
   const dispatch = useDispatch();
   const { isOpen, data } = useSelector((state) => state.modalEdit);
+  const [id,setId] = useState('');
   const [descriptionData, setDescriptionData] = useState('');
 
   useEffect(()=>{
         setDescriptionData(data.description);
+        setId(data.id);
   },[data]);
 
   const handleClose = () => {
@@ -28,12 +32,23 @@ const Modal = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        await axios.put(`${URL_BASE}/publication/${id}`,{description:descriptionData}); 
+        console.log(id, descriptionData,'aca los datos la puta que te remilpario')
+        await axios.put(`${URL_BASE}/publications/${id}`,{description:descriptionData}); 
         dispatch(closeModalAction()); 
+        toast.success(`La publicacion se actualizó con éxito`, {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
     } catch (error) {
-        console.error('Error en la petición PUT:', error);
+      toast.error(`Hubo un error al editar la publicación`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
-
   }
 
   return (
