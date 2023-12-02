@@ -9,27 +9,26 @@ const Page = () => {
   console.log(user);
 
   const initialTimeAvailability = {
-    Lunes: { inicio: "06:00", fin: "23:00" },
-    Martes: { inicio: "06:00", fin: "23:00" },
-    Miercoles: { inicio: "06:00", fin: "23:00" },
-    Jueves: { inicio: "06:00", fin: "23:00" },
-    Viernes: { inicio: "06:00", fin: "23:00" },
-    Sabado: { inicio: "06:00", fin: "23:00" },
-    Domingo: { inicio: "06:00", fin: "23:00" },
+    Lunes: {id:"", inicio: "06:00", fin: "23:00" },
+    Martes: {id:"", inicio: "06:00", fin: "23:00" },
+    Miércoles: {id:"", inicio: "06:00", fin: "23:00" },
+    Jueves: {id:"", inicio: "06:00", fin: "23:00" },
+    Viernes: {id:"", inicio: "06:00", fin: "23:00" },
+    Sábado: {id:"", inicio: "06:00", fin: "23:00" },
+    Domingo: {id:"", inicio: "06:00", fin: "23:00" },
   };
-
-  const generateTimeOptions = () => {
-    let options = [];
-    for (let i = 6; i <= 23; i++) {
-      let time = `${i}:00`;
-      options.push(
-        <option value={time} key={time}>
-          {time}
-        </option>
-      );
-    }
-    return options;
-  };
+const generateTimeOptions = () => {
+  let options = [];
+  for (let i = 6; i <= 23; i++) {
+    let time = `${i}:00`;
+    options.push(
+      <option value={time} key={time}>
+        {time}
+      </option>
+    );
+  }
+  return options;
+};
   const [timeAvailability, setTimeAvailability] = useState(
     initialTimeAvailability
   );
@@ -42,32 +41,30 @@ const Page = () => {
 
 
 const handleTimeChange = (day, timeType, value) => {
-  const newTimeAvailability = {
-    ...timeAvailability,
+  setTimeAvailability((prevState) => ({
+    ...prevState,
     [day]: {
-      ...timeAvailability[day],
+      ...prevState[day],
       [timeType]: value,
     },
-  };
-
-  console.log(`Nuevo horario para ${day}:`, newTimeAvailability[day]);
-  setTimeAvailability(newTimeAvailability);
-};
-
-const transformTimeAvailability = () => {
-  return Object.entries(timeAvailability).map(([day, times]) => ({
-    tattooArtistId: user.id,
-    day,
-    initialHour: times.inicio,
-    finalHour: times.fin,
   }));
 };
+
+// const transformTimeAvailability = () => {
+//   return Object.entries(timeAvailability).map(([day, times]) => ({
+//     tattooArtistId: user.id,
+//     day,
+//     initialHour: times.inicio,
+//     finalHour: times.fin,
+//   }));
+// };
 
 const saveTimeAvailability = async () => {
   try {
    
     for (const [day, times] of Object.entries(timeAvailability)) {
       const data = {
+        
         tattooArtistId: user.id,
         day,
         initialHour: times.inicio,
@@ -78,29 +75,43 @@ const saveTimeAvailability = async () => {
         "http://localhost:3001/timeAvailabilities",
         data
       );
-      console.log(`Horario Guardado para ${day}:`, response.data);
+      console.log(`Horario Guardado para ${day}:`, response);
     }
   } catch (error) {
     console.error("Error al guardar el horario:", error);
   }
 };
 
+// useEffect(() => {
+  
+//   axios
+//     .get(http://localhost:3001/timeAvailabilities/{}) 
+//     .then((response) => {
+      
+//     })
+//     .catch((error) => console.error(error));
+// }, []);
+
 const updateTimeAvailability = async () => {
   try {
     
-    for (const [day, times] of Object.entries(timeAvailability)) {
-      const data = {
+    const timeAvailabilityArray = Object.entries(timeAvailability).map(
+      ([day, times]) => ({
+        
         tattooArtistId: user.id,
         day,
         initialHour: times.inicio,
         finalHour: times.fin,
-      };
+      })
+    );
 
+    
+    for (const availability of timeAvailabilityArray) {
       const response = await axios.put(
-        "http://localhost:3001/timeAvailabilities",
-        data
+        "http://localhost:3001/timeAvailabilities/",
+        availability
       );
-      console.log(`Horario Actualizado para ${day}:`, response.data);
+      console.log(`Horario Actualizado para ${response.config.data}:`);
     }
   } catch (error) {
     console.error("Error al actualizar el horario:", error);
@@ -109,8 +120,8 @@ const updateTimeAvailability = async () => {
 
   const handleExceptionChange = (e) => {
     setNewException({ ...newException, [e.target.name]: e.target.value });
-    console.log("Nueva excepción:", newExceptionData);
-    setNewException(newExceptionData);
+    console.log("Nueva excepción:", newException);
+    setNewException(newException);
   };
 
   const addTimeException = async () => {
@@ -136,13 +147,12 @@ const updateTimeAvailability = async () => {
     }
   };
 
-  const deleteTimeException = async (id) => {
-    
-    console.log("Eliminando excepcion con ID:", id);
+  const deleteTimeException = async () => {
+    console.log("Eliminando excepcion con ID:", );
 
     try {
       await axios.delete(
-        `http://localhost:3001/timeAvailabilityExceptions/${id}`
+        `http://localhost:3001/timeAvailabilityExceptions/`
       );
       console.log("Excepcion Eliminada");
       setTimeException(
