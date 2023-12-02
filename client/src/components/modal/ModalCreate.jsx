@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const ModalCreate = () => {
   const dispatch = useDispatch();
   const { isOpen} = useSelector((state) => state.modalCreate);
-  const artist = useSelector((state) => state.user)
+  const artist = useSelector((state) => state.user.logedInUser)
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
@@ -114,9 +114,9 @@ const ModalCreate = () => {
                             <div className='flex justify-between w-full'>
                                     <div className='flex gap-x-2 p-2 items-center'>
                                         <div className='rounded-full w-[32px] h-[32px] overflow-hidden'>
-                                            <Image loader={imageLoader} src={artist.image} height={32} width={32} alt={artist.name} style={{width:'100%', height:'100%' }}/>
+                                            <Image unoptimized loader={imageLoader} src={artist.image} height={32} width={32} alt={artist.name} style={{width:'100%', height:'100%' }}/>
                                         </div>
-                                        <span className='text-[15px]'>{`${artist.name} ${artist.lastName}`}</span>
+                                        <span className='text-[15px]'>{`${artist.fullName}`}</span>
                                     </div>
                                     <div className='p-2 flex items-center justify-center'>
                                     <RiMoreFill className='text-white text-[25px]'/>

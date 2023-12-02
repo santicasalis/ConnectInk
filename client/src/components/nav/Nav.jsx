@@ -12,8 +12,7 @@ export default function Nav() {
   const imageLoader = ({src}) => {
     return src
   }
-  const user = useSelector((state) => state.user)
-  {console.log(user)}
+  const user = useSelector((state) => state.user.logedInUser)
   return (
     <nav className="bg-transparent py-8 px-8 text-gray-200 mb-[30px] ">
       <ul className="flex justify-between gap-8">
@@ -36,17 +35,31 @@ export default function Nav() {
               </Link>
             </li>
             <li>
-            {console.log(user)}
-            {user.email.length == 0 ? (
+            {!user.userType ? (
               <Link href="/auth">
                 <span className="hover:bg-black hover:text-primary hover:border-primary p-2 rounded-lg font-newrocker text-[19px] border-[2px]  border-gray-200">Ingresar</span>
               </Link>
             ): (
+              <div>
+              {user.userType == "artist" &&
               <Link href="/a-dashboard/home">
                 <div className="w-[40px] h-[40px] rounded-full">
-                    <Image loader={imageLoader} src={user.image} width={40} height={40} alt={user.name} style={{borderRadius:'50%', width:'100%',height:'100%'}} />
+                    <Image unoptimized loader={imageLoader} src={user.image} width={40} height={40} alt={user.name} style={{borderRadius:'50%', width:'100%',height:'100%'}} />
                 </div>
-              </Link>
+              </Link>}
+              {user.userType == "customer" &&
+              <Link href="/user-dashboard/home">
+                <div className="w-[40px] h-[40px] rounded-full">
+                    <Image unoptimized loader={imageLoader} src={user.image} width={40} height={40} alt={user.name} style={{borderRadius:'50%', width:'100%',height:'100%'}} />
+                </div>
+              </Link>}
+              {user.userType == "admin" &&
+              <Link href="/admin-dashboard/home">
+                <div className="w-[40px] h-[40px] rounded-full">
+                    <Image unoptimized loader={imageLoader} src={user.image} width={40} height={40} alt={user.name} style={{borderRadius:'50%', width:'100%',height:'100%'}} />
+                </div>
+              </Link>}
+              </div>
             )}
             </li>
         </div>

@@ -4,7 +4,9 @@ const {
   Publication,
   TimeAvailability,
   TimeAvailabilityException,
-  PriceRange
+  PriceRange,
+  CustomerTattooArtistAppointment,
+  Appointment
 } = require("../../db");
 
 const getTattooArtistById = async (id) => {
@@ -18,15 +20,23 @@ const getTattooArtistById = async (id) => {
       },
       {
         model: TimeAvailability,
-        attributes: ["day", "initialHour", "finalHour"],
+        attributes: ["id", "day", "initialHour", "finalHour"],
       },
       {
         model: TimeAvailabilityException,
-        attributes: ["date", "initialHour", "finalHour"],
+        attributes: ["id", "date", "initialHour", "finalHour"],
       },
       {
         model: PriceRange,
-        attributes: ["size", "priceMin", "priceMax"],
+        attributes: ["id", "size", "priceMin", "priceMax"],
+      },
+    ],
+  });
+  const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+    where: {TattooArtistId: id},
+    include: [
+      {
+        model: Appointment,
       },
     ],
   });
@@ -58,6 +68,7 @@ const getTattooArtistById = async (id) => {
     timeAvailabilities: tattooArtist.TimeAvailabilities?.map(
       (timeAvailability) => {
         return {
+          id: timeAvailability.id,
           day: timeAvailability.day,
           initialHour: timeAvailability.initialHour,
           finalHour: timeAvailability.finalHour,
@@ -67,6 +78,7 @@ const getTattooArtistById = async (id) => {
     timeAvailabilityExceptions: tattooArtist.TimeAvailabilityExceptions?.map(
       (timeAvailabilityException) => {
         return {
+          id: timeAvailabilityException.id,
           date: timeAvailabilityException.date,
           initialHour: timeAvailabilityException.initialHour,
           finalHour: timeAvailabilityException.finalHour,
@@ -76,13 +88,15 @@ const getTattooArtistById = async (id) => {
     priceRanges: tattooArtist.PriceRanges?.map(
       (priceRange) => {
         return {
+          id: priceRange.id,
           size: priceRange.size,
           priceMin: priceRange.priceMin,
           priceMax: priceRange.priceMax
         }
 
       }
-    )
+    ),
+    appointments: appointmentsByArtist?.map(appointment => appointment.Appointment)
   };
 };
 

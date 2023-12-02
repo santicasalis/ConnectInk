@@ -45,6 +45,17 @@ export default function FilterSideBar() {
     }
   };
 
+  
+
+  const resetFilters = () =>{
+    setFilters({
+      location: "",
+      name: "",
+      tattooStyle: [],
+    });
+    setStyleSelected([]);
+  }
+
   useEffect(() => {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
@@ -81,7 +92,9 @@ export default function FilterSideBar() {
               id="city"
               name="location"
               onChange={handleChange}
+              value={filters.location}
               placeholder="Buscar por ciudad"
+              
             />
           </div>
 
@@ -98,6 +111,8 @@ export default function FilterSideBar() {
               id="name"
               name="name"
               onChange={handleChange}
+              value={filters.name}
+              
               placeholder="Buscar por nombre"
             />
           </div>
@@ -128,6 +143,11 @@ export default function FilterSideBar() {
                 );
               })}
             </div>
+          </div>
+          <div className="flex justify-center items-center">
+            <button onClick={resetFilters} className="font-newrocker w-[40%] border-[1px] border-primary text-[22px] rounded">
+              Reiniciar Filtros
+            </button>
           </div>
         </form>
       </div>

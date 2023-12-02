@@ -11,6 +11,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import { openModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
+import { openModalDeleteAction } from '@/app/redux/features/modalDelete/modalDeleteAction';
 
 const PostDashboard = ({publication, name, image}) => {
     const [isLike, setIsLike] = useState(false);
@@ -46,7 +47,7 @@ const PostDashboard = ({publication, name, image}) => {
                 <div className='flex justify-between'>
                     <div className='flex gap-x-2 p-2 items-center'>
                         <div className='rounded-full w-[32px] h-[32px] bg-red-600 overflow-hidden'>
-                            <Image loader={imageLoader} src={image} height={32} width={32} alt={name} style={{width:'100%', height:'100%' }}/>
+                            <Image unoptimized loader={imageLoader} src={image} height={32} width={32} alt={name} style={{width:'100%', height:'100%' }}/>
                         </div>
                         <span className='text-[15px]'>{`${name}`}</span>
                         <p className='text-white/50 text-[13px]'>• {formatDistance(publication.createdAt)}</p>
@@ -65,10 +66,10 @@ const PostDashboard = ({publication, name, image}) => {
                                         <RiEditFill />
                                         Editar
                                     </Link>
-                                 </div>
+                                </div>
                                 
                             </MenuItem>
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full'>
+                            <MenuItem className='hover:bg-secondary-100 w-full h-full' onClick={() => dispatch(openModalDeleteAction(publication))}>
                                 <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
                                     <RiDeleteBin6Fill />
                                     Eliminar
@@ -78,7 +79,7 @@ const PostDashboard = ({publication, name, image}) => {
                     </div>
                 </div>
                 <div className="w-full flex flex-col justify-center items-center bg-secondary-100  mb-2 ">
-                    <Image src={publication.image} loader={imageLoader} width={500} height={500} alt={publication.description} />
+                    <Image unoptimized src={publication.image} loader={imageLoader} width={500} height={500} alt={publication.description} />
                 </div>
                 <div  className='cursor-pointer text-[30px] flex gap-x-2 mb-2'>
                 {

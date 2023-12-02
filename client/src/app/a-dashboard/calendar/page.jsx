@@ -50,14 +50,7 @@ const handleTimeChange = (day, timeType, value) => {
   }));
 };
 
-// const transformTimeAvailability = () => {
-//   return Object.entries(timeAvailability).map(([day, times]) => ({
-//     tattooArtistId: user.id,
-//     day,
-//     initialHour: times.inicio,
-//     finalHour: times.fin,
-//   }));
-// };
+
 
 const saveTimeAvailability = async () => {
   try {
@@ -82,15 +75,6 @@ const saveTimeAvailability = async () => {
   }
 };
 
-// useEffect(() => {
-  
-//   axios
-//     .get(http://localhost:3001/timeAvailabilities/{}) 
-//     .then((response) => {
-      
-//     })
-//     .catch((error) => console.error(error));
-// }, []);
 
 const updateTimeAvailability = async () => {
   try {
@@ -169,27 +153,20 @@ const updateTimeAvailability = async () => {
         <h3>Disponibilidad de Tiempo</h3>
         {Object.entries(timeAvailability).map(([day, times]) => (
           <div key={day}>
-            <h4>{day}</h4>
-            <label>
-              Inicio:
-              <select
-                value={times.inicio}
-                onChange={(e) =>
-                  handleTimeChange(day, "inicio", e.target.value)
-                }
-              >
-                {generateTimeOptions()}
-              </select>
-            </label>
-            <label>
-              Fin:
-              <select
-                value={times.fin}
-                onChange={(e) => handleTimeChange(day, "fin", e.target.value)}
-              >
-                {generateTimeOptions()}
-              </select>
-            </label>
+            <label>{day}: </label>
+            <select 
+              value={inicio}
+              onChange={(e) => handleTimeChange(day, "inicio", e.target.value)}
+            >
+              {generateTimeOptions()}
+            </select>
+            <select
+            
+              value={fin}
+              onChange={(e) => handleTimeChange(day, "fin", e.target.value)}
+            >
+              {generateTimeOptions()}
+            </select>
           </div>
         ))}
         <button onClick={saveTimeAvailability}>Guardar Horarios</button>

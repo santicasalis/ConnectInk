@@ -22,14 +22,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getAllArtists } from "@/app/redux/features/artists/artistActions";
 
 const Header = () => {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user.logedInUser)
   const dispatch = useDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    dispatch(getAllArtists());
-  }, [auth]);
-
   // let userEmail = auth.currentUser?.email;
   // let username = userEmail?.split("@")[0];
 
@@ -87,6 +82,7 @@ const Header = () => {
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
                 <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
                   <Image
+                  unoptimized
                     src={user.image}
                     loader={imageLoader}
                     style={{
@@ -119,6 +115,7 @@ const Header = () => {
               >
                 <div className="rounded-full w-[25px] h-[25px] overflow-hidden">
                   <Image
+                  unoptimized
                     src={user.image}
                     loader={imageLoader}
                     width={25}

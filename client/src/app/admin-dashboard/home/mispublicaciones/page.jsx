@@ -9,11 +9,7 @@ import { getUserId } from '@/app/redux/features/user/userActions'
 
 const MyPosts = () => {
 const dispatch = useDispatch()
-const user = useSelector((state)=> state.user)
-useEffect(()=>{
-dispatch(getAllArtists())
-dispatch(getUserId(user.email))
-},[])
+const user = useSelector((state)=> state.user.logedInUser)
 
   return (
     <div>

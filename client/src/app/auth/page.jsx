@@ -19,13 +19,22 @@ import {
 } from "firebase/auth";
 import { getAllArtists } from "../redux/features/artists/artistActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "../redux/features/user/userActions.js";
+import { getUserById, getUserInformation } from "../redux/features/user/userActions.js";
 
 const Login = () => {
+  const user = useSelector((state) => state.user.logedInUser)
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(user){
+      if(user.userType == "artist")router.replace("/a-dashboard/home");
+      if(user.userType == "customer")router.replace("/user-dashboard/home");
+      if(user.userType == "admin")router.replace("/admin-dashboard/home");
+    }
+  }, [user])
 
   const handleChange = (event) => {
     setData({
@@ -35,25 +44,30 @@ const Login = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    emailLogIn()
   };
+  
 
   const googleLogIn = async () => {
     const provider = new GoogleAuthProvider();
+
     try {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user.metadata.createdAt;
-      const userLastLog = result.user.metadata.lastLoginAt;
-
       
+      const fireBaseUser = result.user
+      const token = fireBaseUser.uid
 
-      if (Number(user) + 1 == userLastLog || user == userLastLog) {
-        router.replace("/auth/register");
-      } else {
-        dispatch(getUserById(token))
-        router.replace("/a-dashboard/home");
-      }
+      dispatch(getUserById(token, router))
+
+      dispatch(getUserInformation({
+        tokenId: fireBaseUser.uid,
+        userName: fireBaseUser.displayName,
+        image: fireBaseUser.photoURL,
+        email: fireBaseUser.email,
+        phoneNumber: fireBaseUser.phoneNumber,
+      }))
+      
     } catch (error) {
       const errorMessage = error.message;
       const email = error.email;
@@ -73,17 +87,15 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
-      const user = auth.currentUser;
-      const token = user.reloadUserInfo.localId
+      const userFireBase = auth.currentUser;
+      const token = userFireBase.reloadUserInfo.localId
 
       dispatch(getUserById(token))
-      
 
-      if (user) {
-        router.replace("/a-dashboard/home");
-      } else {
-        router.replace("/user-dashboard/home");
-      }
+      if(user.userType == "artist")router.replace("/a-dashboard/home");
+      if(user.userType == "customer")router.replace("/user-dashboard/home");
+      if(user.userType == "admin")router.replace("/admin-dashboard/home");
+
     } catch (createUserError) {
       const errorCode = createUserError.code;
       const errorMessage = createUserError.message;
@@ -147,7 +159,6 @@ const Login = () => {
             type="submit"
             className="bg-black opacity-50 text-white uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:bg-primary/90 transition-colors"
             disabled={!data.email || !data.password}
-            onClick={emailLogIn}
           >
             Ingresar
           </button>
