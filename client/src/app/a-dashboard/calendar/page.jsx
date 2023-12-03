@@ -153,7 +153,6 @@ const Page = () => {
   }, [dispatch, user.logedInUser.id]);
 
   useEffect(() => {
-    console.log(timeAvailabilities)
   }, [timeAvailabilities]);
 
   return (
