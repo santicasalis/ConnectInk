@@ -15,7 +15,7 @@ const UserSideBar = () => {
             </h1>
             <ul>
               <li>
-                  <Link href='/user-dashboard/profile' className='flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
+                  <Link href='/user-dashboard/' className='flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
                     <RiStore3Line className='text-primary '/> Home
                   </Link>
               </li>
