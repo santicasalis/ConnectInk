@@ -6,6 +6,7 @@ import axios from "axios";
 import Nav from "@/components/nav/Nav";
 import "./style.css"; 
 import MapComponent from "@/components/map/Map"
+import Link from "next/link";
 
 
 export default function Page({ params }) {
@@ -61,9 +62,11 @@ export default function Page({ params }) {
               <h2 className="text-2xl font-bold">
                 Tienda: <p>{artist.shopName}</p>
               </h2>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Reservar
-              </button>
+              <Link href={`/explore/${params.id}/reservas`}>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Reservar
+                </button>
+              </Link>
             </div>
           </div>
 

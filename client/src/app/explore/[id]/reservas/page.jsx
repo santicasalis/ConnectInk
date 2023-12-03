@@ -15,26 +15,89 @@ const URL_BASE = "http://localhost:3001"
 const bookAppointment = ({params}) => {
 
   const {id} = params
-  const [availability, setAvailability] = useState(null)
-  const [exceptions, setExceptions] = useState(null)
+  const [availability, setAvailability] = useState([])
+  const [exceptions, setExceptions] = useState([])
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedTime, setSelectedTime] = useState("")
   const [day, setDay] = useState("")
   const [month, setMonth] = useState("")
   const [year, setYear] = useState("")
   const [showTime, setShowTime] = useState(false)
+  const [obj, setObj] = useState({})
+  const [objHours, setObjHours] = useState({})
+
+  const durations = {
+    pequeño: 1,
+    "pequeño a color": 1,
+    "mediano a color": 2,
+    mediano: 2,
+    grande: 3,
+    "grande a color": 3,
+  }
+
+  useEffect(() => {
+    getDisabled()
+    getHours()
+  }, [availability])
+
+
+  function createHourArray(initialTime, FinalTime) {
+    let resultado = [];
+    for (let i = initialTime; i < FinalTime; i++) {
+      resultado.push(i);
+    }
+    return resultado;
+  }
+
+
+  const getHours = () => {
+    let objH = {}
+    availability.forEach((av) => {
+      dayData.map((da) => {
+        if(da.day === av.day){
+          objH[da.number] = createHourArray(Number(av.initialHour.slice(0, 2)), Number(av.finalHour.slice(0, 2)))
+        }
+      })
+    })
+    setObjHours(objH)
+  }
+
+  const getDisabled = () => {
+    let array = []
+    let numobj = {}
+    availability.map((av) => {
+      dayData.map((da) => {
+        if(da.day === av.day){
+          console.log(da.number)
+          array.push(da.number)
+        }
+      })
+    })
+    for(let num of array){
+      numobj[num] = true
+    }
+    setObj(numobj)
+  }
 
   const tileStyles = ({date, view}) => {
 
-    if (date.toDateString() === selectedDate.toDateString()) {
+    if (date.toDateString() === selectedDate.toDateString() && objHours[selectedDate.getDay()]) {
       return "bg-green-600	text-black"
     }
 
-    if (date < new Date(Date.now())) {
+    if (date < new Date(Date.now()) || !(obj[date.getDay()])) {
       return "text-gray-500"
     }
 
     return ''
+  }
+
+  const isPossible = (duration, start, finish) => {
+    return duration + start <= finish
+  }
+
+  const tileDisabled = ({ activeStartDate, date, view }) => {
+    return (!(obj[date.getDay()]))
   }
 
   const getAvailability = async() => {
@@ -51,12 +114,13 @@ const bookAppointment = ({params}) => {
   }, [])
 
   const changeDate = (form, date) => {
+    setSelectedTime("")
     setShowTime(true)
     setSelectedDate(date)
     setDay(date.getDate())
     setMonth(date.getMonth())
     setYear(date.getFullYear())
-    showTime && form.setFieldValue("dateAndTime", new Date(date.getFullYear(), date.getMonth(), date.getDate(), selectedTime))
+    selectedTime && form.setFieldValue("dateAndTime", new Date(date.getFullYear(), date.getMonth(), date.getDate(), selectedTime))
   }
 
   const handleTime = (form, event) => {
@@ -82,7 +146,9 @@ const bookAppointment = ({params}) => {
             image: null,
             bodyPlace: "",
             description: "",
-            dateAndTime: ""
+            dateAndTime: "",
+            duration: "",
+            possible: true
           }}
           validationSchema={validationSchema}
           onSubmit={async (values, {setSubmitting}) => {
@@ -112,6 +178,8 @@ const bookAppointment = ({params}) => {
                 <option value="grande">Grande</option>
                 <option value="grande a color">Grande a color</option>
               </Field>
+              
+              {objHours[selectedDate.getDay()] && values.size && (values.possible = isPossible(Number(durations[values.size]), Number(selectedTime),  Number(objHours[selectedDate.getDay()].at(-1)) + 1))}
               <ErrorMessage
                 name="fullName"
                 component="div"
@@ -147,20 +215,21 @@ const bookAppointment = ({params}) => {
                   <div>
                     <Calendar
                       {...field}
+                      defaultValue={null}
                       locale="es"
-                      value={selectedDate}
+                      // value={selectedDate}
                       tileClassName={tileStyles}
+                      tileDisabled={tileDisabled}
                       onChange={(date) => changeDate(form, date)}
                       minDate={new Date(Date.now())}
                     />
                     <div className="text-black">
                       {showTime && 
-                      <select name="dateTime" defaultValue="" onChange={(event) => handleTime(form, event)}>
-                        <option name="dateTime" value="" disabled>Selecciona un horario</option>
-                        <option name="dateTime" value="11">11</option>
-                        <option name="dateTime" value="13">13</option>
-                        <option name="dateTime" value="15">15</option>
-                        <option name="dateTime" value="17">17</option>
+                      <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
+                        <option name="dateTime" value="" disabled>Seleccionar horario</option>
+                        {objHours[selectedDate.getDay()].map((hour) => {
+                          return <option key={hour} name="dateTime">{hour}</option>
+                        })}
                       </select>}
                     </div>
                   </div>
@@ -191,11 +260,17 @@ const bookAppointment = ({params}) => {
                 </button>
               )}
             </div>
-            <div>
-              {console.log(availability, "availability")}
-              {console.log(exceptions, "exceptions")}
-              {console.log(values, "values")}
-            </div>
+            <button
+            type="submit"
+            disabled={isSubmitting || !isValid || !dirty || !values.possible}
+            >
+              Reservar turno
+            </button>
+            {!values.possible && (
+              <div>
+                <p>El horario es muy tarde para un tatuaje tan grande, por favor selecciona un horario anterior o cambia de fecha para buscar un dia con mayor disponibilidad</p>
+              </div>
+            )}
           </Form>
         )}
         </Formik>
