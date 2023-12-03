@@ -67,13 +67,13 @@ const TopBarOptions = () => {
         <nav className="flex gap-x-10 items-center">
         <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center font-rocksalt mb-[15px]"
+              className="text-2xl font-weight:800 flex items-center px-4 py-1 justify-center font-newrocker mb-[15px]"
               htmlFor="name"
             >
              <CgProfile className="mr-[8px] text-primary/75"/>Nombre:
             </label>
             <input
-              className="mb-8 mx-auto text-black rounded"
+              className="mb-8 w-[70%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               list="names"
               id="name"
               name="name"
@@ -82,13 +82,13 @@ const TopBarOptions = () => {
           </div>
           <div className="flex flex-col items-center justify-center mb-8 gap">
             <label
-              className="text-lg font-weight:800 flex items-center px-4 py-1 justify-center font-rocksalt mb-[15px]"
+              className="text-2xl font-weight:800 flex items-center px-4 py-1 justify-center font-newrocker mb-[15px]"
               htmlFor="city"
             >
               <FaMapPin className="mr-[8px] text-primary/75"/> Ciudad:
             </label>
             <input
-              className="mb-8 mx-auto text-black rounded"
+              className="mb-8 w-[70%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               list="cities"
               id="city"
               name="location"
@@ -97,13 +97,13 @@ const TopBarOptions = () => {
           </div>
             <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-rocksalt"
+              className="text-2xl font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-newrocker"
               htmlFor="sort"
             >
               <FaRegStar className="mr-[8px] text-primary/75" />Valoracion:
             </label>
             <select
-              className="mb-8 mx-auto text-black w-full rounded"
+              className="mb-8 w-[80%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               id="sort"
               name="sort"
               onChange={handleSortChange}
@@ -115,13 +115,13 @@ const TopBarOptions = () => {
           </div>
             <div className="flex flex-col items-center justify-center mb-8">
             <label
-              className="text-lg font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-rocksalt"
+              className="text-2xl font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-newrocker"
               htmlFor="sort"
             >
               <MdAbc className="mr-[8px] text-primary/75" />Alfabetico:
             </label>
             <select
-              className="mb-8 mx-auto text-black w-full rounded"
+              className="mb-8 w-[80%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               id="sort"
               name="sort"
               onChange={handleSortChange}

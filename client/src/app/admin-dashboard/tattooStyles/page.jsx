@@ -4,9 +4,12 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import { getAllStyles, removeStyle } from '@/app/redux/features/styles/stylesActions';
+import dynamic from "next/dynamic";
+const ModalDeleteStyle = dynamic(()=> import("@/components/modal/ModalDeleteStyle"))
 
 const TattooStyles = () => {
   const styles = useSelector((state) => state.styles.names);
+  
   const dispatch = useDispatch();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [styleIdToDelete, setStyleIdToDelete] = useState(null);
@@ -41,7 +44,7 @@ const TattooStyles = () => {
           {styles.map((style) => (
             <div key={style.id} className="mb-4 w-1/4 flex items-center ">
               <label
-                className="flex items-center gap-2 px-3 py-1 border rounded  bg-white text-black"
+                className="flex items-center gap-2 px-3 py-1 border rounded-lg font-newrocker text-lg border-primary bg-black text-primary"
               >
                 {style.name}
               </label>
