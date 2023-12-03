@@ -28,7 +28,7 @@ const TattoArtistRegister = () => {
   }, []);
 
   return (
-    <div>
+    <div className="h-full">
       <Formik
         initialValues={{
           fullName: "",
@@ -84,13 +84,13 @@ const TattoArtistRegister = () => {
         }}
       >
         {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-          <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+          <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto h-full">
             <div className="info-artist mb-4">
               <Field
                 type="text"
                 name="fullName"
                 placeholder="Nombre completo"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="fullName"
@@ -102,7 +102,7 @@ const TattoArtistRegister = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="email"
@@ -113,7 +113,7 @@ const TattoArtistRegister = () => {
                 type="text"
                 name="shopName"
                 placeholder="Shop Name"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="shopName"
@@ -125,7 +125,7 @@ const TattoArtistRegister = () => {
                 type="text"
                 name="address"
                 placeholder="Dirección"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="address"
@@ -137,7 +137,7 @@ const TattoArtistRegister = () => {
                 type="text"
                 name="location"
                 placeholder="Ubicación"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="location"
@@ -208,7 +208,7 @@ const TattoArtistRegister = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="password"
@@ -220,7 +220,7 @@ const TattoArtistRegister = () => {
                 type="password"
                 name="passwordConfirm"
                 placeholder="Confirm Password"
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
                 name="passwordConfirm"
