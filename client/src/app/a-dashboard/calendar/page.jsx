@@ -9,16 +9,13 @@ import {
 } from "@/app/redux/features/artists/artistActions";
 
 const Page = () => {
-
   const user = useSelector((state) => state.user);
-  
+
   console.log(user.logedInUser);
 
   const timeAvailabilities = useSelector(
     (state) => state.artists.timeAvailabilities[user.logedInUser.id] || []
   );
-
-  const [timeAvailability, setTimeAvailability] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -32,11 +29,19 @@ const Page = () => {
     { day: "Domingo", inicio: "06:00", fin: "23:00" },
   ];
 
+  const [timeAvailability, setTimeAvailability] = useState([
+    initialTimeAvailability,
+  ]);
+
   const generateTimeOptions = () => {
     let options = [];
     for (let i = 6; i <= 23; i++) {
       let time = `${i}:00`;
-      options.push(<option className="bg-transparent" value={time}>{time}</option>);
+      options.push(
+        <option className="bg-transparent" value={time}>
+          {time}
+        </option>
+      );
     }
     return options;
   };
@@ -58,54 +63,61 @@ const Page = () => {
     }));
   };
 
-  const saveTimeAvailability = async () => {
-    try {
-      for (const [day, times] of Object.entries(timeAvailability)) {
-        const data = {
-          tattooArtistId: user.logedInUser.id,
-          day,
-          initialHour: times.inicio,
-          finalHour: times.fin,
-        };
-
-        const response = await axios.post(
-          "http://localhost:3001/timeAvailabilities",
-          data
-        );
-        
-      }
-    } catch (error) {
-      console.error("Error al guardar el horario:", error);
-    }
-  };
-
-  const updateTimeAvailability = async () => {
-    let timeAvailabilityArray = [];
+const saveTimeAvailability = async () => {
+  try {
     
-    try {
-      timeAvailabilityArray = timeAvailability.map((timeDisponible) => ({
-        id: timeDisponible.id,
+    const isAvailabilityEmpty =
+      timeAvailability.length === 0 || !timeAvailability[0];
+    const availabilities = isAvailabilityEmpty
+      ? initialTimeAvailability
+      : timeAvailability[0];
+
+    for (const [day, times] of Object.entries(availabilities)) {
+      const data = {
         tattooArtistId: user.logedInUser.id,
-        day,
-        initialHour: timeDisponible.initialHour,
-        finalHour: timeDisponible.finalHour,
-      }));
-
-      for (const availability of timeAvailabilityArray) {
-        dispatch(updateArtistTimeAvailability(availability));
-      }
-
+        day: isAvailabilityEmpty ? times.day : day,
+        initialHour: times.inicio,
+        finalHour: times.fin,
+      };
       
-    } catch (error) {
-      console.error("Error al actualizar el horario:", error);
-    }
 
-    
-  };
+      const response = await axios.post(
+        "http://localhost:3001/timeAvailabilities",
+        data
+      );
+      
+    }
+    alert("Horarios guardados con éxito");
+  } catch (error) {
+    console.error("Error al guardar el horario:", error);
+    alert("Error al guardar los horarios");
+  }
+};
+
+
+ const updateTimeAvailability = async () => {
+   try {
+     for (const availability of timeAvailabilities) {
+       const updatedAvailability = {
+         initialHour: timeAvailability[availability.day].inicio,
+         finalHour: timeAvailability[availability.day].fin,
+       };
+
+       dispatch(
+         updateArtistTimeAvailability(availability.id, updatedAvailability)
+       );
+     }
+
+     alert("Horarios actualizados con éxito");
+   } catch (error) {
+     console.error("Error al actualizar el horario:", error);
+     alert("Error al actualizar los horarios");
+   }
+ };
 
   const handleExceptionChange = (e) => {
     setNewException({ ...newException, [e.target.name]: e.target.value });
-    
+
     setNewException(newException);
   };
 
@@ -117,15 +129,12 @@ const Page = () => {
       finalHour: newException.finalHour,
     };
 
-   
-
     try {
       const response = await axios.post(
         "http://localhost:3001/timeAvailabilityExceptions",
         formattedException
       );
 
-     
       setTimeException([...timeException, response.data]);
     } catch (error) {
       console.error("Error al añadir la excepción:", error);
@@ -133,11 +142,9 @@ const Page = () => {
   };
 
   const deleteTimeException = async () => {
-    
-
     try {
       await axios.delete(`http://localhost:3001/timeAvailabilityExceptions/`);
-     
+
       setTimeException(
         timeException.filter((exception) => exception.id !== id)
       );
@@ -147,29 +154,50 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (user.logedInUser.id) {
-      dispatch(getTimeAvailabilities(user.logedInUser.id));
-    }
-  }, [dispatch, user.logedInUser.id]);
+  if (user.logedInUser.id) {
+    dispatch(getTimeAvailabilities(user.logedInUser.id));
+  }
+}, [dispatch, user.logedInUser.id]);
 
-  useEffect(() => {
-  }, [timeAvailabilities]);
+    useEffect(() => {
+      if (
+        user.logedInUser.timeAvailabilities &&
+        user.logedInUser.timeAvailabilities.length > 0
+      ) {
+        const updatedTimeAvailability =
+          user.logedInUser.timeAvailabilities.reduce((acc, curr) => {
+            acc[curr.day] = {
+              inicio: curr.initialHour.substring(0, 5),
+              fin: curr.finalHour.substring(0, 5),
+            };
+            return acc;
+          }, {});
+        setTimeAvailability(updatedTimeAvailability);
+      } else {
+        setTimeAvailability(
+          initialTimeAvailability.reduce((acc, curr) => {
+            acc[curr.day] = { inicio: curr.inicio, fin: curr.fin };
+            return acc;
+          }, {})
+        );
+      }
+    }, [user.logedInUser.timeAvailabilities]);
 
   return (
     <div>
       <div>
         <h3>Disponibilidad de Tiempo</h3>
 
-        {initialTimeAvailability.map((initialTimes) => (
-          <div key={initialTimes.day}>
-            <h4>{initialTimes.day}</h4>
+        {Object.entries(timeAvailability).map(([day, times]) => (
+          <div key={day}>
+            <h4>{day}</h4>
             <label>
               Inicio:
               <select
                 className="bg-transparent"
-                value={initialTimes.inicio}
+                value={times.inicio}
                 onChange={(e) =>
-                  handleTimeChange(initialTimes.day, "inicio", e.target.value)
+                  handleTimeChange(day, "inicio", e.target.value)
                 }
               >
                 {generateTimeOptions()}
@@ -179,10 +207,8 @@ const Page = () => {
               Fin:
               <select
                 className="bg-transparent"
-                value={initialTimes.fin}
-                onChange={(e) =>
-                  handleTimeChange(initialTimes.day, "fin", e.target.value)
-                }
+                value={times.fin}
+                onChange={(e) => handleTimeChange(day, "fin", e.target.value)}
               >
                 {generateTimeOptions()}
               </select>

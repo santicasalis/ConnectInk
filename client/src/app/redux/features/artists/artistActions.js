@@ -30,13 +30,14 @@ export const DeleteArtists = (id) => async (dispatch) => {
 
 /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
 
-export const getTimeAvailabilities = (artistId) => async (dispatch) => {
+export const getTimeAvailabilities = (id) => async (dispatch) => {
   try {
-    const response = await axios.get(
-      `${URL_BASE}/timeAvailabilities/${artistId}` //cambiar a id del artista y ver el time availability
-    );
+    const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
     dispatch(
-      setTimeAvailabilities({ artistId, availabilities: response.data })
+      setTimeAvailabilities({
+        id,
+        availabilities: response.data.timeAvailabilities,
+      })
     );
   } catch (error) {
     console.error("Error al obtener los horarios de disponibilidad:", error);
@@ -44,22 +45,18 @@ export const getTimeAvailabilities = (artistId) => async (dispatch) => {
 };
 
 export const updateArtistTimeAvailability =
-  (availability) => async (dispatch) => {
+  (id, { initialHour, finalHour }) =>
+  async (dispatch) => {
     try {
-      const response = await axios.put(
-        `${URL_BASE}/timeAvailabilities/${availability.id}`,
-        availability
-      );
-      
-      dispatch(
-        updateTimeAvailability({
-          id: availability.id,
-          day: availability.day,
-          initialHour: availability.initialHour,
-          finalHour: availability.finalHour,
-        })
-      );
+      await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, {
+        initialHour,
+        finalHour,
+      });
+      dispatch(updateTimeAvailability({ id, initialHour, finalHour }));
     } catch (error) {
-      console.error("Error al actualizar la disponibilidad de tiempo:", error);
+      console.error(
+        "Error al actualizar la disponibilidad de tiempo del artista:",
+        error
+      );
     }
   };
