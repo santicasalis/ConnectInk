@@ -8,16 +8,37 @@ const createTimeAvailability = async (
 ) => {
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (!tattooArtist) {
-    throw new Error("Tattoo artist not found");
+    return { code: 404, error: "Tattoo artist not found" };
   }
+
+  const timeAvailabilityExist = await TimeAvailability.findOne({
+    where: { TattooArtistId: tattooArtistId, day: day },
+  });
+  if (timeAvailabilityExist) {
+    return {
+      code: 404,
+      error: "A time availability for that day already exists",
+    };
+  }
+
+  if (initialHour > finalHour) {
+    return {
+      code: 404,
+      error: "The initial hour must be less than the final hour",
+    };
+  }
+
   const timeAvailability = await TimeAvailability.create({
     day,
     initialHour,
     finalHour,
   });
-
   tattooArtist.addTimeAvailability(timeAvailability);
-  return "Saved time availability";
+  return {
+    code: 201,
+    message: "Time Availability created successfully",
+    data: timeAvailability,
+  };
 };
 
 module.exports = createTimeAvailability;

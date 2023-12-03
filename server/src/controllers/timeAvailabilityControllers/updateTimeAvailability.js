@@ -1,12 +1,11 @@
 const { TimeAvailability } = require("../../db");
 
-const updateTimeAvailability = async (id, day, initialHour, finalHour) => {
+const updateTimeAvailability = async (id, initialHour, finalHour) => {
   const timeAvailabilityFound = await TimeAvailability.findByPk(id);
 
   if (timeAvailabilityFound) {
     await TimeAvailability.update(
       {
-        day: day,
         initialHour: initialHour,
         finalHour: finalHour,
       },

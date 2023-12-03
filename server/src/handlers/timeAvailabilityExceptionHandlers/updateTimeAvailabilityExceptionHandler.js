@@ -2,12 +2,11 @@ const updateTimeAvailabilityException = require("../../controllers/timeAvailabil
 
 const updateTimeAvailabilityExceptionHandler = async (req, res) => {
   const { id } = req.params;
-  const { date, initialHour, finalHour } = req.body;
+  const { initialHour, finalHour } = req.body;
 
   try {
     const timeAvailabilityException = await updateTimeAvailabilityException(
       id,
-      date,
       initialHour,
       finalHour
     );

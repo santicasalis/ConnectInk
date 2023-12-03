@@ -1,18 +1,12 @@
 const { TimeAvailabilityException } = require("../../db");
 
-const updateTimeAvailabilityException = async (
-  id,
-  date,
-  initialHour,
-  finalHour
-) => {
+const updateTimeAvailabilityException = async (id, initialHour, finalHour) => {
   const timeAvailabilityExceptionFound =
     await TimeAvailabilityException.findByPk(id);
 
   if (timeAvailabilityExceptionFound) {
     await TimeAvailabilityException.update(
       {
-        date: date,
         initialHour: initialHour,
         finalHour: finalHour,
       },
