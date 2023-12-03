@@ -66,7 +66,7 @@ export default function AdminCard({fullName,location,shopName,image, id}){
                     transition
                     menuClassName={'hover:bg-red text-red-500'}>
                         <MenuItem>
-                            <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
+                            <Link href={`registeredArtists/${id}`} className='flex items-center gap-2 text-sm py-1.5'>
                                 <RiEyeLine  />
                                 Ver Publicaciones
                             </Link>

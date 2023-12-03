@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const PostsDashboard = () => {
   const user = useSelector((state) => state.user);
+  console.log(user, "lalala")
   return (
     <div className="flex flex-col items-center w-full ">
       {user?.publications.length > 0 ? (
