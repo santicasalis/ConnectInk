@@ -9,7 +9,7 @@ const login = async (tokenId) => {
       { model: TattooStyle, attributes: ["name"] },
       {
         model: Publication,
-        attributes: ["description", "image", "createdAt", "updatedAt"],
+        attributes: ["id", "description", "image", "createdAt", "updatedAt"],
       },
       {
         model: TimeAvailability,
@@ -26,6 +26,60 @@ const login = async (tokenId) => {
     ]
   });
 
+   cleanUser = {
+    id: user.id,
+    fullName: user.fullName,
+    email: user.email,
+    phone: user.phone,
+    instagram: user.instagram,
+    description: user.description,
+    location: user.location,
+    address: user.address,
+    shopName: user.shopName,
+    image: user.image,
+    disabled: user.disabled,
+    tattooStyles: user.TattooStyles?.map(
+      (tattooStyle) => tattooStyle.name
+    ),
+    publications: user.Publications?.map((publication) => {
+      return {
+        id:publication.id,
+        description: publication.description,
+        image: publication.image,
+        createdAt: publication.createdAt,
+        updatedAt: publication.updatedAt,
+      };
+    }),
+    timeAvailabilities: user.TimeAvailabilities?.map(
+      (timeAvailability) => {
+        return {
+          day: timeAvailability.day,
+          initialHour: timeAvailability.initialHour,
+          finalHour: timeAvailability.finalHour,
+        };
+      }
+    ),
+    timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
+      (timeAvailabilityException) => {
+        return {
+          date: timeAvailabilityException.date,
+          initialHour: timeAvailabilityException.initialHour,
+          finalHour: timeAvailabilityException.finalHour,
+        };
+      }
+    ),
+    priceRanges: user.PriceRanges?.map(
+      (priceRange) => {
+        return {
+          size: priceRange.size,
+          priceMin: priceRange.priceMin,
+          priceMax: priceRange.priceMax
+        }
+
+      }
+    )
+   }
+
   if(user){
     cleanUser = {
       id: user.id,
@@ -39,11 +93,13 @@ const login = async (tokenId) => {
       shopName: user.shopName,
       image: user.image,
       disabled: user.disabled,
+      userType: user.userType,
       tattooStyles: user.TattooStyles?.map(
         (tattooStyle) => tattooStyle.name
       ),
       publications: user.Publications?.map((publication) => {
         return {
+          id: publication.id,
           description: publication.description,
           image: publication.image,
           createdAt: publication.createdAt,
@@ -87,11 +143,6 @@ const login = async (tokenId) => {
     })
   }
 
-  if(!cleanUser){
-    cleanUser = await Admin.findOne({
-      where: {tokenId}
-    })
-  }
 
   return cleanUser;
 };

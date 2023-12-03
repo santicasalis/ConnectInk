@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState } from "react";
@@ -77,3 +78,4 @@ console.log(artist.publications, "soyyyy");
 }
 
 export default RegArtistById
+

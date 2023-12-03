@@ -44,9 +44,10 @@ export default function AdminCard({fullName,location,shopName,image, id}){
 
     return (
         <div>
-            <div className="bg-secondary-100 w-[550px] h-[250px] ml-[10px] mb-[10px] rounded">
-            <div className="flex gap-x-1 items-center">
+            <div className="bg-secondary-100 w-[550px] h-[250px] ml-[10px] mb-[10px] rounded-xl">
+            <div className="flex gap-x-1 items-center p-4">
             <Image
+            unoptimized
               className="rounded-full object-cover"
               src={image}
               loader={imageLoader}
@@ -80,10 +81,10 @@ export default function AdminCard({fullName,location,shopName,image, id}){
                     </Menu>
                 </div>
           </div>
-          <div className="font-bolt text-center text-4xl">
+          <div className="font-bolt text-center text-4xl font-newrocker">
             {shopName}
           </div>
-          <div className="font-bolt text-center text-xl mt-[20px]">
+          <div className="font-bolt text-center text-xl mt-[20px] font-newrocker">
             {location}
           </div>
           

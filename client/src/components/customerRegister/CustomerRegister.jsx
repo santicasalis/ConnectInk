@@ -7,10 +7,21 @@ import { emailSignUp } from "../../app/utils/emailSignUp";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "@/app/redux/features/user/userActions";
+import {
+  RiMailLine,
+  RiLockLine,
+  RiEyeLine,
+  RiEyeOffLine,
+  RiGoogleFill
+} from "react-icons/ri";
 
-const CustomerRegister = ({ userInformation }) => {
+const CustomerRegister = () => {
   const urlBase = "http://localhost:3001";
   const router = useRouter();
+  const dispatch = useDispatch()
+  const userInformation = useSelector((state) => state.user.fireBaseUser)
 
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
@@ -28,11 +39,11 @@ const CustomerRegister = ({ userInformation }) => {
   };
 
   return (
-    <div>
+    <div className="w-[70%]">
       <Formik
         initialValues={{
           fullName: "",
-          userName: userInformation?.userName || "",
+          userName: userInformation?.userName ? true : false,
           email: userInformation?.email || "",
           mobile: "",
           image: "",
@@ -43,9 +54,7 @@ const CustomerRegister = ({ userInformation }) => {
         }}
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {
-          if (values) {
             try {
-              console.log(values.image);
               if (values.image && typeof values.image === "object") {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
@@ -55,9 +64,12 @@ const CustomerRegister = ({ userInformation }) => {
                   "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
 
-              values.tokenId = await emailSignUp(values.email, values.password);
+              if(!values.userName){
+                values.tokenId = await emailSignUp(values.email, values.password);
+              }
+            
               const response = await axios.post(`${urlBase}/customers`, values);
-
+              
               toast.success(
                 `${values.fullName} se ha registrado existosamente`,
                 {
@@ -67,33 +79,58 @@ const CustomerRegister = ({ userInformation }) => {
                   hideProgressBar: true,
                 }
               );
+              
+              dispatch(getUserById(values.tokenId))
               router.replace("/user-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
             }
-          }
           setSubmitting(false);
         }}
       >
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+
+            <div className="mb-4">
+                <label htmlFor="image" className="font-bold">
+                  Imagen de Perfil
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  onChange={(event) => {
+                    setFieldValue("image", event.currentTarget.files[0]);
+                  }}
+                  className="p-2 mb-3 shadow-md block w-full"
+                />
+                {values.image && (
+                  <button
+                    type="button"
+                    onClick={() => setFieldValue("image", null)}
+                    className="bg-red-500 text-white p-2 rounded"
+                  >
+                    Delete Image
+                  </button>
+                )}
+            </div>
+
             <Field
               type="text"
               name="fullName"
               placeholder="Nombre completo"
-              className="p-2 mb-3 shadow-md"
-            />
+              className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl relative"
+            /> 
             <ErrorMessage
               name="fullName"
               component="div"
-              className="text-red-500 text-sm"
+              className="text-red-500 text-sm "
             />
 
             <Field
               type="email"
               name="email"
               placeholder="Email"
-              className="p-2 mb-3 shadow-md"
+              className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
             />
             <ErrorMessage
               name="email"
@@ -104,7 +141,7 @@ const CustomerRegister = ({ userInformation }) => {
               type="text"
               name="mobile"
               placeholder="Teléfono"
-              className="p-2 mb-3 shadow-md"
+              className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
               pattern="\d*"
             />
 
@@ -113,54 +150,37 @@ const CustomerRegister = ({ userInformation }) => {
               component="div"
               className="text-red-500 text-sm"
             />
-            <Field
-              type="password"
-              name="password"
-              placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-            <Field
-              type="password"
-              name="passwordConfirm"
-              placeholder="Confirmar contraseña"
-              className="p-2 mb-3 shadow-md"
-            />
-            <ErrorMessage
-              name="passwordConfirm"
-              component="div"
-              className="text-red-500 text-sm"
-            />
 
-            <div className="mb-4">
-              <label htmlFor="image" className="font-bold">
-                Profile Image
-              </label>
-              <input
-                type="file"
-                name="image"
-                onChange={(event) => {
-                  setFieldValue("image", event.currentTarget.files[0]);
-                }}
-                className="p-2 mb-3 shadow-md block w-full"
+            {!userInformation?.email &&
+            <div>
+              <Field
+                type="password"
+                name="password"
+                placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
+                className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
               />
-              {values.image && (
-                <button
-                  type="button"
-                  onClick={() => setFieldValue("image", null)}
-                  className="bg-red-500 text-white p-2 rounded"
-                >
-                  Delete Image
-                </button>
-              )}
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+              <Field
+                type="password"
+                name="passwordConfirm"
+                placeholder="Confirmar contraseña"
+                className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
+              />
+              <ErrorMessage
+                name="passwordConfirm"
+                component="div"
+                className="text-red-500 text-sm"
+              />
             </div>
+            }
+
             <label className="flex items-center">
               <MyCheckbox name="acceptedTerms">
-                I accept the terms and conditions
+                Acepto los Términos y Condiciones
               </MyCheckbox>
             </label>
             <ErrorMessage
@@ -173,7 +193,7 @@ const CustomerRegister = ({ userInformation }) => {
               disabled={isSubmitting || !isValid || !dirty}
               className="p-2 mt-5 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
             >
-              Register
+              Registrarme
             </button>
           </Form>
         )}

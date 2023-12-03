@@ -1,15 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PostDashboard from "../postDashboard/PostDashboard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { bringUserPosts } from "@/app/redux/features/user/userActions";
 
 const PostsDashboard = () => {
-  const user = useSelector((state) => state.user);
-  console.log(user, "lalala")
+
+  const user = useSelector((state) => state.user.logedInUser);
+  const modalCreate = useSelector((state) => state.modalCreate);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(bringUserPosts(user.id))
+  }, [modalCreate])
+
+
   return (
     <div className="flex flex-col items-center w-full ">
-      {user?.publications.length > 0 ? (
+      {user?.publications?.length > 0 ? (
         user.publications.map((publication) => (
           <PostDashboard
             key={publication.id}

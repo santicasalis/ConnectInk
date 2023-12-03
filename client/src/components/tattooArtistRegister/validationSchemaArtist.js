@@ -12,15 +12,21 @@ export const validationSchemaArtist = Yup.object().shape({
 
   // image: Yup.mixed().required("A profile image is required"),
 
-  password: Yup.string()
+  password: Yup.string().when("userName", {
+    is: false,
+    then: () => Yup.string()
     .required("Required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/,
       "Must contain 6-15 characters, one uppercase, one lowercase, one number and one special character"
     )
-    .max(15),
-  passwordConfirm: Yup.string()
+    .max(15)
+  }),
+  passwordConfirm: Yup.string().when("userName", {
+    is: false,
+    then: () => Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .max(15),
+    .max(30)
+  }),
 });
