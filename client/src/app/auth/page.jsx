@@ -6,6 +6,7 @@ import {
   RiLockLine,
   RiEyeLine,
   RiEyeOffLine,
+  RiGoogleFill
 } from "react-icons/ri";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -108,23 +109,15 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-secondary-900 absolute rounded-xl w-full xl:w-1/3 lg:w-1/4 md:w-1/2 p-9">
-      <button onClick={googleLogIn} className="w-full ">
-        <img
-          src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-          className="w-4 h-4"
-        />
-        Ingresar con Google
-      </button>
-      <Link
-        href="/auth/register"
-        className="text-primary hover:text-gray-100 transition-colors"
-      >
-        Registrate
-      </Link>
-      <div className=" absolute opacity-75 w-full h-full ">
-        <img className="object-cover" src="  " alt="" />
+    <div className="bg-secondary-900/90 opacity-90 flex h-[800px] border-[1px] border-white/10  absolute rounded-3xl w-full xl:w-1/2 lg:w-1/3 md:w-1/2">
+      <div className="w-[35%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">
+        <h2 className="font-rocksalt text-[40px] text-white/90 mb-2">Te damos la bienvenida!</h2>
+        <p className="text-primary/80 mb-8">Si no tienes cuenta, registrate aquí</p> 
+        <Link href="/auth/register">
+            <span className=" text-[17px] py-3 px-5 border-[1px] border-primary rounded-3xl text-primary cursor-pointer hover:bg-primary/90 hover:text-white transition-colors">Registrarse</span>
+        </Link>
       </div>
+
 
       <form onSubmit={handleSubmit} className="mb-7">
         <div className="relative mb-3">
@@ -153,19 +146,31 @@ const Login = () => {
             <RiEyeOffLine
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
+
             />
-          )}
-        </div>
-        <div>
-          <button
-            type="submit"
-            className="bg-black opacity-50 text-white uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:bg-primary/90 transition-colors"
-            disabled={!data.email || !data.password}
-          >
-            Ingresar
-          </button>
-        </div>
-      </form>
+            {showPassword ? (
+              <RiEyeOffLine
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-6 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
+              />
+            ) : (
+              <RiEyeLine
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-6 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
+              />
+            )}
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="bg-primary/90 opacity-80  cursor-pointer font-bold text-white text-[18px] w-full py-3 px-4 rounded-lg hover:bg-primary/70 transition-colors"
+              disabled={!data.email || !data.password}
+            >
+              Ingresar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

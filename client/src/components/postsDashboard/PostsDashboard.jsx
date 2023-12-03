@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { bringUserPosts } from "@/app/redux/features/user/userActions";
 
 const PostsDashboard = () => {
+
   const user = useSelector((state) => state.user.logedInUser);
   const modalCreate = useSelector((state) => state.modalCreate);
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const PostsDashboard = () => {
   useEffect(() => {
     dispatch(bringUserPosts(user.id))
   }, [modalCreate])
+
 
   return (
     <div className="flex flex-col items-center w-full ">

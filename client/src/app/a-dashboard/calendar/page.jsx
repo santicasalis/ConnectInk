@@ -1,121 +1,230 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserId } from "@/app/redux/features/user/userActions";
+import axios from "axios";
+import {
+  getTimeAvailabilities,
+  updateArtistTimeAvailability,
+} from "@/app/redux/features/artists/artistActions";
 
 const Page = () => {
-  const initialTimeAvailability = {
-    Lunes: { inicio: "10:00", fin: "19:00" },
-    Martes: { inicio: "10:00", fin: "19:00" },
-    Miercoles: { inicio: "10:00", fin: "19:00" },
-    Jueves: { inicio: "10:00", fin: "19:00" },
-    Viernes: { inicio: "10:00", fin: "19:00" },
-    Sabado: { inicio: "10:00", fin: "19:00" },
-    Domingo: { inicio: "10:00", fin: "19:00" },
-  };
 
-  const [timeAvailability, setTimeAvailability] = useState(
-    initialTimeAvailability
+  const user = useSelector((state) => state.user);
+  
+  console.log(user.logedInUser);
+
+  const timeAvailabilities = useSelector(
+    (state) => state.artists.timeAvailabilities[user.logedInUser.id] || []
   );
-  const [timeException, setTimeException] = useState([]);
-  const [newException, setNewException] = useState({
-    fecha: "",
-    inicio: "10:00",
-    fin: "19:00",
-  });
 
-  const handleTimeChange = (day, timeType, value) => {
-    setTimeAvailability({
-      ...timeAvailability,
-      [day]: { ...timeAvailability[day], [timeType]: value },
-    });
-  };
+  const [timeAvailability, setTimeAvailability] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const initialTimeAvailability = [
+    { day: "Lunes", inicio: "06:00", fin: "23:00" },
+    { day: "Martes", inicio: "06:00", fin: "23:00" },
+    { day: "Miércoles", inicio: "06:00", fin: "23:00" },
+    { day: "Jueves", inicio: "06:00", fin: "23:00" },
+    { day: "Viernes", inicio: "06:00", fin: "23:00" },
+    { day: "Sábado", inicio: "06:00", fin: "23:00" },
+    { day: "Domingo", inicio: "06:00", fin: "23:00" },
+  ];
 
   const generateTimeOptions = () => {
     let options = [];
-    for (let i = 10; i <= 19; i++) {
+    for (let i = 6; i <= 23; i++) {
       let time = `${i}:00`;
-      options.push(
-        <option value={time} key={time}>
-          {time}
-        </option>
-      );
+      options.push(<option className="bg-transparent" value={time}>{time}</option>);
     }
     return options;
   };
 
+  const [timeException, setTimeException] = useState([]);
+  const [newException, setNewException] = useState({
+    date: "",
+    initialHour: "06:00",
+    finalHour: "23:00",
+  });
+
+  const handleTimeChange = (day, timeType, value) => {
+    setTimeAvailability((prevState) => ({
+      ...prevState,
+      [day]: {
+        ...prevState[day],
+        [timeType]: value,
+      },
+    }));
+  };
+
+  const saveTimeAvailability = async () => {
+    try {
+      for (const [day, times] of Object.entries(timeAvailability)) {
+        const data = {
+          tattooArtistId: user.logedInUser.id,
+          day,
+          initialHour: times.inicio,
+          finalHour: times.fin,
+        };
+
+        const response = await axios.post(
+          "http://localhost:3001/timeAvailabilities",
+          data
+        );
+        
+      }
+    } catch (error) {
+      console.error("Error al guardar el horario:", error);
+    }
+  };
+
+  const updateTimeAvailability = async () => {
+    let timeAvailabilityArray = [];
+    
+    try {
+      timeAvailabilityArray = timeAvailability.map((timeDisponible) => ({
+        id: timeDisponible.id,
+        tattooArtistId: user.logedInUser.id,
+        day,
+        initialHour: timeDisponible.initialHour,
+        finalHour: timeDisponible.finalHour,
+      }));
+
+      for (const availability of timeAvailabilityArray) {
+        dispatch(updateArtistTimeAvailability(availability));
+      }
+
+      
+    } catch (error) {
+      console.error("Error al actualizar el horario:", error);
+    }
+
+    
+  };
+
   const handleExceptionChange = (e) => {
     setNewException({ ...newException, [e.target.name]: e.target.value });
+    
+    setNewException(newException);
   };
 
-  const addTimeException = () => {
-    const updatedExceptions = [...timeException, newException];
-    setTimeException(updatedExceptions);
-    console.log("Nueva Excepción Añadida:", newException);
-    console.log("Todas las Excepciones después de añadir:", updatedExceptions);
-    setNewException({ fecha: "", inicio: "10:00", fin: "19:00" });
+  const addTimeException = async () => {
+    const formattedException = {
+      tattooArtistId: user.logedInUser.id,
+      date: newException.date,
+      initialHour: newException.initialHour,
+      finalHour: newException.finalHour,
+    };
+
+   
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/timeAvailabilityExceptions",
+        formattedException
+      );
+
+     
+      setTimeException([...timeException, response.data]);
+    } catch (error) {
+      console.error("Error al añadir la excepción:", error);
+    }
   };
 
-  const handleSaveAvailability = () => {
-    console.log(
-      "Datos a enviar para Disponibilidad Horaria:",
-      timeAvailability
-    );
+  const deleteTimeException = async () => {
+    
+
+    try {
+      await axios.delete(`http://localhost:3001/timeAvailabilityExceptions/`);
+     
+      setTimeException(
+        timeException.filter((exception) => exception.id !== id)
+      );
+    } catch (error) {
+      console.error("Error al eliminar la excepcion:", error);
+    }
   };
+
+  useEffect(() => {
+    if (user.logedInUser.id) {
+      dispatch(getTimeAvailabilities(user.logedInUser.id));
+    }
+  }, [dispatch, user.logedInUser.id]);
+
+  useEffect(() => {
+    console.log(timeAvailabilities)
+  }, [timeAvailabilities]);
 
   return (
     <div>
       <div>
-        <h3>Disponibilidad Horaria</h3>
-        {Object.entries(timeAvailability).map(([day, { inicio, fin }]) => (
-          <div key={day}>
-            <label>{day}: </label>
-            <select 
-              value={inicio}
-              onChange={(e) => handleTimeChange(day, "inicio", e.target.value)}
-            >
-              {generateTimeOptions()}
-            </select>
-            <select
-            
-              value={fin}
-              onChange={(e) => handleTimeChange(day, "fin", e.target.value)}
-            >
-              {generateTimeOptions()}
-            </select>
+        <h3>Disponibilidad de Tiempo</h3>
+
+        {initialTimeAvailability.map((initialTimes) => (
+          <div key={initialTimes.day}>
+            <h4>{initialTimes.day}</h4>
+            <label>
+              Inicio:
+              <select
+                className="bg-transparent"
+                value={initialTimes.inicio}
+                onChange={(e) =>
+                  handleTimeChange(initialTimes.day, "inicio", e.target.value)
+                }
+              >
+                {generateTimeOptions()}
+              </select>
+            </label>
+            <label>
+              Fin:
+              <select
+                className="bg-transparent"
+                value={initialTimes.fin}
+                onChange={(e) =>
+                  handleTimeChange(initialTimes.day, "fin", e.target.value)
+                }
+              >
+                {generateTimeOptions()}
+              </select>
+            </label>
           </div>
         ))}
-        <button onClick={handleSaveAvailability}>Guardar</button>
+        <button onClick={saveTimeAvailability}>Guardar Horarios</button>
+        <button onClick={updateTimeAvailability}>Actualizar Horarios</button>
       </div>
 
       <div>
         <h3>Excepciones de Tiempo</h3>
         <input
           type="date"
-          name="fecha"
-          value={newException.fecha}
+          name="date"
+          value={newException.date}
           onChange={handleExceptionChange}
         />
         <select
-          name="inicio"
-          value={newException.inicio}
+          name="initialHour"
+          value={newException.initialHour}
           onChange={handleExceptionChange}
         >
           {generateTimeOptions()}
         </select>
         <select
-          name="fin"
-          value={newException.fin}
+          name="finalHour"
+          value={newException.finalHour}
           onChange={handleExceptionChange}
         >
           {generateTimeOptions()}
         </select>
-        <button onClick={addTimeException}>Añadir Excepción</button>
+        <button onClick={addTimeException}>Añadir Excepcion</button>
 
         {timeException.map((exception, index) => (
           <div key={index}>
             <p>
-              Fecha: {exception.fecha}, Horario: {exception.inicio} -{" "}
-              {exception.fin}
+              Fecha: {exception.date}, Horario: {exception.initialHour} -{" "}
+              {exception.finalHour}
             </p>
+            <button onClick={() => deleteTimeException(exception.id)}>X</button>
           </div>
         ))}
       </div>
