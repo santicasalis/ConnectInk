@@ -1,4 +1,15 @@
-import {updateTimeAvailability, setTimeAvailabilities,getArtists, filterArtist, orderArtist,orderArtistRating, orderAndFilterArtists, deleteArtist } from "./artistsSlice";
+import {
+  addTimeAvailabilityException,
+  deleteTimeAvailabilityException,
+  updateTimeAvailability,
+  setTimeAvailabilities,
+  getArtists,
+  filterArtist,
+  orderArtist,
+  orderArtistRating,
+  orderAndFilterArtists,
+  deleteArtist,
+} from "./artistsSlice";
 import axios from "axios";
 
 const URL_BASE = "http://localhost:3001"
@@ -60,3 +71,31 @@ export const updateArtistTimeAvailability =
       );
     }
   };
+
+
+export const addArtistTimeAvailabilityException =
+  (id, exceptionData) => async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `${URL_BASE}/timeAvailabilityExceptions`,
+        exceptionData
+      );
+      dispatch(
+        addTimeAvailabilityException({ id, exception: response.data.addTimeAvailabilityException})
+      );
+    } catch (error) {
+      console.error("Error al añadir la excepción:", error);
+    }
+  };
+
+  export const deleteArtistTimeAvailabilityException =
+    (artistId, exceptionId) => async (dispatch) => {
+      try {
+        await axios.delete(
+          `${URL_BASE}/timeAvailabilityExceptions/${exceptionId}`
+        );
+        dispatch(deleteTimeAvailabilityException({ artistId, exceptionId }));
+      } catch (error) {
+        console.error("Error al eliminar la excepción:", error);
+      }
+    };

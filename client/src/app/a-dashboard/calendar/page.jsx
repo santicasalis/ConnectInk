@@ -6,6 +6,8 @@ import axios from "axios";
 import {
   getTimeAvailabilities,
   updateArtistTimeAvailability,
+  addArtistTimeAvailabilityException,
+  deleteArtistTimeAvailabilityException
 } from "@/app/redux/features/artists/artistActions";
 
 const Page = () => {
@@ -115,43 +117,28 @@ const saveTimeAvailability = async () => {
    }
  };
 
-  const handleExceptionChange = (e) => {
-    setNewException({ ...newException, [e.target.name]: e.target.value });
+ const handleExceptionChange = (e) => {
+   setNewException({ ...newException, [e.target.name]: e.target.value });
+ };
 
-    setNewException(newException);
+const addTimeException = () => {
+  const formattedException = {
+    tattooArtistId: user.logedInUser.id,
+    date: newException.date,
+    initialHour: newException.initialHour,
+    finalHour: newException.finalHour,
   };
+  dispatch(
+    addArtistTimeAvailabilityException(user.logedInUser.id, formattedException)
+  );
+  setNewException({ date: "", initialHour: "06:00", finalHour: "23:00" });
+};
 
-  const addTimeException = async () => {
-    const formattedException = {
-      tattooArtistId: user.logedInUser.id,
-      date: newException.date,
-      initialHour: newException.initialHour,
-      finalHour: newException.finalHour,
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/timeAvailabilityExceptions",
-        formattedException
-      );
-
-      setTimeException([...timeException, response.data]);
-    } catch (error) {
-      console.error("Error al añadir la excepción:", error);
-    }
-  };
-
-  const deleteTimeException = async () => {
-    try {
-      await axios.delete(`http://localhost:3001/timeAvailabilityExceptions/`);
-
-      setTimeException(
-        timeException.filter((exception) => exception.id !== id)
-      );
-    } catch (error) {
-      console.error("Error al eliminar la excepcion:", error);
-    }
-  };
+const deleteTimeException = (exceptionId) => {
+  dispatch(
+    deleteArtistTimeAvailabilityException(user.logedInUser.id, exceptionId)
+  );
+};
 
   useEffect(() => {
   if (user.logedInUser.id) {
@@ -248,8 +235,10 @@ const saveTimeAvailability = async () => {
             <p>
               Fecha: {exception.date}, Horario: {exception.initialHour} -{" "}
               {exception.finalHour}
+              <button onClick={() => deleteTimeException(exception.id)}>
+                X
+              </button>
             </p>
-            <button onClick={() => deleteTimeException(exception.id)}>X</button>
           </div>
         ))}
       </div>

@@ -119,10 +119,26 @@ export const artistsSlice = createSlice({
         }
       }
     },
+    addTimeAvailabilityException: (state, action) => {
+      const { artistId, exception } = action.payload;
+      if (!state.timeAvailabilities[artistId]) {
+        state.timeAvailabilities[artistId] = [];
+      }
+      state.timeAvailabilities[artistId].push(exception);
+    },
+
+    deleteTimeAvailabilityException: (state, action) => {
+      const { artistId, exceptionId } = action.payload;
+      state.timeAvailabilities[artistId] = state.timeAvailabilities[
+        artistId
+      ].filter((exception) => exception.id !== exceptionId);
+    },
   },
 });
 
 export const {
+  addTimeAvailabilityException,
+  deleteTimeAvailabilityException,
   updateTimeAvailability,
   setTimeAvailabilities,
   getArtists,
