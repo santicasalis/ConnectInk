@@ -19,22 +19,25 @@ import {
 } from "firebase/auth";
 import { getAllArtists } from "../redux/features/artists/artistActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById, getUserInformation } from "../redux/features/user/userActions.js";
+import {
+  getUserById,
+  getUserInformation,
+} from "../redux/features/user/userActions.js";
 
 const Login = () => {
-  const user = useSelector((state) => state.user.logedInUser)
+  const user = useSelector((state) => state.user.logedInUser);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(user){
-      if(user.userType == "artist")router.replace("/a-dashboard/home");
-      if(user.userType == "customer")router.replace("/user-dashboard/home");
-      if(user.userType == "admin")router.replace("/admin-dashboard/home");
+    if (user) {
+      if (user.userType == "artist") router.replace("/a-dashboard/home");
+      if (user.userType == "customer") router.replace("/user-dashboard/home");
+      if (user.userType == "admin") router.replace("/admin-dashboard/home");
     }
-  }, [user])
+  }, [user]);
 
   const handleChange = (event) => {
     setData({
@@ -44,9 +47,8 @@ const Login = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    emailLogIn()
+    emailLogIn();
   };
-  
 
   const googleLogIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -54,20 +56,21 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      
-      const fireBaseUser = result.user
-      const token = fireBaseUser.uid
 
-      dispatch(getUserById(token, router))
+      const fireBaseUser = result.user;
+      const token = fireBaseUser.uid;
 
-      dispatch(getUserInformation({
-        tokenId: fireBaseUser.uid,
-        userName: fireBaseUser.displayName,
-        image: fireBaseUser.photoURL,
-        email: fireBaseUser.email,
-        phoneNumber: fireBaseUser.phoneNumber,
-      }))
-      
+      dispatch(getUserById(token, router));
+
+      dispatch(
+        getUserInformation({
+          tokenId: fireBaseUser.uid,
+          userName: fireBaseUser.displayName,
+          image: fireBaseUser.photoURL,
+          email: fireBaseUser.email,
+          phoneNumber: fireBaseUser.phoneNumber,
+        })
+      );
     } catch (error) {
       const errorMessage = error.message;
       const email = error.email;
@@ -88,14 +91,13 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const userFireBase = auth.currentUser;
-      const token = userFireBase.reloadUserInfo.localId
+      const token = userFireBase.reloadUserInfo.localId;
 
-      dispatch(getUserById(token))
+      dispatch(getUserById(token));
 
-      if(user.userType == "artist")router.replace("/a-dashboard/home");
-      if(user.userType == "customer")router.replace("/user-dashboard/home");
-      if(user.userType == "admin")router.replace("/admin-dashboard/home");
-
+      if (user.userType == "artist") router.replace("/a-dashboard/home");
+      if (user.userType == "customer") router.replace("/user-dashboard/home");
+      if (user.userType == "admin") router.replace("/admin-dashboard/home");
     } catch (createUserError) {
       const errorCode = createUserError.code;
       const errorMessage = createUserError.message;
@@ -143,12 +145,12 @@ const Login = () => {
             placeholder="Contraseña"
           />
           {showPassword ? (
-            <RiEyeOffLine
+            <RiEyeLine
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
             />
           ) : (
-            <RiEyeLine
+            <RiEyeOffLine
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
             />
