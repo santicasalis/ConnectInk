@@ -1,5 +1,10 @@
 export const dayData = [
     {
+        day: "Domingo",
+        short: "Sun",
+        number: 0
+    },
+    {
         day: "Lunes",
         short: "Mon",
         number: 1
@@ -28,10 +33,5 @@ export const dayData = [
         day: "Sábado",
         short: "Sat",
         number: 6
-    },
-    {
-        day: "Domingo",
-        short: "Sun",
-        number: 0
     },
 ]

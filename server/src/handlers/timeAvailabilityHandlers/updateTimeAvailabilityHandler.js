@@ -2,12 +2,11 @@ const updateTimeAvailability = require("../../controllers/timeAvailabilityContro
 
 const updateTimeAvailabilityHandler = async (req, res) => {
   const { id } = req.params;
-  const { day, initialHour, finalHour } = req.body;
+  const { initialHour, finalHour } = req.body;
 
   try {
     const updatedTimeAvailability = await updateTimeAvailability(
       id,
-      day,
       initialHour,
       finalHour
     );

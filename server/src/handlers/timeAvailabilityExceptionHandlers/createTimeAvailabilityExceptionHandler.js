@@ -9,7 +9,16 @@ const createTimeAvailabilityExceptionHandler = async (req, res) => {
       initialHour,
       finalHour
     );
-    res.status(201).json(timeAvailabilityException);
+    if (timeAvailabilityException.code === 201) {
+      res.status(201).json({
+        message: timeAvailabilityException.message,
+        data: timeAvailabilityException.data,
+      });
+    } else {
+      res
+        .status(timeAvailabilityException.code)
+        .json({ error: timeAvailabilityException.error });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
