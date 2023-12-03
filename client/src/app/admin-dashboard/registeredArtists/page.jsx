@@ -46,25 +46,24 @@ const RegisteredArtist = () => {
                   currentPage={currentPage}
                   onPageChange={onPageChange}
                 />
-                {artistsToDisplay?.map((filter) => (
-                  <div key={filter.id} className="mb-4 w-full ">
+               
 
-      <div className="scroll-fade md:w-3/4 ">
-              <div className="scroll-fade grid  md:grid-cols-1  lg:grid-cols-2 gap-x-[200px] ">
-                {filtered?.map((filter) => (
-                  <div key={filter.id} className="mb-4 w-full  ">
+                      <div className="scroll-fade md:w-3/4 ">
+                    <div className="scroll-fade grid  md:grid-cols-1  lg:grid-cols-2 gap-x-[200px] ">
+                    {artistsToDisplay?.map((filter) => (
+                      <div key={filter.id} className="mb-4 w-full  ">
 
-                    <AdminCard
-                      key={filter.id}
-                      id={filter.id}
-                      name={filter.name}
-                      lastName={filter.lastName}
-                      location={filter.location}
-                      shopName={filter.shopName}
-                      tattoos={filter.publications}
-                      image={filter.image}
-                    />
-                  </div>
+                        <AdminCard
+                          key={filter.id}
+                          id={filter.id}
+                          name={filter.name}
+                          lastName={filter.lastName}
+                          location={filter.location}
+                          shopName={filter.shopName}
+                          tattoos={filter.publications}
+                          image={filter.image}
+                        />
+                      </div>
                 ))}
 
                 {/* {filtered?.map((filter) => (
@@ -85,6 +84,9 @@ const RegisteredArtist = () => {
             </div>
             </div>
             </div>
+            
+    </div>
+    </div>
     </div>
   )
 }
