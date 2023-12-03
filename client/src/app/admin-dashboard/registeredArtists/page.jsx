@@ -46,8 +46,7 @@ const RegisteredArtist = () => {
                   currentPage={currentPage}
                   onPageChange={onPageChange}
                 />
-                {artistsToDisplay?.map((filter) => (
-                  <div key={filter.id} className="mb-4 w-full ">
+                
 
       <div className="scroll-fade md:w-3/4 ">
               <div className="scroll-fade grid  md:grid-cols-1  lg:grid-cols-2 gap-x-[200px] ">
@@ -82,6 +81,8 @@ const RegisteredArtist = () => {
                   </div>
                 ))} */}
               </div>
+            </div>
+            </div>
             </div>
             </div>
             </div>
