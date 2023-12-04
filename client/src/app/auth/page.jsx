@@ -96,8 +96,8 @@ const Login = () => {
 
       dispatch(getUserById(token));
 
-      if (user.userType == "artist") router.replace("/a-dashboard/home");
-      if (user.userType == "customer") router.replace("/user-dashboard");
+      //if (user.userType == "artist") router.replace("/a-dashboard/home");
+      if (user.userType == "customer") { router.replace("/user-dashboard");} else {router.replace("/a-dashboard/home")}
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     } catch (createUserError) {
       toast.error("Usuario y o contraseña errónea", {
