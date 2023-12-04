@@ -10,16 +10,6 @@ const createAppointmentHandler = async (req, res) => {
     description,
     dateAndTime,
   } = req.body;
-
-  console.log(tattooArtistId,
-    customerId,
-    size,
-    image,
-    bodyPlace,
-    description,
-    dateAndTime)
-
-    console.log(req.body)
   try {
     const newAppointment = await createAppointment({
       tattooArtistId,
@@ -30,7 +20,6 @@ const createAppointmentHandler = async (req, res) => {
       description,
       dateAndTime,
     });
-    console.log(newAppointment)
     if (newAppointment.code === 201) {
       res
         .status(201)
@@ -39,7 +28,7 @@ const createAppointmentHandler = async (req, res) => {
       res.status(newAppointment.code).json({ error: newAppointment.error });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
