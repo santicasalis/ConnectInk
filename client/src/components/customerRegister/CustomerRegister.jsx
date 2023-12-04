@@ -11,6 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "@/app/redux/features/user/userActions";
 import {
   RiMailLine,
+  RiLock2Line,
+  RiUserLine,
+  RiPhoneFill,
   RiLockLine,
   RiEyeLine,
   RiEyeOffLine,
@@ -70,8 +73,8 @@ const CustomerRegister = () => {
             
               const response = await axios.post(`${urlBase}/customers`, values);
               
-              toast.success(
-                `${values.fullName} se ha registrado existosamente`,
+              toast.success(`
+                ${values.fullName} se ha registrado existosamente`,
                 {
                   className: "toastSuccess",
                   position: toast.POSITION.BOTTOM_RIGHT,
@@ -114,67 +117,86 @@ const CustomerRegister = () => {
                 )}
             </div>
 
-            <Field
-              type="text"
-              name="fullName"
-              placeholder="Nombre completo"
-              className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl relative"
-            /> 
-            <ErrorMessage
-              name="fullName"
-              component="div"
-              className="text-red-500 text-sm "
-            />
 
-            <Field
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
-            />
-            <ErrorMessage
-              name="email"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-            <Field
-              type="text"
-              name="mobile"
-              placeholder="Teléfono"
-              className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
-              pattern="\d*"
-            />
+            <div className="relative w-full">
+              <RiUserLine className="absolute left-2 top-4 text-white z-30"/>
+              <Field
+                type="text"
+                name="fullName"
+                placeholder="Nombre completo"
+                className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+              /> 
+              <ErrorMessage
+                name="fullName"
+                component="div"
+                className="text-red-500 text-sm "
+              />
+            </div>
+            
+            <div className="relative w-full">
+              <RiMailLine className="absolute left-2 top-4 text-white z-30"/>
+              <Field
+                type="email"
+                name="email"
+                placeholder="Email"
+                className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
 
-            <ErrorMessage
-              name="mobile"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            <div className="relative w-full">
+              <RiPhoneFill  className="absolute left-2 top-4 text-white z-30"/>
+              <Field
+                type="text"
+                name="mobile"
+                placeholder="Teléfono"
+                className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                pattern="\d*"
+              />
+
+              <ErrorMessage
+                name="mobile"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
 
             {!userInformation?.email &&
-            <div>
-              <Field
-                type="password"
-                name="password"
-                placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
-                className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-              <Field
-                type="password"
-                name="passwordConfirm"
-                placeholder="Confirmar contraseña"
-                className="p-2 mb-3 shadow-md bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="passwordConfirm"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+            <div className="w-full flex flex-col">
+              <div className="relative w-full">
+                  < RiLock2Line className="absolute left-2 top-4 text-white z-30"/>
+                  <Field
+                    type="password"
+                    name="password"
+                    placeholder="Contraseña (incluir números, mayusuculas , minusculas y un caracter especial)"
+                    className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+              </div>
+
+              <div className="relative w-full">
+                  <RiLock2Line className="absolute left-2 top-4 text-white z-30"/>
+                  <Field
+                    type="password"
+                    name="passwordConfirm"
+                    placeholder="Confirmar contraseña"
+                    className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                  />
+                  <ErrorMessage
+                    name="passwordConfirm"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+              </div>
             </div>
             }
 
@@ -191,7 +213,7 @@ const CustomerRegister = () => {
             <button
               type="submit"
               disabled={isSubmitting || !isValid || !dirty}
-              className="p-2 mt-5 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
+              className="p-2 mt-5 bg-primary text-white rounded hover:bg-primary/80 disabled:bg-blue-300"
             >
               Registrarme
             </button>
