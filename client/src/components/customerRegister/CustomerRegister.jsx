@@ -89,26 +89,6 @@ const CustomerRegister = () => {
             } catch (error) {
               console.error("Error during form submission", error);
             }
-
-            const response = await axios.post(`${urlBase}/customers`, values);
-
-            toast.success(
-              `
-                ${values.fullName} se ha registrado existosamente`,
-              {
-                className: "toastSuccess",
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: true,
-              }
-            );
-            const userFireBase = auth.currentUser;
-            const token = userFireBase.reloadUserInfo.localId;
-            dispatch(getUserById(token));
-            router.replace("/user-dashboard/home");
-          } catch (error) {
-            console.error("Error during form submission", error);
-          }
           setSubmitting(false);
         }}
       >
