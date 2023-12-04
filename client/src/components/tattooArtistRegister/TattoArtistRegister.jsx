@@ -13,14 +13,14 @@ import axios from "axios";
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
+import { auth } from "../../firebase";
 import { getUserById } from "@/app/redux/features/user/userActions";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
   const userInformation = useSelector((state) => state.user.fireBaseUser);
   const dispatch = useDispatch();
-  const urlBase = "http://localhost:3001";
+  const urlBase = "https://serverconnectink.up.railway.app";
   const router = useRouter();
 
   useEffect(() => {
@@ -75,11 +75,13 @@ const TattoArtistRegister = () => {
                   hideProgressBar: true,
                 }
               );
-              await axios.post(`${urlBase}/nodemailer/welcome`, {
-                email: values.email,
-                name: values.name,
-              });
-              dispatch(getUserById(values.tokenId));
+              // await axios.post(`${urlBase}/nodemailer/welcome`, {
+              //   email: values.email,
+              //   name: values.name,
+              // });
+              const userFireBase = auth.currentUser;
+              const token = userFireBase.reloadUserInfo.localId;
+              dispatch(getUserById(token));
               router.replace("/a-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);

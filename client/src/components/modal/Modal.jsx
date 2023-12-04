@@ -9,7 +9,7 @@ import { closeModalAction } from '@/app/redux/features/modalEdit/modalEditAction
 import axios from 'axios';
 
 const Modal = () => {
-  const URL_BASE = "http://localhost:3001"
+  const URL_BASE = "https://serverconnectink.up.railway.app"
   const dispatch = useDispatch();
   const { isOpen, data } = useSelector((state) => state.modalEdit);
   const [id,setId] = useState('');
