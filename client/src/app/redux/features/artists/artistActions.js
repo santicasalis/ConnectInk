@@ -1,5 +1,5 @@
 import {
-  addTimeAvailabilityException,
+  addTimeAvailabilityExceptionSuccess,
   deleteTimeAvailabilityException,
   updateTimeAvailability,
   setTimeAvailabilities,
@@ -59,11 +59,15 @@ export const updateArtistTimeAvailability =
   (id, { initialHour, finalHour }) =>
   async (dispatch) => {
     try {
-      await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, {
+      const response = await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, {
         initialHour,
         finalHour,
       });
-      dispatch(updateTimeAvailability({ id, initialHour, finalHour }));
+      
+      dispatch({
+        type: "UPDATE_TIME_AVAILABILITY_SUCCESS",
+        payload: { id, ...response.data },
+      });
     } catch (error) {
       console.error(
         "Error al actualizar la disponibilidad de tiempo del artista:",
@@ -73,29 +77,37 @@ export const updateArtistTimeAvailability =
   };
 
 
-export const addArtistTimeAvailabilityException =
-  (id, exceptionData) => async (dispatch) => {
+export const addTimeAvailabilityException =
+  (tattooArtistId, date, initialHour, finalHour) => async (dispatch) => {
     try {
       const response = await axios.post(
         `${URL_BASE}/timeAvailabilityExceptions`,
-        exceptionData
+        {
+          tattooArtistId,
+          date,
+          initialHour,
+          finalHour,
+        }
       );
-      dispatch(
-        addTimeAvailabilityException({ id, exception: response.data.addTimeAvailabilityException})
-      );
+      dispatch({
+        type: "ADD_TIME_AVAILABILITY_EXCEPTION_SUCCESS",
+        payload: response.data,
+      });
     } catch (error) {
-      console.error("Error al añadir la excepción:", error);
+      console.error("Error al crear la excepción de disponibilidad:", error);
+      alert("Error al crear la excepción de disponibilidad");
     }
   };
 
-  export const deleteArtistTimeAvailabilityException =
-    (artistId, exceptionId) => async (dispatch) => {
-      try {
-        await axios.delete(
-          `${URL_BASE}/timeAvailabilityExceptions/${exceptionId}`
-        );
-        dispatch(deleteTimeAvailabilityException({ artistId, exceptionId }));
-      } catch (error) {
-        console.error("Error al eliminar la excepción:", error);
-      }
-    };
+
+  // export const getTimeExceptions = (id) => async (dispatch) => {
+  //   try {
+  //     const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
+  //     console.log(response.data.timeAvailabilityExceptions)
+  //     dispatch(addTimeAvailabilityExceptionSuccess(response.data));
+  //   } catch (error) {
+  //     console.error("Error al obtener las excepciones de tiempo:", error);
+  //   }
+  // };
+
+  

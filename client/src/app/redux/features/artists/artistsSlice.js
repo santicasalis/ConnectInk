@@ -6,6 +6,7 @@ const initialState = {
   people: [],
   filtered: [],
   timeAvailabilities: {},
+  timeAvailabilityExceptions: [],
 };
 
 export const artistsSlice = createSlice({
@@ -119,25 +120,18 @@ export const artistsSlice = createSlice({
         }
       }
     },
-    addTimeAvailabilityException: (state, action) => {
-      const { artistId, exception } = action.payload;
-      if (!state.timeAvailabilities[artistId]) {
-        state.timeAvailabilities[artistId] = [];
-      }
-      state.timeAvailabilities[artistId].push(exception);
+
+    addTimeAvailabilityExceptionSuccess: (state, action) => {
+      state.timeAvailabilityExceptions.push(action.payload);
     },
 
-    deleteTimeAvailabilityException: (state, action) => {
-      const { artistId, exceptionId } = action.payload;
-      state.timeAvailabilities[artistId] = state.timeAvailabilities[
-        artistId
-      ].filter((exception) => exception.id !== exceptionId);
-    },
+    
   },
 });
 
+
 export const {
-  addTimeAvailabilityException,
+  addTimeAvailabilityExceptionSuccess,
   deleteTimeAvailabilityException,
   updateTimeAvailability,
   setTimeAvailabilities,

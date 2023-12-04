@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserId } from "@/app/redux/features/user/userActions";
 import axios from "axios";
 import {
   getTimeAvailabilities,
   updateArtistTimeAvailability,
-  addArtistTimeAvailabilityException,
+  addTimeAvailabilityException,
   deleteArtistTimeAvailabilityException
 } from "@/app/redux/features/artists/artistActions";
 
@@ -129,8 +128,15 @@ const addTimeException = () => {
     finalHour: newException.finalHour,
   };
   dispatch(
-    addArtistTimeAvailabilityException(user.logedInUser.id, formattedException)
+    addTimeAvailabilityException(
+      user.logedInUser.id,
+      newException.date,
+      newException.initialHour,
+      newException.finalHour
+    )
   );
+
+
   setNewException({ date: "", initialHour: "06:00", finalHour: "23:00" });
 };
 
@@ -230,17 +236,7 @@ const deleteTimeException = (exceptionId) => {
         </select>
         <button onClick={addTimeException}>Añadir Excepcion</button>
 
-        {timeException.map((exception, index) => (
-          <div key={index}>
-            <p>
-              Fecha: {exception.date}, Horario: {exception.initialHour} -{" "}
-              {exception.finalHour}
-              <button onClick={() => deleteTimeException(exception.id)}>
-                X
-              </button>
-            </p>
-          </div>
-        ))}
+      
       </div>
     </div>
   );
