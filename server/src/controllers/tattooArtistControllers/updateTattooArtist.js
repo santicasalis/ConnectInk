@@ -1,5 +1,5 @@
 const { TattooArtist } = require("../../db");
-
+const crypto = require("crypto");
 const updateTattooArtist = async (
   id,
   fullName,
@@ -19,7 +19,7 @@ const updateTattooArtist = async (
       {
         fullName: fullName,
         email: email,
-        password: password,
+        password: crypto.createHash("sha256").update(password).digest("hex"),
         phone: phone,
         instagram: instagram,
         description: description,

@@ -6,6 +6,7 @@ const initialState = {
   people: [],
   filtered: [],
   timeAvailabilities: {},
+  timeAvailabilityExceptions: {},
 };
 
 export const artistsSlice = createSlice({
@@ -93,29 +94,48 @@ export const artistsSlice = createSlice({
     /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
 
     setTimeAvailabilities: (state, action) => {
-      const { artistId, availabilities } = action.payload;
-      state.timeAvailabilities[artistId] = availabilities;
+      const { id, availabilities } = action.payload;
+      state.timeAvailabilities[id] = availabilities;
     },
 
     updateTimeAvailability: (state, action) => {
-      const { id, day, initialHour, finalHour } = action.payload;
-      const availabilityIndex = state.timeAvailabilities[day].findIndex(
-        (availability) => availability.id === id
+      const { id, initialHour, finalHour } = action.payload;
+      const artistId = Object.keys(state.timeAvailabilities).find((key) =>
+        state.timeAvailabilities[key].some(
+          (availability) => availability.id === id
+        )
       );
 
-      if (availabilityIndex !== -1) {
-        state.timeAvailabilities[day][availabilityIndex] = {
-          id,
-          day,
-          initialHour,
-          finalHour,
-        };
+      if (artistId) {
+        const availabilityIndex = state.timeAvailabilities[artistId].findIndex(
+          (availability) => availability.id === id
+        );
+
+        if (availabilityIndex !== -1) {
+          state.timeAvailabilities[artistId][availabilityIndex] = {
+            ...state.timeAvailabilities[artistId][availabilityIndex],
+            initialHour,
+            finalHour,
+          };
+        }
       }
+    },
+
+    addTimeAvailabilityExceptions: (state, action) => {
+      state.timeAvailabilityExceptions = action.payload;
+    },
+
+    setTimeAvailabilityExceptions: (state, action) => {
+      const { userId, exceptions } = action.payload;
+      state.timeAvailabilityExceptions[userId] = exceptions;
     },
   },
 });
 
+
 export const {
+  addTimeAvailabilityExceptions,
+  setTimeAvailabilityExceptions,
   updateTimeAvailability,
   setTimeAvailabilities,
   getArtists,
