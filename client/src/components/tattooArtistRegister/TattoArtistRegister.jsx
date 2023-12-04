@@ -14,7 +14,7 @@ import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase";
-import { getUserById } from "@/app/redux/features/user/userActions";
+import { getUserById, getUserInformation } from "@/app/redux/features/user/userActions";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
@@ -46,46 +46,56 @@ const TattoArtistRegister = () => {
         }}
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
-          if (userInformation) {
-            try {
-              if (values.image && typeof values.image === "object") {
-                const imageUrl = await uploadImage(values.image);
-                values.image = imageUrl;
-              } else {
-                values.image =
-                  userInformation?.image ||
-                  "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
-              }
-
-              if (!values.userName) {
-                values.tokenId = await emailSignUp(
-                  values.email,
-                  values.password
-                );
-              }
-
-              await axios.post(`${urlBase}/tattooArtists`, values);
-
-              toast.success(
-                `${values.fullName} se ha registrado existosamente`,
-                {
-                  className: "toastSuccess",
-                  position: toast.POSITION.BOTTOM_RIGHT,
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                }
-              );
-              // await axios.post(`${urlBase}/nodemailer/welcome`, {
-              //   email: values.email,
-              //   name: values.name,
-              // });
-              const userFireBase = auth.currentUser;
-              const token = userFireBase.reloadUserInfo.localId;
-              dispatch(getUserById(token));
-              router.replace("/a-dashboard/home");
-            } catch (error) {
-              console.error("Error during form submission", error);
+          try {
+            if (values.image && typeof values.image === "object") {
+              const imageUrl = await uploadImage(values.image);
+              values.image = imageUrl;
+            } else {
+              values.image =
+                userInformation?.image ||
+                "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
+
+            if (!values.userName) {
+              values.tokenId = await emailSignUp(
+                values.email,
+                values.password
+              );
+            }
+
+            await axios.post(`${urlBase}/tattooArtists`, values);
+
+            toast.success(
+              `${values.fullName} se ha registrado existosamente`,
+              {
+                className: "toastSuccess",
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 3000,
+                hideProgressBar: true,
+              }
+            );
+            // await axios.post(`${urlBase}/nodemailer/welcome`, {
+            //   email: values.email,
+            //   name: values.name,
+            // });
+
+            
+            const userFireBase = auth.currentUser;
+            const token = userFireBase.reloadUserInfo.localId;
+
+            dispatch(getUserById(token));
+            dispatch(
+              getUserInformation({
+                tokenId: userFireBase.uid,
+                userName: userFireBase.displayName,
+                image: userFireBase.photoURL,
+                email: userFireBase.email,
+                phoneNumber: userFireBase.phoneNumber,
+              })
+            )
+            router.replace("/a-dashboard/home");
+          } catch (error) {
+            console.error("Error during form submission", error);
           }
           setSubmitting(false);
         }}

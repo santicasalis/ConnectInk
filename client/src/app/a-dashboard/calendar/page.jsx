@@ -126,10 +126,6 @@ const Page = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(newException)
-  // }, [newException])
-
   const handleExceptionChange = (event) => {
     if(event.target.value && event.target.name == "date"){
       setNewException({
@@ -230,7 +226,6 @@ const Page = () => {
         }
 
         <button onClick={addTimeException}>Añadir Excepcion</button>
-        {console.log(user.logedInUser)}
           {user.logedInUser.timeAvailabilityExceptions.length &&
             user.logedInUser.timeAvailabilityExceptions.map((exception, index) => (
               <div key={index}>
