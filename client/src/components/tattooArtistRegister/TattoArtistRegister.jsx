@@ -18,7 +18,7 @@ import { getUserById } from "@/app/redux/features/user/userActions";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
-  const userInformation = useSelector((state) => state.user.fireBaseUser)
+  const userInformation = useSelector((state) => state.user.fireBaseUser);
   const dispatch = useDispatch();
   const urlBase = "http://localhost:3001";
   const router = useRouter();
@@ -57,11 +57,13 @@ const TattoArtistRegister = () => {
                   "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
               }
 
-              if(!values.userName){
-                values.tokenId = await emailSignUp(values.email, values.password);
+              if (!values.userName) {
+                values.tokenId = await emailSignUp(
+                  values.email,
+                  values.password
+                );
               }
 
-              
               await axios.post(`${urlBase}/tattooArtists`, values);
 
               toast.success(
@@ -73,8 +75,11 @@ const TattoArtistRegister = () => {
                   hideProgressBar: true,
                 }
               );
-              await axios.post(`${urlBase}/nodemailer/welcome`, {email: values.email, name: values.name})
-              dispatch(getUserById(values.tokenId))
+              await axios.post(`${urlBase}/nodemailer/welcome`, {
+                email: values.email,
+                name: values.name,
+              });
+              dispatch(getUserById(values.tokenId));
               router.replace("/a-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);
@@ -201,34 +206,33 @@ const TattoArtistRegister = () => {
               )}
             </div>
 
+            {!userInformation?.email && (
+              <div>
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                  className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
 
-            {!userInformation?.email &&
-            <div>
-              <Field
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-  
-              <Field
-                type="password"
-                name="passwordConfirm"
-                placeholder="Confirm Password"
-                className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="passwordConfirm"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
-            }
+                <Field
+                  type="password"
+                  name="passwordConfirm"
+                  placeholder="Confirme contraseña"
+                  className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
+                />
+                <ErrorMessage
+                  name="passwordConfirm"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+            )}
 
             <button
               type="submit"

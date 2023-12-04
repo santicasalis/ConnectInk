@@ -1,10 +1,19 @@
-const { TattooArtist, TattooStyle, Publication, TimeAvailability, TimeAvailabilityException, PriceRange, Customer, Admin } = require("../../db");
+const {
+  TattooArtist,
+  TattooStyle,
+  Publication,
+  TimeAvailability,
+  TimeAvailabilityException,
+  PriceRange,
+  Customer,
+  Admin,
+} = require("../../db");
 
 const login = async (tokenId) => {
-  let user = {}
-  let cleanUser = {}
+  let user = {};
+  let cleanUser = {};
   user = await TattooArtist.findOne({
-    where: {tokenId}, 
+    where: { tokenId: tokenId },
     include: [
       { model: TattooStyle, attributes: ["name"] },
       {
@@ -21,66 +30,12 @@ const login = async (tokenId) => {
       },
       {
         model: PriceRange,
-        attributes: ["size", "priceMin", "priceMax"]
-      }
-    ]
+        attributes: ["size", "priceMin", "priceMax"],
+      },
+    ],
   });
 
-   cleanUser = {
-    id: user.id,
-    fullName: user.fullName,
-    email: user.email,
-    phone: user.phone,
-    instagram: user.instagram,
-    description: user.description,
-    location: user.location,
-    address: user.address,
-    shopName: user.shopName,
-    image: user.image,
-    disabled: user.disabled,
-    tattooStyles: user.TattooStyles?.map(
-      (tattooStyle) => tattooStyle.name
-    ),
-    publications: user.Publications?.map((publication) => {
-      return {
-        id:publication.id,
-        description: publication.description,
-        image: publication.image,
-        createdAt: publication.createdAt,
-        updatedAt: publication.updatedAt,
-      };
-    }),
-    timeAvailabilities: user.TimeAvailabilities?.map(
-      (timeAvailability) => {
-        return {
-          day: timeAvailability.day,
-          initialHour: timeAvailability.initialHour,
-          finalHour: timeAvailability.finalHour,
-        };
-      }
-    ),
-    timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
-      (timeAvailabilityException) => {
-        return {
-          date: timeAvailabilityException.date,
-          initialHour: timeAvailabilityException.initialHour,
-          finalHour: timeAvailabilityException.finalHour,
-        };
-      }
-    ),
-    priceRanges: user.PriceRanges?.map(
-      (priceRange) => {
-        return {
-          size: priceRange.size,
-          priceMin: priceRange.priceMin,
-          priceMax: priceRange.priceMax
-        }
-
-      }
-    )
-   }
-
-  if(user){
+  if (user) {
     cleanUser = {
       id: user.id,
       fullName: user.fullName,
@@ -94,9 +49,7 @@ const login = async (tokenId) => {
       image: user.image,
       disabled: user.disabled,
       userType: user.userType,
-      tattooStyles: user.TattooStyles?.map(
-        (tattooStyle) => tattooStyle.name
-      ),
+      tattooStyles: user.TattooStyles?.map((tattooStyle) => tattooStyle.name),
       publications: user.Publications?.map((publication) => {
         return {
           id: publication.id,
@@ -106,15 +59,13 @@ const login = async (tokenId) => {
           updatedAt: publication.updatedAt,
         };
       }),
-      timeAvailabilities: user.TimeAvailabilities?.map(
-        (timeAvailability) => {
-          return {
-            day: timeAvailability.day,
-            initialHour: timeAvailability.initialHour,
-            finalHour: timeAvailability.finalHour,
-          };
-        }
-      ),
+      timeAvailabilities: user.TimeAvailabilities?.map((timeAvailability) => {
+        return {
+          day: timeAvailability.day,
+          initialHour: timeAvailability.initialHour,
+          finalHour: timeAvailability.finalHour,
+        };
+      }),
       timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
         (timeAvailabilityException) => {
           return {
@@ -124,25 +75,21 @@ const login = async (tokenId) => {
           };
         }
       ),
-      priceRanges: user.PriceRanges?.map(
-        (priceRange) => {
-          return {
-            size: priceRange.size,
-            priceMin: priceRange.priceMin,
-            priceMax: priceRange.priceMax
-          }
-  
-        }
-      )
-    }
+      priceRanges: user.PriceRanges?.map((priceRange) => {
+        return {
+          size: priceRange.size,
+          priceMin: priceRange.priceMin,
+          priceMax: priceRange.priceMax,
+        };
+      }),
+    };
   }
 
-  if(!user){
+  if (!user) {
     cleanUser = await Customer.findOne({
-      where: {tokenId},
-    })
+      where: { tokenId: tokenId },
+    });
   }
-
 
   return cleanUser;
 };

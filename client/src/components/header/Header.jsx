@@ -22,7 +22,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getAllArtists } from "@/app/redux/features/artists/artistActions";
 
 const Header = () => {
-  const user = useSelector((state) => state.user.logedInUser)
+  const user = useSelector((state) => state.user.logedInUser);
   const dispatch = useDispatch();
   const router = useRouter();
   // let userEmail = auth.currentUser?.email;
@@ -41,7 +41,6 @@ const Header = () => {
   //     "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
   // }
 
-
   const imageLoader = ({ src }) => {
     return src;
   };
@@ -49,12 +48,11 @@ const Header = () => {
   const handleLogOut = () => {
     signOut(auth)
       .then(() => {
-        alert("sign out ok");
+        dispatch(logOut());
       })
       .catch((error) => {
         throw error;
       });
-    dispatch(logOut());
 
     router.replace("/");
   };
@@ -82,7 +80,7 @@ const Header = () => {
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
                 <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
                   <Image
-                  unoptimized
+                    unoptimized
                     src={user.image}
                     loader={imageLoader}
                     style={{
@@ -115,7 +113,7 @@ const Header = () => {
               >
                 <div className="rounded-full w-[25px] h-[25px] overflow-hidden">
                   <Image
-                  unoptimized
+                    unoptimized
                     src={user.image}
                     loader={imageLoader}
                     width={25}
@@ -133,7 +131,7 @@ const Header = () => {
             <MenuItem className="hover:bg-secondary-100">
               <Link href="" className="flex items-center gap-2  py-1.5">
                 <RiSettings5Fill />
-                Settings
+                Configuración
               </Link>
             </MenuItem>
             <MenuItem
@@ -142,7 +140,7 @@ const Header = () => {
             >
               <button className="flex gap-x-2">
                 <RiLogoutCircleRLine />
-                Logout
+                Cerrar sesión
               </button>
             </MenuItem>
           </Menu>

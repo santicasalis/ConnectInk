@@ -1,11 +1,23 @@
-"use client"
+"use client";
 
-import React, {useState} from 'react'
-import Link from 'next/link'
-import {RiBarChart2Line, RiStore3Line, RiStarLine, RiMessage3Line, RiCalendarCheckLine, RiSpeakLine, RiLogoutCircleRLine, RiArrowRightSLine, RiMenuFill,RiCloseFill} from 'react-icons/ri'
+import React, { useState } from "react";
+import Link from "next/link";
+import {
+  RiBarChart2Line,
+  RiStore3Line,
+  RiStarLine,
+  RiMessage3Line,
+  RiCalendarCheckLine,
+  RiSpeakLine,
+  RiLogoutCircleRLine,
+  RiArrowRightSLine,
+  RiMenuFill,
+  RiCloseFill,
+} from "react-icons/ri";
 
 const SideBar = () => {
-  const [showMenu,setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <>
       <div
@@ -23,7 +35,7 @@ const SideBar = () => {
                 href="/a-dashboard/home"
                 className="flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
-                <RiStore3Line className="text-primary " /> Home
+                <RiStore3Line className="text-primary " /> Inicio
               </Link>
             </li>
             <li>
@@ -74,8 +86,9 @@ const SideBar = () => {
           <Link
             href=""
             className="flex items-center gap-4 px-4 py-5 text-[20px] rounded-md font-newrocker hover:bg-secondary-100 transition-colors"
+            // onClick={handleLogOut}
           >
-            <RiLogoutCircleRLine className="text-primary" /> Logout
+            <RiLogoutCircleRLine className="text-primary" /> Cerrar sesión
           </Link>
         </nav>
       </div>
@@ -87,6 +100,6 @@ const SideBar = () => {
       </button>
     </>
   );
-}
+};
 
-export default SideBar
+export default SideBar;
