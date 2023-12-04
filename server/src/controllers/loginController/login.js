@@ -7,13 +7,15 @@ const {
   PriceRange,
   Customer,
   Admin,
+  CustomerTattooArtistAppointment,
+  Appointment
 } = require("../../db");
 
 const login = async (tokenId) => {
   let user = {};
   let cleanUser = {};
   user = await TattooArtist.findOne({
-    where: { tokenId: tokenId },
+    where: { tokenId: tokenId, disabled: false },
     include: [
       { model: TattooStyle, attributes: ["name"] },
       {
@@ -88,8 +90,16 @@ const login = async (tokenId) => {
 
   if (!user) {
     let userCustomer = await Customer.findOne({
-      where: { tokenId: tokenId },
+      where: { tokenId: tokenId, disabled: false},
     });
+    const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+      where: { CustomerId: userCustomer.id },
+      include: [
+          {
+              model: Appointment,
+          },
+      ],
+  });
 
     cleanUser = {
       id: userCustomer.id,
@@ -99,6 +109,7 @@ const login = async (tokenId) => {
       image: userCustomer.image,
       disabled: userCustomer.disabled,
       userType: userCustomer.userType,
+      appointments: appointmentsByArtist?.map(appointment => {return {data: appointment.Appointment, artist: appointment.TattooArtistId}})
     };
   }
 

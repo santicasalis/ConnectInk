@@ -11,7 +11,9 @@ function UDashboard() {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
 
-  // const user = useSelector((state) => state.user.logedInUser)
+  const user = useSelector((state) => state.user.logedInUser)
+
+  console.log(user)
 
   useEffect(() => {
     const fetchData = async () => {
