@@ -21,7 +21,7 @@ import {
 } from "react-icons/ri";
 
 const CustomerRegister = () => {
-  const urlBase = "http://localhost:3001";
+  const urlBase = "https://serverconnectink.up.railway.app";
   const router = useRouter();
   const dispatch = useDispatch()
   const userInformation = useSelector((state) => state.user.fireBaseUser)
