@@ -30,7 +30,7 @@ const ModalDeleteArtist = () => {
         event.preventDefault();
         try {
             
-            dispatch(closeModalDeleteStyleAction());
+            dispatch(closeModalDeleteStyleAction(id));
             toast.success(`El estilo se eliminó con éxito`, {
               className: "toastSuccess",
               position: toast.POSITION.BOTTOM_RIGHT,

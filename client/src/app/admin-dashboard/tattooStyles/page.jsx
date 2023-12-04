@@ -9,7 +9,7 @@ const ModalDeleteStyle = dynamic(()=> import("@/components/modal/ModalDeleteStyl
 
 const TattooStyles = () => {
   const styles = useSelector((state) => state.styles.names);
-  
+  const isOpenModalDeleteStyle = useSelector((state) => state.modalDeleteStyle.isOpen);
   const dispatch = useDispatch();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [styleIdToDelete, setStyleIdToDelete] = useState(null);
@@ -71,6 +71,9 @@ const TattooStyles = () => {
           </div>
         </div>
       )}
+      {/* {
+                    isOpenModalDeleteStyle && <ModalDeleteStyle className="absolute" />
+                } */}
     </div>
   );
 };
