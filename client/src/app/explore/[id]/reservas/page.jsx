@@ -101,11 +101,19 @@ const bookAppointment = ({params}) => {
   }
 
   const getAvailability = async() => {
-    return (await axios(`${URL_BASE}/timeAvailabilities/${id}`)).data
+    try {
+      return (await axios(`${URL_BASE}/timeAvailabilities/${id}`)).data
+    } catch {
+      return []
+    }
   }
 
   const getExceptions = async() => {
-    return (await axios(`${URL_BASE}/timeAvailabilityExceptions/${id}`)).data
+    try {
+      return (await axios(`${URL_BASE}/timeAvailabilityExceptions/${id}`)).data
+    } catch {
+      return []
+    }
   }
 
   useEffect(() => {

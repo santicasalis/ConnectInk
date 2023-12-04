@@ -11,8 +11,6 @@ import {
 const Page = () => {
 
   const user = useSelector((state) => state.user);
-  
-  console.log(user.logedInUser);
 
   const timeAvailabilities = useSelector(
     (state) => state.artists.timeAvailabilities[user.logedInUser.id] || []
@@ -57,6 +55,10 @@ const Page = () => {
       },
     }));
   };
+
+  useEffect(() => {
+    console.log(timeAvailability)
+  }, [timeAvailability])
 
   const saveTimeAvailability = async () => {
     try {
@@ -152,10 +154,6 @@ const Page = () => {
     }
   }, [dispatch, user.logedInUser.id]);
 
-  useEffect(() => {
-    console.log(timeAvailabilities)
-  }, [timeAvailabilities]);
-
   return (
     <div>
       <div>
@@ -168,7 +166,7 @@ const Page = () => {
               Inicio:
               <select
                 className="bg-transparent"
-                value={initialTimes.inicio}
+                value={timeAvailability[initialTimes.day]?.inicio || initialTimes.inicio}
                 onChange={(e) =>
                   handleTimeChange(initialTimes.day, "inicio", e.target.value)
                 }
@@ -180,7 +178,7 @@ const Page = () => {
               Fin:
               <select
                 className="bg-transparent"
-                value={initialTimes.fin}
+                value={timeAvailability[initialTimes.day]?.fin || initialTimes.fin}
                 onChange={(e) =>
                   handleTimeChange(initialTimes.day, "fin", e.target.value)
                 }

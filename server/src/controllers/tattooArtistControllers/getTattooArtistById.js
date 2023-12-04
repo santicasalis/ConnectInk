@@ -12,23 +12,28 @@ const {
 const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {
     include: [
-      { model: TattooStyle, attributes: ["name"] },
+      { model: TattooStyle, attributes: ["name"], required: false },
+      
       {
         model: Publication,
         attributes: ["id", "description", "image", "createdAt", "updatedAt"],
         where: { disabled: false },
+        required: false
       },
       {
         model: TimeAvailability,
         attributes: ["id", "day", "initialHour", "finalHour"],
+        required: false
       },
       {
         model: TimeAvailabilityException,
         attributes: ["id", "date", "initialHour", "finalHour"],
+        required: false
       },
       {
         model: PriceRange,
         attributes: ["id", "size", "priceMin", "priceMax"],
+        required: false
       },
     ],
   });
@@ -37,6 +42,7 @@ const getTattooArtistById = async (id) => {
     include: [
       {
         model: Appointment,
+        required: false
       },
     ],
   });

@@ -17,8 +17,6 @@ export default function Home() {
     dispatch(getAllArtists());
 
     dispatch(getAllPosts());
-    console.log(localStorage)
-
 
   }, []);
 
