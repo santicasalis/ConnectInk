@@ -6,9 +6,9 @@ const updateTimeAvailabilityHandler = async (req, res) => {
 
   try {
     const updatedTimeAvailability = await updateTimeAvailability(
-      id,
+      {id,
       initialHour,
-      finalHour
+      finalHour}
     );
     if (updatedTimeAvailability.code === 201) {
       res.status(201).json({

@@ -22,7 +22,7 @@ const login = async (tokenId) => {
       },
       {
         model: TimeAvailability,
-        attributes: ["day", "initialHour", "finalHour"],
+        attributes: ["id", "day", "initialHour", "finalHour"],
       },
       {
         model: TimeAvailabilityException,
@@ -61,6 +61,7 @@ const login = async (tokenId) => {
       }),
       timeAvailabilities: user.TimeAvailabilities?.map((timeAvailability) => {
         return {
+          id: timeAvailability.id,
           day: timeAvailability.day,
           initialHour: timeAvailability.initialHour,
           finalHour: timeAvailability.finalHour,

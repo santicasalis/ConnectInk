@@ -68,29 +68,27 @@ const CustomerRegister = () => {
                 "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
 
-            if (!values.userName) {
-              values.tokenId = await emailSignUp(values.email, values.password);
-            }
-
-            const response = await axios.post(`${urlBase}/customers`, values);
-
-            toast.success(
-              `
-                ${values.fullName} se ha registrado existosamente`,
-              {
-                className: "toastSuccess",
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: true,
+              if(!values.userName){
+                values.tokenId = await emailSignUp(values.email, values.password);
               }
-            );
-            const userFireBase = auth.currentUser;
-            const token = userFireBase.reloadUserInfo.localId;
-            dispatch(getUserById(token));
-            router.replace("/user-dashboard/home");
-          } catch (error) {
-            console.error("Error during form submission", error);
-          }
+            
+              const response = await axios.post(`${urlBase}/customers`, values);
+              
+              toast.success(`
+                ${values.fullName} se ha registrado existosamente`,
+                {
+                  className: "toastSuccess",
+                  position: toast.POSITION.BOTTOM_RIGHT,
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                }
+              );
+              
+              dispatch(getUserById(values.tokenId))
+              router.replace("/user-dashboard/home");
+            } catch (error) {
+              console.error("Error during form submission", error);
+            }
           setSubmitting(false);
         }}
       >

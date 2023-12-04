@@ -1,14 +1,16 @@
 import {
-  addTimeAvailabilityExceptionSuccess,
-  setTimeAvailabilityExceptions,
-  updateTimeAvailability,
-  setTimeAvailabilities,
+  // addTimeAvailabilityExceptionSuccess,
+  // setTimeAvailabilityExceptions,
+  // updateTimeAvailability,
+  // setTimeAvailabilities,
   getArtists,
   filterArtist,
   orderArtist,
   orderArtistRating,
   orderAndFilterArtists,
   deleteArtist,
+  getDetail,
+  cleanDetail
 } from "./artistsSlice";
 import axios from "axios";
 
@@ -41,78 +43,86 @@ export const DeleteArtists = (id) => async (dispatch) => {
 
 /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
 
-export const getTimeAvailabilities = (id) => async (dispatch) => {
-  try {
-    const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
-    dispatch(
-      setTimeAvailabilities({
-        id,
-        availabilities: response.data.timeAvailabilities,
-      })
-    );
-  } catch (error) {
-    console.error("Error al obtener los horarios de disponibilidad:", error);
-  }
-};
+// export const getTimeAvailabilities = (id) => async (dispatch) => {
+//   try {
+//     const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
+//     dispatch(
+//       setTimeAvailabilities({
+//         id,
+//         availabilities: response.data.timeAvailabilities,
+//       })
+//     );
+//   } catch (error) {
+//     console.error("Error al obtener los horarios de disponibilidad:", error);
+//   }
+// };
 
-export const updateArtistTimeAvailability =
-  (id, { initialHour, finalHour }) =>
-  async (dispatch) => {
-    try {
-      const response = await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, {
-        initialHour,
-        finalHour,
-      });
+// export const updateArtistTimeAvailability =
+//   (id, { initialHour, finalHour }) =>
+//   async (dispatch) => {
+//     try {
+//       const response = await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, {
+//         initialHour,
+//         finalHour,
+//       });
       
-      dispatch({
-        type: "UPDATE_TIME_AVAILABILITY_SUCCESS",
-        payload: { id, ...response.data },
-      });
-    } catch (error) {
-      console.error(
-        "Error al actualizar la disponibilidad de tiempo del artista:",
-        error
-      );
-    }
-  };
+//       dispatch({
+//         type: "UPDATE_TIME_AVAILABILITY_SUCCESS",
+//         payload: { id, ...response.data },
+//       });
+//     } catch (error) {
+//       console.error(
+//         "Error al actualizar la disponibilidad de tiempo del artista:",
+//         error
+//       );
+//     }
+//   };
 
 
-export const addTimeAvailabilityException =
-  (tattooArtistId, date, initialHour, finalHour) => async (dispatch) => {
-    try {
-      const response = await axios.post(
-        `${URL_BASE}/timeAvailabilityExceptions`,
-        {
-          tattooArtistId,
-          date,
-          initialHour,
-          finalHour,
-        }
-      );
-      dispatch({
-        type: "ADD_TIME_AVAILABILITY_EXCEPTION_SUCCESS",
-        payload: response.data,
-      });
-    } catch (error) {
-      console.error("Error al crear la excepción de disponibilidad:", error);
-      alert("Error al crear la excepción de disponibilidad");
-    }
-  };
+// export const addTimeAvailabilityException =
+//   (tattooArtistId, date, initialHour, finalHour) => async (dispatch) => {
+//     try {
+//       const response = await axios.post(
+//         `${URL_BASE}/timeAvailabilityExceptions`,
+//         {
+//           tattooArtistId,
+//           date,
+//           initialHour,
+//           finalHour,
+//         }
+//       );
+//       dispatch({
+//         type: "ADD_TIME_AVAILABILITY_EXCEPTION_SUCCESS",
+//         payload: response.data,
+//       });
+//     } catch (error) {
+//       console.error("Error al crear la excepción de disponibilidad:", error);
+//       alert("Error al crear la excepción de disponibilidad");
+//     }
+//   };
 
 
-  export const getTimeExceptions = (id) => async (dispatch) => {
-    try {
-      const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
-      console.log(response.data.timeAvailabilityExceptions)
-      dispatch(
-        setTimeAvailabilityExceptions({
-          userId: id,
-          exceptions: response.data.timeAvailabilityExceptions,
-        })
-      );
-    } catch (error) {
-      console.error("Error al obtener las excepciones de tiempo:", error);
-    }
-  };
+//   export const getTimeExceptions = (id) => async (dispatch) => {
+//     try {
+//       const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
+//       console.log(response.data.timeAvailabilityExceptions)
+//       dispatch(
+//         setTimeAvailabilityExceptions({
+//           userId: id,
+//           exceptions: response.data.timeAvailabilityExceptions,
+//         })
+//       );
+//     } catch (error) {
+//       console.error("Error al obtener las excepciones de tiempo:", error);
+//     }
+//   };
 
-  
+  export const getArtistDetail = (id) => async (dispatch) => {
+    const response = await axios(`${URL_BASE}/tattooArtists/${id}`)
+
+    dispatch(getDetail(response.data))
+  }
+
+  export const cleanArtistDetail = () => (dispatch) => {
+    dispatch(cleanDetail())
+  }
