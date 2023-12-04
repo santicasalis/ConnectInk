@@ -5,8 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   people: [],
   filtered: [],
-  timeAvailabilities: {},
-  timeAvailabilityExceptions: {},
+  detail: {}
 };
 
 export const artistsSlice = createSlice({
@@ -93,57 +92,67 @@ export const artistsSlice = createSlice({
 
     /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
 
-    setTimeAvailabilities: (state, action) => {
-      const { id, availabilities } = action.payload;
-      state.timeAvailabilities[id] = availabilities;
+    getDetail: (state, action) =>{
+      state.detail = action.payload
     },
 
-    updateTimeAvailability: (state, action) => {
-      const { id, initialHour, finalHour } = action.payload;
-      const artistId = Object.keys(state.timeAvailabilities).find((key) =>
-        state.timeAvailabilities[key].some(
-          (availability) => availability.id === id
-        )
-      );
-
-      if (artistId) {
-        const availabilityIndex = state.timeAvailabilities[artistId].findIndex(
-          (availability) => availability.id === id
-        );
-
-        if (availabilityIndex !== -1) {
-          state.timeAvailabilities[artistId][availabilityIndex] = {
-            ...state.timeAvailabilities[artistId][availabilityIndex],
-            initialHour,
-            finalHour,
-          };
-        }
-      }
+    cleanDetail: (state) => {
+      state.detail = action.payload
     },
 
-    addTimeAvailabilityExceptions: (state, action) => {
-      state.timeAvailabilityExceptions = action.payload;
-    },
+    // setTimeAvailabilities: (state, action) => {
+    //   const { id, availabilities } = action.payload;
+    //   state.timeAvailabilities[id] = availabilities;
+    // },
 
-    setTimeAvailabilityExceptions: (state, action) => {
-      const { userId, exceptions } = action.payload;
-      state.timeAvailabilityExceptions[userId] = exceptions;
-    },
+    // updateTimeAvailability: (state, action) => {
+    //   const { id, initialHour, finalHour } = action.payload;
+    //   const artistId = Object.keys(state.timeAvailabilities).find((key) =>
+    //     state.timeAvailabilities[key].some(
+    //       (availability) => availability.id === id
+    //     )
+    //   );
+
+    //   if (artistId) {
+    //     const availabilityIndex = state.timeAvailabilities[artistId].findIndex(
+    //       (availability) => availability.id === id
+    //     );
+
+    //     if (availabilityIndex !== -1) {
+    //       state.timeAvailabilities[artistId][availabilityIndex] = {
+    //         ...state.timeAvailabilities[artistId][availabilityIndex],
+    //         initialHour,
+    //         finalHour,
+    //       };
+    //     }
+    //   }
+    // },
+
+    // addTimeAvailabilityExceptions: (state, action) => {
+    //   state.timeAvailabilityExceptions = action.payload;
+    // },
+
+    // setTimeAvailabilityExceptions: (state, action) => {
+    //   const { userId, exceptions } = action.payload;
+    //   state.timeAvailabilityExceptions[userId] = exceptions;
+    // },
   },
 });
 
 
 export const {
-  addTimeAvailabilityExceptions,
-  setTimeAvailabilityExceptions,
-  updateTimeAvailability,
-  setTimeAvailabilities,
+  // addTimeAvailabilityExceptions,
+  // setTimeAvailabilityExceptions,
+  // updateTimeAvailability,
+  // setTimeAvailabilities,
   getArtists,
   filterArtist,
   orderArtist,
   orderArtistRating,
   orderAndFilterArtists,
   deleteArtist,
+  getDetail,
+  cleanDetail
 } = artistsSlice.actions;
 
 export default artistsSlice.reducer;

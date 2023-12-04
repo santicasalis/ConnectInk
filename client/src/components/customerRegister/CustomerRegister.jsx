@@ -84,6 +84,7 @@ const CustomerRegister = () => {
               );
               
               dispatch(getUserById(values.tokenId))
+              dispatch()
               router.replace("/user-dashboard/home");
             } catch (error) {
               console.error("Error during form submission", error);

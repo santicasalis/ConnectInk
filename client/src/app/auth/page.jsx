@@ -92,9 +92,18 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const userFireBase = auth.currentUser;
-      const token = userFireBase.reloadUserInfo.localId;
 
-      dispatch(getUserById(token));
+      dispatch(getUserById(userFireBase.uid));
+
+      dispatch(
+        getUserInformation({
+          tokenId: userFireBase.uid,
+          userName: userFireBase.displayName,
+          image: userFireBase.photoURL,
+          email: userFireBase.email,
+          phoneNumber: userFireBase.phoneNumber,
+        })
+      )
 
       if (user.userType == "artist") router.replace("/a-dashboard/home");
       if (user.userType == "customer") router.replace("/user-dashboard");

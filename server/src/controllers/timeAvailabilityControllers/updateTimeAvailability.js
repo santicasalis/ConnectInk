@@ -1,7 +1,9 @@
 const { TimeAvailability } = require("../../db");
 
-const updateTimeAvailability = async (id, initialHour, finalHour) => {
+const updateTimeAvailability = async ({id, initialHour, finalHour}) => {
   const timeAvailabilityFound = await TimeAvailability.findByPk(id);
+
+  console.log(timeAvailabilityFound)
 
   if (timeAvailabilityFound) {
     if (initialHour > finalHour) {
@@ -19,6 +21,7 @@ const updateTimeAvailability = async (id, initialHour, finalHour) => {
         where: { id: id },
       }
     );
+    await TimeAvailability.findByPk(id);
     return {
       code: 201,
       message: "Time availability update sucessfully",
