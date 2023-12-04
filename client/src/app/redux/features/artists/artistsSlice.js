@@ -39,6 +39,7 @@ export const artistsSlice = createSlice({
             b.fullName.localeCompare(a.fullName)
           );
           break;
+        ;
       }
     },
 
