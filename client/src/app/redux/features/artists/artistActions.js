@@ -1,6 +1,6 @@
 import {
   addTimeAvailabilityExceptionSuccess,
-  deleteTimeAvailabilityException,
+  setTimeAvailabilityExceptions,
   updateTimeAvailability,
   setTimeAvailabilities,
   getArtists,
@@ -100,14 +100,19 @@ export const addTimeAvailabilityException =
   };
 
 
-  // export const getTimeExceptions = (id) => async (dispatch) => {
-  //   try {
-  //     const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
-  //     console.log(response.data.timeAvailabilityExceptions)
-  //     dispatch(addTimeAvailabilityExceptionSuccess(response.data));
-  //   } catch (error) {
-  //     console.error("Error al obtener las excepciones de tiempo:", error);
-  //   }
-  // };
+  export const getTimeExceptions = (id) => async (dispatch) => {
+    try {
+      const response = await axios.get(`${URL_BASE}/tattooArtists/${id}`);
+      console.log(response.data.timeAvailabilityExceptions)
+      dispatch(
+        setTimeAvailabilityExceptions({
+          userId: id,
+          exceptions: response.data.timeAvailabilityExceptions,
+        })
+      );
+    } catch (error) {
+      console.error("Error al obtener las excepciones de tiempo:", error);
+    }
+  };
 
   

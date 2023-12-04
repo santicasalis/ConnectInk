@@ -4,21 +4,27 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import {
   getTimeAvailabilities,
+  getTimeExceptions,
   updateArtistTimeAvailability,
   addTimeAvailabilityException,
   deleteArtistTimeAvailabilityException
 } from "@/app/redux/features/artists/artistActions";
 
 const Page = () => {
-  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user);
   console.log(user.logedInUser);
 
   const timeAvailabilities = useSelector(
     (state) => state.artists.timeAvailabilities[user.logedInUser.id] || []
   );
+  console.log(timeAvailabilities)
 
-  const dispatch = useDispatch();
+const timeExceptions = useSelector(
+  (state) => state.artists.timeAvailabilityExceptions[user.logedInUser.id]
+);
+  console.log(timeExceptions)
 
   const initialTimeAvailability = [
     { day: "Lunes", inicio: "06:00", fin: "23:00" },
@@ -176,6 +182,12 @@ const deleteTimeException = (exceptionId) => {
       }
     }, [user.logedInUser.timeAvailabilities]);
 
+    useEffect(() => {
+      if (user.logedInUser.id) {
+        dispatch(getTimeExceptions(user.logedInUser.id));
+      }
+    }, [dispatch, user.logedInUser.id]);
+
   return (
     <div>
       <div>
@@ -235,8 +247,13 @@ const deleteTimeException = (exceptionId) => {
           {generateTimeOptions()}
         </select>
         <button onClick={addTimeException}>Añadir Excepcion</button>
-
-      
+        {timeExceptions &&
+          timeExceptions.map((exception, index) => (
+            <div key={index}>
+              Fecha: {exception.date}, Inicio: {exception.initialHour}, Fin:{" "}
+              {exception.finalHour}
+            </div>
+          ))}
       </div>
     </div>
   );
