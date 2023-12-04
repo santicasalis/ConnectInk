@@ -27,7 +27,6 @@ import {
 
 const Login = () => {
   const user = useSelector((state) => state.user.logedInUser);
-
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({});
@@ -36,7 +35,7 @@ const Login = () => {
   useEffect(() => {
     if (user) {
       if (user.userType == "artist") router.replace("/a-dashboard/home");
-      if (user.userType == "customer") router.replace("/user-dashboard");
+      if (user.userType == "customer") router.replace("/user-dashboard/home");
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     }
   }, [user]);
@@ -157,12 +156,12 @@ const Login = () => {
               placeholder="Contraseña"
             />
             {showPassword ? (
-              <RiEyeOffLine
+              <RiEyeLine
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute top-6 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
               />
             ) : (
-              <RiEyeLine
+              <RiEyeOffLine
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute top-6 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
               />

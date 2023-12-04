@@ -1,13 +1,11 @@
 "use client";
 
-
 import React from "react";
 
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 
 import { uploadImage } from "../../utils/uploadImage";
-
 
 const ArtistRegistrationForm = () => {
   //hardcodeado por el momento
@@ -44,7 +42,6 @@ const ArtistRegistrationForm = () => {
       .required("Required")
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .max(15),
-
   });
 
   return (
@@ -65,7 +62,6 @@ const ArtistRegistrationForm = () => {
         passwordConfirm: "",
       }}
       validationSchema={validationSchema}
-
       onSubmit={async (values, { setSubmitting }) => {
         try {
           if (values.profileImage) {
@@ -78,15 +74,13 @@ const ArtistRegistrationForm = () => {
         setSubmitting(false);
       }}
     >
-
-    
       {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
         <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
           <div className="info-artist mb-4">
             <Field
               type="text"
               name="shopName"
-              placeholder="Shop Name"
+              placeholder="Nombre del estudio"
               className="p-2 mb-3 shadow-md block w-full"
             />
             <ErrorMessage
@@ -98,7 +92,7 @@ const ArtistRegistrationForm = () => {
             <Field
               type="text"
               name="address"
-              placeholder="Address"
+              placeholder="Dirección"
               className="p-2 mb-3 shadow-md block w-full"
             />
             <ErrorMessage
@@ -110,7 +104,7 @@ const ArtistRegistrationForm = () => {
             <Field
               type="text"
               name="city"
-              placeholder="City"
+              placeholder="Ciudad"
               className="p-2 mb-3 shadow-md block w-full"
             />
             <ErrorMessage
@@ -122,7 +116,7 @@ const ArtistRegistrationForm = () => {
             <Field
               type="text"
               name="postcode"
-              placeholder="Postcode"
+              placeholder="Código postal"
               className="p-2 mb-3 shadow-md block w-full"
             />
             <ErrorMessage
@@ -181,19 +175,19 @@ const ArtistRegistrationForm = () => {
             <Field
               type="number"
               name="smallPrice"
-              placeholder="Small Tattoo Price"
+              placeholder="Precio del tatuaje pequeño"
               className="p-2 mb-3 shadow-md block w-full"
             />
             <Field
               type="number"
               name="mediumPrice"
-              placeholder="Medium Tattoo Price"
+              placeholder="Precio del tatuaje mediano"
               className="p-2 mb-3 shadow-md block w-full"
             />
             <Field
               type="number"
               name="largePrice"
-              placeholder="Large Tattoo Price"
+              placeholder="Precio del tatuaje grande"
               className="p-2 mb-3 shadow-md block w-full"
             />
           </div>
@@ -224,7 +218,7 @@ const ArtistRegistrationForm = () => {
           <Field
             as="textarea"
             name="bio"
-            placeholder="Bio (max 500 characters)"
+            placeholder="Descripción (max 500 characters)"
             className="p-2 mb-3 shadow-md block w-full"
             maxLength="500"
           />
@@ -237,7 +231,7 @@ const ArtistRegistrationForm = () => {
           <Field
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             className="p-2 mb-3 shadow-md block w-full"
           />
           <ErrorMessage
@@ -249,7 +243,7 @@ const ArtistRegistrationForm = () => {
           <Field
             type="password"
             name="passwordConfirm"
-            placeholder="Confirm Password"
+            placeholder="Confirmar contraseña"
             className="p-2 mb-3 shadow-md block w-full"
           />
           <ErrorMessage
@@ -272,4 +266,3 @@ const ArtistRegistrationForm = () => {
 };
 
 export default ArtistRegistrationForm;
-
