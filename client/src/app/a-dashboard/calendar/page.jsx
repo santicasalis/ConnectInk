@@ -69,7 +69,7 @@ const Page = () => {
         };
 
         const response = await axios.post(
-          "http://localhost:3001/timeAvailabilities",
+          "https://serverconnectink.up.railway.app/timeAvailabilities",
           data
         );
         
@@ -121,7 +121,7 @@ const Page = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/timeAvailabilityExceptions",
+        "https://serverconnectink.up.railway.app/timeAvailabilityExceptions",
         formattedException
       );
 
@@ -136,7 +136,7 @@ const Page = () => {
     
 
     try {
-      await axios.delete(`http://localhost:3001/timeAvailabilityExceptions/`);
+      await axios.delete(`https://serverconnectink.up.railway.app/timeAvailabilityExceptions/`);
      
       setTimeException(
         timeException.filter((exception) => exception.id !== id)

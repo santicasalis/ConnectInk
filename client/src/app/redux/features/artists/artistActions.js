@@ -1,7 +1,7 @@
 import {updateTimeAvailability, setTimeAvailabilities,getArtists, filterArtist, orderArtist,orderArtistRating, orderAndFilterArtists, deleteArtist } from "./artistsSlice";
 import axios from "axios";
 
-const URL_BASE = "http://localhost:3001"
+const URL_BASE = "https://serverconnectink.up.railway.app"
 
 
 export const getAllArtists = () => async (dispatch) =>{
