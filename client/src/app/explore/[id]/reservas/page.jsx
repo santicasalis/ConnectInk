@@ -29,6 +29,7 @@ const bookAppointment = ({params}) => {
   const [exception, setException] = useState([])
   const artist = useSelector((state) => state.artists.detail)
   const user = useSelector((state) => state.user.logedInUser)
+  const [sent, setSent] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -180,6 +181,9 @@ const bookAppointment = ({params}) => {
 
       <div className="w-full  p-4 shadow-lg flex justify-center">
         <div className="p-4 rounded border-primary border-[2px] shadow-lg">
+          {sent ? (
+            <h1>Turno creado con exito!</h1>
+          ) : (
           <Formik
             initialValues={{
               size: "",
@@ -198,7 +202,7 @@ const bookAppointment = ({params}) => {
                   values.image = imageUrl;
                 }
                 const response = await axios.post(`${URL_BASE}/appointments`, {...values, tattooArtistId: id, customerId: user.id})
-                console.log(response)
+                setSent(true)
               } catch(error) {
                 throw Error("Error en el formulario")
               }
@@ -315,6 +319,7 @@ const bookAppointment = ({params}) => {
             </Form>
           )}
           </Formik>
+          )}
         </div>
       </div>
     </div>
