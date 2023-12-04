@@ -37,6 +37,15 @@ const login = async (tokenId) => {
     ],
   });
 
+  const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+    where: { TattooArtistId: user.id },
+    include: [
+        {
+            model: Appointment,
+        },
+    ],
+});
+
   if (user) {
     cleanUser = {
       id: user.id,
@@ -85,6 +94,7 @@ const login = async (tokenId) => {
           priceMax: priceRange.priceMax,
         };
       }),
+      appointments: appointmentsByArtist?.map(appointment => {return {data: appointment.Appointment, client: appointment.CustomerId}})
     };
   }
 
