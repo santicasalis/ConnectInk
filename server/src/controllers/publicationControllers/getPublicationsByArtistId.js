@@ -1,9 +1,10 @@
 const {Publication} = require("../../db")
 
 const getPublicationsByArtistId = async (id) => {
-    const publications = await Publication.findAll({where: {TattooArtistId: id}})
+    const publications = await Publication.findAll(
+        {where: {TattooArtistId: id, disabled:false}})
 
-    const publicationsClean = publications.map((publication) => {
+    const publicationsClean = publications.map((publication) => { 
         return {
             id: publication.id,
             description: publication.description,
