@@ -150,7 +150,6 @@ const Page = () => {
 
     setNewException({date: ""})
 
-    console.log(logedInUser)
   }
 
   return (
@@ -245,4 +244,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Page;
