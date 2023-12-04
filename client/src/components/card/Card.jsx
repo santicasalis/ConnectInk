@@ -29,29 +29,9 @@ export default function Card({
     return src;
   };
 
-  const [currentStartIndex, setCurrentStartIndex] = useState(0);
-
-  const nextSlide = () => {
-    setCurrentStartIndex((prevIndex) => {
-      let nextIndex = prevIndex + 1;
-
-      if (nextIndex > tattoos.length - 1) {
-        nextIndex = 0;
-      }
-      return nextIndex;
-    });
-  };
-  console.log(publications);
-  const prevSlide = () => {
-    setCurrentStartIndex((prevIndex) => {
-      let nextIndex = prevIndex - 1;
-
-      if (nextIndex < 0) {
-        nextIndex = tattoos.length - 1;
-      }
-      return nextIndex;
-    });
-  };
+ 
+  console.log(image, "arregloooo");
+ 
 
   return (
     <div className="w-[900px] mb-5 p-4 bg-secondary-900 rounded-2xl  text-white transition-transform transform">
@@ -106,6 +86,7 @@ export default function Card({
                           <img 
                           src={publi.image}
                           alt={` error al cargar img`}
+                          className="w-full h-full"
                           
                           />
                         </SwiperSlide>

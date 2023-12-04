@@ -140,7 +140,7 @@ export default function ExplorePage() {
                         shopName={filter.shopName}
                         publications={filter.publications}
                         image={
-                          "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg"
+                          filter.image
                         }
                       />
                   </div>
