@@ -14,7 +14,6 @@ const Page = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  console.log(user.logedInUser);
 
   const timeAvailabilities = useSelector(
     (state) => state.artists.timeAvailabilities[user.logedInUser.id] || []
@@ -70,8 +69,33 @@ const timeExceptions = useSelector(
     }));
   };
 
-const saveTimeAvailability = async () => {
-  try {
+  useEffect(() => {
+    console.log(timeAvailability)
+  }, [timeAvailability])
+
+  const saveTimeAvailability = async () => {
+    try {
+      for (const [day, times] of Object.entries(timeAvailability)) {
+        const data = {
+          tattooArtistId: user.logedInUser.id,
+          day,
+          initialHour: times.inicio,
+          finalHour: times.fin,
+        };
+
+        const response = await axios.post(
+          "http://localhost:3001/timeAvailabilities",
+          data
+        );
+        
+      }
+    } catch (error) {
+      console.error("Error al guardar el horario:", error);
+    }
+  };
+
+  const updateTimeAvailability = async () => {
+    let timeAvailabilityArray = [];
     
     const isAvailabilityEmpty =
       timeAvailability.length === 0 || !timeAvailability[0];
@@ -187,7 +211,6 @@ const deleteTimeException = (exceptionId) => {
         dispatch(getTimeExceptions(user.logedInUser.id));
       }
     }, [dispatch, user.logedInUser.id]);
-
   return (
     <div>
       <div>
