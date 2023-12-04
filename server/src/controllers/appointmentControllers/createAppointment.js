@@ -96,7 +96,6 @@ const createAppointment = async ({
   //caso la hora elegida para el turno + la duración calculada supere la hora laboral final, error
   const hourSlice = Number(dateOrTime[1].slice(0, 2));
   const finalHourSlice = Number(finalHour.slice(0, 2));
-  console.log(hourSlice, sizesAndDurations[size], finalHourSlice);
   if (hourSlice + sizesAndDurations[size] > finalHourSlice) {
     return { code: 400, error: "The appointment must start earlier" };
   }
