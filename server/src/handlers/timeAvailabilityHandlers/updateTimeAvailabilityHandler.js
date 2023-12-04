@@ -10,7 +10,16 @@ const updateTimeAvailabilityHandler = async (req, res) => {
       initialHour,
       finalHour
     );
-    res.status(200).json(updatedTimeAvailability);
+    if (updatedTimeAvailability.code === 201) {
+      res.status(201).json({
+        message: updatedTimeAvailability.message,
+        data: updatedTimeAvailability.data,
+      });
+    } else {
+      res
+        .status(updatedTimeAvailability.code)
+        .json({ error: updatedTimeAvailability.error });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
