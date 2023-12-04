@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
 import Nav from "@/components/nav/Nav";
 
-const URL_BASE = "https://serverconnectink.up.railway.app"
+const URL_BASE = "http://localhost:3001"
 
 
 const bookAppointment = ({params}) => {

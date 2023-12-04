@@ -12,7 +12,7 @@ const Page = () => {
   const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
   const [userTimeAv, setUserTimeAv] = useState(user.logedInUser.timeAvailabilities || [])
   const [newException, setNewException] = useState({date: ""})
-  const URL_BASE = "https://serverconnectink.up.railway.app"
+  const URL_BASE = "http://localhost:3001"
 
   useEffect(() => {
     let obj = {}

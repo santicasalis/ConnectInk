@@ -22,7 +22,7 @@ import {
 import { auth } from "../../firebase";
 
 const CustomerRegister = () => {
-  const urlBase = "https://serverconnectink.up.railway.app";
+  const urlBase = "http://localhost:3001";
   const router = useRouter();
   const dispatch = useDispatch();
   const userInformation = useSelector((state) => state.user.fireBaseUser);

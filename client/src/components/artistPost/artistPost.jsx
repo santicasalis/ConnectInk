@@ -26,7 +26,7 @@ const ArtistPost = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post("https://serverconnectink.up.railway.app/publications", {
+    const response = await axios.post("http://localhost:3001/publications", {
       image,
       description,
       artist_id:artist.id,
