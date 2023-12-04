@@ -29,10 +29,6 @@ export default function Card({
     return src;
   };
 
- 
-  console.log(image, "arregloooo");
- 
-
   return (
     <div className="w-[900px] mb-5 p-4 bg-secondary-900 rounded-2xl  text-white transition-transform transform">
       <div className="w-full mb-4">

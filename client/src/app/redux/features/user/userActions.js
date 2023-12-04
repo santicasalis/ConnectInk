@@ -13,7 +13,9 @@ export const getUserById =
       dispatch(getUser(response.data))
       localStorage.setItem("user", JSON.stringify(response.data))
     } catch (error) {
-      router.replace("/auth/register");
+      if(router){
+        router.replace("/auth/register");
+      }
     }
   };
 
