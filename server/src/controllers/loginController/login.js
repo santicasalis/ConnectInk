@@ -86,9 +86,19 @@ const login = async (tokenId) => {
   }
 
   if (!user) {
-    cleanUser = await Customer.findOne({
+    let userCustomer = await Customer.findOne({
       where: { tokenId: tokenId },
     });
+
+    cleanUser = {
+      id: userCustomer.id,
+      fullName: userCustomer.fullName,
+      email: userCustomer.email,
+      phone: userCustomer.phone,
+      image: userCustomer.image,
+      disabled: userCustomer.disabled,
+      userType: userCustomer.userType,
+    };
   }
 
   return cleanUser;
