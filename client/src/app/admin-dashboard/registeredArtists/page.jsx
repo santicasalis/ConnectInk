@@ -92,9 +92,9 @@ const RegisteredArtist = () => {
     </div>
 
             </div>
-            </div>
+            
 
-    </div>
+  
   )
 }
 
