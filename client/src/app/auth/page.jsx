@@ -97,15 +97,15 @@ const Login = () => {
       dispatch(getUserById(token));
 
       if (user.userType == "artist") router.replace("/a-dashboard/home");
-      if (user.userType == "customer") router.replace("/user-dashboard/home");
+      if (user.userType == "customer") router.replace("/user-dashboard");
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     } catch (createUserError) {
-      const errorCode = createUserError.code;
-      const errorMessage = createUserError.message;
-
-      console.error(
-        `Error al crear un nuevo usuario: ${errorCode} - ${errorMessage}`
-      );
+      toast.error("Usuario y o contraseña errónea", {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
   };
   return (
