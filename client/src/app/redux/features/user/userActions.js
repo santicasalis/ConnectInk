@@ -1,7 +1,7 @@
 import { getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo, getUserPosts} from "./userSlice";
 import axios from "axios";
 
-const URL_BASE = "http://localhost:3001";
+const URL_BASE = "https://serverconnectink.up.railway.app";
 
 export const getUserById =
   (tokenId, router) => async (dispatch) => {

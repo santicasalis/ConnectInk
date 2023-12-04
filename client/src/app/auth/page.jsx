@@ -96,8 +96,8 @@ const Login = () => {
 
       dispatch(getUserById(token));
 
-      if (user.userType == "artist") router.replace("/a-dashboard/home");
-      if (user.userType == "customer") router.replace("/user-dashboard");
+      //if (user.userType == "artist") router.replace("/a-dashboard/home");
+      if (user.userType == "customer") { router.replace("/user-dashboard");} else {router.replace("/a-dashboard/home")}
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     } catch (createUserError) {
       toast.error("Usuario y o contraseña errónea", {
@@ -108,6 +108,7 @@ const Login = () => {
       });
     }
   };
+  
   return (
     <div className="bg-secondary-900/90 opacity-90 flex h-[800px] border-[1px] border-white/10  absolute rounded-3xl w-full xl:w-1/2 lg:w-1/3 md:w-1/2">
       <div className="w-[35%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">

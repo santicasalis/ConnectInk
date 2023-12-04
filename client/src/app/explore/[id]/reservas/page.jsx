@@ -9,7 +9,7 @@ import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import {dayData} from "../../../utils/data/dayData"
 
-const URL_BASE = "http://localhost:3001"
+const URL_BASE = "https://serverconnectink.up.railway.app"
 
 
 const bookAppointment = ({params}) => {
