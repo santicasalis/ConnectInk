@@ -76,7 +76,7 @@ const TattoArtistRegister = () => {
             );
             await axios.post(`${urlBase}/nodemailer/welcome`, {
               email: values.email,
-              name: values.name,
+              name: values.fullName,
             });
 
             
