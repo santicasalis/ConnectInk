@@ -162,37 +162,52 @@ const TattoArtistRegister = () => {
                 className="text-red-500 text-sm"
               />
 
-              <h3 className="text-lg mb-3 font-bold">Tattoo Styles</h3>
+              <h3 className="text-lg mb-3 font-bold">Estilos de tatuaje</h3>
               <FieldArray
-                name="tattooStyle"
-                render={(arrayHelpers) => (
-                  <div>
-                    {styles.map((style) => (
-                      <label key={style.id} className="block">
-                        <Field
-                          name="tattooStyles"
-                          type="checkbox"
-                          value={style.name}
-                          checked={values.tattooStyle.includes(style.name)}
-                          onChange={(e) => {
-                            if (e.target.checked) arrayHelpers.push(style.name);
-                            else
-                              arrayHelpers.remove(
-                                values.tattooStyle.indexOf(style.name)
-                              );
-                          }}
-                        />
-                        {style.name}
-                      </label>
-                    ))}
-                  </div>
-                )}
-              />
-              <ErrorMessage
-                name="tattooStyle"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+  name="tattooStyle"
+  render={(arrayHelpers) => (
+    <div className="flex flex-wrap justify-center gap-4 mb-8">
+      {styles.map((style) => {
+        const isSelected = values.tattooStyle.includes(style.name);
+        return (
+          <label
+            className={`flex items-center gap-2 px-3 py-1 border font-newrocker rounded cursor-pointer ${
+              isSelected
+                ? "bg-primary/75 text-black border-primary border-[1px]"
+                : "bg-transparent border-[1px] border-primary text-primary rounded-lg"
+            }`}
+            htmlFor={style.name}
+            key={style.id}
+          >
+            <input
+              id={style.name}
+              name="tattooStyle"
+              type="checkbox"
+              value={style.name}
+              checked={isSelected}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  arrayHelpers.push(style.name);
+                } else {
+                  arrayHelpers.remove(
+                    values.tattooStyle.indexOf(style.name)
+                  );
+                }
+              }}
+              className="hidden"
+            />
+            {style.name}
+          </label>
+        );
+      })}
+    </div>
+  )}
+/>
+<ErrorMessage
+  name="tattooStyle"
+  component="div"
+  className="text-red-500 text-sm"
+/>
             </div>
 
             <div className="mb-4">

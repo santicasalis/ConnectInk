@@ -7,6 +7,8 @@ import { getAllStyles, removeStyle } from '@/app/redux/features/styles/stylesAct
 import dynamic from "next/dynamic";
 const ModalDeleteStyle = dynamic(()=> import("@/components/modal/ModalDeleteStyle"))
 
+
+
 const TattooStyles = () => {
   const styles = useSelector((state) => state.styles.names);
   
@@ -37,6 +39,8 @@ const TattooStyles = () => {
     setShowConfirmation(false);
   };
 
+  
+
   return (
     <div>
       <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
@@ -58,7 +62,7 @@ const TattooStyles = () => {
           ))}
         </div>
       </div>
-      {showConfirmation && (
+      {/* {showConfirmation && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded-md text-secondary-100 ">
             <p>¿Estás seguro de que deseas eliminar este estilo?</p>
@@ -70,7 +74,8 @@ const TattooStyles = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
+      
     </div>
   );
 };
