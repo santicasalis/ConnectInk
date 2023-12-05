@@ -140,6 +140,7 @@ const Page = () => {
   }
 
   const addTimeException = async () => {
+    console.log(newException)
     await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {...newException, tattooArtistId: user.logedInUser.id})
 
     dispatch(getUserById(user.fireBaseUser.tokenId))

@@ -89,7 +89,11 @@ const bookAppointment = ({params}) => {
       })
     })
     exception?.forEach((ex) => {
-      objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+      if(ex.initialHour){
+        objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+      } else {
+        objH[ex] = []
+      }
     })
     artist?.appointments?.forEach((appointment) => {
       const [date, time] = appointment.dateAndTime.split("T")
@@ -123,7 +127,7 @@ const bookAppointment = ({params}) => {
 
     if(view == "month"){
       
-      if (date < new Date(Date.now()) || !(obj[date.getDay()] || exception.includes(date.toDateString()))) {
+      if (date < new Date(Date.now()) || !(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString())))) {
         return "text-gray-500"
       }
       if (date.toDateString() === selectedDate.toDateString() && (objHours[selectedDate.getDay()] || objHours[selectedDate.toDateString()])) {
@@ -156,8 +160,7 @@ const bookAppointment = ({params}) => {
   }
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
-    if(view == "month") return (!(obj[date.getDay()] || exception.includes(date.toDateString())))
-    // if(view == "year") return !(date.valueOf() >= (new Date(Date.now())).valueOf())
+    if(view == "month") return (!(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString()))))
   }
 
   const changeDate = (form, date) => {
@@ -272,11 +275,12 @@ const bookAppointment = ({params}) => {
                         <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
                           <option name="dateTime" value="" disabled>Seleccionar horario</option>
                           {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()]).map((hour) => {
-                            console.log(hour)
                             return <option key={hour} name="dateTime">{hour}</option>
                           })}
                         </select>}
                       </div>
+                      {console.log(exception)}
+                      {console.log(objHours)}
                     </div>
                   )}
                 </Field>
