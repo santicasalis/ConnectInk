@@ -8,12 +8,12 @@ const {
 } = require("../../db");
 
 const sizesAndDurations = {
-  pequeño: 1,
-  "pequeño a color": 1,
-  mediano: 2,
-  "mediano a color": 2,
-  grande: 3,
-  "grande a color": 3,
+  Pequeño: 1,
+  "Pequeño a color": 1,
+  Mediano: 2,
+  "Mediano a color": 2,
+  Grande: 3,
+  "Grande a color": 3,
 };
 
 const daysOfWeekNames = [
@@ -95,13 +95,12 @@ const createAppointment = async ({
 
   //caso la hora elegida para el turno + la duración calculada supere la hora laboral final, error
   const hourSlice = Number(dateOrTime[1].slice(0, 2));
-  const finalHourDate = new Date(`${dateOrTime[0]}T${finalHour}`);
-  if (hourSlice + sizesAndDurations[size] > finalHourDate.getHours()) {
+  const finalHourSlice = Number(finalHour.slice(0, 2));
+  if (hourSlice + sizesAndDurations[size] > finalHourSlice) {
     return { code: 400, error: "The appointment must start earlier" };
   }
   //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno
-  console.log(hourSlice, sizesAndDurations[size], finalHourDate.getHours)
-  if (hourSlice + sizesAndDurations[size] <= finalHourDate.getHours()) {
+  if (hourSlice + sizesAndDurations[size] <= finalHourSlice) {
     try {
       const appointment = await Appointment.create({
         size,

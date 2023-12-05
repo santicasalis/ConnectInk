@@ -51,6 +51,16 @@ const login = async (tokenId) => {
     // });
 
   if (user) {
+
+    const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+      where: { TattooArtistId: user.id },
+      include: [
+          {
+              model: Appointment,
+          },
+      ],
+    });
+
     cleanUser = {
       id: user.id,
       fullName: user.fullName,

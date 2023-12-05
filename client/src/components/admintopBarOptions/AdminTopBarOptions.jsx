@@ -61,6 +61,14 @@ const TopBarOptions = () => {
     setArtistOrder(order);
   };
 
+  const resetFilters = () =>{
+    setFilters({
+      location: "",
+      name: "",
+      tattooStyle: [],
+    });
+    setStyleSelected([]);
+  }
 
   return (
     <div className='  bg-secondary-900 rounded-lg mb-8 '>
@@ -126,11 +134,16 @@ const TopBarOptions = () => {
               name="sort"
               onChange={handleSortChange}
             >
-              <option value="">Sin orden</option>
-              <option value="asc">Z-A</option>
-              <option value="desc">A-Z</option>
+              <option value="">-</option>
+              <option value="asc">A-Z</option>
+              <option value="desc">Z-A</option>
             </select>
           </div>
+          {/* <div className="flex justify-center items-center">
+            <button onClick={resetFilters} className="font-newrocker  border-[1px] border-primary text-sm rounded">
+              Reiniciar Filtros
+            </button>
+          </div> */}
         </nav>
     </div>
   )
