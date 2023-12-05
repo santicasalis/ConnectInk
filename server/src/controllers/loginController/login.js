@@ -37,16 +37,18 @@ const login = async (tokenId) => {
     ],
   });
 
-  const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-    where: { TattooArtistId: user.id },
-    include: [
-        {
-            model: Appointment,
-        },
-    ],
-});
 
   if (user) {
+
+    const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+      where: { TattooArtistId: user.id },
+      include: [
+          {
+              model: Appointment,
+          },
+      ],
+    });
+
     cleanUser = {
       id: user.id,
       fullName: user.fullName,
@@ -102,6 +104,9 @@ const login = async (tokenId) => {
     let userCustomer = await Customer.findOne({
       where: { tokenId: tokenId, disabled: false},
     });
+    if(userCustomer){
+      
+    }
     const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
       where: { CustomerId: userCustomer.id },
       include: [
@@ -119,7 +124,7 @@ const login = async (tokenId) => {
       image: userCustomer.image,
       disabled: userCustomer.disabled,
       userType: userCustomer.userType,
-      appointments: appointmentsByArtist?.map(appointment => {return {data: appointment.Appointment, artist: appointment.TattooArtistId}})
+      appointments: appointmentsByArtist?.map(appointment => {return {data: appointment.Appointment, artist: appointment?.TattooArtistId}})
     };
   }
 
