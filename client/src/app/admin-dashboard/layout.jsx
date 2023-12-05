@@ -10,15 +10,14 @@ const ModalDeleteStyle = dynamic(()=> import("@/components/modal/ModalDeleteStyl
 
 export default function DashboardLayout({ children }) {
     const isOpenModalDeleteArtist = useSelector((state) => state.modalDeleteArtist.isOpen);
-    console.log(isOpenModalDeleteArtist,"AVERGAtt")
     const isOpenModalDeleteStyle = useSelector((state) => state.modalDeleteStyle.isOpen);
-    console.log(isOpenModalDeleteStyle,"AVERGA")
+   
     
 
     return (
           <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6 relative">
-                { isOpenModalDeleteArtist && <ModalDeleteArtist className="absolute" /> }
-                { isOpenModalDeleteStyle && <ModalDeleteStyle className="absolute" /> }
+                { isOpenModalDeleteArtist && <ModalDeleteArtist className="absolute " /> }
+                { isOpenModalDeleteStyle && <ModalDeleteStyle className="absolute " /> }
                 <AdminSideBar /> 
                 <div className="xl:col-span-5 ">
                     <Header/>
