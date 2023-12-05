@@ -109,7 +109,7 @@ const createAppointment = async ({
         description,
         dateAndTime,
         duration: sizesAndDurations[size],
-        depositPrice: 1000,
+        depositPrice: 1,
       });
       //se crean las relaciones en la tabla de unión
       try {

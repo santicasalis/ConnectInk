@@ -10,7 +10,7 @@ const payment = new Preference(client);
 
 const createOrder = async (req, res) => {
   try {
-    const { depositPrice, image, description } = req.body;
+    const { depositPrice, description } = req.body;
     let preference = {
       body: {
         items: [
@@ -19,7 +19,6 @@ const createOrder = async (req, res) => {
             quantity: 1,
             unit_price: depositPrice,
             currency_id: "ARS",
-            picture_url: image,
             description: description,
           },
         ],
