@@ -110,22 +110,25 @@ const createAppointment = async ({
         description,
         dateAndTime,
         duration: sizesAndDurations[size],
+        depositPrice: 1,
+        CustomerId: customerId,
+        TattooArtistId: tattooArtistId
       });
       //se crean las relaciones en la tabla de unión
-      try {
-        await CustomerTattooArtistAppointment.create({
-          CustomerId: customer.id,
-          TattooArtistId: tattooArtist.id,
-          AppointmentId: appointment.id,
-        });
-        return {
-          code: 201,
-          message: "Appointment created successfully",
-          data: appointment,
-        };
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   await CustomerTattooArtistAppointment.create({
+      //     CustomerId: customer.id,
+      //     TattooArtistId: tattooArtist.id,
+      //     AppointmentId: appointment.id,
+      //   });
+      //   return {
+      //     code: 201,
+      //     message: "Appointment created successfully",
+      //     data: appointment,
+      //   };
+      // } catch (error) {
+      //   return { code: 400, error: "Something went wrong" };
+      // }
     } catch (error) {
       return { code: 400, error: "Something went wrong" };
     }

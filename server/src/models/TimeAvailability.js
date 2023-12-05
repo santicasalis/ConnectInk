@@ -24,11 +24,9 @@ module.exports = (sequelize) => {
       },
       initialHour: {
         type: DataTypes.TIME,
-        allowNull: false,
       },
       finalHour: {
         type: DataTypes.TIME,
-        allowNull: false,
       },
     },
     { timestamps: false }

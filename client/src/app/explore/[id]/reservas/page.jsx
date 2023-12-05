@@ -83,7 +83,7 @@ const bookAppointment = ({params}) => {
     let objH = {}
     artist?.timeAvailabilities?.forEach((av) => {
       dayData.map((da) => {
-        if(da.day === av.day){
+        if(da.day === av.day && av?.initialHour && av?.finalHour){
           objH[da.number] = createHourArray(Number(av.initialHour.slice(0, 2)), Number(av.finalHour.slice(0, 2)))
         }
       })
@@ -274,7 +274,7 @@ const bookAppointment = ({params}) => {
                         {showTime && 
                         <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
                           <option name="dateTime" value="" disabled>Seleccionar horario</option>
-                          {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()]).map((hour) => {
+                          {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()])?.map((hour) => {
                             return <option key={hour} name="dateTime">{hour}</option>
                           })}
                         </select>}

@@ -13,18 +13,23 @@ const Page = () => {
   const [userTimeAv, setUserTimeAv] = useState(user.logedInUser.timeAvailabilities || [])
   const [newException, setNewException] = useState({date: ""})
   const URL_BASE = "http://localhost:3001"
+  const [showHours, setShowHours] = useState({})
 
   useEffect(() => {
     let obj = {}
+    let objH = {}
     user.logedInUser.timeAvailabilities.map((timeAvailability) => {
       obj[timeAvailability.day] = {initialHour: timeAvailability.initialHour, finalHour: timeAvailability.finalHour, id: timeAvailability.id}
+      if(timeAvailability.initialHour) objH[timeAvailability.day] = true
     })
     setDayObj({...obj})
+    setShowHours({...objH})
   }, [user])
 
   useEffect(() => {
     let array = []
     for(let day in dayObj) {
+      if(dayObj[day]) 
       array.push({day, initialHour: dayObj[day].initialHour, finalHour: dayObj[day].finalHour, id: dayObj[day].id})
     }
     setUserTimeAv(array)
@@ -140,13 +145,29 @@ const Page = () => {
   }
 
   const addTimeException = async () => {
-    console.log(newException)
+    if(newException.initialHour == "No trabajo"){
+      setNewException({
+        date: newException.date
+      })
+    }
+
     await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {...newException, tattooArtistId: user.logedInUser.id})
 
     dispatch(getUserById(user.fireBaseUser.tokenId))
 
     setNewException({date: ""})
 
+  }
+
+  const deleteHourDay = (day) => {
+    setDayObj({
+      ...dayObj,
+      [day]: {initialHour: null, finalHour: null, id: dayObj[day]?.id}
+    })
+    setShowHours({
+      ...showHours,
+      [day]: false
+    })
   }
 
   return (
@@ -157,38 +178,43 @@ const Page = () => {
           days.map((day) => {
             return <div key={day}>
               <h4>{day}</h4>
-              {dayObj[day] ? (
+              {showHours[day] ? (
                 <div>
 
                   <label>
                     Inicio: 
                     <select
                     className="bg-transparent"
-                    defaultValue={dayObj[day]?.initialHour}
+                    defaultValue={dayObj[day]?.initialHour || ""}
                     onChange={(e) =>
                       handleInitialTimeChange(day, e.target.value)
                     }
                     >
+                      <option value="" disabled>Seleccionar horario inicial</option>
                       {generateTimeOptions(day)}
                     </select>
                   </label>
-
+                    {console.log(dayObj)}
+                    {console.log(userTimeAv)}
 
                   <label>
                     Fin: 
                     <select
                     className="bg-transparent"
-                    defaultValue={dayObj[day]?.finalHour}
+                    defaultValue={dayObj[day]?.initialHour || ""}
                     onChange={(e) =>
                       handleFinalTimeChange(day, e.target.value)
                     }
                     >
+                      <option value="" disabled>Seleccionar horario final</option>
                       {generateFinalTimeOptions(day)}
                     </select>
                   </label>
+
+                  <button onClick={() => deleteHourDay(day)}>❌</button>
                 </div>
               ) : (
-                <button onClick={() => setDayObj({...dayObj, [day]: true})}>Agregar horario:</button>
+                <button onClick={() => setShowHours({...showHours, [day]: true})}>Agregar horario:</button>
               )}
 
             </div>
@@ -201,28 +227,34 @@ const Page = () => {
         <h3>Excepciones de horarios</h3>
         <p>Si en algna fecha en especifico vas a usar un horario diferente al normal, agregala acá</p>
         <p>Selecciona la fecha especial, e ingresa el horario en el que SI trabajarías</p>
+        <p>En caso de que en la fecha especifica no vayas a trabajar, selecciona la opcion "No trabajo" en el apartado de hora inicial</p>
         <input
           type="date"
           name="date"
           value={newException?.date}
           onChange={handleExceptionChange}
         />
-        {newException.date && 
+        {newException.date &&
         <div>  
           <select
             name="initialHour"
-            value={newException?.initialHour}
+            defaultValue=""
             onChange={handleExceptionChange}
           >
+            <option value="" disabled>Seleccionar horario inicial</option>
             {generateTimeOptions()}
+            <option value="No trabajo">No trabajo</option>
           </select>
+          {newException?.initialHour !== "No trabajo" && 
           <select
             name="finalHour"
-            value={newException.finalHour}
+            defaultValue=""
             onChange={handleExceptionChange}
           >
+            <option>Seleccionar horario final</option>
             {generateTimeOptionsException()}
           </select>
+          }
         </div>
         }
 
@@ -230,8 +262,15 @@ const Page = () => {
           {user.logedInUser.timeAvailabilityExceptions.length &&
             user.logedInUser.timeAvailabilityExceptions.map((exception, index) => (
               <div key={index}>
-                Fecha: {exception.date}, Inicio: {exception.initialHour}, Fin:{" "}
-                {exception.finalHour}
+                Fecha: {exception.date}, 
+                {(exception.initialHour && exception.finalHour) ?
+                <p>
+                  Inicio: {exception.initialHour}, Fin:{" "}
+                  {exception.finalHour}
+                </p>
+                :
+                <p>Sin trabajo</p>
+                }
               </div>
             ))
           }

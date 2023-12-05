@@ -35,17 +35,22 @@ const getTattooArtistById = async (id) => {
         attributes: ["id", "size", "priceMin", "priceMax"],
         required: false
       },
-    ],
-  });
-  const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-    where: { TattooArtistId: id },
-    include: [
       {
         model: Appointment,
-        required: false
-      },
+        as: "appointments",
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
+      }
     ],
   });
+  // const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
+  //   where: { TattooArtistId: id },
+  //   include: [
+  //     {
+  //       model: Appointment,
+  //       required: false
+  //     },
+  //   ],
+  // });
   return {
     id: tattooArtist.id,
     fullName: tattooArtist.fullName,
@@ -100,8 +105,20 @@ const getTattooArtistById = async (id) => {
         priceMax: priceRange.priceMax,
       };
     }),
-    appointments: appointmentsByArtist?.map(
-      (appointment) => appointment.Appointment
+    appointments: tattooArtist.Appointment?.map((appointment) => {
+      return {
+        id: appointment.id,
+        size: appointment.size,
+        image: appointment.image,
+        bodyPlace: appointment.bodyPlace,
+        description: appointment.description,
+        dateAndTime: appointment.dateAndTime,
+        duration: appointment.duration,
+        depositPrice: appointment.depositPrice,
+        paymentId: appointment.paymentId,
+        CustomerId: appointment.CustomerId
+      }
+    } 
     ),
   };
 };

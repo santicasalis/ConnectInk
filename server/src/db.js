@@ -49,19 +49,37 @@ const {
 } = sequelize.models;
 
 // Customer - TattooArtist - Appointment relation:
-Customer.belongsToMany(TattooArtist, {
-  through: CustomerTattooArtistAppointment,
-  unique: false,
+// Customer.belongsToMany(TattooArtist, {
+//   through: CustomerTattooArtistAppointment,
+//   unique: false,
+// });
+// TattooArtist.belongsToMany(Customer, {
+//   through: CustomerTattooArtistAppointment,
+//   unique: false,
+// });
+// CustomerTattooArtistAppointment.belongsTo(Appointment);
+// Appointment.hasOne(CustomerTattooArtistAppointment);
+
+TattooArtist.hasMany(Appointment, {
+  foreignKey: 'id',
+  as: 'appointments'
 });
-TattooArtist.belongsToMany(Customer, {
-  through: CustomerTattooArtistAppointment,
-  unique: false,
+Appointment.belongsTo(TattooArtist, {
+  foreignKey: 'id',
+  as: 'tattooArtist'
 });
-CustomerTattooArtistAppointment.belongsTo(Appointment);
-Appointment.hasOne(CustomerTattooArtistAppointment);
+
+
+Customer.hasMany(Appointment, {
+  foreignKey: 'id',
+  as: 'appointments'
+});
+Appointment.belongsTo(Customer, {
+  foreignKey: 'id',
+  as: 'customer'
+});
 
 // TattooArtist - Review relation:
-
 TattooArtist.hasMany(Review, {
   foreignKey: 'id',
   as: 'reviews'
@@ -89,6 +107,7 @@ Review.belongsTo(Appointment, {
   foreignKey: 'id',
   as: 'appointment'
 });
+
 
 
 // TattooArtist - TattooStyles relation:
