@@ -61,8 +61,6 @@ CustomerTattooArtistAppointment.belongsTo(Appointment);
 Appointment.hasOne(CustomerTattooArtistAppointment);
 
 // TattooArtist - Review relation:
-// TattooArtist.belongsToMany(Customer, { through: Review, timestamps: false });
-// Customer.belongsToMany(TattooArtist, { through: Review, timestamps: false });
 
 TattooArtist.hasMany(Review, {
   foreignKey: 'id',
@@ -73,7 +71,7 @@ Review.belongsTo(TattooArtist, {
   as: 'tattooArtist'
 });
 
-// Relación Cliente-Reseña
+
 Customer.hasMany(Review, {
   foreignKey: 'id',
   as: 'reviews'
@@ -81,6 +79,15 @@ Customer.hasMany(Review, {
 Review.belongsTo(Customer, {
   foreignKey: 'id',
   as: 'customer'
+});
+
+Appointment.hasMany(Review, {
+  foreignKey: 'id',
+  as: 'reviews'
+});
+Review.belongsTo(Appointment, {
+  foreignKey: 'id',
+  as: 'appointment'
 });
 
 

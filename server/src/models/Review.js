@@ -30,13 +30,15 @@ module.exports = (sequelize) => {
     },
     CustomerId: {
       type: DataTypes.UUID,
+    },
+    AppointmentId: {
+      type: DataTypes.UUID
     }
   }, {
-    // Elimina la restricción única en la combinación de TatuadorId y ClienteId
     indexes: [
       {
         unique: false,
-        fields: ['TattooArtistId', 'CustomerId'],
+        fields: ['TattooArtistId', 'CustomerId', "AppointmentId"],
       },
     ],
   });
