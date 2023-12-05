@@ -83,6 +83,12 @@ const CustomerRegister = () => {
                   hideProgressBar: true,
                 }
               );
+
+              await axios.post(`${urlBase}/nodemailer/welcome`, {
+                email: values.email,
+                name: values.fullName,
+              });
+
               const userFireBase = auth.currentUser;
               const token = userFireBase.reloadUserInfo.localId;
 
