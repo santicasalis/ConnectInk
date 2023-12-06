@@ -25,21 +25,5 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    TattooArtistId: {
-      type: DataTypes.UUID,
-    },
-    CustomerId: {
-      type: DataTypes.UUID,
-    },
-    AppointmentId: {
-      type: DataTypes.UUID
-    }
-  }, {
-    indexes: [
-      {
-        unique: false,
-        fields: ['TattooArtistId', 'CustomerId', "AppointmentId"],
-      },
-    ],
   });
 };
