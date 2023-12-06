@@ -4,7 +4,7 @@ const router = Router();
 const tattooArtistsRouter = require("./tattooArtistRouter");
 const customerRouter = require("./customerRouter");
 const publicationRouter = require("./publicationRouter");
-const PriceRangeRouter = require("./priceRangeRouter");
+const priceRangeRouter = require("./priceRangeRouter");
 const tattoStyleRouter = require("./tattooStyleRouter");
 const filterRouter = require("./filterRouter");
 const timeAvailabilityRouter = require("./timeAvailabilityRouter");
@@ -18,7 +18,7 @@ const mercadoPagoRouter = require("./mercadoPagoRouter");
 
 router.use("/tattooStyles", tattoStyleRouter);
 router.use("/tattooArtists", tattooArtistsRouter);
-router.use("/priceRange", PriceRangeRouter);
+router.use("/priceRanges", priceRangeRouter);
 router.use("/publications", publicationRouter);
 router.use("/customers", customerRouter);
 router.use("/filters", filterRouter);
@@ -29,6 +29,6 @@ router.use("/auth", loginRouter);
 router.use("/nodemailer", nodemailerRouter);
 router.use("/admins", adminRouter);
 router.use("/reviews", reviewRouter);
-router.use("/purchase", mercadoPagoRouter);
+router.use("/payment", mercadoPagoRouter);
 
 module.exports = router;

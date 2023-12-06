@@ -54,7 +54,6 @@ const login = async (tokenId) => {
   });
 
   if (user) {
-
     cleanUser = {
       id: user.id,
       fullName: user.fullName,
@@ -102,7 +101,7 @@ const login = async (tokenId) => {
           priceMax: priceRange.priceMax,
         };
       }),
-      appointments: tattooArtist.appointments?.map((appointment) => {
+      appointments: user.appointments?.map((appointment) => {
         return {
           id: appointment.id,
           size: appointment.size,
@@ -116,7 +115,7 @@ const login = async (tokenId) => {
           CustomerId: appointment.Customer_Appointment
         }
       }),
-      reviews: tattooArtist.reviews?.map((review) => {
+      reviews: user.reviews?.map((review) => {
         return {
           comment: review.comment,
           image: review.image,
@@ -159,7 +158,7 @@ const login = async (tokenId) => {
       image: userCustomer.image,
       disabled: userCustomer.disabled,
       userType: userCustomer.userType,
-      appointments: customer.appointments?.map((appointment) => {
+      appointments: userCustomer.appointments?.map((appointment) => {
         return {
           id: appointment.id,
           size: appointment.size,
@@ -173,7 +172,7 @@ const login = async (tokenId) => {
           tattooArtistId: appointment.TattooArtist_Appointment
         }
       }),
-      reviews: customer.reviews?.map((review) => {
+      reviews: userCustomer.reviews?.map((review) => {
         return {
           comment: review.comment,
           image: review.image,
