@@ -7,7 +7,6 @@ const {
   PriceRange,
   Customer,
   Admin,
-  CustomerTattooArtistAppointment,
   Appointment
 } = require("../../db");
 
@@ -41,25 +40,8 @@ const login = async (tokenId) => {
       }
     ],
   });
-    // const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-    //   where: { TattooArtistId: user.id },
-    //   include: [
-    //       {
-    //           model: Appointment,
-    //       },
-    //   ],
-    // });
 
   if (user) {
-
-    const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-      where: { TattooArtistId: user.id },
-      include: [
-          {
-              model: Appointment,
-          },
-      ],
-    });
 
     cleanUser = {
       id: user.id,
@@ -136,14 +118,6 @@ const login = async (tokenId) => {
         }
       ]
     });
-  //   const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-  //     where: { CustomerId: userCustomer.id },
-  //     include: [
-  //         {
-  //             model: Appointment,
-  //         },
-  //     ],
-  // });
 
     cleanUser = {
       id: userCustomer.id,

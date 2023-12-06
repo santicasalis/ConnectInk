@@ -2,7 +2,6 @@ const {
   Appointment,
   TattooArtist,
   Customer,
-  CustomerTattooArtistAppointment,
   TimeAvailability,
   TimeAvailabilityException,
 } = require("../../db");
