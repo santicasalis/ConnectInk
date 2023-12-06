@@ -129,7 +129,7 @@ const TattoArtistRegister = () => {
               <Field
                 type="text"
                 name="shopName"
-                placeholder="Shop Name"
+                placeholder="Nombre de la tienda"
                 className="p-2 mb-3 shadow-md w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
@@ -164,6 +164,7 @@ const TattoArtistRegister = () => {
 
               <h3 className="text-lg mb-3 font-bold">Estilos de tatuaje</h3>
               <FieldArray
+
   name="tattooStyle"
   render={(arrayHelpers) => (
     <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -208,6 +209,44 @@ const TattoArtistRegister = () => {
   component="div"
   className="text-red-500 text-sm"
 />
+
+                name="tattooStyle"
+                render={(arrayHelpers) => (
+                  <div className="flex flex-col items-center justify-center mb-8">
+                    <label
+                      className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6  text-[22px]"
+                      htmlFor="style"
+                    >
+                      
+                    </label>
+                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+                      {styles.map((style) => (
+                        <label
+                          className={`flex items-center gap-2 px-3 py-1 border font-bold rounded cursor-pointer ${
+                            values.tattooStyle.includes(style.name)
+                              ? "bg-primary/75 text-black border-primary border-[1px]"
+                              : "bg-transparent border-[1px] border-primary text-primary rounded-lg"
+                          }`}
+                          htmlFor={style.name}
+                          key={style.id}
+                          onClick={() => {
+                            if (values.tattooStyle.includes(style.name)) {
+                              arrayHelpers.remove(
+                                values.tattooStyle.indexOf(style.name)
+                              );
+                            } else {
+                              arrayHelpers.push(style.name);
+                            }
+                          }}
+                        >
+                          {style.name}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              />
+
             </div>
 
             <div className="mb-4">
