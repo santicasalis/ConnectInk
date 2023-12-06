@@ -1,9 +1,9 @@
 const { PriceRange } = require("../../db");
 
 const getPriceRange = async () => {
-  const allPriceRange = await PriceRange.findAll();
+  const allPriceRanges = await PriceRange.findAll();
 
-  return allPriceRange;
+  return allPriceRanges;
 };
 
 module.exports = getPriceRange;
