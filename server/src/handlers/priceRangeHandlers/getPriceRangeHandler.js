@@ -1,12 +1,12 @@
-const getPriceRange = require("../../controllers/PriceRangeControllers/getPriceRange");
+const getPriceRange = require("../../controllers/priceRangeControllers/getPriceRange");
 
 const getPriceRangeHandler = async (req, res) => {
   try {
-    const allPriceRange = await getPriceRange();
-    if (allPriceRange.length > 0) {
-      res.status(200).json(allPriceRange);
+    const allPriceRanges = await getPriceRange();
+    if (allPriceRanges.length > 0) {
+      res.status(200).json(allPriceRanges);
     } else {
-      res.status(404).json({ message: "PriceRange not found" });
+      res.status(404).json({ message: "Price range not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

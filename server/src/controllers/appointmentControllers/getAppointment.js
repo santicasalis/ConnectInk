@@ -1,7 +1,7 @@
 const { Appointment } = require("../../db");
 
 async function getAppointmentController() {
-  const appointments = Appointment.findAll();
+  const appointments = Appointment.findAll({ where: { disabled: false } });
 
   return appointments;
 }

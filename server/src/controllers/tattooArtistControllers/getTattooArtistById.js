@@ -5,7 +5,6 @@ const {
   TimeAvailability,
   TimeAvailabilityException,
   PriceRange,
-  CustomerTattooArtistAppointment,
   Appointment,
 } = require("../../db");
 
@@ -35,17 +34,17 @@ const getTattooArtistById = async (id) => {
         attributes: ["id", "size", "priceMin", "priceMax"],
         required: false
       },
-    ],
-  });
-  const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-    where: { TattooArtistId: id },
-    include: [
       {
         model: Appointment,
+        as: "appointments",
+        foreignKey: "TattooArtist_Appointment",
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
+        where: { disabled: false },
         required: false
       },
     ],
   });
+
   return {
     id: tattooArtist.id,
     fullName: tattooArtist.fullName,
@@ -100,8 +99,20 @@ const getTattooArtistById = async (id) => {
         priceMax: priceRange.priceMax,
       };
     }),
-    appointments: appointmentsByArtist?.map(
-      (appointment) => appointment.Appointment
+    appointments: tattooArtist.appointments?.map((appointment) => {
+      return {
+        id: appointment.id,
+        size: appointment.size,
+        image: appointment.image,
+        bodyPlace: appointment.bodyPlace,
+        description: appointment.description,
+        dateAndTime: appointment.dateAndTime,
+        duration: appointment.duration,
+        depositPrice: appointment.depositPrice,
+        paymentId: appointment.paymentId,
+        CustomerId: appointment.CustomerId
+      }
+    } 
     ),
   };
 };

@@ -28,8 +28,7 @@ const createAppointmentHandler = async (req, res) => {
       res.status(newAppointment.code).json({ error: newAppointment.error });
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: error.message });
   }
 };
 
