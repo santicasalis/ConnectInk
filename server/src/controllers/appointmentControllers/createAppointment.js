@@ -41,7 +41,15 @@ const createAppointment = async ({
   description,
   dateAndTime,
 }) => {
-  console.log(tattooArtistId, customerId, size, image, bodyPlace, description, dateAndTime)
+  console.log(
+    tattooArtistId,
+    customerId,
+    size,
+    image,
+    bodyPlace,
+    description,
+    dateAndTime
+  );
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
@@ -129,9 +137,9 @@ const createAppointment = async ({
         description,
         dateAndTime,
         duration: sizesAndDurations[size],
-
         depositPrice: depositAmount,
-
+        Customer_Appointment: customerId,
+        TattooArtist_Appointment: tattooArtistId,
       });
 
       return {
@@ -140,7 +148,6 @@ const createAppointment = async ({
         data: appointment,
       };
     } catch (error) {
-      console.log(error)
       return { code: 400, error: "Something went wrong" };
     }
   }

@@ -2,6 +2,7 @@ const { PriceRange, TattooArtist } = require("../../db");
 
 const createPriceRange = async (tattooArtistId, size, priceMin, priceMax) => {
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
+  
   if (!tattooArtist) {
     return { code: 404, error: "Tattoo artist not found" };
   }
