@@ -146,12 +146,10 @@ const Page = () => {
 
   const addTimeException = async () => {
     if(newException.initialHour == "No trabajo"){
-      setNewException({
-        date: newException.date
-      })
+      await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {date: newException.date, tattooArtistId: user.logedInUser.id})
+    } else {
+      await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {...newException, tattooArtistId: user.logedInUser.id})
     }
-
-    await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {...newException, tattooArtistId: user.logedInUser.id})
 
     dispatch(getUserById(user.fireBaseUser.tokenId))
 
@@ -173,6 +171,7 @@ const Page = () => {
   return (
     <div>
       <div>
+        {console.log(newException)}
         <h3>Disponibilidad de Tiempo</h3>
         {
           days.map((day) => {
@@ -194,8 +193,6 @@ const Page = () => {
                       {generateTimeOptions(day)}
                     </select>
                   </label>
-                    {console.log(dayObj)}
-                    {console.log(userTimeAv)}
 
                   <label>
                     Fin: 
@@ -257,8 +254,8 @@ const Page = () => {
           }
         </div>
         }
-
-        <button onClick={addTimeException}>Añadir Excepcion</button>
+        {console.log(newException)}
+        <button onClick={addTimeException} disabled={!newException.initialHour || !newException.finalHour}>Añadir Excepcion</button>
           {user.logedInUser.timeAvailabilityExceptions.length &&
             user.logedInUser.timeAvailabilityExceptions.map((exception, index) => (
               <div key={index}>
