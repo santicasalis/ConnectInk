@@ -11,7 +11,7 @@ import axios from "axios"
 import { useState } from 'react';
 import Image from 'next/image';
 
-const BookingCard = () => {
+const BookingCard = ({appointmentData}) => {
     const imageLoader = ({src}) => {
         return src
       }
@@ -55,16 +55,20 @@ const BookingCard = () => {
     console.log(response, "ARTISTA")
 
   return (
-    <div className='bg-secondary-900 w-[750px] h-[220px] rounded flex '>
-        <div className='w-[15%] h-full  ml-4 border-r-[2px] border-r-neutral-500'>
-            <div className='pt-4'>
-                <p className='flex gap-2'> <TbCalendarCheck className='text-primary text-[27px]'/>Reserva</p>
+    <div className='bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105'>
+        <div className='w-[26%] h-full   border-r-[2px] border-r-neutral-700'>
+            <div className='pt-2 '>
+                <p className='flex gap-2 ml-8'> <TbCalendarCheck className='text-primary text-[27px]'/>Reserva</p>
                 <p className='mt-[4px] text-center'> {fechaFormateada}</p>
             </div>     
             <div className='pt-4'>
-                <p className='flex gap-2'> <IoBodyOutline className='text-primary text-[27px]'/>Donde</p>
-                <p className='mt-[4px] text-center'> {appointment.bodyPlace}</p>
-            </div>   
+                <p className='flex gap-2 ml-4'> <IoBodyOutline className='text-primary text-[27px]'/>Donde:</p>
+                <p className='mt-[8px] text-center'> {appointment.bodyPlace}</p>
+            </div>
+            <div className='mt-[35px] ml-4 '>
+            <p className='font-rocksalt text-[18px]'>Connect<span className='text-primary'>Ink.</span></p>  
+            </div>
+             
         </div>
            <div className=' w-[65%] mt-4'>
             <div>
@@ -88,6 +92,10 @@ const BookingCard = () => {
             <p className='text-center text-2xl font-rocksalt mt-6'>Contacto:</p>
             <p className='text-center mt-8 flex justify-center items-center gap-2'><FaPhone className='text-primary text-[17px]'/> {response.phone}</p>
             <p className='mt-4 flex items-center justify-center'><MdOutlineEmail className='text-[17px] text-primary'/></p><p className='text-center '>{response.email}</p> 
+             <div className='flex justify-center items-center'>
+             <button className='bg-primary/50 mt-6 w-[75%] rounded'>Dejar Reseña</button>
+             </div>
+            
             
             
         </div>

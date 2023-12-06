@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
     },
     depositPrice: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     paymentId: {
       type: DataTypes.STRING,
@@ -52,7 +52,11 @@ module.exports = (sequelize) => {
     },
     CustomerId: {
       type: DataTypes.UUID,
-    }
+    },
+    disabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   }, {
     indexes: [
       {
