@@ -38,7 +38,7 @@ const getTattooArtistById = async (id) => {
         model: Appointment,
         as: "appointments",
         foreignKey: "TattooArtist_Appointment",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtist_Appointment", "Customer_Appointment"],
         where: { disabled: false },
         required: false
       },
@@ -110,7 +110,7 @@ const getTattooArtistById = async (id) => {
         duration: appointment.duration,
         depositPrice: appointment.depositPrice,
         paymentId: appointment.paymentId,
-        CustomerId: appointment.CustomerId
+        CustomerId: appointment.Customer_Appointment
       }
     } 
     ),
