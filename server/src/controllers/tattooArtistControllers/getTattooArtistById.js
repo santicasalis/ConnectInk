@@ -5,7 +5,6 @@ const {
   TimeAvailability,
   TimeAvailabilityException,
   PriceRange,
-  CustomerTattooArtistAppointment,
   Appointment,
 } = require("../../db");
 
@@ -46,19 +45,7 @@ const getTattooArtistById = async (id) => {
     ],
   });
 
-
-
-  // const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-  //   where: { TattooArtistId: id },
-  //   include: [
-  //     {
-  //       model: Appointment,
-  //       required: false
-  //     },
-  //   ],
-  // });
-
-  const appointments = await Appointment.findAll({where: {TattooArtistId: tattooArtist.id}})
+  // const appointments = await Appointment.findAll({where: {TattooArtistId: tattooArtist.id}})
 
   console.log(tattooArtist)
   return {
