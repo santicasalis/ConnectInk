@@ -41,8 +41,9 @@ module.exports = (sequelize) => {
     },
     depositPrice: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
+    //if(paymentId){<button classname: "enable">Finalizar reserva<button>}
     paymentId: {
       type: DataTypes.STRING,
       allowNull: true,
