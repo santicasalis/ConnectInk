@@ -32,20 +32,13 @@ const bookAppointment = ({ params }) => {
   const dispatch = useDispatch();
 
   const durations = {
-    pequeño: 1,
-    "pequeño a color": 1,
-    "mediano a color": 2,
-    mediano: 2,
-    grande: 3,
-    "grande a color": 3,
-  };
     Pequeño: 1,
     "Pequeño a color": 1,
     "Mediano a color": 2,
     Mediano: 2,
     Grande: 3,
     "Grande a color": 3,
-  }
+  };
 
   useEffect(() => {
     let array = [];
@@ -55,7 +48,7 @@ const bookAppointment = ({ params }) => {
     }
     artist?.timeAvailabilityExceptions?.map((e) => {
       const [exY, exM, exD] = e.date.split("-");
-      const date = new Date(exY, exM, exD);
+      const date = new Date(exY, exM - 1, exD);
       array.push(date.toDateString());
     });
     setException(array);
@@ -68,7 +61,7 @@ const bookAppointment = ({ params }) => {
   function createHourArray(initialTime, FinalTime) {
     let resultado = [];
     for (let i = initialTime; i < FinalTime; i++) {
-      resultado.push(`${i} a ${i + 1}`);
+      resultado.push(`${i}hs`);
     }
     return resultado;
   }
@@ -81,8 +74,8 @@ const bookAppointment = ({ params }) => {
   ) {
     let resultado = [];
     for (let i = initialTime; i <= FinalTime; i++) {
-      if(i >= initialTimeApp && i <= FinalTimeApp) continue
-      resultado.push(`${i} a ${i + 1}`);
+      if (i >= initialTimeApp && i <= FinalTimeApp) continue;
+      resultado.push(`${i}hs`);
     }
     return resultado;
   }
@@ -91,37 +84,50 @@ const bookAppointment = ({ params }) => {
     let objH = {};
     artist?.timeAvailabilities?.forEach((av) => {
       dayData.map((da) => {
-        if(da.day === av.day && av?.initialHour && av?.finalHour){
-          objH[da.number] = createHourArray(Number(av.initialHour.slice(0, 2)), Number(av.finalHour.slice(0, 2)))
+        if (da.day === av.day && av?.initialHour && av?.finalHour) {
+          objH[da.number] = createHourArray(
+            Number(av.initialHour.slice(0, 2)),
+            Number(av.finalHour.slice(0, 2))
+          );
         }
       });
     });
-    exception?.forEach((ex) => {
-      if(ex.initialHour){
-        objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+    artist?.timeAvailabilityExceptions?.forEach((ex, index) => {
+      if (ex.initialHour) {
+        objH[exception[index]] = createHourArray(
+          Number(ex?.initialHour?.slice(0, 2)) || 6,
+          Number(ex?.finalHour?.slice(0, 2)) || 23
+        );
       } else {
-        objH[ex] = []
+        objH[ex] = [];
       }
-    })
+    });
     artist?.appointments?.forEach((appointment) => {
-      const dateAndTime = new Date(appointment.dateAndTime)
-      const time = dateAndTime.getHours()
-      const date = dateAndTime.toDateString()
-      let initial = Number((objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2))
-      let final = Number((objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2))
-      console.log(initial)
-      console.log(final)
-      objH[date] = createHourArrayWithAppointment(initial, final, time, time + appointment.duration)
-    })
-    setObjHours(objH)
-  }
+      const dateAndTime = new Date(appointment.dateAndTime);
+      const time = dateAndTime.getHours();
+      const date = dateAndTime.toDateString();
+      let initial = Number(
+        (objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2)
+      );
+      let final = Number(
+        (objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2)
+      );
+      objH[date] = createHourArrayWithAppointment(
+        initial,
+        final,
+        time,
+        time + appointment.duration
+      );
+    });
+    setObjHours(objH);
+  };
 
   const getDisabled = () => {
     let array = [];
     let numobj = {};
     artist?.timeAvailabilities?.map((av) => {
       dayData.map((da) => {
-        if (da.day === av.day) {
+        if (da.day === av.day && av.initialHour) {
           array.push(da.number);
         }
       });
@@ -132,12 +138,17 @@ const bookAppointment = ({ params }) => {
     setObj(numobj);
   };
 
-  const tileStyles = ({date, view}) => {
-
-    if(view == "month"){
-      
-      if (date < new Date(Date.now()) || !(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString())))) {
-        return "text-gray-500"
+  const tileStyles = ({ date, view }) => {
+    if (view == "month") {
+      if (
+        date < new Date(Date.now()) ||
+        !(
+          obj[date.getDay()] ||
+          (objHours[date.toDateString] &&
+            exception.includes(date.toDateString()))
+        )
+      ) {
+        return "text-gray-500";
       }
       if (
         date.toDateString() === selectedDate.toDateString() &&
@@ -173,7 +184,10 @@ const bookAppointment = ({ params }) => {
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view == "month")
-      return !(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString()));)
+      return !(
+        obj[date.getDay()] ||
+        (objHours[date.toDateString] && exception.includes(date.toDateString()))
+      );
   };
 
   const changeDate = (form, date) => {
@@ -196,10 +210,10 @@ const bookAppointment = ({ params }) => {
   };
 
   const handleTime = (form, event) => {
-    setSelectedTime(event.target.value);
+    setSelectedTime(event.target.value.split("h")[0]);
     form.setFieldValue(
       "dateAndTime",
-      new Date(year, month, day, event.target.value)
+      new Date(year, month, day, event.target.value.split("h")[0])
     );
   };
 
@@ -212,63 +226,6 @@ const bookAppointment = ({ params }) => {
           {sent ? (
             <h1>Turno creado con exito!</h1>
           ) : (
-          <Formik
-            initialValues={{
-              size: "",
-              image: null,
-              bodyPlace: "",
-              description: "",
-              dateAndTime: "",
-              duration: "",
-              possible: true
-            }}
-            validationSchema={validationSchema}
-            onSubmit={async (values, {setSubmitting}) => {
-              try{
-                if(values.image && typeof values.image === "object"){
-                  const imageUrl = await uploadImage(values.image);
-                  values.image = imageUrl;
-                }
-                const response = await axios.post(`${URL_BASE}/appointments`, {...values, tattooArtistId: id, customerId: user.id})
-                setSent(true)
-              } catch(error) {
-                throw Error("Error en el formulario")
-              }
-              setSubmitting(false)
-            }}
-          >
-          {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-            <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
-              <div className="info-artist mb-4">
-                <div className="p-2 m-2">
-                  <label htmlFor="size" >Selecciona una opción:</label>
-                  <Field as="select" name="size">
-                    <option value="" disabled>Selecciona una opcion</option>
-                    <option value="Pequeño">Pequeño</option>
-                    <option value="Pequeño a color">Pequeño a color</option>
-                    <option value="Mediano">Mediano</option>
-                    <option value="Mediano a color">Mediano a color</option>
-                    <option value="Grande">Grande</option>
-                    <option value="Grande a color">Grande a color</option>
-                  </Field>
-                  {objHours[selectedDate.getDay()] && values.size && (values.possible = isPossible(Number(durations[values.size]), Number(selectedTime),  Number(objHours[selectedDate.getDay()].at(-1)) + 1))}
-                  <ErrorMessage
-                    name="fullName"
-                    component="div"
-                    className="text-red-500 text-sm"
-                  />
-                </div>
-                <Field
-                  type="text"
-                  name="bodyPlace"
-                  placeholder="Lugar del cuerpo"
-                  className="p-2 mb-3 shadow-md block w-full"
-                />
-                <ErrorMessage
-                  name="bodyPlace"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
             <Formik
               initialValues={{
                 size: "",
@@ -278,18 +235,14 @@ const bookAppointment = ({ params }) => {
                 dateAndTime: "",
                 duration: "",
                 possible: true,
- //aca vamos a tener que agregar el porcentaje del precio a pagar a modo de seña
               }}
               validationSchema={validationSchema}
-              //Al hacer click te tiene que mandar a mercadopago
               onSubmit={async (values, { setSubmitting }) => {
-                console.log("Valores del formulario:", values);
                 try {
                   if (values.image && typeof values.image === "object") {
                     const imageUrl = await uploadImage(values.image);
                     values.image = imageUrl;
                   }
-                  
                   const response = await axios.post(
                     `${URL_BASE}/appointments`,
                     { ...values, tattooArtistId: id, customerId: user.id }
@@ -303,6 +256,7 @@ const bookAppointment = ({ params }) => {
             >
               {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
                 <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+                  {console.log(values)}
                   <div className="info-artist mb-4">
                     <div className="p-2 m-2">
                       <label htmlFor="size">Selecciona una opción:</label>
@@ -310,20 +264,21 @@ const bookAppointment = ({ params }) => {
                         <option value="" disabled>
                           Selecciona una opcion
                         </option>
-                        <option value="pequeño">Pequeño</option>
-                        <option value="pequeño a color">Pequeño a color</option>
-                        <option value="mediano">Mediano</option>
-                        <option value="mediano a color">Mediano a color</option>
-                        <option value="grande">Grande</option>
-                        <option value="grande a color">Grande a color</option>
+                        <option value="Pequeño">Pequeño</option>
+                        <option value="Pequeño a color">Pequeño a color</option>
+                        <option value="Mediano">Mediano</option>
+                        <option value="Mediano a color">Mediano a color</option>
+                        <option value="Grande">Grande</option>
+                        <option value="Grande a color">Grande a color</option>
                       </Field>
-
                       {objHours[selectedDate.getDay()] &&
                         values.size &&
                         (values.possible = isPossible(
                           Number(durations[values.size]),
                           Number(selectedTime),
-                          Number(objHours[selectedDate.getDay()].at(-1)) + 1
+                          Number(
+                            objHours[selectedDate.getDay()].at(-1).split("h")[0]
+                          ) + 1
                         ))}
                       <ErrorMessage
                         name="fullName"
@@ -369,27 +324,30 @@ const bookAppointment = ({ params }) => {
                           />
                           <div className="text-black">
                             {showTime && (
-                              <select
-                                name="dateTime"
-                                value={selectedTime}
-                                onChange={(event) => handleTime(form, event)}
-                              >
-                                <option name="dateTime" value="" disabled>
-                                  Seleccionar horario
-                                </option>
-                                {(
-                                  objHours[selectedDate.toDateString()] ||
-                                  objHours[selectedDate.getDay()]
-                                ).map((hour) => {
-                                  console.log(hour);
-                                  return (
-                                    <option key={hour} name="dateTime">
-                                      {hour}
-                                    </option>
-                                  );
-                                })}
-                              </select>
+                              <div className="text-gray-300">
+                                <p>Horario del comienzo del turno</p>
+                                <select
+                                  name="dateTime"
+                                  value={selectedTime}
+                                  onChange={(event) => handleTime(form, event)}
+                                >
+                                  <option name="dateTime" value="" disabled>
+                                    Seleccionar horario inicial
+                                  </option>
+                                  {(
+                                    objHours[selectedDate.toDateString()] ||
+                                    objHours[selectedDate.getDay()]
+                                  )?.map((hour) => {
+                                    return (
+                                      <option key={hour} name="dateTime">
+                                        {hour}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
+                              </div>
                             )}
+                            {values.duration && values.dateAndTime && <p></p>}
                           </div>
                         </div>
                       )}
@@ -425,7 +383,7 @@ const bookAppointment = ({ params }) => {
                       isSubmitting || !isValid || !dirty || !values.possible
                     }
                   >
-                    Pagar seña
+                    Reservar turno
                   </button>
                   {!values.possible && (
                     <div>
