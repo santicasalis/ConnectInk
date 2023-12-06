@@ -26,7 +26,7 @@ const createOrder = async (req, res) => {
         back_urls: {
           failure: "",
           pending: "",
-          success: "http://localhost:3001/purchase/success",
+          success: "http://localhost:3001/user-dashboard/reservas",
         },
       },
     };
