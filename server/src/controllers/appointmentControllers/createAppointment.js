@@ -4,6 +4,7 @@ const {
   Customer,
   TimeAvailability,
   TimeAvailabilityException,
+  PriceRange,
 } = require("../../db");
 
 const sizesAndDurations = {
@@ -105,8 +106,21 @@ const createAppointment = async ({
   if (hourSlice + sizesAndDurations[size] > finalHourSlice) {
     return { code: 400, error: "The appointment must start earlier" };
   }
+
   //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno
   if (hourSlice + sizesAndDurations[size] <= finalHourSlice) {
+    //cálculo del valor de la seña
+    const priceRangeFound = await PriceRange.findOne({
+      where: { TattooArtistId: tattooArtistId, size: size },
+    });
+    if (!priceRangeFound) {
+      return {
+        code: 404,
+        error: "Price range not found, the deposit price cannot be calculated",
+      };
+    }
+    const depositAmount = priceRangeFound.priceMin / 2;
+
     try {
       const appointment = await Appointment.create({
         size,
@@ -115,9 +129,9 @@ const createAppointment = async ({
         description,
         dateAndTime,
         duration: sizesAndDurations[size],
-        depositPrice: 1,
-        Customer_Appointment: customerId,
-        TattooArtist_Appointment: tattooArtistId
+
+        depositPrice: depositAmount,
+
       });
 
       return {

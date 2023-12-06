@@ -28,17 +28,21 @@ const createTimeAvailability = async (
     };
   }
 
-  const timeAvailability = await TimeAvailability.create({
-    day,
-    initialHour,
-    finalHour,
-  });
-  tattooArtist.addTimeAvailability(timeAvailability);
-  return {
-    code: 201,
-    message: "Time Availability created successfully",
-    data: timeAvailability,
-  };
+  try {
+    const timeAvailability = await TimeAvailability.create({
+      day,
+      initialHour,
+      finalHour,
+    });
+    tattooArtist.addTimeAvailability(timeAvailability);
+    return {
+      code: 201,
+      message: "Time Availability created successfully",
+      data: timeAvailability,
+    };
+  } catch (error) {
+    return { code: 400, error: "Something went wrong" };
+  }
 };
 
 module.exports = createTimeAvailability;
