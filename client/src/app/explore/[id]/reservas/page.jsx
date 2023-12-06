@@ -46,13 +46,13 @@ const bookAppointment = ({ params }) => {
       getDisabled();
       getHours();
     }
-    artist?.timeAvailabilityExceptions?.map((e) =>{
-      const [exY, exM, exD] = e.date.split("-")
-      const date = new Date(exY, exM, exD)
-      array.push(date.toDateString())
-    })
-    setException(array)
-  }, [artist.timeAvailabilities])
+    artist?.timeAvailabilityExceptions?.map((e) => {
+      const [exY, exM, exD] = e.date.split("-");
+      const date = new Date(exY, exM - 1, exD);
+      array.push(date.toDateString());
+    });
+    setException(array);
+  }, [artist.timeAvailabilities]);
 
   useEffect(() => {
     dispatch(getArtistDetail(id));
@@ -74,8 +74,8 @@ const bookAppointment = ({ params }) => {
   ) {
     let resultado = [];
     for (let i = initialTime; i <= FinalTime; i++) {
-      if(i >= initialTimeApp && i <= FinalTimeApp) continue
-      resultado.push(`${i} a ${i + 1}`);
+      if (i >= initialTimeApp && i <= FinalTimeApp) continue;
+      resultado.push(`${i}hs`);
     }
     return resultado;
   }
@@ -90,43 +90,53 @@ const bookAppointment = ({ params }) => {
             Number(av.finalHour.slice(0, 2))
           );
         }
-      })
-    })
-    exception?.forEach((ex) => {
-      if(ex.initialHour){
-        objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+      });
+    });
+    artist?.timeAvailabilityExceptions?.forEach((ex, index) => {
+      if (ex.initialHour) {
+        objH[exception[index]] = createHourArray(
+          Number(ex?.initialHour?.slice(0, 2)) || 6,
+          Number(ex?.finalHour?.slice(0, 2)) || 23
+        );
       } else {
         objH[ex] = [];
       }
     });
     artist?.appointments?.forEach((appointment) => {
-      const dateAndTime = new Date(appointment.dateAndTime)
-      const time = dateAndTime.getHours()
-      const date = dateAndTime.toDateString()
-      let initial = Number((objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2))
-      let final = Number((objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2))
-      console.log(initial)
-      console.log(final)
-      objH[date] = createHourArrayWithAppointment(initial, final, time, time + appointment.duration)
-    })
-    setObjHours(objH)
-  }
+      const dateAndTime = new Date(appointment.dateAndTime);
+      const time = dateAndTime.getHours();
+      const date = dateAndTime.toDateString();
+      let initial = Number(
+        (objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2)
+      );
+      let final = Number(
+        (objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2)
+      );
+      objH[date] = createHourArrayWithAppointment(
+        initial,
+        final,
+        time,
+        time + appointment.duration
+      );
+    });
+    setObjHours(objH);
+  };
 
   const getDisabled = () => {
     let array = [];
     let numobj = {};
     artist?.timeAvailabilities?.map((av) => {
       dayData.map((da) => {
-        if(da.day === av.day){
-          array.push(da.number)
+        if (da.day === av.day && av.initialHour) {
+          array.push(da.number);
         }
       });
     });
     for (let num of array) {
       numobj[num] = true;
     }
-    setObj(numobj)
-  }
+    setObj(numobj);
+  };
 
   const tileStyles = ({ date, view }) => {
     if (view == "month") {
@@ -288,45 +298,62 @@ const bookAppointment = ({ params }) => {
                       className="text-red-500 text-sm"
                     />
 
-                <Field
-                  type="text"
-                  name="description"
-                  placeholder="Descripcion y explicacion del tatuaje a realizar"
-                  className="p-2 mb-3 shadow-md block w-full"
-                />
-                <ErrorMessage
-                  name="description"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-                <label>Fecha Seleccionada:</label>
-                <Field name="dateAndTime">
-                  {({ field, form }) => (
-                    <div>
-                      <Calendar
-                        {...field}
-                        defaultValue={null}
-                        locale="es"
-                        tileClassName={tileStyles}
-                        tileDisabled={tileDisabled}
-                        onChange={(date) => changeDate(form, date)}
-                        minDate={new Date(Date.now())}
-                      />
-                      <div className="text-black">
-                        {showTime && 
-                        <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
-                          <option name="dateTime" value="" disabled>Seleccionar horario</option>
-                          {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()])?.map((hour) => {
-                            return <option key={hour} name="dateTime">{hour}</option>
-                          })}
-                        </select>}
-                      </div>
-                      {console.log(artist)}
-                    </div>
-                  )}
-                </Field>
-                <ErrorMessage name="selectedDate" component="div" />
-              </div>
+                    <Field
+                      type="text"
+                      name="description"
+                      placeholder="Descripcion y explicacion del tatuaje a realizar"
+                      className="p-2 mb-3 shadow-md block w-full"
+                    />
+                    <ErrorMessage
+                      name="description"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                    <label>Fecha Seleccionada:</label>
+                    <Field name="dateAndTime">
+                      {({ field, form }) => (
+                        <div>
+                          <Calendar
+                            {...field}
+                            defaultValue={null}
+                            locale="es"
+                            tileClassName={tileStyles}
+                            tileDisabled={tileDisabled}
+                            onChange={(date) => changeDate(form, date)}
+                            minDate={new Date(Date.now())}
+                          />
+                          <div className="text-black">
+                            {showTime && (
+                              <div className="text-gray-300">
+                                <p>Horario del comienzo del turno</p>
+                                <select
+                                  name="dateTime"
+                                  value={selectedTime}
+                                  onChange={(event) => handleTime(form, event)}
+                                >
+                                  <option name="dateTime" value="" disabled>
+                                    Seleccionar horario inicial
+                                  </option>
+                                  {(
+                                    objHours[selectedDate.toDateString()] ||
+                                    objHours[selectedDate.getDay()]
+                                  )?.map((hour) => {
+                                    return (
+                                      <option key={hour} name="dateTime">
+                                        {hour}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
+                              </div>
+                            )}
+                            {values.duration && values.dateAndTime && <p></p>}
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <ErrorMessage name="selectedDate" component="div" />
+                  </div>
 
                   <div className="mb-4">
                     <label htmlFor="image" className="font-bold">
