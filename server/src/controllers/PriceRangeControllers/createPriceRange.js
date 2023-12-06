@@ -1,8 +1,8 @@
 const { PriceRange, TattooArtist } = require("../../db");
 
 const createPriceRange = async (artistId, size, priceMin, priceMax ) => {
-  
-  const tattooArtist = await TattooArtist.findByPk(artistId);
+   const tattooArtist = await TattooArtist.findByPk(artistId);
+
   if (!tattooArtist) {
     throw new Error("Artist not found");
   }
@@ -13,8 +13,8 @@ const createPriceRange = async (artistId, size, priceMin, priceMax ) => {
       priceMin,
       priceMax,
     });
-
-    tattooArtist.addPriceRange(PriceRange);
+    
+    tattooArtist.addPriceRange(newPriceRange);
 
     return newPriceRange;
   } catch (error) {

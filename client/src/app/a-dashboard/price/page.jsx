@@ -10,18 +10,20 @@ import { useEffect } from 'react'
 
 const Price = () => {
  // const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.logedInUser);
   const URL_BASE = "http://localhost:3001"
 
   const [prices, setPrices] = useState({
-    "Pequeño": { priceMin: '', priceMax: '' },
-    "Pequeño a color": { priceMin: '', priceMax: '' },
-    "Mediano": { priceMin: '', priceMax: '' },
-    "Mediano a color": { priceMin: '', priceMax: '' },
-    "Grande": { priceMin: '', priceMax: '' },
-    "Grande a color": { priceMin: '', priceMax: '' },
-  });
+    "Pequeño": { size: "Pequeño" ,priceMin: '', priceMax: '' , artistId:user.id },
+    "Pequeño a color": { size: "Pequeño a color" ,priceMin: '', priceMax: '' , artistId:user.id},
+    "Mediano": { size: "Mediano" ,priceMin: '', priceMax: '' , artistId:user.id},
+    "Mediano a color": { size: "Mediano a color" ,priceMin: '', priceMax: '' , artistId:user.id},
+    "Grande": { size: "Grande" ,priceMin: '', priceMax: '', artistId:user.id },
+    "Grande a color": { size: "Grande a color" ,priceMin: '', priceMax: '' , artistId:user.id},
+    });
 
+
+  
   const handleInputChange = (size, field, value) => {
     setPrices((prevPrices) => ({
       ...prevPrices,
@@ -35,12 +37,15 @@ const Price = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      
-      const response = await axios.post(`${URL_BASE}/priceRange`, prices);
-      console.log(response.data), "MUESTRATEEE"; 
-    } catch (error) {
-      console.error(error);
+    for( let size in prices){
+      const data = { size:prices[size].size , priceMin:prices[size].priceMin , priceMax:prices[size].priceMax , artistId: prices[size].artistId,}
+      try {
+          console.log(data, "DATAAAAAAAAAA")  
+         await axios.post(`${URL_BASE}/priceRange`, data);
+        
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -59,7 +64,7 @@ const Price = () => {
                   type="number"
                   placeholder="Precio mínimo"
                   value={prices[size].priceMin}
-                  onChange={(event) => handleInputChange(size, 'min', event.target.value)}
+                  onChange={(event) => handleInputChange(size, 'priceMin', event.target.value)}
                   className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900'
                 />
               </div>
