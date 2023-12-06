@@ -2,15 +2,21 @@ const updatePriceRange = require("../../controllers/priceRangeControllers/update
 
 const updatePriceRangeHandler = async (req, res) => {
   const { id } = req.params;
-  const { size, priceMin, priceMax } = req.body;
+  const { priceMin, priceMax } = req.body;
   try {
-    const updatedPriceRange = await updatePriceRange(
-      id,
-      size,
-      priceMin,
-      priceMax,
-    );
-    res.status(200).json(updatedPriceRange);
+    const updatedPriceRange = await updatePriceRange(id, priceMin, priceMax);
+    if (updatedPriceRange.code === 201) {
+      res
+        .status(201)
+        .json({
+          message: updatedPriceRange.message,
+          data: updatedPriceRange.data,
+        });
+    } else {
+      res
+        .status(updatedPriceRange.code)
+        .json({ error: updatedPriceRange.error });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
