@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "@/app/redux/features/user/userActions";
+import { getUserById, getUserInformation } from "@/app/redux/features/user/userActions";
 import {
   RiMailLine,
   RiLock2Line,
@@ -22,7 +22,7 @@ import {
 import { auth } from "../../firebase";
 
 const CustomerRegister = () => {
-  const urlBase = "https://serverconnectink.up.railway.app";
+  const urlBase = "http://localhost:3001";
   const router = useRouter();
   const dispatch = useDispatch();
   const userInformation = useSelector((state) => state.user.fireBaseUser);
@@ -83,9 +83,26 @@ const CustomerRegister = () => {
                   hideProgressBar: true,
                 }
               );
-              
-              dispatch(getUserById(values.tokenId))
-              router.replace("/user-dashboard/home");
+
+              await axios.post(`${urlBase}/nodemailer/welcome`, {
+                email: values.email,
+                name: values.fullName,
+              });
+
+              const userFireBase = auth.currentUser;
+              const token = userFireBase.reloadUserInfo.localId;
+
+              dispatch(getUserById(token));
+              dispatch(
+                getUserInformation({
+                  tokenId: userFireBase.uid,
+                  userName: userFireBase.displayName,
+                  image: userFireBase.photoURL,
+                  email: userFireBase.email,
+                  phoneNumber: userFireBase.phoneNumber,
+                })
+              )
+              router.replace("/user-dashboard");
             } catch (error) {
               console.error("Error during form submission", error);
             }

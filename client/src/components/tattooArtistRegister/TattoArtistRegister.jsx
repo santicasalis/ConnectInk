@@ -14,13 +14,13 @@ import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase";
-import { getUserById } from "@/app/redux/features/user/userActions";
+import { getUserById, getUserInformation } from "@/app/redux/features/user/userActions";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
   const userInformation = useSelector((state) => state.user.fireBaseUser);
   const dispatch = useDispatch();
-  const urlBase = "https://serverconnectink.up.railway.app";
+  const urlBase = "http://localhost:3001";
   const router = useRouter();
 
   useEffect(() => {
@@ -46,46 +46,56 @@ const TattoArtistRegister = () => {
         }}
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
-          if (userInformation) {
-            try {
-              if (values.image && typeof values.image === "object") {
-                const imageUrl = await uploadImage(values.image);
-                values.image = imageUrl;
-              } else {
-                values.image =
-                  userInformation?.image ||
-                  "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
-              }
-
-              if (!values.userName) {
-                values.tokenId = await emailSignUp(
-                  values.email,
-                  values.password
-                );
-              }
-
-              await axios.post(`${urlBase}/tattooArtists`, values);
-
-              toast.success(
-                `${values.fullName} se ha registrado existosamente`,
-                {
-                  className: "toastSuccess",
-                  position: toast.POSITION.BOTTOM_RIGHT,
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                }
-              );
-              // await axios.post(`${urlBase}/nodemailer/welcome`, {
-              //   email: values.email,
-              //   name: values.name,
-              // });
-              const userFireBase = auth.currentUser;
-              const token = userFireBase.reloadUserInfo.localId;
-              dispatch(getUserById(token));
-              router.replace("/a-dashboard/home");
-            } catch (error) {
-              console.error("Error during form submission", error);
+          try {
+            if (values.image && typeof values.image === "object") {
+              const imageUrl = await uploadImage(values.image);
+              values.image = imageUrl;
+            } else {
+              values.image =
+                userInformation?.image ||
+                "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
+
+            if (!values.userName) {
+              values.tokenId = await emailSignUp(
+                values.email,
+                values.password
+              );
+            }
+
+            await axios.post(`${urlBase}/tattooArtists`, values);
+
+            toast.success(
+              `${values.fullName} se ha registrado existosamente`,
+              {
+                className: "toastSuccess",
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 3000,
+                hideProgressBar: true,
+              }
+            );
+            await axios.post(`${urlBase}/nodemailer/welcome`, {
+              email: values.email,
+              name: values.fullName,
+            });
+
+            
+            const userFireBase = auth.currentUser;
+            const token = userFireBase.reloadUserInfo.localId;
+
+            dispatch(getUserById(token));
+            dispatch(
+              getUserInformation({
+                tokenId: userFireBase.uid,
+                userName: userFireBase.displayName,
+                image: userFireBase.photoURL,
+                email: userFireBase.email,
+                phoneNumber: userFireBase.phoneNumber,
+              })
+            )
+            router.replace("/a-dashboard/home");
+          } catch (error) {
+            console.error("Error during form submission", error);
           }
           setSubmitting(false);
         }}
@@ -119,7 +129,7 @@ const TattoArtistRegister = () => {
               <Field
                 type="text"
                 name="shopName"
-                placeholder="Shop Name"
+                placeholder="Nombre de la tienda"
                 className="p-2 mb-3 shadow-md w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage
@@ -152,37 +162,46 @@ const TattoArtistRegister = () => {
                 className="text-red-500 text-sm"
               />
 
-              <h3 className="text-lg mb-3 font-bold">Tattoo Styles</h3>
+              <h3 className="text-lg mb-3 font-bold">Estilos de tatuaje</h3>
+              
               <FieldArray
                 name="tattooStyle"
                 render={(arrayHelpers) => (
-                  <div>
-                    {styles.map((style) => (
-                      <label key={style.id} className="block">
-                        <Field
-                          name="tattooStyles"
-                          type="checkbox"
-                          value={style.name}
-                          checked={values.tattooStyle.includes(style.name)}
-                          onChange={(e) => {
-                            if (e.target.checked) arrayHelpers.push(style.name);
-                            else
+                  <div className="flex flex-col items-center justify-center mb-8">
+                    <label
+                      className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6  text-[22px]"
+                      htmlFor="style"
+                    >
+                      
+                    </label>
+                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+                      {styles.map((style) => (
+                        <label
+                          className={`flex items-center gap-2 px-3 py-1 border font-bold rounded cursor-pointer ${
+                            values.tattooStyle.includes(style.name)
+                              ? "bg-primary/75 text-black border-primary border-[1px]"
+                              : "bg-transparent border-[1px] border-primary text-primary rounded-lg"
+                          }`}
+                          htmlFor={style.name}
+                          key={style.id}
+                          onClick={() => {
+                            if (values.tattooStyle.includes(style.name)) {
                               arrayHelpers.remove(
                                 values.tattooStyle.indexOf(style.name)
                               );
+                            } else {
+                              arrayHelpers.push(style.name);
+                            }
                           }}
-                        />
-                        {style.name}
-                      </label>
-                    ))}
+                        >
+                          {style.name}
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 )}
               />
-              <ErrorMessage
-                name="tattooStyle"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+
             </div>
 
             <div className="mb-4">

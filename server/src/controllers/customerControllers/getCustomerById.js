@@ -1,15 +1,8 @@
-const { Customer, CustomerTattooArtistAppointment, Appointment } = require('../../db')
+const { Customer, Appointment } = require('../../db')
 
 const getCustomerById = async (id) => {
     const customer = await Customer.findByPk(id)
-    const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-        where: { CustomerId: id },
-        include: [
-            {
-                model: Appointment,
-            },
-        ],
-    });
+    
     return {
         tokenId: customer.tokenId,
         fullName: customer.fullName,

@@ -61,6 +61,8 @@ const Login = () => {
       const fireBaseUser = result.user;
       const token = fireBaseUser.uid;
 
+      console.log(token)
+
       dispatch(getUserById(token, router));
 
       dispatch(
@@ -105,8 +107,8 @@ const Login = () => {
         })
       )
 
-      //if (user.userType == "artist") router.replace("/a-dashboard/home");
-      if (user.userType == "customer") { router.replace("/user-dashboard");} else {router.replace("/a-dashboard/home")}
+      if (user.userType == "artist") router.replace("/a-dashboard/home");
+      if (user.userType == "customer") router.replace("/user-dashboard"); /*else {router.replace("/a-dashboard/home")}*/
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     } catch (createUserError) {
       toast.error("Usuario y o contraseña errónea", {

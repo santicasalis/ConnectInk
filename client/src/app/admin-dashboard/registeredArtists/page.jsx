@@ -58,8 +58,7 @@ const RegisteredArtist = () => {
                         <AdminCard
                           key={filter.id}
                           id={filter.id}
-                          name={filter.name}
-                          lastName={filter.lastName}
+                          fullName={filter.fullName}
                           location={filter.location}
                           shopName={filter.shopName}
                           tattoos={filter.publications}

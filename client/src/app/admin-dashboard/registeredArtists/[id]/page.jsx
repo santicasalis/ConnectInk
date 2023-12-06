@@ -22,7 +22,7 @@ const [artist, setArtist] = useState({ publications: [] });
 
 
 useEffect( () => {
-    axios.get(`https://serverconnectink.up.railway.app/tattooArtists/${params.id}`).then(
+    axios.get(`http://localhost:3001/tattooArtists/${params.id}`).then(
         (response)=> {
             setArtist(response.data);
             

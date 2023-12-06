@@ -9,11 +9,12 @@ const PostsDashboard = () => {
 
   const user = useSelector((state) => state.user.logedInUser);
   const modalCreate = useSelector((state) => state.modalCreate);
+  const modalDelete = useSelector((state) => state.modalDelete);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(bringUserPosts(user.id))
-  }, [modalCreate])
+  }, [modalCreate, modalDelete])
 
 
   return (

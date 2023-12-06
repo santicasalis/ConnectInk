@@ -7,13 +7,14 @@ const {
   PriceRange,
   Customer,
   Admin,
+  Appointment
 } = require("../../db");
 
 const login = async (tokenId) => {
   let user = {};
   let cleanUser = {};
   user = await TattooArtist.findOne({
-    where: { tokenId: tokenId },
+    where: { tokenId: tokenId, disabled: false },
     include: [
       { model: TattooStyle, attributes: ["name"] },
       {
@@ -32,10 +33,19 @@ const login = async (tokenId) => {
         model: PriceRange,
         attributes: ["size", "priceMin", "priceMax"],
       },
+      {
+        model: Appointment,
+        as: "appointments",
+        foreignKey: "TattooArtist_Appointment",
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
+        where: { disabled: false },
+        required: false
+      },
     ],
   });
 
   if (user) {
+
     cleanUser = {
       id: user.id,
       fullName: user.fullName,
@@ -83,12 +93,36 @@ const login = async (tokenId) => {
           priceMax: priceRange.priceMax,
         };
       }),
+      appointments: user.Appointment?.map(appointment => {
+        return {
+          id: appointment.id,
+          size: appointment.size,
+          image: appointment.image,
+          bodyPlace: appointment.bodyPlace,
+          description: appointment.description,
+          dateAndTime: appointment.dateAndTime,
+          duration: appointment.duration,
+          depositPrice: appointment.depositPrice,
+          paymentId: appointment.paymentId,
+          customerId: appointment.CustomerId
+        }
+      })
     };
   }
 
   if (!user) {
     let userCustomer = await Customer.findOne({
-      where: { tokenId: tokenId },
+      where: { tokenId: tokenId, disabled: false},
+      include: [
+        {
+          model: Appointment,
+          as: "appointments",
+          foreignKey: "Customer_Appointment",
+          attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
+          where: { disabled: false },
+          required: false
+        },
+      ]
     });
 
     cleanUser = {
@@ -99,6 +133,20 @@ const login = async (tokenId) => {
       image: userCustomer.image,
       disabled: userCustomer.disabled,
       userType: userCustomer.userType,
+      appointments: userCustomer.Appointment?.map(appointment => {
+        return {
+          id: appointment.id,
+          size: appointment.size,
+          image: appointment.image,
+          bodyPlace: appointment.bodyPlace,
+          description: appointment.description,
+          dateAndTime: appointment.dateAndTime,
+          duration: appointment.duration,
+          depositPrice: appointment.depositPrice,
+          paymentId: appointment.paymentId,
+          tattooArtistId: appointment.TattooArtistId
+        }
+      })
     };
   }
 

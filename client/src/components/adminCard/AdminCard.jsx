@@ -27,23 +27,7 @@ export default function AdminCard({fullName,location,shopName,image, id}){
         return src;
       };
 
-    
 
-      // const closeModal = () => {
-      //   setIsModalOpen(false);
-      // };
-       
-
-      // const openModal = () => {
-      //   setIsModalOpen(true);
-      // };
-    
-      // const confirmDelete = () => {
-      //   dispatch(DeleteArtists(id));
-      //   closeModal();
-         
-      // };
-    
      
 
 
@@ -60,7 +44,7 @@ export default function AdminCard({fullName,location,shopName,image, id}){
               height={40}
               alt={`${fullName} profile pic`}
             />
-            <h1 className="font-bold col-span-2">
+            <h1 className="font-bolt text-center text-4xl font-newrocker ml-4">
               {fullName}
             </h1>
          
@@ -86,7 +70,10 @@ export default function AdminCard({fullName,location,shopName,image, id}){
                     </Menu>
                 </div>
           </div>
-          <div className="font-bolt text-center text-4xl font-newrocker">
+          {/* <div className="font-bolt text-center text-4xl font-newrocker">
+            {shopName}
+          </div> */}
+          <div className="font-bolt text-center text-xl mt-[20px] font-newrocker">
             {shopName}
           </div>
           <div className="font-bolt text-center text-xl mt-[20px] font-newrocker">
