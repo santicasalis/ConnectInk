@@ -8,19 +8,20 @@ import { bringUserPosts } from "@/app/redux/features/user/userActions";
 const PostsDashboard = () => {
 
   const user = useSelector((state) => state.user.logedInUser);
-  const modalCreate = useSelector((state) => state.modalCreate);
-  const modalDelete = useSelector((state) => state.modalDelete);
+  const isOpenmodalCreate = useSelector((state) => state.modalCreate.isOpen);
+  const isOpenModalDelete = useSelector((state) => state.modalDelete.isOpen);
+  const isOpenModalEditar = useSelector((state) => state.modalEdit.isOpen)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(bringUserPosts(user.id))
-  }, [modalCreate, modalDelete])
+  }, [isOpenmodalCreate, isOpenModalDelete, isOpenModalEditar])
 
 
   return (
     <div className="flex flex-col items-center w-full ">
       {user?.publications?.length > 0 ? (
-        user.publications.map((publication) => (
+        [...user.publications].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((publication) => (
           <PostDashboard
             key={publication.id}
             publication={publication}
