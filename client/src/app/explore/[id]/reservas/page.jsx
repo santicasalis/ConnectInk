@@ -226,17 +226,18 @@ const bookAppointment = ({ params }) => {
                 dateAndTime: "",
                 duration: "",
                 possible: true,
+ //aca vamos a tener que agregar el porcentaje del precio a pagar a modo de seña
               }}
               validationSchema={validationSchema}
               //Al hacer click te tiene que mandar a mercadopago
               onSubmit={async (values, { setSubmitting }) => {
-                // console.log("Valores del formulario:", values);
+                console.log("Valores del formulario:", values);
                 try {
                   if (values.image && typeof values.image === "object") {
                     const imageUrl = await uploadImage(values.image);
                     values.image = imageUrl;
                   }
-                  //if pagoAprobado ---> que te mande a appointment solo si solo el pago esta aprobado
+                  
                   const response = await axios.post(
                     `${URL_BASE}/appointments`,
                     { ...values, tattooArtistId: id, customerId: user.id }
