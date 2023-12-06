@@ -22,7 +22,7 @@ const Price = () => {
     "Grande a color": { size: "Grande a color" ,priceMin: '', priceMax: '' , artistId:user.id},
     });
 
-
+   
   
   const handleInputChange = (size, field, value) => {
     setPrices((prevPrices) => ({
@@ -38,9 +38,14 @@ const Price = () => {
     event.preventDefault();
 
     for( let size in prices){
-      const data = { size:prices[size].size , priceMin:prices[size].priceMin , priceMax:prices[size].priceMax , artistId: prices[size].artistId,}
+      const data = { 
+        size:prices[size].size , 
+        priceMin:prices[size].priceMin , 
+        priceMax:prices[size].priceMax , 
+        artistId: prices[size].artistId,
+      }
       try {
-          console.log(data, "DATAAAAAAAAAA")  
+        
          await axios.post(`${URL_BASE}/priceRange`, data);
         
       } catch (error) {
@@ -49,6 +54,7 @@ const Price = () => {
     }
   };
 
+ 
   return (
     <div className='bg-secondary-100 p-8 rounded-xl w-full'>
       <form onSubmit={handleSubmit}>
@@ -85,7 +91,15 @@ const Price = () => {
           Guardar Precios
         </button>
       </form>
+
+
+
+
+      
     </div>
+      
+      
+    
   );
 };
 
