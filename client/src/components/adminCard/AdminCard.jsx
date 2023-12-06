@@ -15,7 +15,7 @@ import { openModalDeleteArtistAction } from "@/app/redux/features/modalDeleteArt
 
 
 export default function AdminCard({fullName,location,shopName,image, id}){
-  console.log(fullName,"NOMBREE")
+  
   const dispatch = useDispatch()
 
    const handleBannear = ()=>{

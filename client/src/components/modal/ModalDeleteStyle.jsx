@@ -5,11 +5,11 @@ import { RiAlertFill, RiCloseFill, RiCheckFill } from "react-icons/ri";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { removeStyle } from '@/app/redux/features/styles/stylesActions';
 import { DeleteArtists } from "@/app/redux/features/artists/artistActions";
 import { closeModalDeleteStyleAction } from '@/app/redux/features/modalDeleteStyle/modalDeleteStyleAction';
 
-const ModalDeleteArtist = () => {
+const ModalDeleteStyle = () => {
     
     const dispatch = useDispatch();
     const URL_BASE = "http://localhost:3001"
@@ -21,22 +21,20 @@ const ModalDeleteArtist = () => {
     }
 
     useEffect(() => {
-      
       setId(data);
-      
     },[id]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         try {
-            
+            dispatch(removeStyle(id))
             dispatch(closeModalDeleteStyleAction());
             toast.success(`El estilo se eliminó con éxito`, {
-              className: "toastSuccess",
-              position: toast.POSITION.BOTTOM_RIGHT,
-              autoClose: 3000,
-              hideProgressBar: true,
-            });
+            className: "toastSuccess",
+            position: toast.POSITION.BOTTOM_RIGHT,
+            autoClose: 3000,
+            hideProgressBar: true,
+        });
         } catch (error) {
             toast.error(`Hubo un error al eliminar el estilo`, {
               className: "toastError",
@@ -52,7 +50,7 @@ const ModalDeleteArtist = () => {
     <>
         {
             isOpen &&
-            <div className='fixed top-0 left-0 flex justify-center items-center w-full h-full z-40'  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} >
+            <div className='fixed top-0 left-0 flex justify-center items-center w-full h-full z-50'  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} >
                 <div className='w-full h-full flex justify-center items-center relative'>
                     <RiCloseFill className='absolute top-2 right-2 text-white text-[35px] cursor-pointer hover:text-primary' onClick={handleClose}/>
                     <div className="bg-secondary-900 z-50 opacity-100  w-[400px] flex flex-col p-6 rounded-lg">
@@ -72,4 +70,4 @@ const ModalDeleteArtist = () => {
   )
 }
 
-export default ModalDeleteArtist
+export default ModalDeleteStyle
