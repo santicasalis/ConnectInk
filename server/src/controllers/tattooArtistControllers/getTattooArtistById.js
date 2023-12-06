@@ -45,9 +45,6 @@ const getTattooArtistById = async (id) => {
     ],
   });
 
-  // const appointments = await Appointment.findAll({where: {TattooArtistId: tattooArtist.id}})
-
-  console.log(tattooArtist)
   return {
     id: tattooArtist.id,
     fullName: tattooArtist.fullName,

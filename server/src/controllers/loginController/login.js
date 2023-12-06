@@ -36,8 +36,11 @@ const login = async (tokenId) => {
       {
         model: Appointment,
         as: "appointments",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
-      }
+        foreignKey: "TattooArtist_Appointment",
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
+        where: { disabled: false },
+        required: false
+      },
     ],
   });
 
@@ -114,8 +117,11 @@ const login = async (tokenId) => {
         {
           model: Appointment,
           as: "appointments",
-          attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
-        }
+          foreignKey: "Customer_Appointment",
+          attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
+          where: { disabled: false },
+          required: false
+        },
       ]
     });
 
