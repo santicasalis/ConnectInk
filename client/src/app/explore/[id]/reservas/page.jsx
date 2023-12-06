@@ -34,12 +34,12 @@ const bookAppointment = ({params}) => {
   const dispatch = useDispatch()
 
   const durations = {
-    pequeño: 1,
-    "pequeño a color": 1,
-    "mediano a color": 2,
-    mediano: 2,
-    grande: 3,
-    "grande a color": 3,
+    Pequeño: 1,
+    "Pequeño a color": 1,
+    "Mediano a color": 2,
+    Mediano: 2,
+    Grande: 3,
+    "Grande a color": 3,
   }
 
   useEffect(() => {
@@ -83,13 +83,17 @@ const bookAppointment = ({params}) => {
     let objH = {}
     artist?.timeAvailabilities?.forEach((av) => {
       dayData.map((da) => {
-        if(da.day === av.day){
+        if(da.day === av.day && av?.initialHour && av?.finalHour){
           objH[da.number] = createHourArray(Number(av.initialHour.slice(0, 2)), Number(av.finalHour.slice(0, 2)))
         }
       })
     })
     exception?.forEach((ex) => {
-      objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+      if(ex.initialHour){
+        objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+      } else {
+        objH[ex] = []
+      }
     })
     artist?.appointments?.forEach((appointment) => {
       const [date, time] = appointment.dateAndTime.split("T")
@@ -123,7 +127,7 @@ const bookAppointment = ({params}) => {
 
     if(view == "month"){
       
-      if (date < new Date(Date.now()) || !(obj[date.getDay()] || exception.includes(date.toDateString()))) {
+      if (date < new Date(Date.now()) || !(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString())))) {
         return "text-gray-500"
       }
       if (date.toDateString() === selectedDate.toDateString() && (objHours[selectedDate.getDay()] || objHours[selectedDate.toDateString()])) {
@@ -156,8 +160,7 @@ const bookAppointment = ({params}) => {
   }
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
-    if(view == "month") return (!(obj[date.getDay()] || exception.includes(date.toDateString())))
-    // if(view == "year") return !(date.valueOf() >= (new Date(Date.now())).valueOf())
+    if(view == "month") return (!(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString()))))
   }
 
   const changeDate = (form, date) => {
@@ -216,14 +219,13 @@ const bookAppointment = ({params}) => {
                   <label htmlFor="size" >Selecciona una opción:</label>
                   <Field as="select" name="size">
                     <option value="" disabled>Selecciona una opcion</option>
-                    <option value="pequeño">Pequeño</option>
-                    <option value="pequeño a color">Pequeño a color</option>
-                    <option value="mediano">Mediano</option>
-                    <option value="mediano a color">Mediano a color</option>
-                    <option value="grande">Grande</option>
-                    <option value="grande a color">Grande a color</option>
+                    <option value="Pequeño">Pequeño</option>
+                    <option value="Pequeño a color">Pequeño a color</option>
+                    <option value="Mediano">Mediano</option>
+                    <option value="Mediano a color">Mediano a color</option>
+                    <option value="Grande">Grande</option>
+                    <option value="Grande a color">Grande a color</option>
                   </Field>
-                  
                   {objHours[selectedDate.getDay()] && values.size && (values.possible = isPossible(Number(durations[values.size]), Number(selectedTime),  Number(objHours[selectedDate.getDay()].at(-1)) + 1))}
                   <ErrorMessage
                     name="fullName"
@@ -271,12 +273,12 @@ const bookAppointment = ({params}) => {
                         {showTime && 
                         <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
                           <option name="dateTime" value="" disabled>Seleccionar horario</option>
-                          {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()]).map((hour) => {
-                            console.log(hour)
+                          {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()])?.map((hour) => {
                             return <option key={hour} name="dateTime">{hour}</option>
                           })}
                         </select>}
                       </div>
+                      {console.log(artist)}
                     </div>
                   )}
                 </Field>
