@@ -1,20 +1,33 @@
 const { PriceRange } = require("../../db");
 
-const updatePriceRange = async (id, size, image, priceMin, priceMax) => {
-  const PriceRangeFounded = await PriceRange.findByPk(id);
-  if (PriceRangeFounded) {
-    await PriceRange.update(
+const updatePriceRange = async (id, priceMin, priceMax) => {
+  const priceRangeFound = await PriceRange.findByPk(id);
+  if (!priceRangeFound) {
+    return { code: 404, error: "Price range not found" };
+  }
+
+  if (priceMin > priceMax) {
+    return {
+      code: 400,
+      error: "The minimum price must be less than the maximum price",
+    };
+  }
+
+  try {
+    const updatedPriceRange = await PriceRange.update(
       {
-        size: size,
-        image: image,
         priceMin: priceMin,
         priceMax: priceMax,
       },
       { where: { id: id } }
     );
-    return "price range updated successfully";
-  } else {
-    return "Not found";
+    return {
+      code: 201,
+      message: "Price range updated successfully",
+      data: updatedPriceRange,
+    };
+  } catch (error) {
+    return { code: 400, error: "Something went wrong" };
   }
 };
 
