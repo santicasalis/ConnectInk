@@ -5,7 +5,6 @@ const {
   TimeAvailability,
   TimeAvailabilityException,
   PriceRange,
-  CustomerTattooArtistAppointment,
   Appointment,
 } = require("../../db");
 
@@ -39,26 +38,14 @@ const getTattooArtistById = async (id) => {
         model: Appointment,
         as: "appointments",
         foreignKey: "TattooArtist_Appointment",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"],
         where: { disabled: false },
         required: false
       },
     ],
   });
 
-
-
-  // const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
-  //   where: { TattooArtistId: id },
-  //   include: [
-  //     {
-  //       model: Appointment,
-  //       required: false
-  //     },
-  //   ],
-  // });
-
-  const appointments = await Appointment.findAll({where: {TattooArtistId: tattooArtist.id}})
+  // const appointments = await Appointment.findAll({where: {TattooArtistId: tattooArtist.id}})
 
   console.log(tattooArtist)
   return {

@@ -37,7 +37,6 @@ sequelize.models = Object.fromEntries(capsEntries);
 const {
   Admin,
   Customer,
-  CustomerTattooArtistAppointment,
   Appointment,
   PriceRange,
   Publication,
@@ -48,17 +47,7 @@ const {
   TimeAvailabilityException,
 } = sequelize.models;
 
-// Customer - TattooArtist - Appointment relation:
-// Customer.belongsToMany(TattooArtist, {
-//   through: CustomerTattooArtistAppointment,
-//   unique: false,
-// });
-// TattooArtist.belongsToMany(Customer, {
-//   through: CustomerTattooArtistAppointment,
-//   unique: false,
-// });
-// CustomerTattooArtistAppointment.belongsTo(Appointment);
-// Appointment.hasOne(CustomerTattooArtistAppointment);
+
 
 TattooArtist.hasMany(Appointment, {
   foreignKey: 'TattooArtist_Appointment',
