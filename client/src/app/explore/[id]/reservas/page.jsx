@@ -64,7 +64,7 @@ const bookAppointment = ({params}) => {
   function createHourArray(initialTime, FinalTime) {
     let resultado = [];
     for (let i = initialTime; i < FinalTime; i++) {
-      resultado.push(i);
+      resultado.push(`${i} a ${i + 1}`);
     }
     return resultado;
   }
@@ -73,7 +73,7 @@ const bookAppointment = ({params}) => {
     let resultado = [];
     for (let i = initialTime; i <= FinalTime; i++) {
       if(i >= initialTimeApp && i <= FinalTimeApp) continue
-      resultado.push(i);
+      resultado.push(`${i} a ${i + 1}`);
     }
     return resultado;
   }
@@ -96,13 +96,14 @@ const bookAppointment = ({params}) => {
       }
     })
     artist?.appointments?.forEach((appointment) => {
-      const [date, time] = appointment.dateAndTime.split("T")
-      const appointmentTime = Number(time.slice(0, 2))
-      const [ye, mo, da] = date.split("-")
-      const appointmentDate = new Date(ye, mo, da)
-      let initial = objH[appointmentDate.getDay()]?.at(0) || objH[appointmentDate?.toDateString().at(0)]
-      let final = objH[appointmentDate.getDay()]?.at(-1) || objH[appointmentDate?.toDateString().at(-1)]
-      objH[appointmentDate.toDateString()] = createHourArrayWithAppointment(initial, final, appointmentTime, appointmentTime + appointment.duration)
+      const dateAndTime = new Date(appointment.dateAndTime)
+      const time = dateAndTime.getHours()
+      const date = dateAndTime.toDateString()
+      let initial = Number((objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2))
+      let final = Number((objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2))
+      console.log(initial)
+      console.log(final)
+      objH[date] = createHourArrayWithAppointment(initial, final, time, time + appointment.duration)
     })
     setObjHours(objH)
   }
