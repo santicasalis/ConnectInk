@@ -7,6 +7,8 @@ const getCustomerById = async (id) => {
         include: [
             {
                 model: Appointment,
+                where: { disabled: false },
+                required: false
             },
         ],
     });
