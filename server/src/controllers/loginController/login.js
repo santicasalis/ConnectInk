@@ -133,7 +133,7 @@ const login = async (tokenId) => {
       image: userCustomer.image,
       disabled: userCustomer.disabled,
       userType: userCustomer.userType,
-      appointments: userCustomer.Appointment?.map(appointment => {
+      appointments: userCustomer.appointments?.map(appointment => {
         return {
           id: appointment.id,
           size: appointment.size,

@@ -20,7 +20,7 @@ export default function Reservas() {
 
      return (
       <div className=''>
-        {appointment && appointment.length > 0 ? (
+        {/* {appointment && appointment.length > 0 ? (
           appointment.map((appointmentData, index) => (
             <div key={index} className='mt-[50px]'>
               <BookingCard bodyPlace={appointmentData.bodyPlace} />
@@ -28,7 +28,7 @@ export default function Reservas() {
           ))
         ) : (
           <p>No tienes ninguna reserva aún.</p>
-        )}
+        )} */}
       </div>
     );
   }

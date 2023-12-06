@@ -49,8 +49,9 @@ const bookAppointment = ({params}) => {
       getHours()
     }
     artist?.timeAvailabilityExceptions?.map((e) =>{
+      console.log(e)
       const [exY, exM, exD] = e.date.split("-")
-      const date = new Date(exY, exM, exD)
+      const date = new Date(exY, exM - 1, exD)
       array.push(date.toDateString())
     })
     setException(array)
@@ -64,7 +65,7 @@ const bookAppointment = ({params}) => {
   function createHourArray(initialTime, FinalTime) {
     let resultado = [];
     for (let i = initialTime; i < FinalTime; i++) {
-      resultado.push(`${i} a ${i + 1}`);
+      resultado.push(`${i}hs`);
     }
     return resultado;
   }
@@ -73,7 +74,7 @@ const bookAppointment = ({params}) => {
     let resultado = [];
     for (let i = initialTime; i <= FinalTime; i++) {
       if(i >= initialTimeApp && i <= FinalTimeApp) continue
-      resultado.push(`${i} a ${i + 1}`);
+      resultado.push(`${i}hs`);
     }
     return resultado;
   }
@@ -88,9 +89,9 @@ const bookAppointment = ({params}) => {
         }
       })
     })
-    exception?.forEach((ex) => {
+    artist?.timeAvailabilityExceptions?.forEach((ex, index) => {
       if(ex.initialHour){
-        objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+        objH[exception[index]] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
       } else {
         objH[ex] = []
       }
@@ -101,8 +102,6 @@ const bookAppointment = ({params}) => {
       const date = dateAndTime.toDateString()
       let initial = Number((objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2))
       let final = Number((objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2))
-      console.log(initial)
-      console.log(final)
       objH[date] = createHourArrayWithAppointment(initial, final, time, time + appointment.duration)
     })
     setObjHours(objH)
@@ -113,7 +112,7 @@ const bookAppointment = ({params}) => {
     let numobj = {}
     artist?.timeAvailabilities?.map((av) => {
       dayData.map((da) => {
-        if(da.day === av.day){
+        if(da.day === av.day && av.initialHour){
           array.push(da.number)
         }
       })
@@ -123,6 +122,8 @@ const bookAppointment = ({params}) => {
     }
     setObj(numobj)
   }
+
+  console.log(obj)
 
   const tileStyles = ({date, view}) => {
 
@@ -272,14 +273,20 @@ const bookAppointment = ({params}) => {
                       />
                       <div className="text-black">
                         {showTime && 
-                        <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
-                          <option name="dateTime" value="" disabled>Seleccionar horario</option>
-                          {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()])?.map((hour) => {
-                            return <option key={hour} name="dateTime">{hour}</option>
-                          })}
-                        </select>}
+                        <div className="text-gray-300">
+                          <p>Horario del comienzo del turno</p>
+                          <select name="dateTime" value={selectedTime} onChange={(event) => handleTime(form, event)}>
+                            <option name="dateTime" value="" disabled>Seleccionar horario inicial</option>
+                            {(objHours[selectedDate.toDateString()] || objHours[selectedDate.getDay()])?.map((hour) => {
+                              return <option key={hour} name="dateTime">{hour}</option>
+                            })}
+                          </select>
+                        </div>
+                        }
+                        {(values.duration && values.dateAndTime) && 
+                        <p></p>
+                        }
                       </div>
-                      {console.log(artist)}
                     </div>
                   )}
                 </Field>
