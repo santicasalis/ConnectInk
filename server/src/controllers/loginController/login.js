@@ -7,7 +7,8 @@ const {
   PriceRange,
   Customer,
   Admin,
-  Appointment
+  Appointment,
+  Review
 } = require("../../db");
 
 const login = async (tokenId) => {
@@ -36,7 +37,18 @@ const login = async (tokenId) => {
       {
         model: Appointment,
         as: "appointments",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
+        foreignKey: "TattooArtist_Appointment",
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "Customer_Appointment"],
+        where: { disabled: false },
+        required: false
+      },
+      {
+        model: Review,
+        as: "reviews",
+        foreignKey: "TattooArtist_Review",
+        attributes: ["id", "comment", "rating", "Customer_Review", "Appointment_Review"],
+        where: { disabled: false },
+        required: false
       }
     ],
   });
@@ -90,7 +102,7 @@ const login = async (tokenId) => {
           priceMax: priceRange.priceMax,
         };
       }),
-      appointments: user.Appointment?.map(appointment => {
+      appointments: tattooArtist.appointments?.map((appointment) => {
         return {
           id: appointment.id,
           size: appointment.size,
@@ -101,7 +113,16 @@ const login = async (tokenId) => {
           duration: appointment.duration,
           depositPrice: appointment.depositPrice,
           paymentId: appointment.paymentId,
-          customerId: appointment.CustomerId
+          CustomerId: appointment.Customer_Appointment
+        }
+      }),
+      reviews: tattooArtist.reviews?.map((review) => {
+        return {
+          comment: review.comment,
+          image: review.image,
+          rating: review.rating,
+          customerId: review.Customer_Review,
+          appointmentId: review.Appointment_Review
         }
       })
     };
@@ -109,12 +130,23 @@ const login = async (tokenId) => {
 
   if (!user) {
     let userCustomer = await Customer.findOne({
-      where: { tokenId: tokenId, disabled: false},
+      where: { tokenId: tokenId, disabled: false },
       include: [
         {
           model: Appointment,
           as: "appointments",
-          attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
+          foreignKey: "Customer_Appointment",
+          attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtist_Appointment"],
+          where: { disabled: false },
+          required: false
+        },
+        {
+          model: Review,
+          as: "reviews",
+          foreignKey: "Customer_Review",
+          attributes: ["id", "comment", "rating", "TattooArtist_Review", "Appointment_Review"],
+          where: { disabled: false },
+          required: false
         }
       ]
     });
@@ -127,7 +159,7 @@ const login = async (tokenId) => {
       image: userCustomer.image,
       disabled: userCustomer.disabled,
       userType: userCustomer.userType,
-      appointments: userCustomer.Appointment?.map(appointment => {
+      appointments: customer.appointments?.map((appointment) => {
         return {
           id: appointment.id,
           size: appointment.size,
@@ -138,7 +170,16 @@ const login = async (tokenId) => {
           duration: appointment.duration,
           depositPrice: appointment.depositPrice,
           paymentId: appointment.paymentId,
-          tattooArtistId: appointment.TattooArtistId
+          tattooArtistId: appointment.TattooArtist_Appointment
+        }
+      }),
+      reviews: customer.reviews?.map((review) => {
+        return {
+          comment: review.comment,
+          image: review.image,
+          rating: review.rating,
+          tattooArtistId: review.TattooArtist_Review,
+          appointmentId: review.Appointment_Review
         }
       })
     };
