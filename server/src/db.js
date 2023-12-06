@@ -61,50 +61,50 @@ const {
 // Appointment.hasOne(CustomerTattooArtistAppointment);
 
 TattooArtist.hasMany(Appointment, {
-  foreignKey: 'id',
+  foreignKey: 'TattooArtist_Appointment',
   as: 'appointments'
 });
 Appointment.belongsTo(TattooArtist, {
-  foreignKey: 'id',
+  foreignKey: 'TattooArtist_Appointment', 
   as: 'tattooArtist'
 });
 
 
 Customer.hasMany(Appointment, {
-  foreignKey: 'id',
+  foreignKey: 'Customer_Appointment',
   as: 'appointments'
 });
 Appointment.belongsTo(Customer, {
-  foreignKey: 'id',
+  foreignKey: 'Customer_Appointment',
   as: 'customer'
 });
 
 // TattooArtist - Review relation:
 TattooArtist.hasMany(Review, {
-  foreignKey: 'id',
+  foreignKey: 'TattooArtist_Review',
   as: 'reviews'
 });
 Review.belongsTo(TattooArtist, {
-  foreignKey: 'id',
+  foreignKey: 'TattooArtist_Review',
   as: 'tattooArtist'
 });
 
 
 Customer.hasMany(Review, {
-  foreignKey: 'id',
+  foreignKey: 'Customer_Review',
   as: 'reviews'
 });
 Review.belongsTo(Customer, {
-  foreignKey: 'id',
+  foreignKey: 'Customer_Review',
   as: 'customer'
 });
 
 Appointment.hasMany(Review, {
-  foreignKey: 'id',
+  foreignKey: 'Appointment_Review',
   as: 'reviews'
 });
 Review.belongsTo(Appointment, {
-  foreignKey: 'id',
+  foreignKey: 'Appointment_Review',
   as: 'appointment'
 });
 

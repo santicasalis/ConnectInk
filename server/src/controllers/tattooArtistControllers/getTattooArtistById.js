@@ -38,10 +38,14 @@ const getTattooArtistById = async (id) => {
       {
         model: Appointment,
         as: "appointments",
+        foreignKey: "TattooArtist_Appointment",
         attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtistId", "CustomerId"]
       }
     ],
   });
+
+
+
   // const appointmentsByArtist = await CustomerTattooArtistAppointment.findAll({
   //   where: { TattooArtistId: id },
   //   include: [
@@ -51,6 +55,10 @@ const getTattooArtistById = async (id) => {
   //     },
   //   ],
   // });
+
+  const appointments = await Appointment.findAll({where: {TattooArtistId: tattooArtist.id}})
+
+  console.log(tattooArtist)
   return {
     id: tattooArtist.id,
     fullName: tattooArtist.fullName,
@@ -105,7 +113,7 @@ const getTattooArtistById = async (id) => {
         priceMax: priceRange.priceMax,
       };
     }),
-    appointments: tattooArtist.Appointment?.map((appointment) => {
+    appointments: tattooArtist.appointments?.map((appointment) => {
       return {
         id: appointment.id,
         size: appointment.size,

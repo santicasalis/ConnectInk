@@ -11,15 +11,8 @@ const createAppointmentHandler = async (req, res) => {
     dateAndTime,
   } = req.body;
 
-  console.log(tattooArtistId,
-    customerId,
-    size,
-    image,
-    bodyPlace,
-    description,
-    dateAndTime)
+  console.log(dateAndTime)
 
-    console.log(req.body)
   try {
     const newAppointment = await createAppointment({
       tattooArtistId,
@@ -30,7 +23,7 @@ const createAppointmentHandler = async (req, res) => {
       description,
       dateAndTime,
     });
-    console.log(newAppointment)
+
     if (newAppointment.code === 201) {
       res
         .status(201)

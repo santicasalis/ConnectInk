@@ -34,12 +34,12 @@ const bookAppointment = ({params}) => {
   const dispatch = useDispatch()
 
   const durations = {
-    pequeño: 1,
-    "pequeño a color": 1,
-    "mediano a color": 2,
-    mediano: 2,
-    grande: 3,
-    "grande a color": 3,
+    Pequeño: 1,
+    "Pequeño a color": 1,
+    "Mediano a color": 2,
+    Mediano: 2,
+    Grande: 3,
+    "Grande a color": 3,
   }
 
   useEffect(() => {
@@ -219,14 +219,13 @@ const bookAppointment = ({params}) => {
                   <label htmlFor="size" >Selecciona una opción:</label>
                   <Field as="select" name="size">
                     <option value="" disabled>Selecciona una opcion</option>
-                    <option value="pequeño">Pequeño</option>
-                    <option value="pequeño a color">Pequeño a color</option>
-                    <option value="mediano">Mediano</option>
-                    <option value="mediano a color">Mediano a color</option>
-                    <option value="grande">Grande</option>
-                    <option value="grande a color">Grande a color</option>
+                    <option value="Pequeño">Pequeño</option>
+                    <option value="Pequeño a color">Pequeño a color</option>
+                    <option value="Mediano">Mediano</option>
+                    <option value="Mediano a color">Mediano a color</option>
+                    <option value="Grande">Grande</option>
+                    <option value="Grande a color">Grande a color</option>
                   </Field>
-                  
                   {objHours[selectedDate.getDay()] && values.size && (values.possible = isPossible(Number(durations[values.size]), Number(selectedTime),  Number(objHours[selectedDate.getDay()].at(-1)) + 1))}
                   <ErrorMessage
                     name="fullName"
@@ -279,8 +278,7 @@ const bookAppointment = ({params}) => {
                           })}
                         </select>}
                       </div>
-                      {console.log(exception)}
-                      {console.log(objHours)}
+                      {console.log(artist)}
                     </div>
                   )}
                 </Field>

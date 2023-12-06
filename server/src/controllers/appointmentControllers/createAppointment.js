@@ -8,12 +8,12 @@ const {
 } = require("../../db");
 
 const sizesAndDurations = {
-  pequeño: 1,
-  "pequeño a color": 1,
-  mediano: 2,
-  "mediano a color": 2,
-  grande: 3,
-  "grande a color": 3,
+  Pequeño: 1,
+  "Pequeño a color": 1,
+  Mediano: 2,
+  "Mediano a color": 2,
+  Grande: 3,
+  "Grande a color": 3,
 };
 
 const daysOfWeekNames = [
@@ -35,6 +35,7 @@ const createAppointment = async ({
   description,
   dateAndTime,
 }) => {
+  console.log(tattooArtistId, customerId, size, image, bodyPlace, description, dateAndTime)
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
@@ -99,8 +100,7 @@ const createAppointment = async ({
   if (hourSlice + sizesAndDurations[size] > finalHourDate.getHours()) {
     return { code: 400, error: "The appointment must start earlier" };
   }
-  //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno
-  console.log(hourSlice, sizesAndDurations[size], finalHourDate.getHours)
+  //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno  
   if (hourSlice + sizesAndDurations[size] <= finalHourDate.getHours()) {
     try {
       const appointment = await Appointment.create({
@@ -111,25 +111,17 @@ const createAppointment = async ({
         dateAndTime,
         duration: sizesAndDurations[size],
         depositPrice: 1,
-        CustomerId: customerId,
-        TattooArtistId: tattooArtistId
+        Customer_Appointment: customerId,
+        TattooArtist_Appointment: tattooArtistId
       });
-      //se crean las relaciones en la tabla de unión
-      // try {
-      //   await CustomerTattooArtistAppointment.create({
-      //     CustomerId: customer.id,
-      //     TattooArtistId: tattooArtist.id,
-      //     AppointmentId: appointment.id,
-      //   });
-      //   return {
-      //     code: 201,
-      //     message: "Appointment created successfully",
-      //     data: appointment,
-      //   };
-      // } catch (error) {
-      //   return { code: 400, error: "Something went wrong" };
-      // }
+
+      return {
+        code: 201,
+        message: "Appointment created successfully",
+        data: appointment,
+      };
     } catch (error) {
+      console.log(error)
       return { code: 400, error: "Something went wrong" };
     }
   }
