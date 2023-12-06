@@ -52,7 +52,7 @@ const ModalDeleteArtist = () => {
     <>
         {
             isOpen &&
-            <div className='fixed top-0 left-0 flex justify-center items-center w-full h-full z-40'  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} >
+            <div className='fixed top-0 left-0 flex justify-center items-center w-full h-full z-50'  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} >
                 <div className='w-full h-full flex justify-center items-center relative'>
                     <RiCloseFill className='absolute top-2 right-2 text-white text-[35px] cursor-pointer hover:text-primary' onClick={handleClose}/>
                     <div className="bg-secondary-900 z-50 opacity-100  w-[400px] flex flex-col p-6 rounded-lg">

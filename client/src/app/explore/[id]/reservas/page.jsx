@@ -39,6 +39,13 @@ const bookAppointment = ({ params }) => {
     grande: 3,
     "grande a color": 3,
   };
+    Pequeño: 1,
+    "Pequeño a color": 1,
+    "Mediano a color": 2,
+    Mediano: 2,
+    Grande: 3,
+    "Grande a color": 3,
+  }
 
   useEffect(() => {
     let array = [];
@@ -84,20 +91,18 @@ const bookAppointment = ({ params }) => {
     let objH = {};
     artist?.timeAvailabilities?.forEach((av) => {
       dayData.map((da) => {
-        if (da.day === av.day) {
-          objH[da.number] = createHourArray(
-            Number(av.initialHour.slice(0, 2)),
-            Number(av.finalHour.slice(0, 2))
-          );
+        if(da.day === av.day && av?.initialHour && av?.finalHour){
+          objH[da.number] = createHourArray(Number(av.initialHour.slice(0, 2)), Number(av.finalHour.slice(0, 2)))
         }
       });
     });
     exception?.forEach((ex) => {
-      objH[ex] = createHourArray(
-        Number(ex?.initialHour?.slice(0, 2)) || 6,
-        Number(ex?.finalHour?.slice(0, 2)) || 23
-      );
-    });
+      if(ex.initialHour){
+        objH[ex] = createHourArray(Number(ex?.initialHour?.slice(0, 2)) || 6, Number(ex?.finalHour?.slice(0, 2)) || 23)
+      } else {
+        objH[ex] = []
+      }
+    })
     artist?.appointments?.forEach((appointment) => {
       const [date, time] = appointment.dateAndTime.split("T");
       const appointmentTime = Number(time.slice(0, 2));
@@ -135,13 +140,12 @@ const bookAppointment = ({ params }) => {
     setObj(numobj);
   };
 
-  const tileStyles = ({ date, view }) => {
-    if (view == "month") {
-      if (
-        date < new Date(Date.now()) ||
-        !(obj[date.getDay()] || exception.includes(date.toDateString()))
-      ) {
-        return "text-gray-500";
+  const tileStyles = ({date, view}) => {
+
+    if(view == "month"){
+      
+      if (date < new Date(Date.now()) || !(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString())))) {
+        return "text-gray-500"
       }
       if (
         date.toDateString() === selectedDate.toDateString() &&
@@ -177,8 +181,7 @@ const bookAppointment = ({ params }) => {
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view == "month")
-      return !(obj[date.getDay()] || exception.includes(date.toDateString()));
-    // if(view == "year") return !(date.valueOf() >= (new Date(Date.now())).valueOf())
+      return !(obj[date.getDay()] || (objHours[date.toDateString] && exception.includes(date.toDateString()));)
   };
 
   const changeDate = (form, date) => {
@@ -217,6 +220,63 @@ const bookAppointment = ({ params }) => {
           {sent ? (
             <h1>Turno creado con exito!</h1>
           ) : (
+          <Formik
+            initialValues={{
+              size: "",
+              image: null,
+              bodyPlace: "",
+              description: "",
+              dateAndTime: "",
+              duration: "",
+              possible: true
+            }}
+            validationSchema={validationSchema}
+            onSubmit={async (values, {setSubmitting}) => {
+              try{
+                if(values.image && typeof values.image === "object"){
+                  const imageUrl = await uploadImage(values.image);
+                  values.image = imageUrl;
+                }
+                const response = await axios.post(`${URL_BASE}/appointments`, {...values, tattooArtistId: id, customerId: user.id})
+                setSent(true)
+              } catch(error) {
+                throw Error("Error en el formulario")
+              }
+              setSubmitting(false)
+            }}
+          >
+          {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
+            <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+              <div className="info-artist mb-4">
+                <div className="p-2 m-2">
+                  <label htmlFor="size" >Selecciona una opción:</label>
+                  <Field as="select" name="size">
+                    <option value="" disabled>Selecciona una opcion</option>
+                    <option value="Pequeño">Pequeño</option>
+                    <option value="Pequeño a color">Pequeño a color</option>
+                    <option value="Mediano">Mediano</option>
+                    <option value="Mediano a color">Mediano a color</option>
+                    <option value="Grande">Grande</option>
+                    <option value="Grande a color">Grande a color</option>
+                  </Field>
+                  {objHours[selectedDate.getDay()] && values.size && (values.possible = isPossible(Number(durations[values.size]), Number(selectedTime),  Number(objHours[selectedDate.getDay()].at(-1)) + 1))}
+                  <ErrorMessage
+                    name="fullName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
+                <Field
+                  type="text"
+                  name="bodyPlace"
+                  placeholder="Lugar del cuerpo"
+                  className="p-2 mb-3 shadow-md block w-full"
+                />
+                <ErrorMessage
+                  name="bodyPlace"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
             <Formik
               initialValues={{
                 size: "",
