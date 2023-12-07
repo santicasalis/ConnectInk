@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    //if(paymentId){<button classname: "enable">Finalizar reserva<button>}
+   
     paymentId: {
       type: DataTypes.STRING,
       allowNull: true,

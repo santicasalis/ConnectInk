@@ -50,6 +50,7 @@ const createAppointment = async ({
     description,
     dateAndTime
   );
+
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
