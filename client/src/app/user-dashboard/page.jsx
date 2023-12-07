@@ -11,9 +11,12 @@ function UDashboard() {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
 
-  const user = useSelector((state) => state.user.logedInUser)
+  const user = useSelector((state) => state.user.logedInUser);
 
-  console.log(user)
+  console.log(user);
+  console.log(user.appointments);
+  console.log(user.appointments[0].artist);
+  console.log(user.appointments[0].data);
 
   useEffect(() => {
     const fetchData = async () => {

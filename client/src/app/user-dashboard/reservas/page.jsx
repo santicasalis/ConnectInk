@@ -12,13 +12,8 @@ export default function Reservas() {
     
   const appointment = user.appointments
 
-  
-
-  console.log(user, "holaaa")
- 
-
-
-     return (
+  return (
+    
       <div className=''>
         {appointment && appointment.length > 0 ? (
           appointment.map((tur) => (
@@ -39,5 +34,6 @@ export default function Reservas() {
           <p>No tienes ninguna reserva aún.</p>
         )}
       </div>
+      
     );
   }
