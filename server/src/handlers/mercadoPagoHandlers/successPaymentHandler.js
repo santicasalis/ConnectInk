@@ -1,8 +1,9 @@
+const successPayment = require("../../controllers/mercadoPagoControllers/successPayment");
+
 const successPaymentHandler = async (req, res) => {
-  const { id } = req.body;
   const { payment_id } = req.query;
   try {
-    const confirmedAppointment = await successPayment(id, payment_id);
+    const confirmedAppointment = await successPayment( payment_id );
     res.status(200).send("Pago aprobado");
     console.log(confirmedAppointment);
   } catch (error) {

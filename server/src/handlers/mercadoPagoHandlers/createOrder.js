@@ -24,9 +24,9 @@ const createOrder = async (req, res) => {
         ],
         //hay que definir las rutas
         back_urls: {
-          failure: "",
-          pending: "",
-          success: "http://localhost:3001/user-dashboard/reservas",
+          failure: "http://localhost:3000/[id]/booking",
+          pending: "http://localhost:3000/user-dashboard/reservas",
+          success: "http://localhost:3001/payment/success",
         },
       },
     };
