@@ -41,19 +41,6 @@ const createAppointment = async ({
   description,
   dateAndTime,
 }) => {
-<<<<<<< HEAD
-  console.log(
-    tattooArtistId,
-    customerId,
-    size,
-    image,
-    bodyPlace,
-    description,
-    dateAndTime
-  );
-
-=======
->>>>>>> ea35d4d123b3ae7c5d6df0730115e42c0b0823af
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {

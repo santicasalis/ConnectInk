@@ -224,7 +224,7 @@ const bookAppointment = ({ params }) => {
       <div className="w-full  p-4 shadow-lg flex justify-center">
         <div className="p-4 rounded border-primary border-[2px] shadow-lg">
           {sent ? (
-            <h1>Turno creado con exito!</h1>
+            <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
           ) : (
             <Formik
               initialValues={{
@@ -260,7 +260,10 @@ const bookAppointment = ({ params }) => {
                   const paymentMpResponse = paymentMp.data;
 
                   if (paymentMpResponse) {
-                    window.location.href = paymentMpResponse.init_point;
+                    setTimeout(() => {
+                      window.location.href = paymentMpResponse.init_point;
+                    }, 3000);
+                    
                   }
 
                   setSent(true);

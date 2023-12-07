@@ -1,15 +1,14 @@
 const { Appointment } = require("../../db");
 
-const successPayment = async (payment_id) => {
-  const appointmentFound = await Appointment.findOne({order:[["createdAt", "desc"]]});
-  console.log(appointmentFound);
+const successPayment = async (id, payment_id) => {
+  const appointmentFound = await Appointment.findByPk(id);
   if (appointmentFound) {
     await Appointment.update(
       {
         paymentId: payment_id,
       },
       {
-        where: { id: appointmentFound.id },
+        where: { id: id },
       }
     );
     return appointmentFound;
