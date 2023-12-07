@@ -1,8 +1,9 @@
 "use client"
 import React from 'react'
 import { TbCalendarCheck } from "react-icons/tb";
-import { PiWatchLight } from "react-icons/pi";
-import { MdOutlinePendingActions, MdOutlineEmail } from "react-icons/md";
+import { RiHeart3Line, RiHeart3Fill, RiEditFill, RiDeleteBin6Fill, RiMoreFill, RiMessage3Line, RiEmotionHappyLine } from "react-icons/ri";
+import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
+import { MdOutlineAttachMoney } from "react-icons/md";
 import { IoBodyOutline } from "react-icons/io5";
 import { FaMapPin, FaPhone } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
@@ -10,20 +11,22 @@ import { useEffect } from 'react';
 import axios from "axios"
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const BookingCard = ({appointmentData}) => {
+const BookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, tattooArtistId}) => {
     const imageLoader = ({src}) => {
         return src
       }
     const user = useSelector((state)=>state.user.logedInUser)
     
-    const appointment = user.appointments[0].data
-        console.log(appointment, "apppppp")
     
-    const artist = user.appointments[0].artist
+        console.log(id,bodyPlace, "apppppp")
+        
+    
+    
     
         
-    let date = new Date(appointment.dateAndTime) 
+    let date = new Date(dateAndTime) 
     let opcionesFormato = { 
         year: 'numeric', 
         month: 'long', 
@@ -34,13 +37,13 @@ const BookingCard = ({appointmentData}) => {
     };
     let fechaFormateada = date.toLocaleDateString('es-ES', opcionesFormato)
 
-    const [response, setResponse]= useState({}) 
+     const [response, setResponse]= useState({}) 
 
     useEffect(()=>{
       
     const artistId = async ()=>{
        try {
-        const resp = (await axios.get(`http://localhost:3001/tattooArtists/${artist}`)).data
+        const resp = (await axios.get(`http://localhost:3001/tattooArtists/${tattooArtistId}`)).data
         setResponse(resp)
        } catch (error) {
         console.error("error")
@@ -58,12 +61,16 @@ const BookingCard = ({appointmentData}) => {
     <div className='bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105'>
         <div className='w-[26%] h-full   border-r-[2px] border-r-neutral-700'>
             <div className='pt-2 '>
-                <p className='flex gap-2 ml-8'> <TbCalendarCheck className='text-primary text-[27px]'/>Reserva</p>
+                <p className='flex gap-2 ml-8'> <TbCalendarCheck className='text-primary text-[27px]'/>Reserva:</p>
                 <p className='mt-[4px] text-center'> {fechaFormateada}</p>
             </div>     
             <div className='pt-4'>
-                <p className='flex gap-2 ml-4'> <IoBodyOutline className='text-primary text-[27px]'/>Donde:</p>
-                <p className='mt-[8px] text-center'> {appointment.bodyPlace}</p>
+                <p className='flex gap-2 ml-4'> <IoBodyOutline className='text-primary text-[27px]'/>Donde: {bodyPlace}</p>
+                
+            </div>
+            <div className='pt-4'>
+                <p className=' flex gap-2 ml-4 '><MdOutlineAttachMoney className='text-primary text-[27px]' />Seña: {depositPrice}</p>
+
             </div>
             <div className='mt-[35px] ml-4 '>
             <p className='font-rocksalt text-[18px]'>Connect<span className='text-primary'>Ink.</span></p>  
@@ -89,12 +96,34 @@ const BookingCard = ({appointmentData}) => {
             </div>
         </div>
         <div className=' w-[20%] mr-4'>
-            <p className='text-center text-2xl font-rocksalt mt-6'>Contacto:</p>
-            <p className='text-center mt-8 flex justify-center items-center gap-2'><FaPhone className='text-primary text-[17px]'/> {response.phone}</p>
-            <p className='mt-4 flex items-center justify-center'><MdOutlineEmail className='text-[17px] text-primary'/></p><p className='text-center '>{response.email}</p> 
-             <div className='flex justify-center items-center'>
-             <button className='bg-primary/50 mt-6 w-[75%] rounded'>Dejar Reseña</button>
-             </div>
+            <div className='flex items-end justify-end'>
+            <Menu menuButton={
+                            <MenuButton >  
+                                <RiMoreFill className='text-white text-[25px] cursor-pointer hover:bg-secondary-100'/>
+                            </MenuButton>}
+                        transition
+                        menuStyle={{backgroundColor:'#252524', color:'white'}}
+                        menuClassName={'hover:bg-secondary-900 hover:text-black-900'}>
+                        
+                            <MenuItem className='hover:bg-secondary-100 w-full h-full'>
+                                
+                                    <RiDeleteBin6Fill />
+                                    Cancelar Reserva
+                                
+                            </MenuItem>
+                        </Menu>
+
+            </div>
+       
+             <p className='text-center text-2xl font-rocksalt mt-2'>Detalles:</p>
+             <p className='text-center mt-2 '>Tamaño: {size}</p>
+             <p className='text-center mt-2 '>Duracion:{duration}</p>
+             <p className='text-center mt-2'>Tu diseño:</p>
+            <div className='flex justify-center items-center mt-2'>
+                 <Image unoptimized src={image} loader={imageLoader} width={50} height={50} alt={"Tu Tattoo"} className=' rounded-full'/> 
+           </div>
+            
+             
             
             
             
