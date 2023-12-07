@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RiCloseFill, RiEmotionHappyLine, RiCheckFill  } from "react-icons/ri";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { closeModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
+import { closeModalAction } from '../../app/redux/features/modalEdit/modalEditAction';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 

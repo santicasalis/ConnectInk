@@ -10,8 +10,8 @@ import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
-import { openModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
-import { openModalDeleteAction } from '@/app/redux/features/modalDelete/modalDeleteAction';
+import { openModalAction } from '../../app/redux/features/modalEdit/modalEditAction';
+import { openModalDeleteAction } from '../../app/redux/features/modalDelete/modalDeleteAction';
 
 const UserPostDash = ({publication}) => {
     const [isLike, setIsLike] = useState(false);
