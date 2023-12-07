@@ -1,6 +1,6 @@
 "use client";
 
-import Nav from "@/components/nav/Nav";
+import Nav from "../components/nav/Nav";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllStyles } from "./redux/features/styles/stylesActions";

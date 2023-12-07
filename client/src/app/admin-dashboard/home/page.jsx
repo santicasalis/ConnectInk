@@ -1,4 +1,4 @@
-import TopBarOptions from '@/components/topBarOptions/TopBarOptions'
+import TopBarOptions from '../../../components/topBarOptions/TopBarOptions'
 import React from 'react'
 
 const Home = () => {

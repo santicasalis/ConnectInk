@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { validationSchema } from "./validationSchema";
 import { useState } from "react";
 import ReactStars from "react-stars";
-import { uploadImage } from "@/app/utils/uploadImage";
+import { uploadImage } from "../../../../app/utils/uploadImage";
 
 const Critica = () => {
   const [sent, setSent] = useState(false);

@@ -1,8 +1,8 @@
 'use client'
-import UserSideBar from "@/components/userSideBar/UserSideBar";
-import Header from "@/components/header/Header";
-import Modal from "@/components/modal/Modal";
-import ModalCreate from "@/components/modal/ModalCreate";
+import UserSideBar from "../../components/userSideBar/UserSideBar";
+import Header from "../../components/header/Header";
+import Modal from "../../components/modal/Modal";
+import ModalCreate from "../../components/modal/ModalCreate";
 
 export default function DashboardLayout({ children }) {
     return (

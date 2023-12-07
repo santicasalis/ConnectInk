@@ -1,11 +1,11 @@
 "use client"
 import React from 'react'
-import AdminCard from "@/components/adminCard/AdminCard";
+import AdminCard from "../../../components/adminCard/AdminCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
-import { getAllArtists } from '@/app/redux/features/artists/artistActions';
+import { getAllArtists } from '../../../app/redux/features/artists/artistActions';
 import { useState } from 'react';
-import Paginate from '@/components/paginate/Paginate';
+import Paginate from '../../../components/paginate/Paginate';
 
 const RegisteredArtist = () => {
   const { people, filtered } = useSelector((state) => state.artists);

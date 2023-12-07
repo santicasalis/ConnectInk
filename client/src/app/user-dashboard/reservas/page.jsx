@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import axios from 'axios';
-import BookingCard from '@/components/bookingCard/BookingCard';
+import BookingCard from '../../../components/bookingCard/BookingCard';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 

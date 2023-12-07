@@ -1,11 +1,11 @@
 'use client'
 
 import dynamic from "next/dynamic";
-import SideBar from "@/components/sidebar/SideBar";
-import Header from "@/components/header/Header";
-const Modal = dynamic(() => import("@/components/modal/Modal"));
-const ModalCreate = dynamic(() => import("@/components/modal/ModalCreate"));
-const ModalDeletePost = dynamic(() => import("@/components/modal/ModalDeletePost"));
+import SideBar from "../../components/sidebar/SideBar";
+import Header from "../../components/header/Header";
+const Modal = dynamic(() => import("../../components/modal/Modal"));
+const ModalCreate = dynamic(() => import("../../components/modal/ModalCreate"));
+const ModalDeletePost = dynamic(() => import("../../components/modal/ModalDeletePost"));
 import { useSelector } from "react-redux";
 
 export default function DashboardLayout({ children }) {

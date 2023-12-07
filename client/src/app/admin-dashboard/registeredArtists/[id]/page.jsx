@@ -2,7 +2,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import PostDashboard from "@/components/postDashboard/PostDashboard";
+import PostDashboard from "../../../../components/postDashboard/PostDashboard";
 import axios from "axios";
 import Link from "next/link";
 import { CiShop } from "react-icons/ci";

@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import { uploadImage } from "@/app/utils/uploadImage";
+import { uploadImage } from "../../../../app/utils/uploadImage";
 import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import { dayData } from "../../../utils/data/dayData";
 import { useDispatch, useSelector } from "react-redux";
-import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
-import Nav from "@/components/nav/Nav";
+import { getArtistDetail } from "../../../../app/redux/features/artists/artistActions";
+import Nav from "../../../../components/nav/Nav";
 
 const URL_BASE = "http://localhost:3001";
 

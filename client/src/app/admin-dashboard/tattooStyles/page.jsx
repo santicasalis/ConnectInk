@@ -3,8 +3,8 @@ import React from 'react'
 import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
-import { getAllStyles, removeStyle } from '@/app/redux/features/styles/stylesActions';
-import { openModalDeleteStyleAction } from '@/app/redux/features/modalDeleteStyle/modalDeleteStyleAction';
+import { getAllStyles, removeStyle } from '../../../app/redux/features/styles/stylesActions';
+import { openModalDeleteStyleAction } from '../../../app/redux/features/modalDeleteStyle/modalDeleteStyleAction';
 
 
 const TattooStyles = () => {

@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PostCards from "@/components/postCards/PostCards";
+import PostCards from "../../components/postCards/PostCards";
 import { getAllPosts } from "../redux/features/posts/postsActions";
 import axios from "axios";
 import { orderPosts } from "../utils/ordenarPosts";
-import UserPostDash from "@/components/userPostDash/UserPostDash";
+import UserPostDash from "../../components/userPostDash/UserPostDash";
 
 function UDashboard() {
   const dispatch = useDispatch();

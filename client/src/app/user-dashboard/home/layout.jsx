@@ -1,9 +1,9 @@
 'use client'
 
-import TopBarOptions from "@/components/topBarOptions/TopBarOptions";
+import TopBarOptions from "../../../components/topBarOptions/TopBarOptions";
 import { RiAddFill } from "react-icons/ri";
 import Link from 'next/link'
-import { openModalCreateAction } from "@/app/redux/features/modalCreate/modalCreateAction";
+import { openModalCreateAction } from "../../../app/redux/features/modalCreate/modalCreateAction";
 import { useDispatch } from "react-redux";
 
 

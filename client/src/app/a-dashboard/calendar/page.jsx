@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { getUserById } from "@/app/redux/features/user/userActions";
+import { getUserById } from "../../../app/redux/features/user/userActions";
 
 const Page = () => {
   const dispatch = useDispatch();
