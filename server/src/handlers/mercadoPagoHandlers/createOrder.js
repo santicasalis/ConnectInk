@@ -10,11 +10,12 @@ const payment = new Preference(client);
 
 const createOrder = async (req, res) => {
   try {
-    const { depositPrice, description } = req.body;
+    const { depositPrice, description, id } = req.body;
     let preference = {
       body: {
         items: [
           {
+            id: id,
             title: "Seña para reservar turno",
             quantity: 1,
             unit_price: depositPrice,
@@ -24,8 +25,8 @@ const createOrder = async (req, res) => {
         ],
         //hay que definir las rutas
         back_urls: {
-          failure: "http://localhost:3000/[id]/booking",
-          pending: "http://localhost:3000/user-dashboard/reservas",
+          failure: "http://localhost:3001/payment/success",
+          pending: "http://localhost:3001/payment/success",
           success: "http://localhost:3001/payment/success",
         },
       },
