@@ -6,14 +6,16 @@ import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { IoBodyOutline } from "react-icons/io5";
 import { FaMapPin, FaPhone } from "react-icons/fa6";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from "axios"
 import { useState } from 'react';
 import Image from 'next/image';
+import { openModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
 import Link from 'next/link';
 
 const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
+    const dispatch = useDispatch();
     const imageLoader = ({src}) => {
         return src
       }
@@ -103,7 +105,7 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
                         menuStyle={{backgroundColor:'#252524', color:'white'}}
                         menuClassName={'hover:bg-secondary-900 hover:text-black-900'}>
                         
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full'>
+                            <MenuItem className='hover:bg-secondary-100 w-full h-full' onClick={()=>dispatch(openModalDeleteAppointmentAction(id))}>
                                 
                                     <RiDeleteBin6Fill />
                                     Cancelar Reserva
