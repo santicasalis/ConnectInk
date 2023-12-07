@@ -2,11 +2,11 @@ const updateTimeAvailabilityException = require("../../controllers/timeAvailabil
 
 const updateTimeAvailabilityExceptionHandler = async (req, res) => {
   const { id } = req.params;
-  const { initialHour, finalHour } = req.body;
+  const { initialHour, finalHour, secondInitialHour, secondFinalHour } = req.body;
 
   try {
     const updatedtimeAvailabilityException =
-      await updateTimeAvailabilityException(id, initialHour, finalHour);
+      await updateTimeAvailabilityException({id, initialHour, finalHour, secondInitialHour, secondFinalHour});
     if (updatedtimeAvailabilityException.code === 201) {
       res.status(201).json({
         message: updatedtimeAvailabilityException.message,
