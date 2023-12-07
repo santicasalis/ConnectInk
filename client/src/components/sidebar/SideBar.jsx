@@ -13,6 +13,7 @@ import {
   RiArrowRightSLine,
   RiMenuFill,
   RiCloseFill,
+  RiBookletLine
 } from "react-icons/ri";
 
 const SideBar = () => {
@@ -70,6 +71,14 @@ const SideBar = () => {
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
               >
                 <RiMessage3Line className="text-primary" /> Precios
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/a-dashboard/Appointments"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
+              >
+                <RiBookletLine className="text-primary" /> Mis Turnos
               </Link>
             </li>
             <li>
