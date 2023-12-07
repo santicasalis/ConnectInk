@@ -13,6 +13,17 @@ const createTimeAvailability = async (
     return { code: 404, error: "Tattoo artist not found" };
   }
 
+  const timeAvailabilityExist =
+    await TimeAvailability.findOne({
+      where: { TattooArtistId: tattooArtistId, day: day },
+    });
+  if (timeAvailabilityExist) {
+    return {
+      code: 404,
+      error: "A time availability for that day already exists",
+    };
+  }
+
   if (initialHour > finalHour) {
     return {
       code: 404,

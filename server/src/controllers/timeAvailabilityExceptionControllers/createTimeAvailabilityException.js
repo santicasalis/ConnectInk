@@ -4,7 +4,9 @@ const createTimeAvailabilityException = async (
   tattooArtistId,
   date,
   initialHour,
-  finalHour
+  finalHour,
+  secondInitialHour,
+  secondFinalHour
 ) => {
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (!tattooArtist) {
@@ -28,11 +30,26 @@ const createTimeAvailabilityException = async (
       error: "The initial hour must be less than the final hour",
     };
   }
+  if (secondInitialHour > secondFinalHour) {
+    return {
+      code: 404,
+      error: "The second initial hour must be less than the second final hour",
+    };
+  }
+
+  if (finalHour > secondInitialHour) {
+    return {
+      code: 404,
+      error: "The second initial hour must be more than the final hour",
+    };
+  }
 
   const timeAvailabilityException = await TimeAvailabilityException.create({
     date,
     initialHour,
     finalHour,
+    secondInitialHour,
+    secondFinalHour
   });
 
   tattooArtist.addTimeAvailabilityException(timeAvailabilityException);
