@@ -21,14 +21,17 @@ const login = async (tokenId) => {
       {
         model: Publication,
         attributes: ["id", "description", "image", "createdAt", "updatedAt"],
+        required: false
       },
       {
         model: TimeAvailability,
-        attributes: ["id", "day", "initialHour", "finalHour"],
+        attributes: ["id", "day", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
+        required: false
       },
       {
         model: TimeAvailabilityException,
-        attributes: ["date", "initialHour", "finalHour"],
+        attributes: ["id", "date", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
+        required: false
       },
       {
         model: PriceRange,
@@ -83,6 +86,8 @@ const login = async (tokenId) => {
           day: timeAvailability.day,
           initialHour: timeAvailability.initialHour,
           finalHour: timeAvailability.finalHour,
+          secondInitialHour: timeAvailability.secondInitialHour,
+          secondFinalHour: timeAvailability.secondFinalHour
         };
       }),
       timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
@@ -91,6 +96,8 @@ const login = async (tokenId) => {
             date: timeAvailabilityException.date,
             initialHour: timeAvailabilityException.initialHour,
             finalHour: timeAvailabilityException.finalHour,
+            secondInitialHour: timeAvailabilityException.secondInitialHour,
+            secondFinalHour: timeAvailabilityException.secondFinalHour
           };
         }
       ),
