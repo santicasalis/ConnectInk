@@ -66,7 +66,7 @@ const SideBar = () => {
             </li>
             <li>
               <Link
-                href=""
+                href="/a-dashboard/price"
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
               >
                 <RiMessage3Line className="text-primary" /> Precios
