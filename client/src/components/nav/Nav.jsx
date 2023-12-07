@@ -32,7 +32,7 @@ export default function Nav() {
           <li>
             <Link href="/about">
               <span className="hover:text-primary hover:border-primary pb-1 font-newrocker text-[19px] border-b-[2px] border-gray-200">
-                ¿Quiénes somos?
+                Nosotros
               </span>
             </Link>
           </li>

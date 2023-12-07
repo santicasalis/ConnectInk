@@ -30,6 +30,7 @@ export default function ExplorePage() {
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
+    setFilterSidebarVisible(true);
   }, []);
 
   //paginado
@@ -120,8 +121,8 @@ export default function ExplorePage() {
 
         <hr className="mt-[50px] border-white/20 ml-[50px] mr-[50px]"></hr>
 
-        <section className="flex w-full">
-          <div className="w-full flex flex-col md:flex-row justify-center mt-8 mx-4 my-4 gap-x-4">
+        <section className="flex w-full ">
+          <div className="w-full flex flex-col md:flex-row justify-center mt-8 mx-6 my-4 gap-x-4">
             <div className="md:w-1/4 flex flex-col items-center">
               <button
                 onClick={handleToggleFilterSidebar}
@@ -129,9 +130,7 @@ export default function ExplorePage() {
               >
                 {filterSidebarVisible ? "Ocultar Filtros" : "Mostrar Filtros"}
               </button>
-              {(filterSidebarVisible || window.innerWidth >= 768) && (
-                <FilterSideBar />
-              )}
+              {filterSidebarVisible && <FilterSideBar />}
             </div>
 
             <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
@@ -145,7 +144,7 @@ export default function ExplorePage() {
                 {artistsToDisplay?.map((filter) => (
                   <div
                     key={filter.id}
-                    className="mb-4 w-full flex flex-col items-center justify-center"
+                    className="mb-4 w-full flex flex-col items-center justify-center mr-10"
                   >
                     <Card
                       id={filter.id}
