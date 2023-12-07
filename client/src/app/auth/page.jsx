@@ -7,6 +7,7 @@ import {
   RiEyeLine,
   RiEyeOffLine,
   RiGoogleFill,
+  RiReplyLine,
 } from "react-icons/ri";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -61,7 +62,7 @@ const Login = () => {
       const fireBaseUser = result.user;
       const token = fireBaseUser.uid;
 
-      console.log(token)
+      console.log(token);
 
       dispatch(getUserById(token, router));
 
@@ -105,10 +106,13 @@ const Login = () => {
           email: userFireBase.email,
           phoneNumber: userFireBase.phoneNumber,
         })
-      )
+      );
 
       if (user.userType == "artist") router.replace("/a-dashboard/home");
-      if (user.userType == "customer") router.replace("/user-dashboard"); /*else {router.replace("/a-dashboard/home")}*/
+      if (user.userType == "customer")
+        router.replace(
+          "/user-dashboard"
+        ); /*else {router.replace("/a-dashboard/home")}*/
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     } catch (createUserError) {
       toast.error("Usuario y o contraseña errónea", {
@@ -119,10 +123,10 @@ const Login = () => {
       });
     }
   };
-  
+
   return (
-    <div className="bg-secondary-900/90 opacity-90 flex h-[800px] border-[1px] border-white/10  absolute rounded-3xl w-full xl:w-1/2 lg:w-1/3 md:w-1/2">
-      <div className="w-[35%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">
+    <div className="bg-secondary-900/90 opacity-90 flex h-full  border-[1px] border-white/10  absolute rounded-3xl  xl:w-1/2 lg:w-1/2 md:w-1/2  sm:w-3/4 items-start">
+      {/* <div className="w-[40%] h-80vh border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8 ">
         <h2 className="font-rocksalt text-[40px] text-white/90 mb-2">
           Te damos la bienvenida!
         </h2>
@@ -134,8 +138,18 @@ const Login = () => {
             Registrarse
           </span>
         </Link>
-      </div>
-      <div className="flex-1 flex flex-col items-center justify-center">
+      </div> */}
+
+      <div className=" w-[40%] flex-1 flex flex-col items-center justify-center">
+        <div className="mt-4 ml-4 mb-10 ">
+          <Link
+            href="/"
+            className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2"
+          >
+            <RiReplyLine className=" " />
+            Volver al inicio
+          </Link>
+        </div>
         <h2 className="font-rocksalt text-[40px] text-white/90 mb-4">
           Inicia Sesión
         </h2>
@@ -189,6 +203,16 @@ const Login = () => {
             </button>
           </div>
         </form>
+        <div className=" h-80vh border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8 ">
+          <p className="text-primary/80 mb-6">
+            ¿No tenés una cuenta? Registrate GRATIS
+          </p>
+          <Link href="/auth/register">
+            <span className=" text-[17px] py-3 px-5 border-[1px] border-primary rounded-3xl text-primary cursor-pointer hover:bg-primary/90 hover:text-white transition-colors">
+              Registrarse
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   );
