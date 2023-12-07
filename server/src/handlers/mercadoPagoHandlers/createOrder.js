@@ -10,7 +10,7 @@ const payment = new Preference(client);
 
 const createOrder = async (req, res) => {
   try {
-    const { depositPrice, description, id } = req.body;
+    const { id, depositPrice, description } = req.body;
     let preference = {
       body: {
         items: [
@@ -19,20 +19,20 @@ const createOrder = async (req, res) => {
             title: "Seña para reservar turno",
             quantity: 1,
             unit_price: depositPrice,
-            currency_id: "ARS",
+            currency_id: "BRL",
             description: description,
           },
         ],
-        //hay que definir las rutas
         back_urls: {
-          failure: "http://localhost:3001/payment/success",
-          pending: "http://localhost:3001/payment/success",
-          success: "http://localhost:3001/payment/success",
+          failure: "http://localhost:3001/payment/failure",
+          pending: "http://localhost:3001/payment/pending",
+          success: `http://localhost:3001/payment/success/${id}`,
         },
+        notification_url: "https://connectink.vercel.app/payment/webhook",
       },
     };
     const response = await payment.create(preference);
-    res.status(200).send(response);
+    res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

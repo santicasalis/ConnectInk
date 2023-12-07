@@ -41,6 +41,7 @@ const createAppointment = async ({
   description,
   dateAndTime,
 }) => {
+<<<<<<< HEAD
   console.log(
     tattooArtistId,
     customerId,
@@ -51,6 +52,8 @@ const createAppointment = async ({
     dateAndTime
   );
 
+=======
+>>>>>>> ea35d4d123b3ae7c5d6df0730115e42c0b0823af
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
@@ -63,10 +66,24 @@ const createAppointment = async ({
     return { code: 404, error: "Customer not found" };
   }
 
+  //chequea que no exista un turno para esa fecha y hora
+  const appointmentExist = await Appointment.findOne({
+    where: {
+      TattooArtist_Appointment: tattooArtistId,
+      dateAndTime: dateAndTime,
+    },
+  });
+  if (appointmentExist) {
+    return {
+      code: 404,
+      error:
+        "That date and time are not available, the tattoo artist already has an appointment scheduled at that time",
+    };
+  }
+
   //cálculo del día de la semana:
   const date = new Date(dateAndTime);
   const exactDate = date.toISOString();
-
   const dayOfWeek = date.getDay();
   const dayName = daysOfWeekNames[dayOfWeek];
 
