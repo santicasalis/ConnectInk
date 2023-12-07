@@ -32,7 +32,7 @@ const login = async (tokenId) => {
       },
       {
         model: PriceRange,
-        attributes: ["size", "priceMin", "priceMax"],
+        attributes: ["size", "priceMin", "priceMax", "id"],
       },
       {
         model: Appointment,
@@ -99,6 +99,7 @@ const login = async (tokenId) => {
           size: priceRange.size,
           priceMin: priceRange.priceMin,
           priceMax: priceRange.priceMax,
+          id: priceRange.id,
         };
       }),
       appointments: user.appointments?.map((appointment) => {
