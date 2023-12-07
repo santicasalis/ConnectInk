@@ -27,6 +27,7 @@ export default function Reservas() {
                dateAndTime={tur.dateAndTime}
                depositPrice={tur.depositPrice}
                tattooArtistId={tur.tattooArtistId}
+               paymentId={!!tur.paymentId}
                 />
             </div>
           ))

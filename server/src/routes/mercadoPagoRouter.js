@@ -7,7 +7,7 @@ const failurePaymentHandler = require ("../handlers/mercadoPagoHandlers/failureP
 const mercadoPagoRouter = Router();
 
 mercadoPagoRouter.post("/", createOrder);
-mercadoPagoRouter.get("/failure", failurePaymentHandler);
+mercadoPagoRouter.get("/failure/:id", failurePaymentHandler);
 mercadoPagoRouter.get("/pending", (req, res) => res.send("Pago pendiente"));
 mercadoPagoRouter.get("/success/:id", successPaymentHandler);
 mercadoPagoRouter.get("/webhook", receiveWebhook);

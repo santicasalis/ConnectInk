@@ -13,17 +13,11 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const BookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, tattooArtistId}) => {
+const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, tattooArtistId}) => {
     const imageLoader = ({src}) => {
         return src
       }
     const user = useSelector((state)=>state.user.logedInUser)
-    
-    
-        console.log(id,bodyPlace, "apppppp")
-        
-    
-    
     
         
     let date = new Date(dateAndTime) 
@@ -55,81 +49,106 @@ const BookingCard = ({id, bodyPlace, description, duration, image, size, dateAnd
         
     },[])
 
-    console.log(response, "ARTISTA")
 
   return (
-    <div className='bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105'>
-        <div className='w-[26%] h-full   border-r-[2px] border-r-neutral-700'>
-            <div className='pt-2 '>
-                <p className='flex gap-2 ml-8'> <TbCalendarCheck className='text-primary text-[27px]'/>Reserva:</p>
-                <p className='mt-[4px] text-center'> {fechaFormateada}</p>
-            </div>     
-            <div className='pt-4'>
-                <p className='flex gap-2 ml-4'> <IoBodyOutline className='text-primary text-[27px]'/>Donde: {bodyPlace}</p>
-                
-            </div>
-            <div className='pt-4'>
-                <p className=' flex gap-2 ml-4 '><MdOutlineAttachMoney className='text-primary text-[27px]' />Seña: {depositPrice}</p>
-
-            </div>
-            <div className='mt-[35px] ml-4 '>
-            <p className='font-rocksalt text-[18px]'>Connect<span className='text-primary'>Ink.</span></p>  
-            </div>
-             
+    <div className="bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105">
+      <div className="w-[26%] h-full   border-r-[2px] border-r-neutral-700">
+        <div className="pt-2 ">
+          <p className="flex gap-2 ml-8">
+            {" "}
+            <TbCalendarCheck className="text-primary text-[27px]" />
+            Reserva:
+          </p>
+          <p className="mt-[4px] text-center"> {fechaFormateada}</p>
         </div>
-           <div className=' w-[65%] mt-4'>
-            <div>
-                <p className='text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt'><FaMapPin className='text-primary' /> Dirección:</p>
-                <p className='text-center'>{response.address}</p>
-                <p className='text-center'>{response.location}</p>
-            </div>
-            <div>
-                <p className='text-center mb-[15px] text-2xl mt-4 font-rocksalt'>Artista:</p>
-                <div className='flex justify-center items-center gap-2'>
-                    <Image unoptimized src={response.image} loader={imageLoader} width={80} height={80} alt={`${response.fullName} profile pic`} className=' rounded-full'/>
-                    <p className='text-center'>{response.fullName}</p>
-                    
-                    
-                </div>
-
-
-            </div>
+        <div className="pt-4">
+          <p className="flex gap-2 ml-4">
+            {" "}
+            <IoBodyOutline className="text-primary text-[27px]" />
+            Donde: {bodyPlace}
+          </p>
         </div>
-        <div className=' w-[20%] mr-4'>
-            <div className='flex items-end justify-end'>
-            <Menu menuButton={
-                            <MenuButton >  
-                                <RiMoreFill className='text-white text-[25px] cursor-pointer hover:bg-secondary-100'/>
-                            </MenuButton>}
-                        transition
-                        menuStyle={{backgroundColor:'#252524', color:'white'}}
-                        menuClassName={'hover:bg-secondary-900 hover:text-black-900'}>
-                        
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full'>
-                                
-                                    <RiDeleteBin6Fill />
-                                    Cancelar Reserva
-                                
-                            </MenuItem>
-                        </Menu>
-
-            </div>
-       
-             <p className='text-center text-2xl font-rocksalt mt-2'>Detalles:</p>
-             <p className='text-center mt-2 '>Tamaño: {size}</p>
-             <p className='text-center mt-2 '>Duracion:{duration}</p>
-             <p className='text-center mt-2'>Tu diseño:</p>
-            <div className='flex justify-center items-center mt-2'>
-                 <Image unoptimized src={image} loader={imageLoader} width={50} height={50} alt={"Tu Tattoo"} className=' rounded-full'/> 
-           </div>
-            
-             
-            
-            
-            
+        <div className="pt-4">
+          <p className=" flex gap-2 ml-4 ">
+            <MdOutlineAttachMoney className="text-primary text-[27px]" />
+            Seña: {depositPrice}
+          </p>
         </div>
+        <div className="mt-[35px] ml-4 ">
+          <p className="font-rocksalt text-[18px]">
+            Connect<span className="text-primary">Ink.</span>
+          </p>
+        </div>
+      </div>
+
+      <div
+        className={`w-[20%] mr-4 ${
+          !paymentId ? "border-4 border-red-500" : ""
+        }`}
+      >
+        <div>
+          <p className="text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt">
+            <FaMapPin className="text-primary" /> Dirección:
+          </p>
+          <p className="text-center">{response.address}</p>
+          <p className="text-center">{response.location}</p>
+        </div>
+        <div>
+          <p className="text-center mb-[15px] text-2xl mt-4 font-rocksalt">
+            Artista:
+          </p>
+          <div className="flex justify-center items-center gap-2">
+            <Image
+              unoptimized
+              src={response.image}
+              loader={imageLoader}
+              width={80}
+              height={80}
+              alt={`${response.fullName} profile pic`}
+              className=" rounded-full"
+            />
+            <p className="text-center">{response.fullName}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className=" w-[20%] mr-4">
+        <div className="flex items-end justify-end">
+          <Menu
+            menuButton={
+              <MenuButton>
+                <RiMoreFill className="text-white text-[25px] cursor-pointer hover:bg-secondary-100" />
+              </MenuButton>
+            }
+            transition
+            menuStyle={{ backgroundColor: "#252524", color: "white" }}
+            menuClassName={"hover:bg-secondary-900 hover:text-black-900"}
+          >
+            <MenuItem className="hover:bg-secondary-100 w-full h-full">
+              <RiDeleteBin6Fill />
+              Cancelar Reserva
+            </MenuItem>
+          </Menu>
+        </div>
+
+        <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
+        <p className="text-center mt-2 ">Tamaño: {size}</p>
+        <p className="text-center mt-2 ">Duracion:{duration}</p>
+        <p className="text-center mt-2">Tu diseño:</p>
+        <div className="flex justify-center items-center mt-2">
+          <Image
+            unoptimized
+            src={image}
+            loader={imageLoader}
+            width={50}
+            height={50}
+            alt={"Tu Tattoo"}
+            className=" rounded-full"
+          />
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default BookingCard
