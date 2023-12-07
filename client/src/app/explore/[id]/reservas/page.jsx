@@ -243,10 +243,25 @@ const bookAppointment = ({ params }) => {
                     const imageUrl = await uploadImage(values.image);
                     values.image = imageUrl;
                   }
-                  const response = await axios.post(
+
+                  const createResponse = await axios.post(
                     `${URL_BASE}/appointments`,
                     { ...values, tattooArtistId: id, customerId: user.id }
                   );
+
+                  const createdAppointment = createResponse.data.data;
+
+                  const paymentMp = await axios.post(`${URL_BASE}/payment`, {
+                    description: createdAppointment.description,
+                    depositPrice: createdAppointment.depositPrice,
+                  });
+
+                  const paymentMpResponse = paymentMp.data;
+
+                  if (paymentMpResponse) {
+                    window.location.href = paymentMpResponse.init_point;
+                  }
+
                   setSent(true);
                 } catch (error) {
                   throw Error("Error en el formulario");
