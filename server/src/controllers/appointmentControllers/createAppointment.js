@@ -80,6 +80,8 @@ const createAppointment = async ({
   // si existe disponibilidad horaria, se queda con los horarios cargados para ese día
   let initialHour = possibleAvialability.initialHour;
   let finalHour = possibleAvialability.finalHour;
+  // let secondInitialHour = possibleAvialability.secondInitialHour;
+  // let secondFinalHour = possibleAvialability.secondFinalHour;
 
   //cálculo fecha
   const dateOrTime = exactDate.split("T");
@@ -96,6 +98,8 @@ const createAppointment = async ({
   if (possibleException && possibleException.initialHour !== null) {
     initialHour = possibleException.initialHour;
     finalHour = possibleException.finalHour;
+    // let secondInitialHour = possibleException.secondInitialHour;
+    // let secondFinalHour = possibleException.secondFinalHour;
   }
 
   //comparar las horas
@@ -107,6 +111,14 @@ const createAppointment = async ({
   if (finalHour < dateOrTime[1]) {
     return { code: 400, error: "The tattoo artist finishes work early" };
   }
+  //caso la segunda hora laboral inicial sea mayor a la hora elegida para el turno, error
+  // if (secondInitialHour > dateOrTime[1]) {
+  //   return { code: 400, error: "The tattoo artist starts working later" };
+  // }
+  //caso la segunda hora laboral final sea menor a la hora elegida para el turno, error
+  // if (secondFinalHour < dateOrTime[1]) {
+  //   return { code: 400, error: "The tattoo artist finishes work early" };
+  // }
 
   //caso la hora elegida para el turno + la duración calculada supere la hora laboral final, error
   const hourSlice = Number(dateOrTime[1].slice(0, 2));
