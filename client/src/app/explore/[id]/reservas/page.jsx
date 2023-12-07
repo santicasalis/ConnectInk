@@ -101,6 +101,7 @@ const bookAppointment = ({ params }) => {
       } else {
         objH[ex] = [];
       }
+
     });
     artist?.appointments?.forEach((appointment) => {
       const dateAndTime = new Date(appointment.dateAndTime);
@@ -265,7 +266,6 @@ const bookAppointment = ({ params }) => {
                     }, 3000);
                     
                   }
-
                   setSent(true);
                 } catch (error) {
                   throw Error("Error en el formulario");
@@ -373,7 +373,6 @@ const bookAppointment = ({ params }) => {
                     </Field>
                     <ErrorMessage name="selectedDate" component="div" />
                   </div>
-
                   <div className="mb-4">
                     <label htmlFor="image" className="font-bold">
                       Imagen de perfil
