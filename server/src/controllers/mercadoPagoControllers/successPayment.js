@@ -11,7 +11,7 @@ const successPayment = async (id, payment_id) => {
         where: { id: id },
       }
     );
-    return "Payment Id added successfully";
+    return appointmentFound;
   } else {
     return "Appointment not found";
   }
