@@ -39,7 +39,7 @@ const Critica = () => {
           {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
             <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
               <div>
-                <label htmlFor="rating">Calificación</label>
+                <label htmlFor="rating">¿Que calificaion le darías a la experiencia?</label>
                 <Field name="rating">
                   {({ field, form }) => (
                     <ReactStars
@@ -76,7 +76,7 @@ const Critica = () => {
 
               <div className="mb-4">
                 <label htmlFor="image" className="font-bold">
-                  Imagen de perfil
+                  Si quieres, puedes dejar una foto del resultado!
                 </label>
                 <input
                   type="file"
