@@ -45,16 +45,14 @@ export default function FilterSideBar() {
     }
   };
 
-  
-
-  const resetFilters = () =>{
+  const resetFilters = () => {
     setFilters({
       location: "",
       name: "",
       tattooStyle: [],
     });
     setStyleSelected([]);
-  }
+  };
 
   useEffect(() => {
     setFilters({ ...filters, tattooStyle: styleSelected });
@@ -63,9 +61,6 @@ export default function FilterSideBar() {
   // useEffect(() => {
   //   dispatch(OrderAllArtists(artistOrder));
   // }, [artistOrder]);
-
-
-
 
   // const handleSortChange = (event) => {
   //   const order = event.target.value;
@@ -94,7 +89,6 @@ export default function FilterSideBar() {
               onChange={handleChange}
               value={filters.location}
               placeholder="Buscar por ciudad"
-              
             />
           </div>
 
@@ -112,7 +106,6 @@ export default function FilterSideBar() {
               name="name"
               onChange={handleChange}
               value={filters.name}
-              
               placeholder="Buscar por nombre"
             />
           </div>
@@ -145,7 +138,10 @@ export default function FilterSideBar() {
             </div>
           </div>
           <div className="flex justify-center items-center">
-            <button onClick={resetFilters} className="font-newrocker w-[40%] border-[1px] border-primary text-[22px] rounded">
+            <button
+              onClick={resetFilters}
+              className="font-newrocker w-[40%] border-[1px] border-primary text-[22px] rounded"
+            >
               Reiniciar Filtros
             </button>
           </div>

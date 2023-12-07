@@ -6,13 +6,14 @@ const {
   TimeAvailabilityException,
   PriceRange,
   Appointment,
+  Review
 } = require("../../db");
 
 const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {
     include: [
       { model: TattooStyle, attributes: ["name"], required: false },
-      
+
       {
         model: Publication,
         attributes: ["id", "description", "image", "createdAt", "updatedAt"],
@@ -38,10 +39,18 @@ const getTattooArtistById = async (id) => {
         model: Appointment,
         as: "appointments",
         foreignKey: "TattooArtist_Appointment",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtist_Appointment", "Customer_Appointment"],
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "Customer_Appointment"],
         where: { disabled: false },
         required: false
       },
+      {
+        model: Review,
+        as: "reviews",
+        foreignKey: "TattooArtist_Review",
+        attributes: ["id", "comment", "rating", "Customer_Review", "Appointment_Review"],
+        where: { disabled: false },
+        required: false
+      }
     ],
   });
 
@@ -112,8 +121,16 @@ const getTattooArtistById = async (id) => {
         paymentId: appointment.paymentId,
         CustomerId: appointment.Customer_Appointment
       }
-    } 
-    ),
+    }),
+    reviews: tattooArtist.reviews?.map((review) => {
+      return {
+        comment: review.comment,
+        image: review.image,
+        rating: review.rating,
+        customerId: review.Customer_Review,
+        appointmentId: review.Appointment_Review
+      }
+    })
   };
 };
 

@@ -101,7 +101,7 @@ const bookAppointment = ({ params }) => {
       } else {
         objH[ex] = [];
       }
-      
+
     });
     artist?.appointments?.forEach((appointment) => {
       const dateAndTime = new Date(appointment.dateAndTime);
@@ -225,7 +225,7 @@ const bookAppointment = ({ params }) => {
       <div className="w-full  p-4 shadow-lg flex justify-center">
         <div className="p-4 rounded border-primary border-[2px] shadow-lg">
           {sent ? (
-            <h1>Turno creado con exito!</h1>
+            <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
           ) : (
             <Formik
               initialValues={{
@@ -244,10 +244,28 @@ const bookAppointment = ({ params }) => {
                     const imageUrl = await uploadImage(values.image);
                     values.image = imageUrl;
                   }
-                  const response = await axios.post(
+
+                  const createResponse = await axios.post(
                     `${URL_BASE}/appointments`,
                     { ...values, tattooArtistId: id, customerId: user.id }
                   );
+
+                  const createdAppointment = createResponse.data.data;
+
+                  const paymentMp = await axios.post(`${URL_BASE}/payment`, {
+                    id: createdAppointment.id,
+                    description: createdAppointment.description,
+                    depositPrice: createdAppointment.depositPrice,
+                  });
+
+                  const paymentMpResponse = paymentMp.data;
+
+                  if (paymentMpResponse) {
+                    setTimeout(() => {
+                      window.location.href = paymentMpResponse.init_point;
+                    }, 3000);
+                    
+                  }
                   setSent(true);
                 } catch (error) {
                   throw Error("Error en el formulario");
@@ -355,7 +373,6 @@ const bookAppointment = ({ params }) => {
                     </Field>
                     <ErrorMessage name="selectedDate" component="div" />
                   </div>
-
                   <div className="mb-4">
                     <label htmlFor="image" className="font-bold">
                       Imagen de perfil

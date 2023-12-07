@@ -12,23 +12,28 @@ export default function Reservas() {
     
   const appointment = user.appointments
 
-  
-
-  console.log(user, "holaaa")
- 
-
-
-     return (
+  return (
+    
       <div className=''>
-        {/* {appointment && appointment.length > 0 ? (
-          appointment.map((appointmentData, index) => (
-            <div key={index} className='mt-[50px]'>
-              <BookingCard bodyPlace={appointmentData.bodyPlace} />
+        {appointment && appointment.length > 0 ? (
+          appointment.map((tur) => (
+            <div className='mt-[50px]'>
+              <BookingCard 
+               bodyPlace={tur.bodyPlace}
+               description={tur.description}
+               duration={tur.duration}
+               image={tur.image}
+               size={tur.size}
+               dateAndTime={tur.dateAndTime}
+               depositPrice={tur.depositPrice}
+               tattooArtistId={tur.tattooArtistId}
+                />
             </div>
           ))
         ) : (
           <p>No tienes ninguna reserva aún.</p>
-        )} */}
+        )}
       </div>
+      
     );
   }

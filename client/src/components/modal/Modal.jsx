@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { closeModalAction } from '@/app/redux/features/modalEdit/modalEditAction';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'
 
 const Modal = () => {
   const URL_BASE = "http://localhost:3001"
+  const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, data } = useSelector((state) => state.modalEdit);
   const [id,setId] = useState('');
@@ -34,6 +36,7 @@ const Modal = () => {
     try {
         console.log(id, descriptionData,'aca los datos la puta que te remilpario')
         await axios.put(`${URL_BASE}/publications/${id}`,{description:descriptionData}); 
+        
         dispatch(closeModalAction()); 
         toast.success(`La publicacion se actualizó con éxito`, {
           className: "toastSuccess",

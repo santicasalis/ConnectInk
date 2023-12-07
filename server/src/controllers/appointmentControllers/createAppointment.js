@@ -4,6 +4,7 @@ const {
   Customer,
   TimeAvailability,
   TimeAvailabilityException,
+  PriceRange,
 } = require("../../db");
 
 const sizesAndDurations = {
@@ -40,7 +41,6 @@ const createAppointment = async ({
   description,
   dateAndTime,
 }) => {
-  console.log(tattooArtistId, customerId, size, image, bodyPlace, description, dateAndTime)
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
@@ -53,10 +53,24 @@ const createAppointment = async ({
     return { code: 404, error: "Customer not found" };
   }
 
+  //chequea que no exista un turno para esa fecha y hora
+  const appointmentExist = await Appointment.findOne({
+    where: {
+      TattooArtist_Appointment: tattooArtistId,
+      dateAndTime: dateAndTime,
+    },
+  });
+  if (appointmentExist) {
+    return {
+      code: 404,
+      error:
+        "That date and time are not available, the tattoo artist already has an appointment scheduled at that time",
+    };
+  }
+
   //cálculo del día de la semana:
   const date = new Date(dateAndTime);
   const exactDate = date.toISOString();
-
   const dayOfWeek = date.getDay();
   const dayName = daysOfWeekNames[dayOfWeek];
 
@@ -105,8 +119,21 @@ const createAppointment = async ({
   if (hourSlice + sizesAndDurations[size] > finalHourSlice) {
     return { code: 400, error: "The appointment must start earlier" };
   }
+
   //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno
   if (hourSlice + sizesAndDurations[size] <= finalHourSlice) {
+    //cálculo del valor de la seña
+    const priceRangeFound = await PriceRange.findOne({
+      where: { TattooArtistId: tattooArtistId, size: size },
+    });
+    if (!priceRangeFound) {
+      return {
+        code: 404,
+        error: "Price range not found, the deposit price cannot be calculated",
+      };
+    }
+    const depositAmount = priceRangeFound.priceMin / 2;
+
     try {
       const appointment = await Appointment.create({
         size,
@@ -115,9 +142,9 @@ const createAppointment = async ({
         description,
         dateAndTime,
         duration: sizesAndDurations[size],
-        depositPrice: 1,
+        depositPrice: depositAmount,
         Customer_Appointment: customerId,
-        TattooArtist_Appointment: tattooArtistId
+        TattooArtist_Appointment: tattooArtistId,
       });
 
       return {
@@ -126,7 +153,6 @@ const createAppointment = async ({
         data: appointment,
       };
     } catch (error) {
-      console.log(error)
       return { code: 400, error: "Something went wrong" };
     }
   }

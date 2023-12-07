@@ -6,5 +6,5 @@ export const validationSchema = Yup.object().shape({
   bodyPlace: Yup.string().required("Campo obligatorio").max(30),
   description: Yup.string().required("Campo obligatorio").max(250),
   dateAndTime: Yup.date().required("Campo obligatorio"),
-  possible: Yup.boolean().oneOf([true]).required("Required")
+  // possible: Yup.boolean().oneOf([true]).required("Required"),
 });

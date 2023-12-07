@@ -42,6 +42,8 @@ export default function Page({ params }) {
   if (!artist)
     return <div className="text-center">No se encontró el tatuador</div>;
 
+    console.log(artist)
+
   return (
     <div className="container mx-auto p-4">
       <Nav />
