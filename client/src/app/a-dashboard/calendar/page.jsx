@@ -176,8 +176,9 @@ const Page = () => {
 
           await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, data);
         } else if (initialHour && finalHour) {
+          let data = {}
           if (secondInitialHour && secondFinalHour) {
-            const data = {
+             data = {
               tattooArtistId: user.logedInUser.id,
               day,
               initialHour,
@@ -186,7 +187,7 @@ const Page = () => {
               secondInitialHour,
             };
           } else {
-            const data = {
+             data = {
               tattooArtistId: user.logedInUser.id,
               day,
               initialHour,

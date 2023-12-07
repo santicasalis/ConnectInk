@@ -41,15 +41,6 @@ const createAppointment = async ({
   description,
   dateAndTime,
 }) => {
-  console.log(
-    tattooArtistId,
-    customerId,
-    size,
-    image,
-    bodyPlace,
-    description,
-    dateAndTime
-  );
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
@@ -80,8 +71,8 @@ const createAppointment = async ({
   // si existe disponibilidad horaria, se queda con los horarios cargados para ese día
   let initialHour = possibleAvialability.initialHour;
   let finalHour = possibleAvialability.finalHour;
-  // let secondInitialHour = possibleAvialability.secondInitialHour;
-  // let secondFinalHour = possibleAvialability.secondFinalHour;
+  let secondInitialHour = possibleAvialability.secondInitialHour;
+  let secondFinalHour = possibleAvialability.secondFinalHour;
 
   //cálculo fecha
   const dateOrTime = exactDate.split("T");
@@ -98,37 +89,47 @@ const createAppointment = async ({
   if (possibleException && possibleException.initialHour !== null) {
     initialHour = possibleException.initialHour;
     finalHour = possibleException.finalHour;
-    // let secondInitialHour = possibleException.secondInitialHour;
-    // let secondFinalHour = possibleException.secondFinalHour;
+    secondInitialHour = possibleException.secondInitialHour;
+    secondFinalHour = possibleException.secondFinalHour;
   }
 
   //comparar las horas
+
+
   //caso la hora laboral inicial sea mayor a la hora elegida para el turno, error
+if (secondInitialHour) {
+  if (secondInitialHour > dateOrTime[1]) {
+    if (finalHour < dateOrTime[1]) {
+    return { code: 400, error: "The tattoo artist starts working later" };
+  }}
+} else {
   if (initialHour > dateOrTime[1]) {
     return { code: 400, error: "The tattoo artist starts working later" };
   }
+}
   //caso la hora laboral final sea menor a la hora elegida para el turno, error
-  if (finalHour < dateOrTime[1]) {
-    return { code: 400, error: "The tattoo artist finishes work early" };
+  if (secondFinalHour) {
+    if (secondFinalHour < dateOrTime[1]) {
+      if (finalHour < dateOrTime[1]) {
+      return { code: 400, error: "The tattoo artist finishes work early" };
+    }}
+  } else {
+    if (finalHour < dateOrTime[1]) {
+      return { code: 400, error: "The tattoo artist finishes work early" };
+    }
   }
-  //caso la segunda hora laboral inicial sea mayor a la hora elegida para el turno, error
-  // if (secondInitialHour > dateOrTime[1]) {
-  //   return { code: 400, error: "The tattoo artist starts working later" };
-  // }
-  //caso la segunda hora laboral final sea menor a la hora elegida para el turno, error
-  // if (secondFinalHour < dateOrTime[1]) {
-  //   return { code: 400, error: "The tattoo artist finishes work early" };
-  // }
 
   //caso la hora elegida para el turno + la duración calculada supere la hora laboral final, error
-  const hourSlice = Number(dateOrTime[1].slice(0, 2));
-  const finalHourSlice = Number(finalHour.slice(0, 2));
+  const hourSlice = Number(dateOrTime[1].split(":")[0]);
+  const finalHourSlice = Number(finalHour.split(":")[0]);
+  const secondFinalHourSlice = Number(secondFinalHour.split(":")[0]) || null;
+  if (secondFinalHourSlice && hourSlice + sizesAndDurations[size] > secondFinalHourSlice ) {
   if (hourSlice + sizesAndDurations[size] > finalHourSlice) {
     return { code: 400, error: "The appointment must start earlier" };
-  }
+  }}
 
   //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno
-  if (hourSlice + sizesAndDurations[size] <= finalHourSlice) {
+  if (hourSlice + sizesAndDurations[size] <= finalHourSlice || hourSlice + sizesAndDurations[size] <= secondFinalHourSlice  ) {
     //cálculo del valor de la seña
     const priceRangeFound = await PriceRange.findOne({
       where: { TattooArtistId: tattooArtistId, size: size },
