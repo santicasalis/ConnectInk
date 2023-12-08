@@ -18,15 +18,17 @@ export default function Reservas() {
           [...user.appointments].sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime)).map((tur) => (
             <div className='mt-[50px]'>
               <BookingCard 
-                id={tur.id}
-                bodyPlace={tur.bodyPlace}
-                description={tur.description}
-                duration={tur.duration}
-                image={tur.image}
-                size={tur.size}
-                dateAndTime={tur.dateAndTime}
-                depositPrice={tur.depositPrice}
-                tattooArtistId={tur.tattooArtistId}
+
+               bodyPlace={tur.bodyPlace}
+               description={tur.description}
+               duration={tur.duration}
+               image={tur.image}
+               size={tur.size}
+               dateAndTime={tur.dateAndTime}
+               depositPrice={tur.depositPrice}
+               tattooArtistId={tur.tattooArtistId}
+               paymentId={!!tur.paymentId}
+
                 />
             </div>
           ))
