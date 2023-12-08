@@ -650,208 +650,186 @@ const BookAppointment = ({ params }) => {
 
   return (
     <div className="container mx-auto p-4">
+       <Nav />
 
-      <div className="w-full p-4 shadow-lg flex justify-center">
-        <div className="p-4 rounded border-primary border-[2px] shadow-lg">
-          {sent ? (
-            <h1>
+       <div className="w-full  p-4 shadow-lg flex justify-center">
+         <div className="p-4 rounded border-primary border-[2px] shadow-lg">
+           {sent ? (
+             <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
+           ) : (
+             <Formik
+               initialValues={{
+                 size: "",
+                 image: null,
+                 bodyPlace: "",
+                 description: "",
+                 dateAndTime: "",
+                 duration: "",
+                 possible: true,
+               }}
+               validationSchema={validationSchema}
+               onSubmit={async (values, { setSubmitting }) => {
+                 try {
+                   if (values.image && typeof values.image === "object") {
+                     const imageUrl = await uploadImage(values.image);
+                     values.image = imageUrl;
+                   }
 
-             Redireccionando a Mercado Pago para completar la reserva
+                   const createResponse = await axios.post(
+                     `${URL_BASE}/appointments`,
+                     { ...values, tattooArtistId: id, customerId: user.id }
+                   );
 
+                   const createdAppointment = createResponse.data.data;
 
-            </h1>
-          ) : (
-            <Formik
-              initialValues={{
-                size: "",
-                image: null,
-                bodyPlace: "",
-                description: "",
-                dateAndTime: "",
-                duration: "",
-                possible: true,
-              }}
-              validationSchema={validationSchema}
-              onSubmit={async (values, { setSubmitting }) => {
-                try {
-                  if (values.image && typeof values.image === "object") {
-                    const imageUrl = await uploadImage(values.image);
-                    values.image = imageUrl;
-                  }
+                   const paymentMp = await axios.post(`${URL_BASE}/payment`, {
+                     id: createdAppointment.id,
+                     description: createdAppointment.description,
+                     depositPrice: createdAppointment.depositPrice,
+                   });
 
-                  const createResponse = await axios.post(
-                    `${URL_BASE}/appointments`,
-                    { ...values, tattooArtistId: id, customerId: user.id }
-                  );
+                   const paymentMpResponse = paymentMp.data;
 
-                  const createdAppointment = createResponse.data.data;
+                   if (paymentMpResponse) {
+                     setTimeout(() => {
+                       window.location.href = paymentMpResponse.init_point;
+                     }, 3000);
 
-                  const paymentMp = await axios.post(`${URL_BASE}/payment`, {
-                    id: createdAppointment.id,
-                    description: createdAppointment.description,
-                    depositPrice: createdAppointment.depositPrice,
-                  });
+                   }
+                   setSent(true);
+                 } catch (error) {
+                   throw Error("Error en el formulario");
+                 }
+                 setSubmitting(false);
+               }}
+             >
+               {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
+                 <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+                   <div className="info-artist mb-4">
+                     <div className="p-2 m-2">
+                       <label htmlFor="size">Selecciona una opción:</label>
+                       <Field as="select" name="size">
+                         <option value="" disabled>
+                           Selecciona una opcion
+                         </option>
+                         <option value="Pequeño">Pequeño</option>
+                         <option value="Pequeño a color">Pequeño a color</option>
+                         <option value="Mediano">Mediano</option>
+                         <option value="Mediano a color">Mediano a color</option>
+                         <option value="Grande">Grande</option>
+                         <option value="Grande a color">Grande a color</option>
+                       </Field>
+                       <ErrorMessage
+                         name="size"
+                         component="div"
+                         className="text-red-500 text-sm"
+                       />
+                     </div>
+                     
+                     <Field
+                       type="text"
+                       name="bodyPlace"
+                       placeholder="Lugar del cuerpo"
+                       className="p-2 mb-3 shadow-md block w-full"
+                     />
+                     <ErrorMessage
+                       name="bodyPlace"
+                       component="div"
+                       className="text-red-500 text-sm"
+                     />
 
-                  const paymentMpResponse = paymentMp.data;
-
-                  if (paymentMpResponse) {
-                    setTimeout(() => {
-                      window.location.href = paymentMpResponse.init_point;
-                    }, 3000);
-                  }
-                  setSent(true);
-                } catch (error) {
-                  throw Error("Error en el formulario");
-                }
-                setSubmitting(false);
-              }}
-            >
-              {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-                <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
-                  {console.log(values)}
-                  <div className="info-artist mb-4">
-                    <div className="p-2 m-2">
-                      <label htmlFor="size">Selecciona una opción:</label>
-                      <Field as="select" name="size">
-                        <option value="" disabled>
-                          Selecciona una opcion
-                        </option>
-                        <option value="Pequeño">Pequeño</option>
-                        <option value="Pequeño a color">Pequeño a color</option>
-                        <option value="Mediano">Mediano</option>
-                        <option value="Mediano a color">Mediano a color</option>
-                        <option value="Grande">Grande</option>
-                        <option value="Grande a color">Grande a color</option>
-                      </Field>
-                      {objHours[selectedDate.getDay()] &&
-                        values.size &&
-                        (values.possible = isPossible(
-                          Number(durations[values.size]),
-                          Number(selectedTime),
-                          Number(
-                            objHours[selectedDate.getDay()].at(-1).split("h")[0]
-                          ) + 1
-                        ))}
-                      <ErrorMessage
-                        name="fullName"
-                        component="div"
-                        className="text-red-500 text-sm"
-                      />
-                    </div>
-                    <Field
-                      type="text"
-                      name="bodyPlace"
-                      placeholder="Lugar del cuerpo"
-                      className="p-2 mb-3 shadow-md block w-full"
-                    />
-                    <ErrorMessage
-                      name="bodyPlace"
-                      component="div"
-                      className="text-red-500 text-sm"
-                    />
-
-                    <Field name="dateAndTime">
-                      {({ field, form }) => (
-                        <div>
-                          <Calendar
-                            {...field}
-                            defaultValue={null}
-                            locale="es"
-                            tileClassName={tileStyles}
-                            tileDisabled={tileDisabled}
-                            onChange={(date) => changeDate(form, date)}
-                            minDate={new Date(Date.now())}
-                          />
-                          <div className="text-black">
-                            {showTime && (
-                              <div className="text-gray-300">
-                                <p>Horario del comienzo del turno</p>
-                                <select
-                                  name="dateTime"
-                                  value={selectedTime}
-                                  onChange={(event) => handleTime(form, event)}
-                                >
-                                  <option name="dateTime" value="" disabled>
-                                    Seleccionar horario inicial
-                                  </option>
-                                  {(
-                                    objHours[selectedDate.toDateString()] ||
-                                    objHours[selectedDate.getDay()]
-                                  )?.map((hour) => {
-                                    return (
-                                      <option key={hour} name="dateTime">
-                                        {hour}
-                                      </option>
-                                    );
-                                  })}
-                                </select>
-                              </div>
-                            )}
-                            {values.duration && values.dateAndTime && <p></p>}
-                          </div>
-                        </div>
-                      )}
-                    </Field>
-
-                    <Field
-                      type="text"
-                      name="description"
-                      placeholder="Descripcion y explicacion del tatuaje a realizar"
-                      className="p-2 mb-3 shadow-md block w-full"
-                    />
-                    <ErrorMessage
-                      name="description"
-                      component="div"
-                      className="text-red-500 text-sm"
-                    />
-                    <label>Fecha Seleccionada:</label>
-                  </div>
-                  <div className="mb-4">
-                    <label htmlFor="image" className="font-bold">
-                      Imagen de perfil
-                    </label>
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={(event) => {
-                        setFieldValue("image", event.currentTarget.files[0]);
-                      }}
-                      className="p-2 mb-3 shadow-md block w-full"
-                    />
-                    {values.image && (
-                      <button
-                        type="button"
-                        onClick={() => setFieldValue("image", null)}
-                        className="bg-red-500 text-white p-2 rounded"
-                      >
-                        Delete Image
-                      </button>
-                    )}
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={
-                      isSubmitting || !isValid || !dirty || !values.possible
-                    }
-                  >
-                    Reservar turno
-                  </button>
-                  {!values.possible && (
-                    <div>
-                      <p>
-                        El horario es muy tarde para un tatuaje tan grande, por
-                        favor selecciona un horario anterior o cambia de fecha
-                        para buscar un dia con mayor disponibilidad
-                      </p>
-                    </div>
-                  )}
-                </Form>
-              )}
-            </Formik>
-          )}
-        </div>
-      </div>
-    </div>
+                     <Field
+                       type="text"
+                       name="description"
+                       placeholder="Descripcion y explicacion del tatuaje a realizar"
+                       className="p-2 mb-3 shadow-md block w-full"
+                     />
+                     <ErrorMessage
+                       name="description"
+                       component="div"
+                       className="text-red-500 text-sm"
+                     />
+                     <label>Fecha Seleccionada:</label>
+                     <Field name="dateAndTime">
+                       {({ field, form }) => (
+                         <div>
+                           <Calendar
+                             {...field}
+                             defaultValue={null}
+                             locale="es"
+                             tileClassName={tileStyles}
+                             tileDisabled={tileDisabled}
+                             onChange={(date) => changeDate(form, date)}
+                             minDate={new Date(Date.now())}
+                           />
+                           <div className="text-black">
+                             {showTime && (
+                               <div className="text-gray-300">
+                                 <p>Horario del comienzo del turno</p>
+                                 <select
+                                   name="dateTime"
+                                   value={selectedTime}
+                                   onChange={(event) => handleTime(form, event)}
+                                 >
+                                   <option name="dateTime" value="" disabled>
+                                     Seleccionar horario inicial
+                                   </option>
+                                   {(
+                                     daysWithHours[selectedDate.toDateString()] ||
+                                     daysWithHours[dayData[selectedDate.getDay()].day]
+                                   )?.map((hour) => {
+                                     return (
+                                       <option key={hour} name="dateTime">
+                                         {hour}
+                                       </option>
+                                     );
+                                   })}
+                                 </select>
+                               </div>
+                             )}
+                           </div>
+                         </div>
+                       )}
+                     </Field>
+                     <ErrorMessage name="selectedDate" component="div" />
+                   </div>
+                   <div className="mb-4">
+                     <label htmlFor="image" className="font-bold">
+                       Imagen de perfil
+                     </label>
+                     <input
+                       type="file"
+                       name="image"
+                       onChange={(event) => {
+                         setFieldValue("image", event.currentTarget.files[0]);
+                       }}
+                       className="p-2 mb-3 shadow-md block w-full"
+                     />
+                     {values.image && (
+                       <button
+                         type="button"
+                         onClick={() => setFieldValue("image", null)}
+                         className="bg-red-500 text-white p-2 rounded"
+                       >
+                         Delete Image
+                       </button>
+                     )}
+                   </div>
+                   <button
+                     type="submit"
+                     disabled={
+                       isSubmitting || !isValid || !dirty || !values.possible
+                     }
+                   >
+                     Reservar turno
+                   </button>
+                 </Form>
+               )}
+             </Formik>
+           )}
+         </div>
+       </div>
+     </div>
   );
 };
 
