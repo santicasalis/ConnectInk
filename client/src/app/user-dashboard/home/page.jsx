@@ -10,6 +10,7 @@ import PostsDashboard from '../../../components/postsDashboard/PostsDashboard'
 const Home = () => {
   return (
     <div>
+      <h1>EL PAGO FALLO, INTENTALO MAS TARDE</h1>
       {/* <PostsDashboard /> */}
     </div>
   );

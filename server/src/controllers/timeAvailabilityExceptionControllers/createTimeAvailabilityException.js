@@ -24,24 +24,30 @@ const createTimeAvailabilityException = async (
     };
   }
 
-  if (initialHour > finalHour) {
-    return {
-      code: 404,
-      error: "The initial hour must be less than the final hour",
-    };
-  }
-  if (secondInitialHour > secondFinalHour) {
-    return {
-      code: 404,
-      error: "The second initial hour must be less than the second final hour",
-    };
+  if(initialHour && finalHour){
+    if (Number(initialHour.split(":")[0]) > Number(finalHour.split(":")[0])) {
+      return {
+        code: 404,
+        error: "The initial hour must be less than the final hour",
+      };
+    }
   }
 
-  if (finalHour > secondInitialHour) {
-    return {
-      code: 404,
-      error: "The second initial hour must be more than the final hour",
-    };
+
+  if(secondInitialHour && secondFinalHour){
+    if (Number(secondInitialHour.split(":")[0]) > Number(secondFinalHour.split(":")[0])) {
+      return {
+        code: 404,
+        error: "The second initial hour must be less than the second final hour",
+      };
+    }
+  
+    if (Number(finalHour.split(":")[0]) > Number(secondInitialHour.split(":")[0])) {
+      return {
+        code: 404,
+        error: "The second initial hour must be more than the final hour",
+      };
+    }
   }
 
   const timeAvailabilityException = await TimeAvailabilityException.create({

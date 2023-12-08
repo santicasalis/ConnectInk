@@ -24,7 +24,7 @@ const createOrder = async (req, res) => {
           },
         ],
         back_urls: {
-          failure: "http://localhost:3001/payment/failure",
+          failure: `http://localhost:3001/payment/failure/${id}`,
           pending: "http://localhost:3001/payment/pending",
           success: `http://localhost:3001/payment/success/${id}`,
         },
