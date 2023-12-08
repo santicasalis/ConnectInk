@@ -7,12 +7,15 @@ import Image from "next/image";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useState } from "react";
 import { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 
 const Price = () => {
   // const dispatch = useDispatch();
   const user = useSelector((state) => state.user.logedInUser);
   const URL_BASE = "http://localhost:3001";
+  let errorIndicator = false
 
   const [prices, setPrices] = useState({
     Pequeño: { size: "Pequeño", priceMin: "", priceMax: "", artistId: user.id },
@@ -87,11 +90,9 @@ const Price = () => {
     setErrorMessages([]);
 
     for (const size in prices) {
-
       const priceData = prices[size];
 
       if (parseInt(priceData.priceMin) > parseInt(priceData.priceMax)) {
-        
         setErrorMessages((prevMessages) => [
           ...prevMessages,
           `Error: El precio mínimo para ${size} no puede ser mayor al precio máximo.`,
@@ -105,23 +106,39 @@ const Price = () => {
         await createPrice(priceData);
       }
     }
-    
+    if(errorIndicator){
+      toast.error(`Error al guardar precios`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+    } else{
+      toast.success(`Precios guardados con éxito`, {
+        className: "toastSuccess",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+    }
   };
 
   const createPrice = async (data) => {
     try {
       await axios.post(`${URL_BASE}/priceRanges`, data);
+   
     } catch (error) {
       console.error(error);
-      
+      errorIndicator = true
     }
   };
 
   const updatePrice = async (data) => {
     try {
       await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
-    } catch (error) {
+       } catch (error) {
       console.error(error);
+      errorIndicator = true
     }
   };
 
