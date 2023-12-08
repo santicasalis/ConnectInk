@@ -450,6 +450,8 @@ const BookAppointment = ({ params }) => {
   const user = useSelector((state) => state.user.logedInUser);
   const [sent, setSent] = useState(false);
 
+  console.log("ESTE ES EL DAYSWITHHOURS", daysWithHours)
+
   const dispatch = useDispatch();
 
   const durations = {

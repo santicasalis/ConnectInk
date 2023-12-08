@@ -20,12 +20,6 @@ export default function Appointments() {
 
   
 
-  
-
-
-  
-
-  console.log(user, "holaaa")
  
 
 

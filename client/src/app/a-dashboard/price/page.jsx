@@ -13,6 +13,7 @@ const Price = () => {
   // const dispatch = useDispatch();
   const user = useSelector((state) => state.user.logedInUser);
   const URL_BASE = "http://localhost:3001";
+  
 
   const [prices, setPrices] = useState({
     Pequeño: { size: "Pequeño", priceMin: "", priceMax: "", artistId: user.id },
@@ -103,23 +104,6 @@ const Price = () => {
     } catch (error) {
       console.error(error);
       
-    }
-  };
-
-  const updatePrice = async (data) => {
-    try {
-      await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
-  const createPrice = async (data) => {
-    try {
-      await axios.post(`${URL_BASE}/priceRanges`, data);
-    } catch (error) {
-      console.error(error);
     }
   };
 
