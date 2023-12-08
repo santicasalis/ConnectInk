@@ -6,14 +6,17 @@ import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { IoBodyOutline } from "react-icons/io5";
 import { FaMapPin, FaPhone } from "react-icons/fa6";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from "axios"
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { openModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
+
 
 const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, tattooArtistId}) => {
+
     const imageLoader = ({src}) => {
         return src
       }
@@ -130,6 +133,7 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
             </MenuItem>
           </Menu>
         </div>
+
 
         <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
         <p className="text-center mt-2 ">Tamaño: {size}</p>

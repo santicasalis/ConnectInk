@@ -18,6 +18,7 @@ const createPriceRangeHandler = async (req, res) => {
       res.status(newPriceRange.code).json({ error: newPriceRange.error });
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

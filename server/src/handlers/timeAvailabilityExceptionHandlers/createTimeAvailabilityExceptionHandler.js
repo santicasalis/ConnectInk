@@ -1,13 +1,15 @@
 const createTimeAvailabilityException = require("../../controllers/timeAvailabilityExceptionControllers/createTimeAvailabilityException");
 
 const createTimeAvailabilityExceptionHandler = async (req, res) => {
-  const { tattooArtistId, date, initialHour, finalHour } = req.body;
+  const { tattooArtistId, date, initialHour, finalHour, secondInitialHour, secondFinalHour } = req.body;
   try {
     const timeAvailabilityException = await createTimeAvailabilityException(
       tattooArtistId,
       date,
       initialHour,
-      finalHour
+      finalHour,
+      secondInitialHour,
+      secondFinalHour
     );
     if (timeAvailabilityException.code === 201) {
       res.status(201).json({

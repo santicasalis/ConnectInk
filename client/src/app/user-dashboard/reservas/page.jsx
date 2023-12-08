@@ -9,16 +9,16 @@ import { useEffect } from 'react';
 export default function Reservas() {
 
   const user = useSelector((state)=>state.user.logedInUser)
-    
-  const appointment = user.appointments
+  const appointment =  user.appointments;
 
   return (
     
       <div className=''>
         {appointment && appointment.length > 0 ? (
-          appointment.map((tur) => (
+          [...user.appointments].sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime)).map((tur) => (
             <div className='mt-[50px]'>
               <BookingCard 
+
                bodyPlace={tur.bodyPlace}
                description={tur.description}
                duration={tur.duration}
@@ -28,6 +28,7 @@ export default function Reservas() {
                depositPrice={tur.depositPrice}
                tattooArtistId={tur.tattooArtistId}
                paymentId={!!tur.paymentId}
+
                 />
             </div>
           ))

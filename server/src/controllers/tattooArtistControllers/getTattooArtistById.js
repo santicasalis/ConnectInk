@@ -22,12 +22,12 @@ const getTattooArtistById = async (id) => {
       },
       {
         model: TimeAvailability,
-        attributes: ["id", "day", "initialHour", "finalHour"],
+        attributes: ["id", "day", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
         required: false
       },
       {
         model: TimeAvailabilityException,
-        attributes: ["id", "date", "initialHour", "finalHour"],
+        attributes: ["id", "date", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
         required: false
       },
       {
@@ -87,6 +87,8 @@ const getTattooArtistById = async (id) => {
           day: timeAvailability.day,
           initialHour: timeAvailability.initialHour,
           finalHour: timeAvailability.finalHour,
+          secondInitialHour: timeAvailability.secondInitialHour, 
+          secondFinalHour: timeAvailability.secondFinalHour
         };
       }
     ),
@@ -97,6 +99,8 @@ const getTattooArtistById = async (id) => {
           date: timeAvailabilityException.date,
           initialHour: timeAvailabilityException.initialHour,
           finalHour: timeAvailabilityException.finalHour,
+          secondInitialHour: timeAvailabilityException.secondInitialHour, 
+          secondFinalHour: timeAvailabilityException.secondFinalHour
         };
       }
     ),
