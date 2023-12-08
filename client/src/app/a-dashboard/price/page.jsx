@@ -39,6 +39,7 @@ const Price = () => {
     },
 
   });
+  const [errorMessages, setErrorMessages] = useState([]);
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -83,11 +84,21 @@ const Price = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setErrorMessages([]);
 
     for (const size in prices) {
 
       const priceData = prices[size];
+
+      if (parseInt(priceData.priceMin) > parseInt(priceData.priceMax)) {
+        
+        setErrorMessages((prevMessages) => [
+          ...prevMessages,
+          `Error: El precio mínimo para ${size} no puede ser mayor al precio máximo.`,
+        ]);
+        return; 
+      }
+
       if (priceData.priceRangeId) {
         await updatePrice(priceData);
       } else {
@@ -121,6 +132,7 @@ const Price = () => {
   return (
     <div className="flex items-center justify-center h-screen ">
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
+    
       <form onSubmit={handleSubmit}>
         {Object.keys(prices).map((size) => (
           <div key={size} className="flex items-center mr-50 mb-4 ">
@@ -156,6 +168,13 @@ const Price = () => {
             </div>
           </div>
         ))}
+         {errorMessages.length > 0 && (
+          <div className="mb-4 text-red-500">
+            {errorMessages.map((errorMessage, index) => (
+              <p key={index}>{errorMessage}</p>
+            ))}
+          </div>
+        )}
         <div className="flex justify-center mt-8">
         <button
           type="submit"
@@ -165,6 +184,7 @@ const Price = () => {
         </button>
         </div>
       </form>
+     
     </div>
     </div>
   );
