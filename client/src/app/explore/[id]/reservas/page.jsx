@@ -436,6 +436,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
 import Nav from "@/components/nav/Nav";
 import { array } from "yup";
+import { MdFileUpload } from "react-icons/md";
 
 const URL_BASE = "http://localhost:3001";
 
@@ -472,8 +473,8 @@ const BookAppointment = ({ params }) => {
     const allAvailabilities = timeAvailabilities?.map((availabilty) => {
       return { 
           day: availabilty.day,
-          initialHour:Number(availabilty.initialHour.split(":")[0]),
-          finalHour: Number(availabilty.finalHour.split(":")[0]),
+          initialHour:Number(availabilty.initialHour?.split(":")[0]),
+          finalHour: Number(availabilty.finalHour?.split(":")[0]),
           secondInitialHour: Number(availabilty.secondInitialHour?.split(":")[0]) || null,
           secondFinalHour: Number(availabilty.secondFinalHour?.split(":")[0]) || null
         
@@ -649,11 +650,11 @@ const BookAppointment = ({ params }) => {
 
 
   return (
-    <div className="container mx-auto p-4">
+    <div className=" w-full bg-secondary-900  ">
        <Nav />
 
-       <div className="w-full  p-4 shadow-lg flex justify-center">
-         <div className="p-4 rounded border-primary border-[2px] shadow-lg">
+       <div className="w-full p-4 flex justify-center ">
+         <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
            {sent ? (
              <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
            ) : (
@@ -704,20 +705,22 @@ const BookAppointment = ({ params }) => {
                }}
              >
                {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-                 <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+                 <Form className="flex flex-col  shadow-2xl p-5 max-w-xl mx-auto ">
                    <div className="info-artist mb-4">
                      <div className="p-2 m-2">
-                       <label htmlFor="size">Selecciona una opción:</label>
-                       <Field as="select" name="size">
-                         <option value="" disabled>
+                       <label className="font-rocksalt text-lg" htmlFor="size">Selecciona una opción:</label>
+                       <Field as="select" name="size" className=" text-white  bg-secondary-100 text-[15px] ml-4 rounded-md p-2">
+                         <option value="" disabled   >
                            Selecciona una opcion
                          </option>
-                         <option value="Pequeño">Pequeño</option>
-                         <option value="Pequeño a color">Pequeño a color</option>
-                         <option value="Mediano">Mediano</option>
-                         <option value="Mediano a color">Mediano a color</option>
-                         <option value="Grande">Grande</option>
-                         <option value="Grande a color">Grande a color</option>
+                        
+                         <option className="text-white " value="Pequeño">Pequeño</option>
+                         <option className="text-white" value="Pequeño a color">Pequeño a color</option>
+                         <option className="text-white" value="Mediano">Mediano</option>
+                         <option className="text-white" value="Mediano a color">Mediano a color</option>
+                         <option className="text-white" value="Grande">Grande</option>
+                         <option className="text-white" value="Grande a color">Grande a color</option>
+                         
                        </Field>
                        <ErrorMessage
                          name="size"
@@ -725,34 +728,35 @@ const BookAppointment = ({ params }) => {
                          className="text-red-500 text-sm"
                        />
                      </div>
-                     
+                     <label className="font-rocksalt text-xs"> Lugar del cuerpo:</label>
                      <Field
                        type="text"
                        name="bodyPlace"
-                       placeholder="Lugar del cuerpo"
-                       className="p-2 mb-3 shadow-md block w-full"
+                      //  placeholder="Lugar del cuerpo"
+                       className="p-2 mb-3 shadow-md block w-50  text-white  bg-secondary-100 rounded-md "
                      />
                      <ErrorMessage
                        name="bodyPlace"
                        component="div"
                        className="text-red-500 text-sm"
                      />
-
+                      <label className="font-rocksalt text-xs"> Descripción: </label>
+                      <p className="text-[9px]"> *Describa en el mayor detalle posible el tatuaje a realizar</p>
                      <Field
                        type="text"
                        name="description"
-                       placeholder="Descripcion y explicacion del tatuaje a realizar"
-                       className="p-2 mb-3 shadow-md block w-full"
+                      //  placeholder="Descripcion y explicacion del tatuaje a realizar"
+                       className="p-2 mb-3 shadow-md block w-full rounded-md text-white  bg-secondary-100"
                      />
                      <ErrorMessage
                        name="description"
                        component="div"
                        className="text-red-500 text-sm"
                      />
-                     <label>Fecha Seleccionada:</label>
+                     <label >Fecha Seleccionada:</label>
                      <Field name="dateAndTime">
                        {({ field, form }) => (
-                         <div>
+                         <div  >
                            <Calendar
                              {...field}
                              defaultValue={null}
@@ -764,15 +768,16 @@ const BookAppointment = ({ params }) => {
                            />
                            <div className="text-black">
                              {showTime && (
-                               <div className="text-gray-300">
-                                 <p>Horario del comienzo del turno</p>
+                               <div className="text-gray-300 font-rocksalt text-sm mt-8 ">
+                                 <p>Horario del comienzo del turno:</p>
                                  <select
                                    name="dateTime"
                                    value={selectedTime}
                                    onChange={(event) => handleTime(form, event)}
+                                   className="text-secondary-900 text-[10px] rounded-md w-[50px] mt-2"
                                  >
                                    <option name="dateTime" value="" disabled>
-                                     Seleccionar horario inicial
+                                    
                                    </option>
                                    {(
                                      daysWithHours[selectedDate.toDateString()] ||
@@ -793,36 +798,44 @@ const BookAppointment = ({ params }) => {
                      </Field>
                      <ErrorMessage name="selectedDate" component="div" />
                    </div>
-                   <div className="mb-4">
-                     <label htmlFor="image" className="font-bold">
-                       Imagen de perfil
+                   <div className="mb-4 flex flex-col">
+                     <label htmlFor="image" className="font-rocksalt">
+                       Imagen de referencia:
+                     </label>
+                     <label className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" htmlFor="imagenReferencia">
+                     <MdFileUpload className="mr-2 " />
+                      Cargar
                      </label>
                      <input
                        type="file"
                        name="image"
+                       id="imagenReferencia"
                        onChange={(event) => {
                          setFieldValue("image", event.currentTarget.files[0]);
                        }}
-                       className="p-2 mb-3 shadow-md block w-full"
+                       className="hidden "
                      />
                      {values.image && (
                        <button
                          type="button"
                          onClick={() => setFieldValue("image", null)}
-                         className="bg-red-500 text-white p-2 rounded"
+                         className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
                        >
                          Delete Image
                        </button>
                      )}
                    </div>
+                   <div className="flex justify-center items-center " >
                    <button
                      type="submit"
                      disabled={
                        isSubmitting || !isValid || !dirty || !values.possible
                      }
+                     className=" border-[1px] w-[35%] text-lg p-2 rounded-md hover:bg-primary/80 hover:font-bold disabled:bg-transparent"
                    >
                      Reservar turno
                    </button>
+                   </div>
                  </Form>
                )}
              </Formik>
