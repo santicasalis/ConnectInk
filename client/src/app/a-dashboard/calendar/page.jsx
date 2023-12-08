@@ -285,6 +285,13 @@ const Page = () => {
         date: newException.date,
         tattooArtistId: user.logedInUser.id,
       });
+    } else  if (newException.secondInitialHour && !newException.secondFinalHour){
+      await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
+        date: newException.date,
+        initialHour: newException.initialHour,
+        finalHour: newException.finalHour,
+        tattooArtistId: user.logedInUser.id,
+      });
     } else {
       await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
         ...newException,
@@ -493,7 +500,7 @@ const Page = () => {
         }
         <button
           onClick={addTimeException}
-          disabled={!newException.initialHour || !newException.finalHour}
+          disabled={!newException.initialHour || (!newException.finalHour && newException.initialHour !== "No trabajo") }
         >
           Añadir Excepcion
         </button>
