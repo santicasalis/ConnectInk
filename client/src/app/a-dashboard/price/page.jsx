@@ -119,16 +119,18 @@ const Price = () => {
 
 
   return (
+    <div className="flex items-center justify-center h-screen ">
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
       <form onSubmit={handleSubmit}>
         {Object.keys(prices).map((size) => (
-          <div key={size} className="flex items-center mb-4">
-            <div className="w-1/4">
-              <p>{size}:</p>
+          <div key={size} className="flex items-center mr-50 mb-4 ">
+            <div className="w-1/4 font-rocksalt">
+              <p className="mb-2" >{size}:</p>
             </div>
-            <div className="flex-1 flex items-center gap-4">
-              <div className="w-1/2">
-
+            <div className="flex-1 flex items-center gap-4 ">
+            <p className="font-rocksalt"> $ </p>
+              <div className="w-1/3">
+                
                 <input
                   type="number"
                   placeholder="Precio mínimo"
@@ -136,12 +138,11 @@ const Price = () => {
                   onChange={(event) =>
                     handleInputChange(size, "priceMin", event.target.value)
                   }
-                  className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900"
+                  className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
                 />
               </div>
-
-              <div className="w-1/2">
-
+              <p className="font-rocksalt"> $ </p>
+              <div className="w-1/3">
                 <input
                   type="number"
                   placeholder="Precio máximo"
@@ -149,22 +150,22 @@ const Price = () => {
                   onChange={(event) =>
                     handleInputChange(size, "priceMax", event.target.value)
                   }
-                  className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900"
+                  className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
                 />
               </div>
             </div>
           </div>
         ))}
-
+        <div className="flex justify-center mt-8">
         <button
           type="submit"
-
-          className="bg-primary text-white py-2 px-4 rounded-lg"
-
+          className="hover:bg-primary font-rocksalt hover:text-black flex items-center justify-center gap-1 border-primary text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer"
         >
           Guardar Precios
         </button>
+        </div>
       </form>
+    </div>
     </div>
   );
 };
