@@ -115,21 +115,7 @@ const Price = () => {
   };
 
 
-  const createPrice = async (data) => {
-    try {
-      await axios.post(`${URL_BASE}/priceRanges`, data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const updatePrice = async (data) => {
-    try {
-      await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
 
   return (

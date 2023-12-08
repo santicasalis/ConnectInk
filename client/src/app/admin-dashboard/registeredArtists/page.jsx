@@ -24,9 +24,9 @@ const RegisteredArtist = () => {
     indexOfFirstArtist,
     indexOfLastArtist
   );
-  console.log(artistsToDisplay);
+
   const totalArtists = filtered.length;
-  console.log(totalArtists);
+ 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

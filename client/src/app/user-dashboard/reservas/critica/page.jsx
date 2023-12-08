@@ -27,10 +27,10 @@ const Critica = () => {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
               }
-              console.log(values);
+              
               setSent(true);
             } catch (error) {
-              console.log(error);
+              
               throw Error("Error en el formulario");
             }
             setSubmitting(false);

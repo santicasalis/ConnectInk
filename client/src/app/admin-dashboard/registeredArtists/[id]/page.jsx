@@ -31,7 +31,7 @@ useEffect( () => {
 }, [params.id]
     
 )
-console.log(artist.publications, "soyyyy");
+
 
   return (
     <div className="">
