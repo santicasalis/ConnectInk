@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { getUserById } from "@/app/redux/features/user/userActions";
+
+import { TbPointFilled } from "react-icons/tb";
+
 import { useRouter } from "next/navigation";
+
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -78,7 +82,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -94,7 +98,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -110,7 +114,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -126,7 +130,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -142,7 +146,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -158,7 +162,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -174,7 +178,7 @@ const Page = () => {
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
       options.push(
-        <option key={time} className="bg-transparent" value={time}>
+        <option key={time} className="bg-secondary-900 text-white" value={time}>
           {time}
         </option>
       );
@@ -330,25 +334,30 @@ const Page = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h3>Disponibilidad de Tiempo</h3>
+    <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-primary">
+      <div className=" text-center">
+        <h3 className="font-rocksalt text-[26px] mt-4 mb-2">Disponibilidad de Tiempo</h3>
+        <div className="flex items-center justify-center">
+           <hr className="mt-6 mb-6 w-[90%] border-neutral-500"></hr>
+        </div>
+        
         {days.map((day) => {
           return (
-            <div key={day}>
-              <h4>{day}</h4>
+            <div key={day} className="">
+              <h4 className="text-xl mb-4 font-rocksalt">{day}</h4>
               {showHours[day] ? (
-                <div>
+                <div className="">
+                  <div className="flex justify-center items-center gap-[25px]"> 
                   <label>
                     Inicio:
                     <select
-                      className="bg-transparent"
+                      className="bg-transparent border-[1px] border-primary/40 ml-4"
                       defaultValue={dayObj[day]?.initialHour || ""}
                       onChange={(e) =>
                         handleInitialTimeChange(day, e.target.value)
                       }
                     >
-                      <option value="" disabled>
+                      <option className="bg-transparent" value="" disabled>
                         Seleccionar horario inicial
                       </option>
                       {generateTimeOptions()}
@@ -358,7 +367,7 @@ const Page = () => {
                   <label>
                     Fin:
                     <select
-                      className="bg-transparent"
+                      className="bg-transparent border-[1px] border-primary/40 ml-4"
                       defaultValue={dayObj[day]?.finalHour || ""}
                       onChange={(e) =>
                         handleFinalTimeChange(day, e.target.value)
@@ -370,13 +379,14 @@ const Page = () => {
                       {generateFinalTimeOptions(day)}
                     </select>
                   </label>
-
+                  </div>
+                    
                   {moreTime[day] && (
-                    <div>
+                    <div className="flex items-center justify-center gap-[25px] mt-6">
                       <label>
                         Inicio:
                         <select
-                          className="bg-transparent"
+                          className="bg-transparent border-[1px] border-primary/40 ml-4"
                           defaultValue={dayObj[day]?.secondInitialHour || ""}
                           onChange={(e) =>
                             handleSecondInitialTimeChange(day, e.target.value)
@@ -392,7 +402,7 @@ const Page = () => {
                       <label>
                         Fin:
                         <select
-                          className="bg-transparent"
+                          className="bg-transparent border-[1px] border-primary/40 ml-4"
                           defaultValue={dayObj[day]?.secondFinalHour || ""}
                           onChange={(e) =>
                             handleSecondFinalTimeChange(day, e.target.value)
@@ -406,7 +416,7 @@ const Page = () => {
                       </label>
                     </div>
                   )}
-
+                    
                   <button
                     onClick={() =>
                       setMoreTime({ ...moreTime, [day]: !moreTime[day] })
@@ -420,6 +430,7 @@ const Page = () => {
               ) : (
                 <button
                   onClick={() => setShowHours({ ...showHours, [day]: true })}
+                  className="w-[30%] rounded outline  mb-4 transition-transform hover:scale-110  "
                 >
                   Agregar horario:
                 </button>
@@ -427,35 +438,35 @@ const Page = () => {
             </div>
           );
         })}
-        <button onClick={saveTimeAvailability}>Guardar Horarios</button>
+        <button onClick={saveTimeAvailability} className="w-[40%] border-[1px] border-primary/40 hover:border-primary transition-transform hover:scale-105 mb-2 rounded mt-2 ">Guardar Horarios</button>
       </div>
+      <div className="flex items-center justify-center">
+           <hr className="mt-6 mb-6 w-[90%] border-neutral-500"></hr>
+        </div>
 
-      <div>
-        <h3>Excepciones de horarios</h3>
-        <p>
-          Si en algna fecha en especifico vas a usar un horario diferente al
-          normal, agregala acá
-        </p>
-        <p>
-          Selecciona la fecha especial, e ingresa el horario en el que SI
-          trabajarías
-        </p>
-        <p>
-          En caso de que en la fecha especifica no vayas a trabajar, selecciona
-          la opcion "No trabajo" en el apartado de hora inicial
-        </p>
+      <div className="">
+        <h3 className="text-[26px] font-rocksalt text-center mt-4 mb-6">Excepciones de horarios</h3>
+          <ul className="ml-10 mt-4">
+             <li className="mt-2 flex gap-2"><TbPointFilled className='text-primary'/>Si en alguna fecha en específico vas a usar un horario diferente al normal, agrégala aquí.</li>
+             <li className="mt-2 flex gap-2"><TbPointFilled className='text-primary'/>Selecciona la fecha especial e ingresa el horario en el que SÍ trabajarías.</li>
+             <li className="mt-2 flex gap-2"><TbPointFilled className='text-primary'/>En caso de que en la fecha específica no vayas a trabajar, selecciona la opción "No trabajo" en el apartado de hora inicial.</li>
+          </ul>
+        <div className="flex items-center justify-center mt-10">
         <input
           type="date"
           name="date"
           value={newException?.date}
           onChange={handleExceptionChange}
+          className="bg-transparent border-[1px] border-primary/40"
         />
+        </div>
         {newException.date && (
-          <div>
+          <div className=" flex items-center justify-center mt-4 mb-4 gap-[25px]">
             <select
               name="initialHour"
               defaultValue=""
               onChange={handleExceptionChange}
+              className="bg-transparent border-[1px] border-primary/40"
             >
               <option value="" disabled>
                 Seleccionar horario inicial
@@ -468,6 +479,7 @@ const Page = () => {
                 name="finalHour"
                 defaultValue=""
                 onChange={handleExceptionChange}
+                className="bg-transparent border-[1px] border-primary/40"
               >
                 <option>Seleccionar horario final</option>
                 {generateTimeOptionsException()}
@@ -475,6 +487,7 @@ const Page = () => {
             )}
           </div>
         )}
+
         {newException.initialHour && newException.finalHour && (
           <div>
             <button onClick={() => setMoreExceptionTime(!moreExceptionTime)}>
@@ -516,6 +529,7 @@ const Page = () => {
         )}
         <button
           onClick={addTimeException}
+          className="ml-6 hover:scale-105 transition-transform border-[1px] border-primary/40 hover:border-primary rounded mb-6"
           disabled={
             !newException.initialHour ||
             (!newException.finalHour &&
@@ -547,11 +561,15 @@ const Page = () => {
                   ) : (
                     <p>Sin trabajo</p>
                   )}
+                   <div className="flex items-center justify-center ">
+                    <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr>
+               </div>
                 </div>
               )
             )}
           </div>
         )}
+
       </div>
     </div>
   );
