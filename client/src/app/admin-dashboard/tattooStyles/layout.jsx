@@ -24,7 +24,7 @@ export default function TattooStylesLayout({ children }) {
 
   const handleAddStyle = () => {
     if (newStyleName.trim() !== '') {
-     console.log('Nuevo estilo a añadir:', newStyleName);
+     
      dispatch(addNewStyle({ name: newStyleName }));
     closeModal(); 
     }

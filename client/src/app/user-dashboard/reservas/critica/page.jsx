@@ -5,9 +5,22 @@ import { validationSchema } from "./validationSchema";
 import { useState } from "react";
 import ReactStars from "react-stars";
 import { uploadImage } from "../../../../app/utils/uploadImage";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Critica = () => {
   const [sent, setSent] = useState(false);
+  const user = useSelector((state) => state.user.logedInUser)
+  const router = useRouter()
+
+  useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if(user.userType !== "customer"){
+      router.replace("/")
+    }
+  }, [])
 
   return (
     <div>
@@ -27,10 +40,10 @@ const Critica = () => {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
               }
-              console.log(values);
+              
               setSent(true);
             } catch (error) {
-              console.log(error);
+              
               throw Error("Error en el formulario");
             }
             setSubmitting(false);

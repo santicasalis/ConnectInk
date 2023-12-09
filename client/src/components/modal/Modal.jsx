@@ -34,7 +34,7 @@ const Modal = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        console.log(id, descriptionData,'aca los datos la puta que te remilpario')
+       
         await axios.put(`${URL_BASE}/publications/${id}`,{description:descriptionData}); 
         
         dispatch(closeModalAction()); 

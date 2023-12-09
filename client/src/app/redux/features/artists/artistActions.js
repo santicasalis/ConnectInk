@@ -41,6 +41,12 @@ export const DeleteArtists = (id) => async (dispatch) => {
     dispatch(deleteArtist(id))
 }
 
+export const CleanArtist = () => async (dispatch) => {
+  dispatch(cleanDetail())
+}
+
+
+
 /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
 
 // export const getTimeAvailabilities = (id) => async (dispatch) => {

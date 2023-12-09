@@ -6,11 +6,23 @@ import { useSelector } from 'react-redux'
 import Image from 'next/image'
 //NUESTROS PERFILES
 
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 const Profile = () => {
   const user = useSelector((state) => state.user.logedInUser) // ACA TENEMOS QUE TRAER LAS CUENTAS DE ADMIN- BACK
   const imageLoader = ({src}) => {
     return src
   }
+  const router = useRouter()
+  
+  useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if (user.userType !== "admin"){
+      router.replace("/")
+    }
+  }, [])
   return (
     <div className='bg-secondary-100 p-8 rounded-xl w-full'>
       <h1 className='text-4xl'> Mi perfil</h1>

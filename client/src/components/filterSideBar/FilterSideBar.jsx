@@ -1,6 +1,7 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { RiRefreshLine } from "react-icons/ri";
 import {
   filterAllArtists,
   getAllArtists,
@@ -68,13 +69,13 @@ export default function FilterSideBar() {
   // };
 
   return (
-    <div>
+    <div className="border-[2px] border-primary/40 rounded-3xl overflow-hidden shadow-md shadow-primary">
       <div className="bg-secondary-900 p-4 flex flex-col transition-all pt-10">
         <h2 className="text-center text-[35px] font-bold mb-[50px] font-rocksalt">
           Filtros <span className="text-primary text-4xl">.</span>
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center w-full justify-center mb-8">
+          <div className="flex flex-col items-center w-full justify-center mb-5">
             <label
               className="text-[22px] font-weight:800 flex items-center px-4 py-1 justify-center font-newrocker"
               htmlFor="city"
@@ -82,7 +83,7 @@ export default function FilterSideBar() {
               Ciudad:
             </label>
             <input
-              className="mb-8 w-[60%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
+              className=" w-[90%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               list="cities"
               id="city"
               name="location"
@@ -100,7 +101,7 @@ export default function FilterSideBar() {
               Nombre:
             </label>
             <input
-              className="mb-8 w-[60%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
+              className="mb-8 w-[90%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
               list="names"
               id="name"
               name="name"
@@ -122,7 +123,7 @@ export default function FilterSideBar() {
                 const isSelected = styleSelected.includes(style.name);
                 return (
                   <label
-                    className={`flex items-center gap-2 px-3 py-1 border font-newrocker rounded cursor-pointer ${
+                    className={`flex items-center gap-2 px-3 py-1 border rounded cursor-pointer ${
                       isSelected
                         ? "bg-primary/75 text-black border-primary border-[1px]"
                         : "bg-transparent border-[1px] border-primary text-primary rounded-lg"
@@ -137,11 +138,12 @@ export default function FilterSideBar() {
               })}
             </div>
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center mb-6">
             <button
               onClick={resetFilters}
-              className="font-newrocker w-[40%] border-[1px] border-primary text-[22px] rounded"
+              className=" bg-primary text-black text-[20px] font-newrocker font-bold rounded-lg flex gap-x-2 items-center justify-center py-3 px-3"
             >
+              <RiRefreshLine className="text-black"/>
               Reiniciar Filtros
             </button>
           </div>
