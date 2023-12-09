@@ -1,5 +1,5 @@
 import React from "react";
-import { uploadImage } from "@/app/utils/uploadImage";
+import { uploadImage } from '../../app/utils/uploadImage';
 import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 
 import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById, getUserInformation } from "@/app/redux/features/user/userActions";
+import { getUserById, getUserInformation } from "../../app/redux/features/user/userActions"
 import {
   RiMailLine,
   RiLock2Line,

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { TbPointFilled } from "react-icons/tb";
 import { useSelector } from 'react-redux';

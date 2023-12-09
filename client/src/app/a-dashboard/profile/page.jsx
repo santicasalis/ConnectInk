@@ -103,7 +103,6 @@ const Profile = () => {
                 <input type="text" value={user.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
-          
         </div>
       </form>
     </div>

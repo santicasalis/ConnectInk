@@ -1,4 +1,4 @@
-import ArtistPost from '@/components/artistPost/artistPost'
+import ArtistPost from '../../../../components/artistPost/artistPost'
 import React from 'react'
 
 const CreatePost = () => {

@@ -427,17 +427,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { uploadImage } from "@/app/utils/uploadImage";
+
+import { Formik, Form, Field, ErrorMessage} from "formik";
+import { uploadImage } from "../../../../app/utils/uploadImage";
+
 import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import { dayData } from "../../../utils/data/dayData";
 import { useDispatch, useSelector } from "react-redux";
-import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
-import Nav from "@/components/nav/Nav";
+
+import { getArtistDetail } from "../../../../app/redux/features/artists/artistActions";
+import Nav from "../../../../components/nav/Nav";
 import { array } from "yup";
 import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
+
 
 
 const URL_BASE = "http://localhost:3001";

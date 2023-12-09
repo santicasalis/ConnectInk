@@ -1,4 +1,4 @@
-import AdminTopBarOptions from "@/components/admintopBarOptions/AdminTopBarOptions";
+import AdminTopBarOptions from "../../../components/admintopBarOptions/AdminTopBarOptions";
 import { RiAddFill } from "react-icons/ri";
 import Link from 'next/link'
 

@@ -3,20 +3,18 @@
 // Importaciones
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Nav from "@/components/nav/Nav";
-import "./style.css";
-import MapComponent from "@/components/map/Map";
+import Nav from "../../../components/nav/Nav";
+import "./style.css"; 
+import MapComponent from "../../../components/map/map"
 import Link from "next/link";
 import { CiShop } from "react-icons/ci";
 import { VscAccount } from "react-icons/vsc";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getArtistDetail,
-  CleanArtist,
-} from "@/app/redux/features/artists/artistActions";
 import ReviewCard from "../../../components/reviewCard/ReviewCard";
+import { getArtistDetail, CleanArtist } from "../../../app/redux/features/artists/artistActions";
+
 
 export default function Page({ params }) {
   // const [loading, setLoading] = useState(true);
