@@ -23,9 +23,7 @@ useEffect(() => {
           setPosition(coords);
         } else {
         
-          console.log(
-            "No se encontraron coordenadas para la dirección y provincia proporcionadas."
-          );
+        
         }
       })
       .catch((error) => {

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { CiShop } from "react-icons/ci";
 import { BsFillFilePostFill } from "react-icons/bs";
 import { VscAccount } from "react-icons/vsc";
+
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -28,6 +29,7 @@ const RegArtistById = ({ params }) => {
       });
   }, [params.id]);
   console.log(artist.publications, "soyyyy");
+
 
   return (
     <div className="">

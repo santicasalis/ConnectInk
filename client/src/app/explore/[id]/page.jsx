@@ -43,7 +43,7 @@ export default function Page({ params }) {
   if (!artist)
     return <div className="text-center">No se encontró el tatuador</div>;
 
-    console.log(artist)
+   
 
   return (
     <div className="w-full p-4">

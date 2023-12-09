@@ -253,7 +253,7 @@ const Page = () => {
               finalHour,
             };
           }
-          console.log(data);
+
 
           await axios.post(`${URL_BASE}/timeAvailabilities`, data);
         }
@@ -284,8 +284,11 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log(newException);
-  }, [newException]);
+
+   
+  }, [newException])
+
+
 
   const addTimeException = async () => {
     if (newException.initialHour == "No trabajo") {

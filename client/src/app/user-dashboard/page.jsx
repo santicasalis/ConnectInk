@@ -17,9 +17,11 @@ function UDashboard() {
   const user = useSelector((state) => state.user.logedInUser);
 const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
 
+
 useEffect (() => {
 dispatch(getUserById(fireBaseUser.tokenId))
 },[])
+
   useEffect(() => {
     if(!user.userType){
       router.replace("/auth")

@@ -65,7 +65,6 @@ const Login = () => {
       const fireBaseUser = result.user;
       const token = fireBaseUser.uid;
 
-      console.log(token);
 
       dispatch(getUserById(token, router));
 
