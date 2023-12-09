@@ -26,7 +26,7 @@ const UserSideBar = () => {
       >
         <div>
           <h1 className="text-center text-2xl font-bold mb-10 font-rocksalt">
-            Usuario<span className="text-primary text-4xl">.</span>
+            Cliente<span className="text-primary text-4xl">.</span>
           </h1>
           <ul>
             <li>

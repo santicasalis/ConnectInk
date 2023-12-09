@@ -4,12 +4,24 @@ import axios from 'axios';
 import BookingCard from '@/components/bookingCard/BookingCard';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 
 export default function Reservas() {
 
   const user = useSelector((state)=>state.user.logedInUser)
   const appointment =  user.appointments;
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if(user.userType !== "customer"){
+      router.replace("/")
+    }
+  }, [])
 
   return (
     

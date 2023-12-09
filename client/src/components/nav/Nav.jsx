@@ -6,9 +6,19 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { openModalLoadingAction } from "../../app/redux/features/modalLoading/ModalLoadingActions";
+import { useRouter } from "next/navigation";
 
 export default function Nav() {
+
+  const dispatch = useDispatch();
+  const router = useRouter()
+  const handleClickExplorer = (e) => {
+    dispatch(openModalLoadingAction());
+    router.replace('/explore');
+  }
+
   const imageLoader = ({ src }) => {
     return src;
   };
@@ -37,11 +47,9 @@ export default function Nav() {
             </Link>
           </li>
           <li>
-            <Link href="/explore">
-              <span className="hover:text-primary hover:border-primary pb-1 font-newrocker text-[19px] border-b-[2px]  border-gray-200">
+            <span onClick={handleClickExplorer} className=" hover:text-primary cursor-pointer hover:border-primary pb-1 font-newrocker text-[19px] border-b-[2px]  border-gray-200">
                 Explorar
-              </span>
-            </Link>
+            </span>
           </li>
           <li>
             {!user.userType ? (

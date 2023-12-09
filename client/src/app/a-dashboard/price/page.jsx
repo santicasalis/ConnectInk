@@ -10,12 +10,17 @@ import { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
+import { useRouter } from "next/navigation";
 
 const Price = () => {
   // const dispatch = useDispatch();
   const user = useSelector((state) => state.user.logedInUser);
   const URL_BASE = "http://localhost:3001";
+
   let errorIndicator = false
+
+
+  const router = useRouter();
 
   const [prices, setPrices] = useState({
     Pequeño: { size: "Pequeño", priceMin: "", priceMax: "", artistId: user.id },
@@ -40,11 +45,15 @@ const Price = () => {
       priceMax: "",
       artistId: user.id,
     },
-
   });
   const [errorMessages, setErrorMessages] = useState([]);
 
   useEffect(() => {
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "artist") {
+      router.replace("/");
+    }
     const fetchPrices = async () => {
       try {
         const artist = await axios.get(`${URL_BASE}/tattooArtists/${user.id}`);
@@ -87,7 +96,9 @@ const Price = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     setErrorMessages([]);
+
 
     for (const size in prices) {
       const priceData = prices[size];
@@ -106,6 +117,7 @@ const Price = () => {
         await createPrice(priceData);
       }
     }
+
     if(errorIndicator){
       toast.error(`Error al guardar precios`, {
         className: "toastError",
@@ -121,6 +133,7 @@ const Price = () => {
         hideProgressBar: false,
       });
     }
+
   };
 
   const createPrice = async (data) => {
@@ -129,7 +142,9 @@ const Price = () => {
    
     } catch (error) {
       console.error(error);
+
       errorIndicator = true
+
     }
   };
 
@@ -143,9 +158,6 @@ const Price = () => {
   };
 
 
-
-
-
   return (
     <div className="flex items-center justify-center h-screen ">
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
@@ -156,10 +168,12 @@ const Price = () => {
             <div className="w-1/4 font-rocksalt">
               <p className="mb-2" >{size}:</p>
             </div>
+
             <div className="flex-1 flex items-center gap-4 ">
             <p className="font-rocksalt"> $ </p>
               <div className="w-1/3">
                 
+
                 <input
                   type="number"
                   placeholder="Precio mínimo"
@@ -170,8 +184,13 @@ const Price = () => {
                   className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
                 />
               </div>
+
               <p className="font-rocksalt"> $ </p>
               <div className="w-1/3">
+
+
+              <div className="w-1/2">
+
                 <input
                   type="number"
                   placeholder="Precio máximo"
@@ -195,7 +214,11 @@ const Price = () => {
         <div className="flex justify-center mt-8">
         <button
           type="submit"
+
           className="hover:bg-primary font-rocksalt hover:text-black flex items-center justify-center gap-1 border-primary text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer"
+
+          className="bg-primary text-white py-2 px-4 rounded-lg"
+
         >
           Guardar Precios
         </button>
