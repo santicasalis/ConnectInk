@@ -8,12 +8,13 @@ import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useState } from "react";
 import { useEffect } from "react";
 
+import { useRouter } from "next/navigation";
 
 const Price = () => {
   // const dispatch = useDispatch();
   const user = useSelector((state) => state.user.logedInUser);
   const URL_BASE = "http://localhost:3001";
-
+  const router = useRouter();
   const [prices, setPrices] = useState({
     Pequeño: { size: "Pequeño", priceMin: "", priceMax: "", artistId: user.id },
 
@@ -37,10 +38,14 @@ const Price = () => {
       priceMax: "",
       artistId: user.id,
     },
-
   });
 
   useEffect(() => {
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "artist") {
+      router.replace("/");
+    }
     const fetchPrices = async () => {
       try {
         const artist = await axios.get(`${URL_BASE}/tattooArtists/${user.id}`);
@@ -84,9 +89,7 @@ const Price = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
     for (const size in prices) {
-
       const priceData = prices[size];
       if (priceData.priceRangeId) {
         await updatePrice(priceData);
@@ -94,26 +97,7 @@ const Price = () => {
         await createPrice(priceData);
       }
     }
-    
   };
-
-  const createPrice = async (data) => {
-    try {
-      await axios.post(`${URL_BASE}/priceRanges`, data);
-    } catch (error) {
-      console.error(error);
-      
-    }
-  };
-
-  const updatePrice = async (data) => {
-    try {
-      await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
 
   const createPrice = async (data) => {
     try {
@@ -130,7 +114,6 @@ const Price = () => {
       console.error(error);
     }
   };
-
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
@@ -142,7 +125,6 @@ const Price = () => {
             </div>
             <div className="flex-1 flex items-center gap-4">
               <div className="w-1/2">
-
                 <input
                   type="number"
                   placeholder="Precio mínimo"
@@ -155,7 +137,6 @@ const Price = () => {
               </div>
 
               <div className="w-1/2">
-
                 <input
                   type="number"
                   placeholder="Precio máximo"
@@ -172,9 +153,7 @@ const Price = () => {
 
         <button
           type="submit"
-
           className="bg-primary text-white py-2 px-4 rounded-lg"
-
         >
           Guardar Precios
         </button>

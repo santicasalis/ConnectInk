@@ -1,7 +1,21 @@
 import React from 'react'
 import { TbPointFilled } from "react-icons/tb";
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const AdminDashboard = () => {
+
+  const user = useSelector((state) => state.user.logedInUser)
+  const router = useRouter()
+
+  useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if (user.userType !== "admin"){
+      router.replace("/")
+    }
+  }, [])
   
   return (
     <div className='bg-secondary-900 p-8 rounded-xl w-full'>

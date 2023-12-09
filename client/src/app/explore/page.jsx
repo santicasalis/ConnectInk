@@ -53,8 +53,10 @@ export default function ExplorePage() {
   };
 
   return (
-    <div className="w-full">
-      <Nav />
+
+    <div className="w-full bg-secondary-900">
+
+
 
       <div className="w-full">
         <section className="flex flex-col w-full justify-center items-center gap-x-1 text-center">
@@ -65,7 +67,7 @@ export default function ExplorePage() {
                 <span className="text-primary"> Ink</span>orporada!
               </h2>
             </div>
-            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-0 sm:gap-y-4 sm:w-full ">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-0 sm:gap-y-4 sm:w-full w-full">
               <div className="flex items-center sm:w-full mb-4">
                 <p className="text-center text-[20px] text-white/70 sm:w-full">
                   "En nuestro santuario del arte corporal, cada trazo cuenta una
@@ -76,7 +78,9 @@ export default function ExplorePage() {
                 </p>
               </div>
 
-              <div className="flex-1 rounded-lg  shadow-2xl ">
+              <div className="flex rounded-lg  shadow-2xl  w-full relative  overflow-hidden">
+                <img className="absolute w-full h-full object-cover" src="https://media.istockphoto.com/id/1320388570/es/foto/manos-de-un-tatuador-con-guantes-negros-y-sosteniendo-una-máquina.jpg?s=612x612&w=0&k=20&c=20XaUXZaEiJ8C0877TxICFtvgwaBfmIiUoYWXVVSmxg=" />
+                <div className="w-full h-full bg-black opacity-60 absolute">  </div> 
                 <Swiper
                   spaceBetween={30}
                   parallax={true}
@@ -89,26 +93,25 @@ export default function ExplorePage() {
                     clickable: true,
                   }}
                   modules={[Parallax, Autoplay, Pagination, Navigation]}
-                  className="sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px] flex justify-center items-center relative text-center p-5 bg-secondary-100 h-[320px]
-                          bg-[url(https://media.istockphoto.com/id/1320388570/es/foto/manos-de-un-tatuador-con-guantes-negros-y-sosteniendo-una-m%C3%A1quina.jpg?s=612x612&w=0&k=20&c=20XaUXZaEiJ8C0877TxICFtvgwaBfmIiUoYWXVVSmxg=)]
-                            bg-center bg-cover rounded"
+                  className="w-full flex justify-center items-center relative text-center p-5 h-[350px] "
                 >
-                  <SwiperSlide className=" mt-[150px] font-bold text-xl  sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px] ">
+
+                  <SwiperSlide className=" mt-[150px] font-bold text-[20px]  w-[50%] ">
                     Encuentra la belleza en la simplicidad. Un tatuaje no solo
                     decora tu piel, sino que también cuenta tu historia en las
                     líneas más simples.{" "}
                   </SwiperSlide>{" "}
-                  <SwiperSlide className="mt-[150px] font-bold text-xl  sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px]  ">
+                  <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] ">
                     La poesía de la tinta. Cada tatuaje es una estrofa, cada
                     estrofa es una expresión. ¿Cuál será tu próximo verso?{" "}
                   </SwiperSlide>{" "}
-                  <SwiperSlide className="mt-[150px] font-bold text-xl  sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px] ">
+                  <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] ">
                     Palabras que perduran. Un tatuaje corto, una vida de
                     significado. Exprésate con precisión, deja que tu piel hable
                     por ti.{" "}
                   </SwiperSlide>
                   //{" "}
-                  <SwiperSlide className="mt-[150px] font-bold text-xl sm:text-m sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px]  ">
+                  <SwiperSlide className="mt-[150px] font-bold text-xl sm:text-m w-full  ">
                     Menos es más. Descubre la magia de las palabras concisas.Tus
                     tatuajes son recordatorios diarios de lo que realmente
                     importa{" "}
@@ -119,10 +122,10 @@ export default function ExplorePage() {
           </div>
         </section>
 
-        <hr className="mt-[50px] border-white/20 ml-[50px] mr-[50px]"></hr>
+        <hr className="mt-[50px] border-primary/40 ml-[50px] mr-[50px]"></hr>
 
         <section className="flex w-full ">
-          <div className="w-full flex flex-col md:flex-row justify-center mt-8 mx-6 my-4 gap-x-4">
+          <div className="w-full flex flex-col md:flex-row justify-center mt-8 ml-10 my-4 gap-x-4">
             <div className="md:w-1/4 flex flex-col items-center">
               <button
                 onClick={handleToggleFilterSidebar}

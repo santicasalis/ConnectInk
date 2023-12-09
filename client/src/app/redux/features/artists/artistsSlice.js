@@ -98,7 +98,7 @@ export const artistsSlice = createSlice({
     },
 
     cleanDetail: (state) => {
-      state.detail = action.payload
+      state.detail = {}
     },
 
     // setTimeAvailabilities: (state, action) => {

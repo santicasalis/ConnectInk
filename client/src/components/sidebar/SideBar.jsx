@@ -34,7 +34,7 @@ const SideBar = () => {
             <li>
               <Link
                 href="/a-dashboard/home"
-                className="flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
+                className="flex items-center rounded-md border-b-[1px] border-primary/30 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
                 <RiStore3Line className="text-primary " /> Inicio
               </Link>
@@ -42,7 +42,7 @@ const SideBar = () => {
             <li>
               <Link
                 href="/a-dashboard/profile"
-                className="w-full flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
+                className="w-full flex items-center rounded-md border-b-[1px] border-primary/30 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
                 <span className="flex items-center gap-4">
                   <RiSpeakLine className="text-primary" /> Mi Perfil
@@ -60,7 +60,7 @@ const SideBar = () => {
             <li>
               <Link
                 href=""
-                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-primary/30 hover:bg-secondary-100 transition-colors"
               >
                 <RiStarLine className="text-primary" /> Reseñas
               </Link>
@@ -68,7 +68,7 @@ const SideBar = () => {
             <li>
               <Link
                 href="/a-dashboard/price"
-                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-primary/30 hover:bg-secondary-100 transition-colors"
               >
                 <RiMessage3Line className="text-primary" /> Precios
               </Link>
@@ -76,7 +76,7 @@ const SideBar = () => {
             <li>
               <Link
                 href="/a-dashboard/Appointments"
-                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-primary/30 hover:bg-secondary-100 transition-colors"
               >
                 <RiBookletLine className="text-primary" /> Mis Turnos
               </Link>
@@ -84,7 +84,7 @@ const SideBar = () => {
             <li>
               <Link
                 href="/a-dashboard/calendar"
-                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-primary/30 hover:bg-secondary-100 transition-colors"
               >
                 <RiCalendarCheckLine className="text-primary" /> Calendario
               </Link>
