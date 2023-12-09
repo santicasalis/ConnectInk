@@ -53,7 +53,7 @@ export default function ExplorePage() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[100vh] bg-secondary-900">
       <Nav />
 
       <div className="w-full">

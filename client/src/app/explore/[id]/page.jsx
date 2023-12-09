@@ -45,7 +45,7 @@ export default function Page({ params }) {
     console.log(artist)
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="w-full p-4">
       <Nav />
 
       <div className="text-center text-white bg-secondary-900 text-6xl font-bold p-10 font-rocksalt m-4 rounded">
