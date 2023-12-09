@@ -28,7 +28,7 @@ const createOrder = async (req, res) => {
           pending: "http://localhost:3001/payment/pending",
           success: `http://localhost:3001/payment/success/${id}`,
         },
-        notification_url: "https://connectink.vercel.app/payment/webhook",
+        notification_url: "https://webhook.site/95a6fd8f-442f-407a-92ac-54976654b519/payment/webhook"
       },
     };
     const response = await payment.create(preference);
