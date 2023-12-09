@@ -2,13 +2,17 @@
 
 import Nav from "@/components/nav/Nav";
 import { useDispatch } from "react-redux";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { getAllStyles } from "./redux/features/styles/stylesActions";
 import { getAllArtists } from "./redux/features/artists/artistActions";
 import { getAllPosts } from "./redux/features/posts/postsActions";
+import { useSelector } from "react-redux";
+const Loading = dynamic(()=> import("../components/loading/Loading"));
 
 export default function Home() {
   const dispatch = useDispatch();
+  const isOpenModalLoading = useSelector((state) => state.modalLoading.isOpen)
 
   useEffect(() => {
     dispatch(getAllStyles());
@@ -19,6 +23,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full h-screen  p-0 overflow-hidden relative">
+      {isOpenModalLoading && <div className="absolute w-full h-full"><Loading /></div>}
       <div className="w-full h-full relative overflow-hidden ">
         <img
           className="w-full h-full object-cover "
