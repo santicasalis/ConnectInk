@@ -469,17 +469,15 @@ const BookAppointment = ({ params }) => {
     })
     let obj = {};
 
-    const allAvailabilities = timeAvailabilities?.map((availabilty) => {
+    const allAvailabilities = timeAvailabilities?.filter((availabilty) =>  availabilty.initialHour)?.map((availabilty) => {
       return { 
-          day: availabilty.day,
-          initialHour:Number(availabilty.initialHour.split(":")[0]),
-          finalHour: Number(availabilty.finalHour.split(":")[0]),
-          secondInitialHour: Number(availabilty.secondInitialHour?.split(":")[0]) || null,
-          secondFinalHour: Number(availabilty.secondFinalHour?.split(":")[0]) || null
-        
+        day: availabilty.day,
+        initialHour: Number(availabilty.initialHour.split(":")[0]),
+        finalHour: Number(availabilty.finalHour.split(":")[0]),
+        secondInitialHour: Number(availabilty.secondInitialHour?.split(":")[0]) || null,
+        secondFinalHour: Number(availabilty.secondFinalHour?.split(":")[0]) || null
       };
-    });
-
+    })
 
     timeAvailabilityExceptions?.map((exception) => {
       let hours = []
