@@ -6,12 +6,18 @@ import { getAllPosts } from "../redux/features/posts/postsActions";
 import axios from "axios";
 import { orderPosts } from "../utils/ordenarPosts";
 import UserPostDash from "@/components/userPostDash/UserPostDash";
+import { getUserById } from "../redux/features/user/userActions";
 
 function UDashboard() {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
 
   const user = useSelector((state) => state.user.logedInUser);
+const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
+
+useEffect (() => {
+dispatch(getUserById(fireBaseUser.tokenId))
+},[])
 
   useEffect(() => {
     const fetchData = async () => {
