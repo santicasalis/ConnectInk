@@ -35,9 +35,13 @@ const [formData, setFormData] = useState({
   address: user.address,
   location: user.location,
   shopName: user.shopName,
-  image: user.image
+  image: user.image,
+  instagram: user.instagram,
+  description:user.description,
+  password:user.password,
 });
 
+const [confirmPassword, setConfirmPassword] = useState("");
 
 useEffect(() => {
   setFormData({
@@ -48,11 +52,19 @@ useEffect(() => {
     location: user.location,
     shopName: user.shopName,
     image: user.image,
+    instagram: user.instagram,
+    description: user.description,
   });
 }, [user]);
 
 const handleUpdate = async (e) => {
   e.preventDefault();
+
+  if (formData.password !== confirmPassword) {
+    console.error("Las contraseñas no coinciden");
+    return;
+  }
+
   try {
     const response = await axios.put(
       `http://localhost:3001/tattooArtists/${user.id}`,
@@ -116,7 +128,7 @@ const handleChange = (e) => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-              name="fullName"
+                name="fullName"
                 type="text"
                 value={formData.fullName}
                 onChange={handleChange}
@@ -134,7 +146,7 @@ const handleChange = (e) => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-              name="email"
+                name="email"
                 type="text"
                 value={formData.email}
                 onChange={handleChange}
@@ -152,7 +164,7 @@ const handleChange = (e) => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-              name="phone"
+                name="phone"
                 type="text"
                 value={formData.phone}
                 onChange={handleChange}
@@ -170,7 +182,7 @@ const handleChange = (e) => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-              name="address"
+                name="address"
                 type="text"
                 value={formData.address}
                 onChange={handleChange}
@@ -188,7 +200,7 @@ const handleChange = (e) => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-              name="location"
+                name="location"
                 type="text"
                 value={formData.location}
                 onChange={handleChange}
@@ -206,7 +218,7 @@ const handleChange = (e) => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-              name="shopName"
+                name="shopName"
                 type="text"
                 value={formData.shopName}
                 onChange={handleChange}
@@ -216,6 +228,69 @@ const handleChange = (e) => {
           </div>
           {/* {console.log(localStorage)} */}
         </div>
+
+        <div className="flex items-center mb-4">
+          <div className="w-1/4">
+            <p>Instagram:</p>
+          </div>
+          <div className="flex-1">
+            <input
+              name="instagram"
+              type="text"
+              value={formData.instagram}
+              onChange={handleChange}
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+            />
+          </div>
+        </div>
+
+        {/* Campo para Descripción */}
+        <div className="flex items-center mb-4">
+          <div className="w-1/4">
+            <p>Descripción:</p>
+          </div>
+          <div className="flex-1">
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+              rows="4"
+            />
+          </div>
+        </div>
+
+        {/* Campo para Nueva Contraseña */}
+        <div className="flex items-center mb-4">
+          <div className="w-1/4">
+            <p>Nueva Contraseña:</p>
+          </div>
+          <div className="flex-1">
+            <input
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+            />
+          </div>
+        </div>
+
+        {/* Campo para Confirmar Nueva Contraseña */}
+        <div className="flex items-center mb-4">
+          <div className="w-1/4">
+            <p>Confirmar Nueva Contraseña:</p>
+          </div>
+          <div className="flex-1">
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+            />
+          </div>
+        </div>
+
         <button type="submit">BOTON GUARDAR CAMBIOS</button>
       </form>
     </div>
