@@ -35,7 +35,7 @@ export default function Home() {
             <h1 className="text-white/80 text-4xl font-rocksalt mb-8  ">
               Los mejores artistas y
             </h1>
-            <h1 className="font-rocksalt mb-10 text-4xl">TATTOOS</h1>
+            <h1 className="font-rocksalt mb-10 text-4xl">TATUAJES</h1>
             <p className="text-primary/80 mb-10 font-newrocker text-[25px]">
               ConnectInk es el lugar
             </p>

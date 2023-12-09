@@ -53,8 +53,10 @@ export default function ExplorePage() {
   };
 
   return (
+
     <div className="w-full bg-secondary-900">
-      <Nav />
+
+
 
       <div className="w-full">
         <section className="flex flex-col w-full justify-center items-center gap-x-1 text-center">
