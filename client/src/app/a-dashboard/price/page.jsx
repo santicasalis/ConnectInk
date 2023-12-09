@@ -160,49 +160,42 @@ const Price = () => {
 
   return (
     <div className="flex items-center justify-center h-screen ">
-    <div className="bg-secondary-100 p-8 rounded-xl w-full">
-    
-      <form onSubmit={handleSubmit}>
-        {Object.keys(prices).map((size) => (
-          <div key={size} className="flex items-center mr-50 mb-4 ">
-            <div className="w-1/4 font-rocksalt">
-              <p className="mb-2" >{size}:</p>
-            </div>
-
-            <div className="flex-1 flex items-center gap-4 ">
-            <p className="font-rocksalt"> $ </p>
-              <div className="w-1/3">
+      <div className="bg-secondary-100 p-8 rounded-xl w-full">
+        <form onSubmit={handleSubmit}>
+           {Object.keys(prices).map((size) => (
+              <div key={size} className="flex items-center mr-50 mb-4 ">
+                 <div className="w-1/4 font-rocksalt">
+                   <p className="mb-2" >{size}:</p>
+                 </div>
+                <div className="flex-1 flex items-center gap-4 ">
+                   <p className="font-rocksalt"> $ </p>
+                    <div className="w-1/3">
+                      <input
+                        type="number"
+                        placeholder="Precio mínimo"
+                        value={prices[size].priceMin}
+                        onChange={(event) =>
+                          handleInputChange(size, "priceMin", event.target.value)
+                        }
+                        className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
+                      />
+                    </div>
+                    <p className="font-rocksalt"> $ </p>
+                      <div className="w-1/3">
+                       
+                        <input
+                          type="number"
+                          placeholder="Precio máximo"
+                          value={prices[size].priceMax}
+                          onChange={(event) =>
+                            handleInputChange(size, "priceMax", event.target.value)
+                          }
+                          className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
+                        />
+                        </div>
+                      </div>
+                  </div>
                 
-
-                <input
-                  type="number"
-                  placeholder="Precio mínimo"
-                  value={prices[size].priceMin}
-                  onChange={(event) =>
-                    handleInputChange(size, "priceMin", event.target.value)
-                  }
-                  className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
-                />
-              </div>
-
-              <p className="font-rocksalt"> $ </p>
-              <div className="w-1/3">
-
-
-              <div className="w-1/2">
-
-                <input
-                  type="number"
-                  placeholder="Precio máximo"
-                  value={prices[size].priceMax}
-                  onChange={(event) =>
-                    handleInputChange(size, "priceMax", event.target.value)
-                  }
-                  className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
-                />
-              </div>
-            </div>
-          </div>
         ))}
          {errorMessages.length > 0 && (
           <div className="mb-4 text-red-500">
@@ -214,11 +207,8 @@ const Price = () => {
         <div className="flex justify-center mt-8">
         <button
           type="submit"
-
           className="hover:bg-primary font-rocksalt hover:text-black flex items-center justify-center gap-1 border-primary text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer"
-
-          className="bg-primary text-white py-2 px-4 rounded-lg"
-
+                 
         >
           Guardar Precios
         </button>

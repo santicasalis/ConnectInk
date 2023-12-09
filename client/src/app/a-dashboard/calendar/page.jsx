@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -35,11 +36,12 @@ const Page = () => {
   const [moreExceptionTime, setMoreExceptionTime] = useState(false);
 
   useEffect(() => {
-    if (!user.userType) {
-      router.replace("/auth");
-    } else if (user.userType !== "artist") {
-      router.replace("/");
-    }
+    // if (!user.userType) {
+    //   router.replace("/auth");
+    // } else if (user.userType !== "artist") {
+    //   router.replace("/");
+    // }
+    
     let obj = {};
     let objH = {};
     user.logedInUser.timeAvailabilities.map((timeAvailability) => {
@@ -336,9 +338,9 @@ const Page = () => {
   return (
     <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-primary">
       <div className=" text-center">
-        <h3 className="font-rocksalt text-[26px] mt-4 mb-2">Disponibilidad de Tiempo</h3>
-        <div className="flex items-center justify-center">
-           <hr className="mt-6 mb-6 w-[90%] border-neutral-500"></hr>
+        <h3 className="font-rocksalt text-[26px] mt-8 mb-2 ">Disponibilidad de Tiempo</h3>
+        <div className="flex items-center justify-center ">
+           <hr className="mt-6 mb-6 w-[90%] border-primary/50 "></hr>
         </div>
         
         {days.map((day) => {
@@ -347,18 +349,18 @@ const Page = () => {
               <h4 className="text-xl mb-4 font-rocksalt">{day}</h4>
               {showHours[day] ? (
                 <div className="">
-                  <div className="flex justify-center items-center gap-[25px]"> 
+                  <div className="flex justify-center items-center gap-[25px] p-3"> 
                   <label>
                     Inicio:
                     <select
-                      className="bg-transparent border-[1px] border-primary/40 ml-4"
+                      className="bg-transparent border-[1px] border-primary/50 ml-4 rounded-md "
                       defaultValue={dayObj[day]?.initialHour || ""}
                       onChange={(e) =>
                         handleInitialTimeChange(day, e.target.value)
                       }
                     >
-                      <option className="bg-transparent" value="" disabled>
-                        Seleccionar horario inicial
+                      <option className="bg-transparent " value="" disabled>
+                        Horario inicial
                       </option>
                       {generateTimeOptions()}
                     </select>
@@ -367,14 +369,14 @@ const Page = () => {
                   <label>
                     Fin:
                     <select
-                      className="bg-transparent border-[1px] border-primary/40 ml-4"
+                      className="bg-transparent border-[1px] border-primary/40 ml-4 rounded-md "
                       defaultValue={dayObj[day]?.finalHour || ""}
                       onChange={(e) =>
                         handleFinalTimeChange(day, e.target.value)
                       }
                     >
                       <option value="" disabled>
-                        Seleccionar horario final
+                        Horario final
                       </option>
                       {generateFinalTimeOptions(day)}
                     </select>
@@ -386,7 +388,7 @@ const Page = () => {
                       <label>
                         Inicio:
                         <select
-                          className="bg-transparent border-[1px] border-primary/40 ml-4"
+                          className="bg-transparent border-[1px] border-primary/40 ml-4 rounded-md"
                           defaultValue={dayObj[day]?.secondInitialHour || ""}
                           onChange={(e) =>
                             handleSecondInitialTimeChange(day, e.target.value)
@@ -402,7 +404,7 @@ const Page = () => {
                       <label>
                         Fin:
                         <select
-                          className="bg-transparent border-[1px] border-primary/40 ml-4"
+                          className="bg-transparent border-[1px] border-primary/40 ml-4 rounded-md "
                           defaultValue={dayObj[day]?.secondFinalHour || ""}
                           onChange={(e) =>
                             handleSecondFinalTimeChange(day, e.target.value)
@@ -438,10 +440,10 @@ const Page = () => {
             </div>
           );
         })}
-        <button onClick={saveTimeAvailability} className="w-[40%] border-[1px] border-primary/40 hover:border-primary transition-transform hover:scale-105 mb-2 rounded mt-2 ">Guardar Horarios</button>
+        <button onClick={saveTimeAvailability} className="w-[20%] border-[3px] p-3  border-primary/40 hover:border-primary transition-transform hover:scale-105 mb-2 rounded-lg mt-3 hover:bg-primary/70 hover:text-lg ">Guardar Horarios</button>
       </div>
       <div className="flex items-center justify-center">
-           <hr className="mt-6 mb-6 w-[90%] border-neutral-500"></hr>
+           <hr className="mt-6 mb-6 w-[90%] border-primary/50"></hr>
         </div>
 
       <div className="">
@@ -457,7 +459,7 @@ const Page = () => {
           name="date"
           value={newException?.date}
           onChange={handleExceptionChange}
-          className="bg-transparent border-[1px] border-primary/40"
+          className="bg-transparent border-[1px] border-primary/50 rounded-md text-center p-2"
         />
         </div>
         {newException.date && (
@@ -466,10 +468,10 @@ const Page = () => {
               name="initialHour"
               defaultValue=""
               onChange={handleExceptionChange}
-              className="bg-transparent border-[1px] border-primary/40"
+              className="bg-transparent border-[1px] border-primary/60 rounded-md p-2"
             >
-              <option value="" disabled>
-                Seleccionar horario inicial
+              <option value=""  >
+                Horario inicial
               </option>
               {generateTimeOptions()}
               <option value="No trabajo">No trabajo</option>
@@ -479,9 +481,9 @@ const Page = () => {
                 name="finalHour"
                 defaultValue=""
                 onChange={handleExceptionChange}
-                className="bg-transparent border-[1px] border-primary/40"
+                className="bg-transparent border-[1px] border-primary/60 rounded-md p-2"
               >
-                <option>Seleccionar horario final</option>
+                <option>Horario final</option>
                 {generateTimeOptionsException()}
               </select>
             )}
@@ -489,7 +491,7 @@ const Page = () => {
         )}
 
         {newException.initialHour && newException.finalHour && (
-          <div>
+          <div className="text-center">
             <button onClick={() => setMoreExceptionTime(!moreExceptionTime)}>
               {moreExceptionTime ? "➖" : "➕"}
             </button>
@@ -529,17 +531,17 @@ const Page = () => {
         )}
         <button
           onClick={addTimeException}
-          className="ml-6 hover:scale-105 transition-transform border-[1px] border-primary/40 hover:border-primary rounded mb-6"
+          className="ml-6 hover:scale-105 transition-transform border-[1px] border-primary/60 hover:border-primary hover:bg-primary/60 hover:text-secondary-900 rounded mb-6 p-2"
           disabled={
             !newException.initialHour ||
             (!newException.finalHour &&
               newException.initialHour !== "No trabajo")
           }
         >
-          Añadir Excepcion
+          Añadir Excepción
         </button>
         {user.logedInUser.timeAvailabilityExceptions.length && (
-          <div>
+          <div className="text-center">
             {user.logedInUser.timeAvailabilityExceptions.map(
               (exception, index) => (
                 <div key={index}>

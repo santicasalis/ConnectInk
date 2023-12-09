@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { RiEdit2Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
