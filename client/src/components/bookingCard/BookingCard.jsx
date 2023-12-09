@@ -13,6 +13,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { openModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
+import { useRouter } from 'next/navigation';
 
 
 const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, tattooArtistId}) => {
@@ -21,6 +22,7 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
         return src
       }
     const user = useSelector((state)=>state.user.logedInUser)
+    const router = useRouter()
     
         
     let date = new Date(dateAndTime) 
@@ -51,6 +53,15 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
      artistId()       
         
     },[])
+
+    const handleReview = () => {
+      if(new Date(dateAndTime).valueOf() > Date.now()){
+        console.log(id, tattooArtistId)
+        //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
+      } else {
+        router.push(`/critica/${id}-${tattooArtistId}`)
+      }
+    }
 
 
   return (
@@ -89,32 +100,35 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
           !paymentId ? "border-4 border-red-500" : ""
         }`}
       >
+        {response.id &&
         <div>
-          <p className="text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt">
-            <FaMapPin className="text-primary" /> Dirección:
-          </p>
-          <p className="text-center">{response.address}</p>
-          <p className="text-center">{response.location}</p>
-        </div>
-        <div>
-          <p className="text-center mb-[15px] text-2xl mt-4 font-rocksalt">
-            Artista:
-          </p>
-          <div className="flex justify-center items-center gap-2">
-            <Image
-              unoptimized
-              src={response.image}
-              loader={imageLoader}
-              width={80}
-              height={80}
-              alt={`${response.fullName} profile pic`}
-              className=" rounded-full"
-            />
-            <p className="text-center">{response.fullName}</p>
+          <div>
+            <p className="text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt">
+              <FaMapPin className="text-primary" /> Dirección:
+            </p>
+            <p className="text-center">{response.address}</p>
+            <p className="text-center">{response.location}</p>
+          </div>
+          <div>
+            <p className="text-center mb-[15px] text-2xl mt-4 font-rocksalt">
+              Artista:
+            </p>
+            <div className="flex justify-center items-center gap-2">
+              <Image
+                unoptimized
+                src={response.image}
+                loader={imageLoader}
+                width={80}
+                height={80}
+                alt={`${response.fullName} profile pic`}
+                className=" rounded-full"
+              />
+              <p className="text-center">{response.fullName}</p>
+            </div>
           </div>
         </div>
+        }
       </div>
-
       <div className=" w-[20%] mr-4">
         <div className="flex items-end justify-end">
           <Menu
@@ -151,6 +165,7 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
           />
         </div>
       </div>
+      <button onClick={handleReview}>Dejar reseña</button>
     </div>
   );
 }
