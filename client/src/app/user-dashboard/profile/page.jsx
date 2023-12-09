@@ -14,7 +14,6 @@ const UProfile = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  
 
   useEffect(() => {
     if (!user.userType) {
@@ -27,50 +26,45 @@ const UProfile = () => {
   const imageLoader = ({ src }) => {
     return src;
   };
-const [formData, setFormData] = useState({
-  fullName: user.fullName,
-  email: user.email,
-  image: user.image,
-});
-
-useEffect(() => {
-  setFormData({
+  const [formData, setFormData] = useState({
     fullName: user.fullName,
     email: user.email,
     image: user.image,
   });
-}, [user]);
 
-const handleUpdate = async (e) => {
-  e.preventDefault();
-  console.log(formData)
-  try {
-    const response = await axios.put(
-      `http://localhost:3001/customers/${user.id}`,
-      formData
-    );
+  useEffect(() => {
+    setFormData({
+      fullName: user.fullName,
+      email: user.email,
+      image: user.image,
+    });
+  }, [user]);
 
-    console.log("ESTE ES EL RESPONSE",response.data)
-    dispatch(bringUserInformation(formData));
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/customers/${user.id}`,
+        formData
+      );
 
-    if (response.status === 200) {
-      console.log("Datos actualizados con éxito");
+      dispatch(bringUserInformation(formData));
+
+      if (response.status === 200) {
+        console.log("Datos actualizados con éxito");
+      }
+    } catch (error) {
+      console.error("Error al actualizar datos", error);
+
+      if (error.response) {
+      }
     }
-  } catch (error) {
-    console.error("Error al actualizar datos", error);
+  };
 
-    if (error.response) {
-      
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    }
-  }
-};
-
-const handleChange = (e) => {
-  setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
@@ -137,7 +131,6 @@ const handleChange = (e) => {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
-               
               />
             </div>
           </div>
