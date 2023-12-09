@@ -30,12 +30,15 @@ const Page = () => {
   const [moreTime, setMoreTime] = useState({});
   const [moreExceptionTime, setMoreExceptionTime] = useState(false);
 
+  console.log(user.logedInUser.userType);
+
   useEffect(() => {
-    if (!user.userType) {
+    if (!user.logedInUser.userType) {
       router.replace("/auth");
-    } else if (user.userType !== "artist") {
+    } else if (user.logedInUser.userType !== "artist") {
       router.replace("/");
     }
+    
     let obj = {};
     let objH = {};
     user.logedInUser.timeAvailabilities.map((timeAvailability) => {
