@@ -11,10 +11,13 @@
     extend: {
       colors: {
         primary: "#20C6DA",
+        //primary:"#E74D40",
         secondary: {
           900: "#101010",
           100: "#1C1C1C",
         },
+        // artist:"#5AD65E"
+        // admin:"#E8EA36"
       },
       fontFamily: {
         rocksalt: ["Rock Salt"],

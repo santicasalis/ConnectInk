@@ -12,29 +12,30 @@ import { VscAccount } from "react-icons/vsc";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
+import { getArtistDetail,CleanArtist } from "@/app/redux/features/artists/artistActions";
 
 
 export default function Page({ params }) {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const dispatch = useDispatch()
   const artist = useSelector((state) => state.artists.detail)
 
   useEffect(() => {
     if (params.id) {
-      setLoading(true);
+      // setLoading(true);
       dispatch(getArtistDetail(params.id))
     }
+    return () => dispatch(CleanArtist());
   }, [params.id]);
 
   useEffect(() => {
     if(artist.fullName){
-      setLoading(false)
+      // setLoading(false)
     }
   }, [artist])
 
-  if (loading) return <div className="text-center">Cargando...</div>;
+  // if (loading) return <div className="text-center">Cargando...</div>;
   if (error)
     return (
       <div className="text-center text-red-500">Error al cargar los datos</div>

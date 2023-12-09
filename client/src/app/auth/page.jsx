@@ -21,6 +21,8 @@ import {
 } from "firebase/auth";
 import { getAllArtists } from "../redux/features/artists/artistActions.js";
 import { useDispatch, useSelector } from "react-redux";
+import { openModalLoadingAction } from "../redux/features/modalLoading/ModalLoadingActions.js";
+import { closeModalLoadingAction } from "../redux/features/modalLoading/ModalLoadingActions.js";
 import {
   getUserById,
   getUserInformation,
@@ -49,6 +51,7 @@ const Login = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(openModalLoadingAction());
     emailLogIn();
   };
 
@@ -107,13 +110,13 @@ const Login = () => {
           phoneNumber: userFireBase.phoneNumber,
         })
       );
-
-      if (user.userType == "artist") router.replace("/a-dashboard/home");
+      
+      if (user.userType == "artist") router.push("/a-dashboard/home");
       if (user.userType == "customer")
-        router.replace(
+        router.push(
           "/user-dashboard"
         ); /*else {router.replace("/a-dashboard/home")}*/
-      if (user.userType == "admin") router.replace("/admin-dashboard/home");
+      if (user.userType == "admin") router.push("/admin-dashboard/home");
     } catch (createUserError) {
       toast.error("Usuario y o contraseña errónea", {
         className: "toastError",
@@ -121,6 +124,8 @@ const Login = () => {
         autoClose: 3000,
         hideProgressBar: true,
       });
+    } finally {
+      dispatch(closeModalLoadingAction());
     }
   };
 

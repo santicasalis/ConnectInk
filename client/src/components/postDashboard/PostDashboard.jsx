@@ -42,7 +42,7 @@ const PostDashboard = ({publication, name, image}) => {
         return src
     }
     return (
-        <div className=' flex flex-col xl:w-[60%] border-transparent pb-3 border-[2px] border-b-gray-600 bg-secondary-900 rounded-md overflow-hidden m-5 ' >
+        <div className=' flex flex-col xl:w-[60%] border-transparent pb-3 border-[2px] border-b-primary/30 bg-secondary-900 rounded-md overflow-hidden m-5 ' >
             <div>
                 <div className='flex justify-between'>
                     <div className='flex gap-x-2 p-2 items-center'>
