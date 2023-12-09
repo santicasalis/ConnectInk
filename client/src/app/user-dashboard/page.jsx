@@ -6,19 +6,21 @@ import { getAllPosts } from "../redux/features/posts/postsActions";
 import axios from "axios";
 import { orderPosts } from "../utils/ordenarPosts";
 import UserPostDash from "@/components/userPostDash/UserPostDash";
+import { useRouter } from "next/navigation";
 
 function UDashboard() {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
+  const router = useRouter()
 
   const user = useSelector((state) => state.user.logedInUser);
 
-  console.log(user);
-  console.log(user.appointments);
-  console.log(user.appointments[0].artist);
-  console.log(user.appointments[0].data);
-
   useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if(user.userType !== "customer"){
+      router.replace("/")
+    }
     const fetchData = async () => {
       try {
         const artists = (await axios.get("http://localhost:3001/tattooArtists"))

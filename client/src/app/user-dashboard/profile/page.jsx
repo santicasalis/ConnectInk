@@ -6,11 +6,22 @@ import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import {  RiEyeLine,  RiEyeOffLine,} from "react-icons/ri";
 import { useState } from 'react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const UProfile = () => {
 
   const user = useSelector((state) => state.user.logedInUser)
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
+
+  useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if(user.userType !== "customer"){
+      router.replace("/")
+    }
+  }, [])
 
   const imageLoader = ({src}) => {
     return src
