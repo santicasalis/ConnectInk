@@ -62,11 +62,11 @@ export default function Page({ params }) {
               className="w-48 h-48 object-cover rounded-full mx-auto"
             />
             <h2 className="items-center justify-center text-2xl font-bold mt-4 flex gap-2">
-            <VscAccount className="text-primary" /> {artist?.fullName}
+              <VscAccount className="text-primary" /> {artist?.fullName}
             </h2>
             <div className="mt-[10px]">
               <h2 className="text-2xl font-bold flex gap-2">
-              <CiShop className="text-primary" /> <p>{artist?.shopName}</p>
+                <CiShop className="text-primary" /> <p>{artist?.shopName}</p>
               </h2>
               <Link href={`/explore/${params.id}/reservas`}>
                 <button className="mt-[20px] ml-[50px] border-[1px] border-primary/75 text-primary/75 hover:border-primary hover:text-primary font-bold py-2 px-4 rounded">
@@ -74,21 +74,28 @@ export default function Page({ params }) {
                 </button>
               </Link>
             </div>
-            
           </div>
-
-          
         </div>
 
         <div className="w-full md:w-1/2 p-4 flex flex-col">
           <div className="p-4 rounded  bg-secondary-900 flex-grow">
-            <h3 className="text-xl font-bold  font-rocksalt flex gap-2 mb-4"> <FaMapLocationDot className="text-primary" /> Ubicacion</h3>
-            <MapComponent location={artist?.location} address={artist?.address} />
+            <h3 className="text-xl font-bold  font-rocksalt flex gap-2 mb-4">
+              {" "}
+              <FaMapLocationDot className="text-primary" /> Ubicacion
+            </h3>
+            {artist.location && artist.address && (
+              <MapComponent
+                location={artist.location}
+                address={artist.address}
+              />
+            )}
           </div>
 
           <div className="flex flex-wrap justify-around p-4 rounded mt-4  bg-secondary-900">
             <div>
-              <h3 className="text-xl font-bold mb-2 font-rocksalt">Estilos de tatuaje</h3>
+              <h3 className="text-xl font-bold mb-2 font-rocksalt">
+                Estilos de tatuaje
+              </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {artist?.tattooStyles?.map((style, index) => (
                   <p key={index} className="flex items-center">
@@ -105,7 +112,9 @@ export default function Page({ params }) {
               <p>{artist?.phone}</p>
               <p>{artist?.address}</p>
               <p>{artist?.location}</p>
-              <p className="mb-1"><FaInstagram className="text-xl"/></p>
+              <p className="mb-1">
+                <FaInstagram className="text-xl" />
+              </p>
             </div>
 
             <div className="p-4 rounded ">
