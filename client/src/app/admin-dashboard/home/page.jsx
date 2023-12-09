@@ -1,6 +1,6 @@
 "use client"
-import TopBarOptions from "@/components/topBarOptions/TopBarOptions";
-import React from "react";
+import TopBarOptions from '../../../components/topBarOptions/TopBarOptions'
+import React from 'react'
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

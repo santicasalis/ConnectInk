@@ -1,5 +1,5 @@
 import React from 'react'
-import ArtistPost from '@/components/artistPost/artistPost'
+import ArtistPost from '../../../components/artistPost/artistPost'
 
 const TattooGallery = () => {
   return (

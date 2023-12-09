@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RiAlertFill, RiCloseFill, RiCheckFill } from "react-icons/ri";
-import { closeModalDeleteAction } from '@/app/redux/features/modalDelete/modalDeleteAction';
+import { closeModalDeleteAction } from '../../app/redux/features/modalDelete/modalDeleteAction';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

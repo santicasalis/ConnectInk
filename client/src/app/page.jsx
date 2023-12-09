@@ -1,6 +1,6 @@
 "use client";
 
-import Nav from "@/components/nav/Nav";
+import Nav from "../components/nav/Nav";
 import { useDispatch } from "react-redux";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
