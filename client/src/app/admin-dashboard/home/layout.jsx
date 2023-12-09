@@ -1,4 +1,4 @@
-import TopBarOptions from "@/components/topBarOptions/TopBarOptions";
+import TopBarOptions from "../../../components/topBarOptions/TopBarOptions";
 import { RiAddFill } from "react-icons/ri";
 import Link from "next/link";
 

@@ -1,19 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import SideBar from "@/components/sidebar/SideBar";
-import Header from "@/components/header/Header";
-const Modal = dynamic(() => import("@/components/modal/Modal"));
-const ModalCreate = dynamic(() => import("@/components/modal/ModalCreate"));
-const ModalDeletePost = dynamic(() =>
-  import("@/components/modal/ModalDeletePost")
-);
-const ModalDeleteAppointment = dynamic(() =>
-  import("@/components/modal/ModalDeleteAppointment")
-);
+
+import SideBar from "../../components/sidebar/SideBar";
+import Header from "../../components/header/Header";
+const Modal = dynamic(() => import("../../components/modal/Modal"));
+const ModalCreate = dynamic(() => import("../../components/modal/ModalCreate"));
+const ModalDeletePost = dynamic(() => import("../../components/modal/ModalDeletePost"));
+const ModalDeleteAppointment = dynamic(()=> import("../../components/modal/ModalDeleteAppointment"));
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../redux/features/user/userActions";
 import { useEffect } from "react";
+
 
 export default function DashboardLayout({ children }) {
   const isModalEditOpen = useSelector((state) => state.modalEdit.isOpen);
