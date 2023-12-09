@@ -1,34 +1,38 @@
-"use client"
-import React from 'react';
-import axios from 'axios';
+"use client";
+import React from "react";
+import axios from "axios";
 import ArtistBookingCard from "../../../components/ArtistBookingCard/ArtistBookingCard";
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Appointments() {
+  const user = useSelector((state) => state.user.logedInUser);
+  const appointment = user.appointments;
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const user = useSelector((state)=>state.user.logedInUser)
-  const appointment = user.appointments
-  const dispatch = useDispatch()
+  useEffect(() => {
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "artist") {
+      router.replace("/");
+    }
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {}, [user]);
 
-    
+  console.log(user, "holaaa");
 
-  },[user])
-
-  
-
- 
-
-
-     return (
-      <div className=''>
-        {appointment && appointment.length > 0 ? (
-          [...user.appointments].sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime)).map((tur) => (
-            <div className='mt-[50px]'>
-              <ArtistBookingCard 
+  return (
+    <div className="">
+      {appointment && appointment.length > 0 ? (
+        [...user.appointments]
+          .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
+          .map((tur) => (
+            <div className="mt-[50px]">
+              <ArtistBookingCard
                 id={tur.id}
                 bodyPlace={tur.bodyPlace}
                 description={tur.description}
@@ -38,12 +42,12 @@ export default function Appointments() {
                 dateAndTime={tur.dateAndTime}
                 depositPrice={tur.depositPrice}
                 CustomerId={tur.CustomerId}
-                />
+              />
             </div>
           ))
-        ) : (
-          <p>No tienes ninguna reserva aún.</p>
-        )}
-      </div>
-    );
-  }
+      ) : (
+        <p>No tienes ninguna reserva aún.</p>
+      )}
+    </div>
+  );
+}

@@ -436,7 +436,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
 import Nav from "@/components/nav/Nav";
 import { array } from "yup";
+import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
+
 
 const URL_BASE = "http://localhost:3001";
 
@@ -450,6 +452,7 @@ const BookAppointment = ({ params }) => {
   const artist = useSelector((state) => state.artists.detail);
   const user = useSelector((state) => state.user.logedInUser);
   const [sent, setSent] = useState(false);
+  const router = useRouter()
 
   console.log("ESTE ES EL DAYSWITHHOURS", daysWithHours)
 
@@ -595,6 +598,12 @@ const BookAppointment = ({ params }) => {
   };
 
   useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    }
+    if (user.userType) {
+      if (user.userType == "admin") router.replace("/admin-dashboard/home");
+    }
     dispatch(getArtistDetail(id))
   }, [])
 

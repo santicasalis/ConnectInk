@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { getUserById } from "@/app/redux/features/user/userActions";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
   const [dayObj, setDayObj] = useState({});
+  const router = useRouter();
   const days = [
     "Lunes",
     "Martes",
@@ -18,6 +20,7 @@ const Page = () => {
     "Sábado",
     "Domingo",
   ];
+
   const [userTimeAv, setUserTimeAv] = useState(
     user.logedInUser.timeAvailabilities || []
   );
@@ -28,13 +31,19 @@ const Page = () => {
   const [moreExceptionTime, setMoreExceptionTime] = useState(false);
 
   useEffect(() => {
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "artist") {
+      router.replace("/");
+    }
     let obj = {};
     let objH = {};
     user.logedInUser.timeAvailabilities.map((timeAvailability) => {
       obj[timeAvailability.day] = {
         initialHour: timeAvailability.initialHour,
         finalHour: timeAvailability.finalHour,
-        secondInitialHour: timeAvailability.secondInitialHour || timeAvailability.finalHour,
+        secondInitialHour:
+          timeAvailability.secondInitialHour || timeAvailability.finalHour,
         secondFinalHour: timeAvailability.secondFinalHour || null,
         id: timeAvailability.id,
       };
@@ -42,7 +51,7 @@ const Page = () => {
     });
     setDayObj({ ...obj });
     setShowHours({ ...objH });
-    setMoreTime({...objH})
+    setMoreTime({ ...objH });
   }, [user]);
 
   useEffect(() => {
@@ -81,7 +90,6 @@ const Page = () => {
     let options = [];
     let initial = dayObj[day]?.finalHour.split(":")[0];
     let final = 23;
-
 
     for (let i = initial; i <= final; i++) {
       let time = `${i}:00:00`;
@@ -124,7 +132,7 @@ const Page = () => {
       );
     }
     return options;
-  }
+  };
 
   const generateSecondException = () => {
     let options = [];
@@ -140,7 +148,7 @@ const Page = () => {
       );
     }
     return options;
-  }
+  };
 
   const generateFinalTimeOptions = (day) => {
     let options = [];
@@ -227,9 +235,9 @@ const Page = () => {
 
           await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, data);
         } else if (initialHour && finalHour) {
-          let data = {}
+          let data = {};
           if (secondInitialHour && secondFinalHour) {
-             data = {
+            data = {
               tattooArtistId: user.logedInUser.id,
               day,
               initialHour,
@@ -238,14 +246,14 @@ const Page = () => {
               secondInitialHour,
             };
           } else {
-             data = {
+            data = {
               tattooArtistId: user.logedInUser.id,
               day,
               initialHour,
               finalHour,
             };
           }
-          console.log(data)
+          console.log(data);
 
           await axios.post(`${URL_BASE}/timeAvailabilities`, data);
         }
@@ -261,11 +269,11 @@ const Page = () => {
       setNewException({
         [event.target.name]: event.target.value,
       });
-    } else  if (event.target.name == "finalHour"){
+    } else if (event.target.name == "finalHour") {
       setNewException({
         ...newException,
         [event.target.name]: event.target.value,
-        secondInitialHour: event.target.value
+        secondInitialHour: event.target.value,
       });
     } else {
       setNewException({
@@ -276,8 +284,8 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log(newException)
-  }, [newException])
+    console.log(newException);
+  }, [newException]);
 
   const addTimeException = async () => {
     if (newException.initialHour == "No trabajo") {
@@ -285,7 +293,10 @@ const Page = () => {
         date: newException.date,
         tattooArtistId: user.logedInUser.id,
       });
-    } else  if (newException.secondInitialHour && !newException.secondFinalHour){
+    } else if (
+      newException.secondInitialHour &&
+      !newException.secondFinalHour
+    ) {
       await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
         date: newException.date,
         initialHour: newException.initialHour,
@@ -461,71 +472,83 @@ const Page = () => {
             )}
           </div>
         )}
-        {(newException.initialHour && newException.finalHour) &&
-        <div>
-          <button onClick={() => setMoreExceptionTime(!moreExceptionTime)}>{moreExceptionTime ? "➖" : "➕"}</button>
-
-          {moreExceptionTime && 
+        {newException.initialHour && newException.finalHour && (
           <div>
-            <label>
-              Segundo horario de inicio:
-              <select
-                name="secondInitialHour"
-                className="bg-transparent"
-                onChange={handleExceptionChange}
-              >
-                <option value="" disabled>
-                  Seleccionar segundo horario inicial
-                </option>
-                {generateSecondException()}
-              </select>
-            </label>
+            <button onClick={() => setMoreExceptionTime(!moreExceptionTime)}>
+              {moreExceptionTime ? "➖" : "➕"}
+            </button>
 
-            <label>
-              Segundo horario de fin:
-              <select
-                name="secondFinalHour"
-                className="bg-transparent"
-                onChange={handleExceptionChange}
-              >
-                <option value="" disabled>
-                  Seleccionar horario final
-                </option>
-                {generateSecondFinalException()}
-              </select>
-            </label>
+            {moreExceptionTime && (
+              <div>
+                <label>
+                  Segundo horario de inicio:
+                  <select
+                    name="secondInitialHour"
+                    className="bg-transparent"
+                    onChange={handleExceptionChange}
+                  >
+                    <option value="" disabled>
+                      Seleccionar segundo horario inicial
+                    </option>
+                    {generateSecondException()}
+                  </select>
+                </label>
+
+                <label>
+                  Segundo horario de fin:
+                  <select
+                    name="secondFinalHour"
+                    className="bg-transparent"
+                    onChange={handleExceptionChange}
+                  >
+                    <option value="" disabled>
+                      Seleccionar horario final
+                    </option>
+                    {generateSecondFinalException()}
+                  </select>
+                </label>
+              </div>
+            )}
           </div>
-          }
-        </div>
-        }
+        )}
         <button
           onClick={addTimeException}
-          disabled={!newException.initialHour || (!newException.finalHour && newException.initialHour !== "No trabajo") }
+          disabled={
+            !newException.initialHour ||
+            (!newException.finalHour &&
+              newException.initialHour !== "No trabajo")
+          }
         >
           Añadir Excepcion
         </button>
-        {user.logedInUser.timeAvailabilityExceptions.length &&
-        <div>
-          {user.logedInUser.timeAvailabilityExceptions.map(
-            (exception, index) => (
-              <div key={index}>
-                Fecha: {exception.date},
-                {exception.initialHour && exception.finalHour ? (
-                  <div>
-                    <p>
-                      Inicio: {exception.initialHour}, Fin: {exception.finalHour}
-                    </p>
-                    {(exception.secondInitialHour && exception.secondFinalHour) &&
-                    <p>Segundo inicio: {exception.secondInitialHour}, Segundo fin: {exception.secondFinalHour}</p>
-                    }
-                  </div>
-                ) : (
-                  <p>Sin trabajo</p>
-                )}
-              </div>
-            ))}
-        </div>
-        }
+        {user.logedInUser.timeAvailabilityExceptions.length && (
+          <div>
+            {user.logedInUser.timeAvailabilityExceptions.map(
+              (exception, index) => (
+                <div key={index}>
+                  Fecha: {exception.date},
+                  {exception.initialHour && exception.finalHour ? (
+                    <div>
+                      <p>
+                        Inicio: {exception.initialHour}, Fin:{" "}
+                        {exception.finalHour}
+                      </p>
+                      {exception.secondInitialHour &&
+                        exception.secondFinalHour && (
+                          <p>
+                            Segundo inicio: {exception.secondInitialHour},
+                            Segundo fin: {exception.secondFinalHour}
+                          </p>
+                        )}
+                    </div>
+                  ) : (
+                    <p>Sin trabajo</p>
+                  )}
+                </div>
+              )
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

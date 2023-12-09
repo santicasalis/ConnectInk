@@ -36,7 +36,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user) {
+    if (user.userType) {
       if (user.userType == "artist") router.replace("/a-dashboard/home");
       if (user.userType == "customer") router.replace("/user-dashboard");
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
