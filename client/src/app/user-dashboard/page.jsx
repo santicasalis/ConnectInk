@@ -7,6 +7,7 @@ import axios from "axios";
 import { orderPosts } from "../utils/ordenarPosts";
 import UserPostDash from "@/components/userPostDash/UserPostDash";
 import { useRouter } from "next/navigation";
+import { getUserById } from "../redux/features/user/userActions";
 
 function UDashboard() {
   const dispatch = useDispatch();
@@ -14,7 +15,11 @@ function UDashboard() {
   const router = useRouter()
 
   const user = useSelector((state) => state.user.logedInUser);
+const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
 
+useEffect (() => {
+dispatch(getUserById(fireBaseUser.tokenId))
+},[])
   useEffect(() => {
     if(!user.userType){
       router.replace("/auth")
