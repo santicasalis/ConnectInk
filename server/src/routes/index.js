@@ -29,6 +29,6 @@ router.use("/auth", loginRouter);
 router.use("/nodemailer", nodemailerRouter);
 router.use("/admins", adminRouter);
 router.use("/reviews", reviewRouter);
-router.use("/payment", mercadoPagoRouter);
+router.use("/payments", mercadoPagoRouter);
 
 module.exports = router;

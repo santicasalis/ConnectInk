@@ -8,7 +8,7 @@ const client = new MercadoPagoConfig({
 
 const payment = new Preference(client);
 
-const createOrder = async (req, res) => {
+const createOrderHandler = async (req, res) => {
   try {
     const { id, depositPrice, description } = req.body;
     let preference = {
@@ -16,7 +16,7 @@ const createOrder = async (req, res) => {
         items: [
           {
             id: id,
-            title: "Seña para reservar turno",
+            title: "Pago de seña para la reserva del turno",
             quantity: 1,
             unit_price: depositPrice,
             currency_id: "BRL",
@@ -24,18 +24,19 @@ const createOrder = async (req, res) => {
           },
         ],
         back_urls: {
-          failure: `http://localhost:3001/payment/failure/${id}`,
-          pending: "http://localhost:3001/payment/pending",
-          success: `http://localhost:3001/payment/success/${id}`,
+          failure: `http://localhost:3001/payments/result/${id}`,
+          pending: `http://localhost:3001/payments/result/${id}`,
+          success: `http://localhost:3001/payments/result/${id}`,
         },
-        notification_url: "https://webhook.site/95a6fd8f-442f-407a-92ac-54976654b519/payment/webhook"
+        notification_url:
+          "https://webhook.site/aba5ed31-610a-4241-8b81-131b4e3025bc/payments/webhook",
       },
     };
     const response = await payment.create(preference);
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = createOrder;
+module.exports = createOrderHandler;
