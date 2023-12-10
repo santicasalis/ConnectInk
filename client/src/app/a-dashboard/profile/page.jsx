@@ -1,26 +1,27 @@
-"use client"
+"use client";
 
-import {RiEdit2Line} from "react-icons/ri"
+import { RiEdit2Line } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
-import Image from 'next/image'
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 import { bringUserInformation } from "@/app/redux/features/user/userActions";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
-
+import { getAuth, updatePassword } from "firebase/auth";
 
 const Profile = () => {
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.logedInUser);
+  const [showPassword, setShowPassword] = useState(false);
+  const [initialData, setInitialData] = useState({});
 
-  const user = useSelector((state) => state.user.logedInUser)
-  
-  const imageLoader = ({src}) => {
-    return src
-  }
+  const imageLoader = ({ src }) => {
+    return src;
+  };
   const router = useRouter();
-  
+
   useEffect(() => {
     if (!user.userType) {
       router.replace("/auth");
@@ -29,23 +30,7 @@ const dispatch = useDispatch()
     }
   }, []);
 
-const [formData, setFormData] = useState({
-  fullName: user.fullName,
-  email: user.email,
-  phone: user.phone,
-  address: user.address,
-  location: user.location,
-  shopName: user.shopName,
-  image: user.image,
-  instagram: user.instagram,
-  description:user.description,
-  password:user.password,
-});
-
-const [confirmPassword, setConfirmPassword] = useState("");
-
-useEffect(() => {
-  setFormData({
+  const [formData, setFormData] = useState({
     fullName: user.fullName,
     email: user.email,
     phone: user.phone,
@@ -55,38 +40,72 @@ useEffect(() => {
     image: user.image,
     instagram: user.instagram,
     description: user.description,
+    password: user.password,
   });
-}, [user]);
 
-const handleUpdate = async (e) => {
-  e.preventDefault();
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  if (formData.password !== confirmPassword) {
-    console.error("Las contraseñas no coinciden");
-    return;
-  }
+  useEffect(() => {
+    setInitialData({ ...user });
+    setFormData({
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phone,
+      address: user.address,
+      location: user.location,
+      shopName: user.shopName,
+      image: user.image,
+      instagram: user.instagram,
+      description: user.description,
+    });
+  }, [user]);
 
-  try {
-    const response = await axios.put(
-      `http://localhost:3001/tattooArtists/${user.id}`,
-      formData
-    );
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-      dispatch(bringUserInformation(formData));
+     const updatedFields = {};
+     Object.keys(formData).forEach((key) => {
+       if (formData[key] !== initialData[key]) {
+         updatedFields[key] = formData[key];
+       }
+     });
 
-    if (response.status === 200) {
-    
-      console.log("Datos actualizados con éxito");
+    if (formData.password && formData.password !== confirmPassword) {
+      console.error("Las contraseñas no coinciden");
+      return;
     }
-  } catch (error) {
- 
-    console.error("Error al actualizar datos", error);
-  }
-};
 
-const handleChange = (e) => {
-  setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+    try {
+      const auth = getAuth();
+      const firebaseUser = auth.currentUser;
+
+      if (firebaseUser) {
+        await updatePassword(firebaseUser, formData.password);
+        console.log("Contraseña actualizada con éxito en Firebase");
+      } else {
+        console.error("No hay usuario de Firebase autenticado");
+        return;
+      }
+
+      const response = await axios.put(
+        `http://localhost:3001/tattooArtists/${user.id}`,
+        formData
+      );
+
+      if (response.status === 200) {
+        dispatch(bringUserInformation(formData));
+        console.log("Datos actualizados con éxito");
+        setFormData({ ...formData, password: "" });
+        setConfirmPassword("");
+      }
+    } catch (error) {
+      console.error("Error al actualizar datos", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
@@ -276,7 +295,7 @@ const handleChange = (e) => {
             </span>
           </div>
         </div>
-        
+
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>Confirmar Nueva Contraseña:</p>
@@ -300,6 +319,6 @@ const handleChange = (e) => {
       </form>
     </div>
   );
-}
+};
 
-export default Profile
+export default Profile;

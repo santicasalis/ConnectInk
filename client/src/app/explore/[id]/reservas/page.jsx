@@ -696,7 +696,7 @@ const BookAppointment = ({ params }) => {
 
                    const createdAppointment = createResponse.data.data;
 
-                   const paymentMp = await axios.post(`${URL_BASE}/payment`, {
+                   const paymentMp = await axios.post(`${URL_BASE}/payments`, {
                      id: createdAppointment.id,
                      description: createdAppointment.description,
                      depositPrice: createdAppointment.depositPrice,

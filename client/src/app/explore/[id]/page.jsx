@@ -85,19 +85,23 @@ export default function Page({ params }) {
               <div>
                 <h1>Reseñas dejadas por clientes sobre el artista: </h1>
                 {artist.reviews.map((review) => {
-                  return <ReviewCard 
-                    key={review.appointmentId}
-                    customerId={review.customerId}
-                    comment={review.comment}
-                    image={review?.image}
-                    rating={review.rating}
+                  return (
+                    <ReviewCard
+                      key={review.appointmentId}
+                      customerId={review.customerId}
+                      comment={review.comment}
+                      image={review?.image}
+                      rating={review.rating}
                     />
+                  );
                 })}
               </div>
             ) : (
-              <h1>El artista todavía no tiene reseñas, saca un turno y se el primero en dejar una!</h1>
-            )
-            }
+              <h1>
+                El artista todavía no tiene reseñas, saca un turno y se el
+                primero en dejar una!
+              </h1>
+            )}
           </div>
         </div>
 
@@ -107,10 +111,12 @@ export default function Page({ params }) {
               {" "}
               <FaMapLocationDot className="text-primary" /> Ubicacion
             </h3>
-            <MapComponent
-              location={artist?.location}
-              address={artist?.address}
-            />
+            {artist.location && artist.address && (
+              <MapComponent
+                location={artist.location}
+                address={artist.address}
+              />
+            )}
           </div>
 
           <div className="flex flex-wrap justify-around p-4 rounded mt-4  bg-secondary-900">
@@ -142,15 +148,24 @@ export default function Page({ params }) {
             <div className="p-4 rounded ">
               <div className="flex flex-col items-center">
                 <label className="text-md  font-rocksalt">Pequeño</label>
-                <span className="text-gray-600">$ {priceRanges.Pequeño?.priceMin} - {priceRanges.Pequeño?.priceMax}</span>
+                <span className="text-gray-600">
+                  $ {priceRanges.Pequeño?.priceMin} -{" "}
+                  {priceRanges.Pequeño?.priceMax}
+                </span>
               </div>
               <div className="flex flex-col items-center mt-2">
                 <label className="text-md  font-rocksalt">Mediano</label>
-                <span className="text-gray-600">$ {priceRanges.Mediano?.priceMin} - {priceRanges.Mediano?.priceMax}</span>
+                <span className="text-gray-600">
+                  $ {priceRanges.Mediano?.priceMin} -{" "}
+                  {priceRanges.Mediano?.priceMax}
+                </span>
               </div>
               <div className="flex flex-col items-center mt-2">
                 <label className="text-md  font-rocksalt">Grande</label>
-                <span className="text-gray-600">$ {priceRanges.Grande?.priceMin} - {priceRanges.Grande?.priceMax}</span>
+                <span className="text-gray-600">
+                  $ {priceRanges.Grande?.priceMin} -{" "}
+                  {priceRanges.Grande?.priceMax}
+                </span>
               </div>
             </div>
           </div>
