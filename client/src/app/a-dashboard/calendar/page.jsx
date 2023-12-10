@@ -35,6 +35,8 @@ const Page = () => {
   const [moreTime, setMoreTime] = useState({});
   const [moreExceptionTime, setMoreExceptionTime] = useState(false);
 
+  console.log(user.logedInUser.userType);
+
   useEffect(() => {
     // if (!user.userType) {
     //   router.replace("/auth");

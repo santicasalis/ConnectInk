@@ -9,19 +9,18 @@ import { useRouter } from 'next/navigation';
 
 
 export default function Reservas() {
+  const user = useSelector((state) => state.user.logedInUser);
+  const appointment = user.appointments;
 
-  const user = useSelector((state)=>state.user.logedInUser)
-  const appointment =  user.appointments;
-
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
-    if(!user.userType){
-      router.replace("/auth")
-    } else if(user.userType !== "customer"){
-      router.replace("/")
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "customer") {
+      router.replace("/");
     }
-  }, [])
+  }, []);
 
   return (
     
@@ -43,10 +42,9 @@ export default function Reservas() {
                 />
             </div>
           ))
-        ) : (
-          <p>No tienes ninguna reserva aún.</p>
-        )}
-      </div>
-      
-    );
-  }
+      ) : (
+        <p>No tienes ninguna reserva aún.</p>
+      )}
+    </div>
+  );
+}

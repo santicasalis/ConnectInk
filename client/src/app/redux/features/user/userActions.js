@@ -1,4 +1,10 @@
-import { getUser, cleanUser, getFirebaseInfo, cleanFireBaseInfo, getUserPosts} from "./userSlice";
+import {
+  bringInformation, getUser,
+  cleanUser,
+  getFirebaseInfo,
+  cleanFireBaseInfo,
+  getUserPosts,
+} from "./userSlice";
 import axios from "axios";
 
 const URL_BASE = "http://localhost:3001";
@@ -30,6 +36,10 @@ export const logOut = () => async dispatch =>{
 export const getUserInformation = (user) => async dispatch => {
   dispatch(getFirebaseInfo(user))
   localStorage.setItem("fireBaseUser", JSON.stringify(user))
+}
+
+export const bringUserInformation = (data) => async dispatch => {
+  dispatch(bringInformation(data))
 }
 
 export const bringUserPosts = (id) => async dispatch => {
