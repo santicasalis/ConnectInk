@@ -4,7 +4,7 @@ export default function About() {
     return (
         <>
         <Nav/>
-        <div className=" mx-4 my-8">
+        <div className=" mx-4 my-8 text-artistfont">
         <h1 className="text-5xl font-rocksalt text-center mb-10">Sobre Connect<span className="text-primary">Ink</span></h1>
         <p className="text-lg mb-4 ">
              <p className="font-serif">ConnectInk es más que una aplicación; es una comunidad creada por un grupo de estudiantes de Henry con una visión única. Nuestra plataforma nace del deseo de facilitar la conexión entre amantes del arte del tatuaje. Fundada como proyecto final en Henry, ConnectInk es la puerta de entrada a un mundo de expresión artística en la piel.</p>

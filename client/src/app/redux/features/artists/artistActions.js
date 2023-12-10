@@ -10,7 +10,8 @@ import {
   orderAndFilterArtists,
   deleteArtist,
   getDetail,
-  cleanDetail
+  cleanDetail,
+  
 } from "./artistsSlice";
 import axios from "axios";
 
@@ -30,6 +31,11 @@ export const filterAllArtists = (filter) => async (dispatch) =>{
 
 export const OrderAllArtists = (tag)=>(dispatch)=> {
     dispatch(orderArtist(tag))
+}
+
+export const OrderAllArtistsRating = (tag)=>(dispatch)=> {
+
+  dispatch(orderArtistRating(tag))
 }
 
 export const OrderAndFilterArtists = (filters, sortCriteria) => (dispatch) => {

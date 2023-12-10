@@ -13,6 +13,7 @@ import "swiper/css/pagination";
 import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
 import Paginate from "../../components/paginate/Paginate";
+import { orderRating } from "../utils/ordenarRaiting";
 import "../explore/page.css";
 import Link from "next/link";
 
@@ -52,6 +53,9 @@ export default function ExplorePage() {
     setFilterSidebarVisible(!filterSidebarVisible);
   };
 
+
+
+
   return (
 
     <div className="w-full bg-secondary-900">
@@ -63,14 +67,14 @@ export default function ExplorePage() {
         <section className="flex flex-col w-full justify-center items-center gap-x-1 text-center">
           <div className="w-[80%] sm:flex sm:flex-col sm:justify-center sm:items-center">
             <div className="w-full mb-9">
-              <h2 className="font-bold  text-[50px] font-newrocker ">
+              <h2 className="font-bold  text-[50px] font-newrocker  text-artistfont">
                 Bienvenidos al Reino de la Inspiracion
                 <span className="text-primary"> Ink</span>orporada!
               </h2>
             </div>
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-0 sm:gap-y-4 sm:w-full w-full">
               <div className="flex items-center sm:w-full mb-4">
-                <p className="text-center text-[20px] text-white/70 sm:w-full">
+                <p className="text-center text-[20px] text-artistfont sm:w-full">
                   "En nuestro santuario del arte corporal, cada trazo cuenta una
                   historia, cada línea lleva consigo la esencia de un viaje
                   personal. En el lienzo de la piel, exploramos la intersección
@@ -97,22 +101,22 @@ export default function ExplorePage() {
                   className="w-full flex justify-center items-center relative text-center p-5 h-[350px] "
                 >
 
-                  <SwiperSlide className=" mt-[150px] font-bold text-[20px]  w-[50%] ">
+                  <SwiperSlide className=" mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont ">
                     Encuentra la belleza en la simplicidad. Un tatuaje no solo
                     decora tu piel, sino que también cuenta tu historia en las
                     líneas más simples.{" "}
                   </SwiperSlide>{" "}
-                  <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] ">
+                  <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont ">
                     La poesía de la tinta. Cada tatuaje es una estrofa, cada
                     estrofa es una expresión. ¿Cuál será tu próximo verso?{" "}
                   </SwiperSlide>{" "}
-                  <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] ">
+                  <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont">
                     Palabras que perduran. Un tatuaje corto, una vida de
                     significado. Exprésate con precisión, deja que tu piel hable
                     por ti.{" "}
                   </SwiperSlide>
                   //{" "}
-                  <SwiperSlide className="mt-[150px] font-bold text-xl sm:text-m w-full  ">
+                  <SwiperSlide className="mt-[150px] font-bold text-xl sm:text-m w-full text-artistfont  ">
                     Menos es más. Descubre la magia de las palabras concisas.Tus
                     tatuajes son recordatorios diarios de lo que realmente
                     importa{" "}
