@@ -73,21 +73,21 @@ const ModalCreate = () => {
             isOpen && 
             <div className='fixed top-0 left-0 flex justify-center items-center w-full h-full z-40'  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} >
                 <div className='w-full h-full flex justify-center items-center relative'>
-                    <RiCloseFill className='absolute top-2 right-2 text-white text-[35px] cursor-pointer hover:text-primary' onClick={handleClose}/>
-                    <form className='w-[900px] bg-secondary-900 p-4 flex flex-col items-center' onSubmit={handleSubmit}>
-                        <div className='grid md:grid-cols-2 grid-cols-1 items-center gap-x-10'>
+                    <RiCloseFill className='absolute top-2 right-2 text-artistfont text-[35px] cursor-pointer hover:text-artist' onClick={handleClose}/>
+                    <form className='w-[900px] bg-secondary-900 p-4 flex flex-col items-center shadow-lg shadow-artist/40' onSubmit={handleSubmit}>
+                        <div className='grid md:grid-cols-2 grid-cols-1 items-center gap-x-10' >
 
                         <div className='flex flex-col'>
-                            <label htmlFor='post' className='w-1/2 font-newrocker flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-white/70 border-white/60 border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-primary hover:border-primary'>
+                            <label htmlFor='post' className='w-1/2 font-newrocker flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-artistfont border-artistfont border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-artist hover:border-artist'>
                                 <RiUpload2Fill/>
                                 Subir imagen
                             </label> 
                             <input className='hidden' name='post' id='post' type="file" onChange={handleImageChange} />
-                            <p className='text-primary/50 text-sm mb-3'>
+                            <p className='text-artist text-sm mb-3'>
                             Extensiones permitidas: png, jpg, jpeg
                             </p> 
-                            <label htmlFor='description' className='font-newrocker'>Descripción</label>
-                            <textarea className='bg-secondary-100 resize-none opacity-80 w-[400px] h-[240px] md:col-span-1 flex justify-center items-center text-[15px] text-white mb-8 p-3 outline-none rounded-lg' rows="10"
+                            <label htmlFor='description' className='font-newrocker text-artistfont'>Descripción</label>
+                            <textarea className='bg-secondary-100 resize-none opacity-80 w-[400px] h-[240px] md:col-span-1 flex justify-center items-center text-[15px] text-artistfont mb-8 p-3 outline-none rounded-lg' rows="10"
                             id='description'
                             name='description'
                             value={description}
@@ -95,9 +95,9 @@ const ModalCreate = () => {
                             placeholder="Agrega descripción..."
                             />
                             <div className='w-100 flex justify-center items-center gap-x-4 '>
-                                <button onClick={handleClose} className='flex items-center gap-x-1 font-newrocker text-[20px] py-3 px-6  rounded-lg hover:text-red-400 '><RiCloseFill className='font-bold text-[30px]'/> Cancelar </button>
-                                <button className={` flex items-center gap-x-1 font-newrocker py-3 px-6 text-[20px]  bg-transparent rounded-lg transition duration-200 ease-in-out ${
-                                    !image ? 'opacity-50 cursor-not-allowed' : 'hover:text-primary '
+                                <button onClick={handleClose} className='flex items-center gap-x-1 font-newrocker text-[20px] py-3 px-6  rounded-lg hover:text-artist  text-artistfont'><RiCloseFill className='font-bold text-[30px]'/> Cancelar </button>
+                                <button className={` flex items-center gap-x-1  text-artistfont font-newrocker py-3 px-6 text-[20px]  bg-transparent rounded-lg transition duration-200 ease-in-out ${
+                                    !image ? 'opacity-50 cursor-not-allowed' : 'hover:text-artistfont/60 '
                                 }`}
                                 type="submit"
                                 disabled={!image}
@@ -116,21 +116,21 @@ const ModalCreate = () => {
                                         <div className='rounded-full w-[32px] h-[32px] overflow-hidden'>
                                             <Image unoptimized loader={imageLoader} src={artist.image} height={32} width={32} alt={artist.fullName} style={{width:'100%', height:'100%' }}/>
                                         </div>
-                                        <span className='text-[15px]'>{`${artist.fullName}`}</span>
+                                        <span className='text-[15px] text-artistfont'>{`${artist.fullName}`}</span>
                                     </div>
                                     <div className='p-2 flex items-center justify-center'>
-                                    <RiMoreFill className='text-white text-[25px]'/>
+                                    <RiMoreFill className='text-artistfont text-[25px]'/>
                                     </div>
                             </div>
                         
                         
                         
                             <div className={`bg-black ${image == null ? 'opacity-50' : ''} w-full h-[300px] relative mb-2`}>
-                                {loading  && <div className='font-newrocker flex items-center justify-center w-full h-full bg-black opacity-70 text-[30px] text-white absolute transform-translate z-20'>Cargando...</div>}
+                                {loading  && <div className='font-newrocker flex items-center justify-center w-full h-full bg-black opacity-70 text-[30px] text-artistfont absolute transform-translate z-20'>Cargando...</div>}
                                 <img className='w-full h-full aspect-w-16 aspect-h-9 object-cover' src={image != null ? image : 'https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg'} />
                             </div>
                             <div className='w-full pr-3 flex justify-between gap-x-3'>
-                            <textarea className=' text-[17px] resize-none w-full mb-1 bg-transparent text-white/80' rows={3} value={description}></textarea>
+                            <textarea className=' text-[17px] resize-none w-full mb-1 bg-transparent text-artistfont' rows={3} value={description}></textarea>
                             <div className='pt-1 ml-auto'>
                                 <RiEmotionHappyLine className=' top-0 text-[17px]'/>
                             </div>
