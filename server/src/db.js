@@ -9,7 +9,6 @@ const { DB_DEPLOY } = process.env;
 const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
-  //timezone: "America/Buenos_Aires",
 });
 
 const basename = path.basename(__filename);
