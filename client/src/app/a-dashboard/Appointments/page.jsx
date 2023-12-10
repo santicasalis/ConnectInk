@@ -4,10 +4,11 @@ import axios from "axios";
 import ArtistBookingCard from "../../../components/ArtistBookingCard/ArtistBookingCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
 export default function Appointments() {
+
+
   const user = useSelector((state) => state.user.logedInUser);
   const appointment = user.appointments;
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ export default function Appointments() {
           .map((tur) => (
             <div className="mt-[50px]">
               <ArtistBookingCard
+
                 id={tur.id}
                 bodyPlace={tur.bodyPlace}
                 description={tur.description}

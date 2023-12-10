@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PostCards from "@/components/postCards/PostCards";
+import PostCards from "../../components/postCards/PostCards";
 import { getAllPosts } from "../redux/features/posts/postsActions";
 import axios from "axios";
 import { orderPosts } from "../utils/ordenarPosts";
-import UserPostDash from "@/components/userPostDash/UserPostDash";
+import UserPostDash from "../../components/userPostDash/UserPostDash";
 import { useRouter } from "next/navigation";
 import { getUserById } from "../redux/features/user/userActions";
 
@@ -17,9 +17,11 @@ function UDashboard() {
   const user = useSelector((state) => state.user.logedInUser);
 const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
 
+
 useEffect (() => {
 dispatch(getUserById(fireBaseUser.tokenId))
 },[])
+
   useEffect(() => {
     if(!user.userType){
       router.replace("/auth")

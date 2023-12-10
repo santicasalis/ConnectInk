@@ -1,16 +1,12 @@
 const { Router } = require("express");
-const createOrder = require("../handlers/mercadoPagoHandlers/createOrder");
-const successPaymentHandler = require("../handlers/mercadoPagoHandlers/successPaymentHandler");
-const receiveWebhook = require("../handlers/mercadoPagoHandlers/receiveWebhook");
-const failurePaymentHandler = require ("../handlers/mercadoPagoHandlers/failurePaymentHandler")
-const pendingPaymentHandler = require("../handlers/mercadoPagoHandlers/pendingPaymentHandler");
+const createOrderHandler = require("../handlers/mercadoPagoHandlers/createOrderHandler");
+const resultPaymentHandler = require("../handlers/mercadoPagoHandlers/resultPaymentHandler");
+const receiveWebhookHandler = require("../handlers/mercadoPagoHandlers/receiveWebhookHandler");
 
 const mercadoPagoRouter = Router();
 
-mercadoPagoRouter.post("/", createOrder);
-mercadoPagoRouter.get("/failure/:id", failurePaymentHandler);
-mercadoPagoRouter.get("/pending", pendingPaymentHandler);
-mercadoPagoRouter.get("/success/:id", successPaymentHandler);
-mercadoPagoRouter.post("/webhook", receiveWebhook);
+mercadoPagoRouter.post("/", createOrderHandler);
+mercadoPagoRouter.get("/result/:id", resultPaymentHandler);
+mercadoPagoRouter.post("/webhook", receiveWebhookHandler);
 
 module.exports = mercadoPagoRouter;

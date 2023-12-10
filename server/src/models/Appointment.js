@@ -43,8 +43,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-   
     paymentId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    paymentStatus: {
       type: DataTypes.STRING,
       allowNull: true,
     },

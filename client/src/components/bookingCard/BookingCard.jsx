@@ -1,57 +1,85 @@
-"use client"
-import React from 'react'
+"use client";
+import React from "react";
 import { TbCalendarCheck } from "react-icons/tb";
-import { RiHeart3Line, RiHeart3Fill, RiEditFill, RiDeleteBin6Fill, RiMoreFill, RiMessage3Line, RiEmotionHappyLine } from "react-icons/ri";
-import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
+import {
+  RiHeart3Line,
+  RiHeart3Fill,
+  RiEditFill,
+  RiDeleteBin6Fill,
+  RiMoreFill,
+  RiMessage3Line,
+  RiEmotionHappyLine,
+} from "react-icons/ri";
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { IoBodyOutline } from "react-icons/io5";
 import { FaMapPin, FaPhone } from "react-icons/fa6";
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import axios from "axios"
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { openModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { openModalDeleteAppointmentAction } from "@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
+import { useRouter } from "next/navigation";
 
+const BookingCard = ({
+  paymentId,
+  paymentStatus,
+  id,
+  bodyPlace,
+  description,
+  duration,
+  image,
+  size,
+  dateAndTime,
+  depositPrice,
+  tattooArtistId,
+}) => {
+  const imageLoader = ({ src }) => {
+    return src;
+  };
+  const user = useSelector((state) => state.user.logedInUser);
+  const router = useRouter();
 
-const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, tattooArtistId}) => {
+  let date = new Date(dateAndTime);
+  let opcionesFormato = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZoneName: "short",
+  };
+  let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
 
-    const imageLoader = ({src}) => {
-        return src
+  const [response, setResponse] = useState({});
+
+  useEffect(() => {
+    const artistId = async () => {
+      try {
+        const resp = (
+          await axios.get(
+            `http://localhost:3001/tattooArtists/${tattooArtistId}`
+          )
+        ).data;
+        setResponse(resp);
+      } catch (error) {
+        console.error("error");
       }
-    const user = useSelector((state)=>state.user.logedInUser)
-    
-        
-    let date = new Date(dateAndTime) 
-    let opcionesFormato = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
-        hour: 'numeric',
-        minute: 'numeric',
-        timeZoneName: 'short' 
     };
-    let fechaFormateada = date.toLocaleDateString('es-ES', opcionesFormato)
 
-     const [response, setResponse]= useState({}) 
+    artistId();
+  }, []);
 
-    useEffect(()=>{
-      
-    const artistId = async ()=>{
-       try {
-        const resp = (await axios.get(`http://localhost:3001/tattooArtists/${tattooArtistId}`)).data
-        setResponse(resp)
-       } catch (error) {
-        console.error("error")
-       }     
-       
+  const handleReview = () => {
+    if (new Date(dateAndTime).valueOf() > Date.now()) {
+      console.log(id, tattooArtistId);
+      //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
+    } else {
+      router.push(`/critica/${id}-${tattooArtistId}`);
     }
-        
-     artistId()       
-        
-    },[])
-
+  };
 
   return (
     <div className="bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105">
@@ -86,35 +114,40 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
 
       <div
         className={`w-[20%] mr-4 ${
-          !paymentId ? "border-4 border-red-500" : ""
+          paymentId && paymentStatus === "in_process"
+            ? "border-4 border-red-500"
+            : "border-4 border-green-500"
         }`}
       >
-        <div>
-          <p className="text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt">
-            <FaMapPin className="text-primary" /> Dirección:
-          </p>
-          <p className="text-center">{response.address}</p>
-          <p className="text-center">{response.location}</p>
-        </div>
-        <div>
-          <p className="text-center mb-[15px] text-2xl mt-4 font-rocksalt">
-            Artista:
-          </p>
-          <div className="flex justify-center items-center gap-2">
-            <Image
-              unoptimized
-              src={response.image}
-              loader={imageLoader}
-              width={80}
-              height={80}
-              alt={`${response.fullName} profile pic`}
-              className=" rounded-full"
-            />
-            <p className="text-center">{response.fullName}</p>
+        {response.id && (
+          <div>
+            <div>
+              <p className="text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt">
+                <FaMapPin className="text-primary" /> Dirección:
+              </p>
+              <p className="text-center">{response.address}</p>
+              <p className="text-center">{response.location}</p>
+            </div>
+            <div>
+              <p className="text-center mb-[15px] text-2xl mt-4 font-rocksalt">
+                Artista:
+              </p>
+              <div className="flex justify-center items-center gap-2">
+                <Image
+                  unoptimized
+                  src={response.image}
+                  loader={imageLoader}
+                  width={80}
+                  height={80}
+                  alt={`${response.fullName} profile pic`}
+                  className=" rounded-full"
+                />
+                <p className="text-center">{response.fullName}</p>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-
       <div className=" w-[20%] mr-4">
         <div className="flex items-end justify-end">
           <Menu
@@ -134,7 +167,6 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
           </Menu>
         </div>
 
-
         <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
         <p className="text-center mt-2 ">Tamaño: {size}</p>
         <p className="text-center mt-2 ">Duracion:{duration}</p>
@@ -151,8 +183,9 @@ const BookingCard = ({paymentId, id, bodyPlace, description, duration, image, si
           />
         </div>
       </div>
+      <button onClick={handleReview}>Dejar reseña</button>
     </div>
   );
-}
+};
 
-export default BookingCard
+export default BookingCard;

@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PostDashboard from "@/components/postDashboard/PostDashboard";
+import PostDashboard from "../../../../components/postDashboard/PostDashboard";
 import axios from "axios";
 import Link from "next/link";
 import { CiShop } from "react-icons/ci";
 import { BsFillFilePostFill } from "react-icons/bs";
 import { VscAccount } from "react-icons/vsc";
+
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -28,6 +29,7 @@ const RegArtistById = ({ params }) => {
       });
   }, [params.id]);
   console.log(artist.publications, "soyyyy");
+
 
   return (
     <div className="">

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import PostDashboard from "../postDashboard/PostDashboard";
 import { useSelector, useDispatch } from "react-redux";
-import { bringUserPosts } from "@/app/redux/features/user/userActions";
+import { bringUserPosts } from "../../app/redux/features/user/userActions";
 
 const PostsDashboard = () => {
 
@@ -23,7 +23,7 @@ const PostsDashboard = () => {
   return (
     <div className="flex flex-col items-center w-full ">
       {user?.publications?.length > 0 ? (
-        [...user.publications].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((publication) => (
+        [...user.publications].filter((post) => {return post.disabled == false}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((publication) => (
           <PostDashboard
             key={publication.id}
             publication={publication}

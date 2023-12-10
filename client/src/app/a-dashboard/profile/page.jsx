@@ -227,7 +227,6 @@ const handleChange = (e) => {
               />
             </div>
           </div>
-          {/* {console.log(localStorage)} */}
         </div>
         <div className="flex items-center mb-4">
           <div className="w-1/4">
