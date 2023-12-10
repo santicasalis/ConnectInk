@@ -51,6 +51,7 @@ const Header = () => {
         dispatch(logOut());
       })
       .catch((error) => {
+        notifyError(error);
         throw error;
       });
 

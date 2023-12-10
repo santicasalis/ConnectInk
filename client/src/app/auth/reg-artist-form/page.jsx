@@ -69,7 +69,7 @@ const ArtistRegistrationForm = () => {
             values.profileImage = imageUrl;
           }
         } catch (error) {
-          console.error("Error during form submission", error);
+          notifyError("Error durante el envio del formulario", error);
         }
         setSubmitting(false);
       }}

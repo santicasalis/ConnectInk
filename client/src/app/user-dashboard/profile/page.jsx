@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { bringUserInformation } from "@/app/redux/features/user/userActions";
 import axios from "axios";
 import { getAuth, updatePassword } from "firebase/auth";
+import { notifyError } from "@/components/notifyError/NotifyError";
 
 const UProfile = () => {
   const user = useSelector((state) => state.user.logedInUser);
@@ -59,7 +60,7 @@ const UProfile = () => {
     });
 
    if (formData.password && formData.password !== confirmPassword) {
-     console.error("Las contraseñas no coinciden");
+     notifyError("Las contraseñas no coinciden");
      return;
    }
 
@@ -71,7 +72,7 @@ const UProfile = () => {
         await updatePassword(firebaseUser, formData.password);
         console.log("Contraseña actualizada con éxito en Firebase");
       } else {
-        console.error("No hay usuario de Firebase autenticado");
+        notifyError("No hay usuario de Firebase autenticado");
         return;
       }
 
@@ -90,7 +91,7 @@ const UProfile = () => {
 
       
     } catch (error) {
-      console.error("Error al actualizar datos", error);
+      notifyError("Error al actualizar datos", error);
     }
   };
   const handleChange = (e) => {

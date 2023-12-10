@@ -10,6 +10,8 @@ import { validationSchemaArtist } from "../../components/tattooArtistRegister/va
 
 import axios from "axios";
 
+import { notifyError } from "@/components/notifyError/NotifyError";
+
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -92,7 +94,7 @@ const AdminRegister = () => {
             )
             router.replace("/a-dashboard/home");
           } catch (error) {
-            console.error("Error during form submission", error);
+            notifyError("Error during form submission", error);
           }
           setSubmitting(false);
         }}

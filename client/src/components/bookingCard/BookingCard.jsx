@@ -22,6 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { openModalDeleteAppointmentAction } from "@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import { useRouter } from "next/navigation";
+import { notifyError } from "@/components/notifyError/NotifyError";
 
 const BookingCard = ({
   paymentId,
@@ -65,7 +66,7 @@ const BookingCard = ({
         ).data;
         setResponse(resp);
       } catch (error) {
-        console.error("error");
+        notifyError("error");
       }
     };
 

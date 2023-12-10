@@ -441,6 +441,7 @@ import Nav from "../../../../components/nav/Nav";
 import { array } from "yup";
 import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
+import { notifyError } from "@/components/notifyError/NotifyError";
 
 
 
@@ -712,6 +713,7 @@ const BookAppointment = ({ params }) => {
                    }
                    setSent(true);
                  } catch (error) {
+                  notifyError("Error en el formulario", error);
                    throw Error("Error en el formulario");
                  }
                  setSubmitting(false);

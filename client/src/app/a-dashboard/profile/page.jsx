@@ -9,6 +9,7 @@ import axios from "axios";
 import { bringUserInformation } from "@/app/redux/features/user/userActions";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { getAuth, updatePassword } from "firebase/auth";
+import { notifyError } from "@/components/notifyError/NotifyError";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -63,15 +64,15 @@ const Profile = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-     const updatedFields = {};
-     Object.keys(formData).forEach((key) => {
-       if (formData[key] !== initialData[key]) {
-         updatedFields[key] = formData[key];
-       }
-     });
+    const updatedFields = {};
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== initialData[key]) {
+        updatedFields[key] = formData[key];
+      }
+    });
 
     if (formData.password && formData.password !== confirmPassword) {
-      console.error("Las contraseñas no coinciden");
+      notifyError(new Error("Las contraseñas no coinciden"));
       return;
     }
 
@@ -83,7 +84,7 @@ const Profile = () => {
         await updatePassword(firebaseUser, formData.password);
         console.log("Contraseña actualizada con éxito en Firebase");
       } else {
-        console.error("No hay usuario de Firebase autenticado");
+        notifyError(new Error("No hay usuario de Firebase autenticado"));
         return;
       }
 
@@ -99,9 +100,10 @@ const Profile = () => {
         setConfirmPassword("");
       }
     } catch (error) {
-      console.error("Error al actualizar datos", error);
+      notifyError(error);
     }
   };
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
