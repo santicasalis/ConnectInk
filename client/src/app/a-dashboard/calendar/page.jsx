@@ -44,7 +44,7 @@ const Page = () => {
     
     let obj = {};
     let objH = {};
-    user.logedInUser.timeAvailabilities.map((timeAvailability) => {
+    user.logedInUser.timeAvailabilities?.map((timeAvailability) => {
       obj[timeAvailability.day] = {
         initialHour: timeAvailability.initialHour,
         finalHour: timeAvailability.finalHour,
@@ -336,11 +336,11 @@ const Page = () => {
   };
 
   return (
-    <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-primary">
+    <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-artist">
       <div className=" text-center">
-        <h3 className="font-rocksalt text-[26px] mt-8 mb-2 ">Disponibilidad de Tiempo</h3>
+        <h3 className="font-rocksalt text-[26px] mt-8 mb-2 text-artistfont ">Disponibilidad de Tiempo</h3>
         <div className="flex items-center justify-center ">
-           <hr className="mt-6 mb-6 w-[90%] border-primary/50 "></hr>
+           <hr className="mt-6 mb-6 w-[90%] border-artist/50 "></hr>
         </div>
         
         {days.map((day) => {
@@ -353,7 +353,7 @@ const Page = () => {
                   <label>
                     Inicio:
                     <select
-                      className="bg-transparent border-[1px] border-primary/50 ml-4 rounded-md "
+                      className="bg-transparent border-[1px] border-artist/50 ml-4 rounded-md "
                       defaultValue={dayObj[day]?.initialHour || ""}
                       onChange={(e) =>
                         handleInitialTimeChange(day, e.target.value)
@@ -369,7 +369,7 @@ const Page = () => {
                   <label>
                     Fin:
                     <select
-                      className="bg-transparent border-[1px] border-primary/40 ml-4 rounded-md "
+                      className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md "
                       defaultValue={dayObj[day]?.finalHour || ""}
                       onChange={(e) =>
                         handleFinalTimeChange(day, e.target.value)
@@ -388,7 +388,7 @@ const Page = () => {
                       <label>
                         Inicio:
                         <select
-                          className="bg-transparent border-[1px] border-primary/40 ml-4 rounded-md"
+                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md"
                           defaultValue={dayObj[day]?.secondInitialHour || ""}
                           onChange={(e) =>
                             handleSecondInitialTimeChange(day, e.target.value)
@@ -404,7 +404,7 @@ const Page = () => {
                       <label>
                         Fin:
                         <select
-                          className="bg-transparent border-[1px] border-primary/40 ml-4 rounded-md "
+                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md "
                           defaultValue={dayObj[day]?.secondFinalHour || ""}
                           onChange={(e) =>
                             handleSecondFinalTimeChange(day, e.target.value)
@@ -440,18 +440,18 @@ const Page = () => {
             </div>
           );
         })}
-        <button onClick={saveTimeAvailability} className="w-[20%] border-[3px] p-3  border-primary/40 hover:border-primary transition-transform hover:scale-105 mb-2 rounded-lg mt-3 hover:bg-primary/70 hover:text-lg ">Guardar Horarios</button>
+        <button onClick={saveTimeAvailability} className="w-[20%] border-[3px] p-3  border-artist/40 hover:border-artist transition-transform hover:scale-105 mb-2 rounded-lg mt-3 hover:bg-artist/70 hover:text-lg ">Guardar Horarios</button>
       </div>
       <div className="flex items-center justify-center">
-           <hr className="mt-6 mb-6 w-[90%] border-primary/50"></hr>
+           <hr className="mt-6 mb-6 w-[90%] border-artist/50"></hr>
         </div>
 
       <div className="">
         <h3 className="text-[26px] font-rocksalt text-center mt-4 mb-6">Excepciones de horarios</h3>
           <ul className="ml-10 mt-4">
-             <li className="mt-2 flex gap-2"><TbPointFilled className='text-primary'/>Si en alguna fecha en específico vas a usar un horario diferente al normal, agrégala aquí.</li>
-             <li className="mt-2 flex gap-2"><TbPointFilled className='text-primary'/>Selecciona la fecha especial e ingresa el horario en el que SÍ trabajarías.</li>
-             <li className="mt-2 flex gap-2"><TbPointFilled className='text-primary'/>En caso de que en la fecha específica no vayas a trabajar, selecciona la opción "No trabajo" en el apartado de hora inicial.</li>
+             <li className="mt-2 flex gap-2 text-artistfont"><TbPointFilled className='text-artist'/>Si en alguna fecha en específico vas a usar un horario diferente al normal, agrégala aquí.</li>
+             <li className="mt-2 flex gap-2 text-artistfont"><TbPointFilled className='text-artist'/>Selecciona la fecha especial e ingresa el horario en el que SÍ trabajarías.</li>
+             <li className="mt-2 flex gap-2 text-artistfont"><TbPointFilled className='text-artist'/>En caso de que en la fecha específica no vayas a trabajar, selecciona la opción "No trabajo" en el apartado de hora inicial.</li>
           </ul>
         <div className="flex items-center justify-center mt-10">
         <input
@@ -459,7 +459,7 @@ const Page = () => {
           name="date"
           value={newException?.date}
           onChange={handleExceptionChange}
-          className="bg-transparent border-[1px] border-primary/50 rounded-md text-center p-2"
+          className="bg-transparent border-[1px] border-artist/50 rounded-md text-center p-2"
         />
         </div>
         {newException.date && (
@@ -468,7 +468,7 @@ const Page = () => {
               name="initialHour"
               defaultValue=""
               onChange={handleExceptionChange}
-              className="bg-transparent border-[1px] border-primary/60 rounded-md p-2"
+              className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
             >
               <option value=""  >
                 Horario inicial
@@ -481,7 +481,7 @@ const Page = () => {
                 name="finalHour"
                 defaultValue=""
                 onChange={handleExceptionChange}
-                className="bg-transparent border-[1px] border-primary/60 rounded-md p-2"
+                className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
               >
                 <option>Horario final</option>
                 {generateTimeOptionsException()}
@@ -529,9 +529,10 @@ const Page = () => {
             )}
           </div>
         )}
+        <div className="flex items-center justify-center mt-8 mr-6">
         <button
           onClick={addTimeException}
-          className="ml-6 hover:scale-105 transition-transform border-[1px] border-primary/60 hover:border-primary hover:bg-primary/60 hover:text-secondary-900 rounded mb-6 p-2"
+          className="ml-6 hover:scale-105 transition-transform border-[1px] border-artist/60 hover:border-artist hover:bg-artist/60 hover:text-secondary-900 rounded mb-6 p-2"
           disabled={
             !newException.initialHour ||
             (!newException.finalHour &&
@@ -540,7 +541,10 @@ const Page = () => {
         >
           Añadir Excepción
         </button>
-        {user.logedInUser.timeAvailabilityExceptions.length && (
+
+        </div>
+       
+        {user.logedInUser.timeAvailabilityExceptions?.length && (
           <div className="text-center">
             {user.logedInUser.timeAvailabilityExceptions.map(
               (exception, index) => (
