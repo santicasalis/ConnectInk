@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllStyles } from "../../../app/redux/features/styles/stylesActions";
 import CustomerRegister from "../../../components/customerRegister/CustomerRegister";
 import TattoArtistRegister from "../../../components/tattooArtistRegister/TattoArtistRegister";
-const { onAuthStateChanged } = require("firebase/auth");
 import { auth } from "../../../firebase";
 import { getUserInformation } from "../../../app/redux/features/user/userActions";
 import { useRouter } from "next/navigation";

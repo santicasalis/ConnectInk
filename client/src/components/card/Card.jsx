@@ -48,11 +48,11 @@ export default function Card({
                 />
               </div>
 
-              <h1 className="font-bold col-span-2 text-white/70">{fullName}</h1>
+              <h1 className="font-bold col-span-2  text-artistfont">{fullName}</h1>
             </div>
           </Link>
 
-          <div className="flex gap-x-0.5 mr-4 items-center justify-center">
+          <div className="flex gap-x-0.5 mr-4 items-center justify-center ">
             <RiStarLine className="text-[18px]" />
             <RiStarLine className="text-[18px]" />
             <RiStarLine className="text-[18px]" />
@@ -92,7 +92,7 @@ export default function Card({
 
       <div className="flex justify-center items-center w-full gap-x-2">
         <RiMapPinFill className="text-red-700" />
-        <p>{location}</p>
+        <p className=" text-artistfont">{location}</p>
       </div>
     </div>
   );
