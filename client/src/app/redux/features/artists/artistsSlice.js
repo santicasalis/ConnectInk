@@ -43,6 +43,31 @@ export const artistsSlice = createSlice({
       }
     },
 
+    orderArtistRating: (state, action) => {
+      let reviewedArtists = state.filtered.filter((artist) => artist.reviews?.length != 0);
+      let sortedArtists;
+      switch (action.payload) {
+        case "asc":
+          sortedArtists = [...reviewedArtists].sort((a, b) =>
+            a.reviews?.rating - b.reviews?.rating
+        
+          );
+          break;
+        case "desc":
+          sortedArtists = [...reviewedArtists].sort((a, b) =>
+            b.reviews?.rating - a.reviews?.rating
+          );
+          break;
+          default:
+      sortedArtists = [...reviewedArtists];
+  }
+
+  state.filtered = sortedArtists;
+        
+      
+    },
+
+
     orderAndFilterArtists: (state, action) => {
       const { filters, sortCriteria } = action.payload;
       let filteredArtists = state.people;
@@ -149,11 +174,11 @@ export const {
   getArtists,
   filterArtist,
   orderArtist,
-  orderArtistRating,
   orderAndFilterArtists,
   deleteArtist,
   getDetail,
-  cleanDetail
+  cleanDetail,
+  orderArtistRating,
 } = artistsSlice.actions;
 
 export default artistsSlice.reducer;

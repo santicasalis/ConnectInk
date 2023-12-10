@@ -6,7 +6,7 @@ const failurePaymentHandler = async (req, res) => {
   try {
     await failurePayment(id);
 
-    res.status(200).redirect("http://localhost:3000/user-dashboard/home");
+    res.status(200).redirect("http://localhost:3000/user-dashboard/paymentFailure");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

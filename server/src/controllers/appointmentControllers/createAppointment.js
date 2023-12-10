@@ -40,6 +40,7 @@ const createAppointment = async ({
   bodyPlace,
   description,
   dateAndTime,
+  paymentStatus,
 }) => {
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
@@ -58,6 +59,7 @@ const createAppointment = async ({
     where: {
       TattooArtist_Appointment: tattooArtistId,
       dateAndTime: dateAndTime,
+      paymentStatus: "approved" || "in_process",
     },
   });
   if (appointmentExist) {

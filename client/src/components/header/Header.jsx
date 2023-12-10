@@ -62,15 +62,15 @@ const Header = () => {
       <nav className="w-full flex items-center gap-x-4 justify-between">
         <Link
           href="/explore"
-          className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2"
+          className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2 text-artistfont font-newrocker text-[17px]"
         >
           <RiReplyLine className="" />
-          Volver al inicio
+          ir a Explorar
         </Link>
         <div className="flex items-center gap-x-4">
           <button className="relative hover:bg-secondary-100 p-2 rounded-lg transition-colors">
-            <RiNotification3Line />
-            <span className="absolute -top-0 -right-0 bg-red-600 py-0.5 px-1 text-white rounded-full text-[8px] font-bold">
+            <RiNotification3Line className="text-artistfont"/>
+            <span className="absolute -top-0 -right-0 bg-red-600 py-0.5 px-1 text-artistfont rounded-full text-[8px] font-bold">
               2
             </span>
           </button>
@@ -94,8 +94,8 @@ const Header = () => {
                   />
                 </div>
 
-                <span>{`${user.fullName}`}</span>
-                <RiArrowDownSLine />
+                <span className="text-artistfont">{`${user.fullName}`}</span>
+                <RiArrowDownSLine className="text-artistfont"/>
               </MenuButton>
             }
             menuStyle={{
@@ -122,24 +122,24 @@ const Header = () => {
                     alt={`${user.fullName} profile pic`}
                   />
                 </div>
-                <div className="flex flex-col gap-1 text-sm">
+                <div className="flex flex-col gap-1 text-sm text-artistfont">
                   <span>{`${user.fullName}`}</span>
                   <span className="text-[9px]">{user.email}</span>
                 </div>
               </Link>
             </MenuItem>
-            <MenuItem className="hover:bg-secondary-100">
+            <MenuItem className="hover:bg-secondary-100 text-artistfont">
               <Link href="" className="flex items-center gap-2  py-1.5">
-                <RiSettings5Fill />
+                <RiSettings5Fill className="text-artistfont/70"/>
                 Configuración
               </Link>
             </MenuItem>
             <MenuItem
               onClick={handleLogOut}
-              className="hover:bg-secondary-100 "
+              className="hover:bg-secondary-100 text-artistfont"
             >
               <button className="flex gap-x-2">
-                <RiLogoutCircleRLine />
+                <RiLogoutCircleRLine className="text-artistfont" />
                 Cerrar sesión
               </button>
             </MenuItem>

@@ -203,7 +203,7 @@ const BookAppointment = ({ params }) => {
     <div className=" w-full bg-secondary-900  ">
        <Nav />
 
-       <div className="w-full p-4 flex justify-center ">
+       <div className="w-full p-4 flex justify-center  text-artistfont">
          <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
            {sent ? (
              <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
@@ -258,18 +258,18 @@ const BookAppointment = ({ params }) => {
                  <Form className="flex flex-col  shadow-2xl p-5 max-w-xl mx-auto ">
                    <div className="info-artist mb-4">
                      <div className="p-2 m-2">
-                       <label className="font-rocksalt text-lg" htmlFor="size">Selecciona una opción:</label>
-                       <Field as="select" name="size" className=" text-white  bg-secondary-100 text-[15px] ml-4 rounded-md p-2">
+                       <label className="font-rocksalt text-lg text-artistfont" htmlFor="size">Selecciona una opción:</label>
+                       <Field as="select" name="size" className=" text-artistfont  bg-secondary-100 text-[15px] ml-4 rounded-md p-2">
                          <option value="" disabled   >
                            Selecciona una opcion
                          </option>
                         
-                         <option className="text-white " value="Pequeño">Pequeño</option>
-                         <option className="text-white" value="Pequeño a color">Pequeño a color</option>
-                         <option className="text-white" value="Mediano">Mediano</option>
-                         <option className="text-white" value="Mediano a color">Mediano a color</option>
-                         <option className="text-white" value="Grande">Grande</option>
-                         <option className="text-white" value="Grande a color">Grande a color</option>
+                         <option className="text-artistfont" value="Pequeño">Pequeño</option>
+                         <option className="text-artistfont" value="Pequeño a color">Pequeño a color</option>
+                         <option className="text-artistfont" value="Mediano">Mediano</option>
+                         <option className="text-artistfont" value="Mediano a color">Mediano a color</option>
+                         <option className="text-artistfont" value="Grande">Grande</option>
+                         <option className="text-artistfonte" value="Grande a color">Grande a color</option>
                          
                        </Field>
                        <ErrorMessage
@@ -319,7 +319,7 @@ const BookAppointment = ({ params }) => {
                           </CalendarContainer>
                            <div className="text-black">
                              {showTime && (
-                               <div className="text-gray-300 font-rocksalt text-sm mt-8 ">
+                               <div className="text-artistfont font-rocksalt text-sm mt-8  ">
                                  <p>Horario del comienzo del turno:</p>
                                  <select
                                    name="dateTime"
