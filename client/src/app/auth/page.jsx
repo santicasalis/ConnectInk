@@ -27,6 +27,7 @@ import {
   getUserById,
   getUserInformation,
 } from "../redux/features/user/userActions.js";
+import { forgetPass } from "../utils/resetPassword.js";
 
 const Login = () => {
   const user = useSelector((state) => state.user.logedInUser);
@@ -64,7 +65,6 @@ const Login = () => {
 
       const fireBaseUser = result.user;
       const token = fireBaseUser.uid;
-
 
       dispatch(getUserById(token, router));
 
@@ -109,7 +109,7 @@ const Login = () => {
           phoneNumber: userFireBase.phoneNumber,
         })
       );
-      
+
       if (user.userType == "artist") router.push("/a-dashboard/home");
       if (user.userType == "customer")
         router.push(
@@ -206,7 +206,14 @@ const Login = () => {
               Ingresar
             </button>
           </div>
+          <span></span>
         </form>
+        <p
+          className="text-primary/80 mb-6 hover:text-primary cursor-pointer"
+          onClick={() => forgetPass(data.email)}
+        >
+          ¿Has olvidado tu contraseña?{" "}
+        </p>
         <div className=" h-80vh border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8 ">
           <p className="text-primary/80 mb-6">
             ¿No tenés una cuenta? Registrate GRATIS
