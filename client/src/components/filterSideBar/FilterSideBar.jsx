@@ -1,6 +1,7 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { FaRegStar } from "react-icons/fa";
 import { RiRefreshLine } from "react-icons/ri";
 import {
   filterAllArtists,
@@ -8,18 +9,19 @@ import {
   OrderAllArtists,
 } from "../../app/redux/features/artists/artistActions";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
+import { OrderAllArtistsRating } from "../../app/redux/features/artists/artistActions";
 
 export default function FilterSideBar() {
   const dispatch = useDispatch();
   const styles = useSelector((state) => state.styles.names);
   const { people, filtered } = useSelector((state) => state.artists);
-
   const [artistOrder, setArtistOrder] = useState("");
   const [styleSelected, setStyleSelected] = useState([]);
   const [filters, setFilters] = useState({
     location: "",
     name: "",
     tattooStyle: [],
+    
   });
 
   useEffect(() => {
@@ -51,22 +53,30 @@ export default function FilterSideBar() {
       location: "",
       name: "",
       tattooStyle: [],
+      
     });
     setStyleSelected([]);
+    setRatingOrder("")
   };
 
   useEffect(() => {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
 
-  // useEffect(() => {
-  //   dispatch(OrderAllArtists(artistOrder));
-  // }, [artistOrder]);
+//rating order
+  const [ ratingOrder, setRatingOrder] = useState("");
 
-  // const handleSortChange = (event) => {
-  //   const order = event.target.value;
-  //   setArtistOrder(order);
-  // };
+  useEffect(() => {
+    dispatch(OrderAllArtistsRating(ratingOrder));
+  }, [ratingOrder]);
+
+  const handleSortChange = (event) => {
+    const ratings = event.target.value;
+    setRatingOrder(ratings);
+   
+  };
+
+
 
   return (
     <div className="border-[2px] border-primary/40 rounded-3xl overflow-hidden shadow-md shadow-primary">
@@ -109,6 +119,24 @@ export default function FilterSideBar() {
               value={filters.name}
               placeholder="Buscar por nombre"
             />
+          </div>
+          <div className="flex flex-col items-center justify-center mb-8">
+            <label
+              className="text-2xl font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-newrocker"
+              htmlFor="sort"
+            >
+              <FaRegStar className="mr-[8px] text-primary/75" />Raiting:
+            </label>
+            <select
+              className="mb-8 w-[80%] bg-secondary-100 text-white/80 rounded-lg outline-none p-2"
+              id="sort"
+              name="sort"
+              onChange={handleSortChange}
+            >
+              <option value="">Raiting</option>
+              <option value="asc">1-5</option>
+              <option value="desc">5-1</option>
+            </select>
           </div>
 
           <div className="flex flex-col items-center justify-center mb-8">

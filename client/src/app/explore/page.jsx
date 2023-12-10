@@ -13,6 +13,7 @@ import "swiper/css/pagination";
 import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
 import Paginate from "../../components/paginate/Paginate";
+import { orderRating } from "../utils/ordenarRaiting";
 import "../explore/page.css";
 import Link from "next/link";
 
@@ -51,6 +52,9 @@ export default function ExplorePage() {
   const handleToggleFilterSidebar = () => {
     setFilterSidebarVisible(!filterSidebarVisible);
   };
+
+
+
 
   return (
 
