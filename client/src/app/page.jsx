@@ -1,6 +1,6 @@
 "use client";
 
-import Nav from "@/components/nav/Nav";
+import Nav from "../components/nav/Nav";
 import { useDispatch } from "react-redux";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
@@ -32,10 +32,10 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-full custom-gradient">
           <Nav />
           <div className="flex flex-col items-center w-full px-8 py-10 lg:py-1 text-center ">
-            <h1 className="text-white/80 text-4xl font-rocksalt mb-8  ">
+            <h1 className="text-artistfont text-4xl font-rocksalt mb-8  ">
               Los mejores artistas y
             </h1>
-            <h1 className="font-rocksalt mb-10 text-4xl">TATUAJES</h1>
+            <h1 className="font-rocksalt mb-10 text-4xl text-artistfont">TATUAJES</h1>
             <p className="text-primary/80 mb-10 font-newrocker text-[25px]">
               ConnectInk es el lugar
             </p>

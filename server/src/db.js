@@ -44,53 +44,58 @@ const {
   TattooStyle,
   TimeAvailability,
   TimeAvailabilityException,
+  Comment
 } = sequelize.models;
 
 TattooArtist.hasMany(Appointment, {
-  foreignKey: "TattooArtist_Appointment",
-  as: "appointments",
+  foreignKey: 'TattooArtist_Appointment',
+  as: 'appointments'
 });
 Appointment.belongsTo(TattooArtist, {
-  foreignKey: "TattooArtist_Appointment",
-  as: "tattooArtist",
+  foreignKey: 'TattooArtist_Appointment', 
+  as: 'tattooArtist'
 });
 
+
 Customer.hasMany(Appointment, {
-  foreignKey: "Customer_Appointment",
-  as: "appointments",
+  foreignKey: 'Customer_Appointment',
+  as: 'appointments'
 });
 Appointment.belongsTo(Customer, {
-  foreignKey: "Customer_Appointment",
-  as: "customer",
+  foreignKey: 'Customer_Appointment',
+  as: 'customer'
 });
 
 // TattooArtist - Review relation:
 TattooArtist.hasMany(Review, {
-  foreignKey: "TattooArtist_Review",
-  as: "reviews",
+  foreignKey: 'TattooArtist_Review',
+  as: 'reviews'
 });
 Review.belongsTo(TattooArtist, {
-  foreignKey: "TattooArtist_Review",
-  as: "tattooArtist",
+  foreignKey: 'TattooArtist_Review',
+  as: 'tattooArtist'
 });
 
+
 Customer.hasMany(Review, {
-  foreignKey: "Customer_Review",
-  as: "reviews",
+  foreignKey: 'Customer_Review',
+  as: 'reviews'
 });
 Review.belongsTo(Customer, {
-  foreignKey: "Customer_Review",
-  as: "customer",
+  foreignKey: 'Customer_Review',
+  as: 'customer'
 });
 
 Appointment.hasMany(Review, {
-  foreignKey: "Appointment_Review",
-  as: "reviews",
+  foreignKey: 'Appointment_Review',
+  as: 'reviews'
 });
 Review.belongsTo(Appointment, {
-  foreignKey: "Appointment_Review",
-  as: "appointment",
+  foreignKey: 'Appointment_Review',
+  as: 'appointment'
 });
+
+
 
 // TattooArtist - TattooStyles relation:
 TattooArtist.belongsToMany(TattooStyle, {

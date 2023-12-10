@@ -24,7 +24,7 @@ export default function Nav() {
   };
   const user = useSelector((state) => state.user.logedInUser);
   return (
-    <nav className="bg-transparent py-8 px-8 text-gray-200 mb-[30px] ">
+    <nav className="bg-transparent py-8 px-8 text-artistfont mb-[30px] ">
       <ul className="flex flex-col sm:flex-row  items-center justify-center sm:justify-between gap-8">
         <div className="text-center sm:flex sm:justify-center">
           <li>
@@ -41,7 +41,7 @@ export default function Nav() {
         <div className="flex items-center gap-x-8">
           <li>
             <Link href="/about">
-              <span className="hover:text-primary hover:border-primary pb-1 font-newrocker text-[19px] border-b-[2px] border-gray-200">
+              <span className="hover:text-primary  hover:border-primary pb-1 font-newrocker text-[19px] border-b-[2px] border-gray-200">
                 Nosotros
               </span>
             </Link>

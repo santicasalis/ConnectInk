@@ -1,9 +1,9 @@
-import ArtistPost from "@/components/artistPost/artistPost";
-import React from "react";
-
+import ArtistPost from '../../../../components/artistPost/artistPost'
+import React from 'react'
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
 
 const CreatePost = () => {
   const user = useSelector((state) => state.user.logedInUser);

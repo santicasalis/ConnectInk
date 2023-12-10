@@ -110,22 +110,34 @@ const Login = () => {
         })
       );
 
-      if (user.userType == "artist") router.push("/a-dashboard/home");
-      if (user.userType == "customer")
-        router.push(
-          "/user-dashboard"
-        ); /*else {router.replace("/a-dashboard/home")}*/
-      if (user.userType == "admin") router.push("/admin-dashboard/home");
+      
+      if (user.userType == "artist") {
+          await new Promise(resolve => {
+            router.push("/a-dashboard/home").then(() => resolve());
+          });
+          dispatch(closeModalLoadingAction());
+      }
+      if (user.userType == "customer"){
+          await new Promise(resolve => {
+            router.push("/user-dashboard").then(() => resolve());
+          });
+          dispatch(closeModalLoadingAction());
+       } 
+      if (user.userType == "admin") { 
+        await new Promise(resolve => {
+          router.push("/admin-dashboard/home").then(() => resolve());
+        });
+        dispatch(closeModalLoadingAction());
+      }
     } catch (createUserError) {
+      dispatch(closeModalLoadingAction());
       toast.error("Usuario y o contraseña errónea", {
         className: "toastError",
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,
         hideProgressBar: true,
       });
-    } finally {
-      dispatch(closeModalLoadingAction());
-    }
+    } 
   };
 
   return (

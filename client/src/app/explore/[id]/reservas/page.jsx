@@ -427,17 +427,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { uploadImage } from "@/app/utils/uploadImage";
+// import 'react-calendar/dist/Calendar.css';
+
+import { Formik, Form, Field, ErrorMessage} from "formik";
+import { uploadImage } from "../../../../app/utils/uploadImage";
+
 import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import { dayData } from "../../../utils/data/dayData";
 import { useDispatch, useSelector } from "react-redux";
-import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
-import Nav from "@/components/nav/Nav";
+
+import { getArtistDetail } from "../../../../app/redux/features/artists/artistActions";
+import Nav from "../../../../components/nav/Nav";
 import { array } from "yup";
 import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
+
 
 
 const URL_BASE = "http://localhost:3001";
@@ -662,7 +667,7 @@ const BookAppointment = ({ params }) => {
     <div className=" w-full bg-secondary-900  ">
        <Nav />
 
-       <div className="w-full p-4 flex justify-center ">
+       <div className="w-full p-4 flex justify-center  text-artistfont">
          <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
            {sent ? (
              <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
@@ -717,18 +722,18 @@ const BookAppointment = ({ params }) => {
                  <Form className="flex flex-col  shadow-2xl p-5 max-w-xl mx-auto ">
                    <div className="info-artist mb-4">
                      <div className="p-2 m-2">
-                       <label className="font-rocksalt text-lg" htmlFor="size">Selecciona una opción:</label>
-                       <Field as="select" name="size" className=" text-white  bg-secondary-100 text-[15px] ml-4 rounded-md p-2">
+                       <label className="font-rocksalt text-lg text-artistfont" htmlFor="size">Selecciona una opción:</label>
+                       <Field as="select" name="size" className=" text-artistfont  bg-secondary-100 text-[15px] ml-4 rounded-md p-2">
                          <option value="" disabled   >
                            Selecciona una opcion
                          </option>
                         
-                         <option className="text-white " value="Pequeño">Pequeño</option>
-                         <option className="text-white" value="Pequeño a color">Pequeño a color</option>
-                         <option className="text-white" value="Mediano">Mediano</option>
-                         <option className="text-white" value="Mediano a color">Mediano a color</option>
-                         <option className="text-white" value="Grande">Grande</option>
-                         <option className="text-white" value="Grande a color">Grande a color</option>
+                         <option className="text-artistfont" value="Pequeño">Pequeño</option>
+                         <option className="text-artistfont" value="Pequeño a color">Pequeño a color</option>
+                         <option className="text-artistfont" value="Mediano">Mediano</option>
+                         <option className="text-artistfont" value="Mediano a color">Mediano a color</option>
+                         <option className="text-artistfont" value="Grande">Grande</option>
+                         <option className="text-artistfonte" value="Grande a color">Grande a color</option>
                          
                        </Field>
                        <ErrorMessage
@@ -774,16 +779,17 @@ const BookAppointment = ({ params }) => {
                              tileDisabled={tileDisabled}
                              onChange={(date) => changeDate(form, date)}
                              minDate={new Date(Date.now())}
+                             
                            />
                            <div className="text-black">
                              {showTime && (
-                               <div className="text-gray-300 font-rocksalt text-sm mt-8 ">
+                               <div className="text-artistfont font-rocksalt text-sm mt-8  ">
                                  <p>Horario del comienzo del turno:</p>
                                  <select
                                    name="dateTime"
                                    value={selectedTime}
                                    onChange={(event) => handleTime(form, event)}
-                                   className="text-secondary-900 text-[10px] rounded-md w-[50px] mt-2"
+                                   className="text-artistfont text-[10px] rounded-md w-[50px] mt-2 bg-secondary-100 "
                                  >
                                    <option name="dateTime" value="" disabled>
                                     

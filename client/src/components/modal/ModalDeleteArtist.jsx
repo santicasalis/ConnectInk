@@ -5,8 +5,8 @@ import { RiAlertFill, RiCloseFill, RiCheckFill } from "react-icons/ri";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { closeModalDeleteArtistAction } from '@/app/redux/features/modalDeleteArtist/modalDeleteArtistAction';
-import { DeleteArtists } from "@/app/redux/features/artists/artistActions";
+import { closeModalDeleteArtistAction } from '../../app/redux/features/modalDeleteArtist/modalDeleteArtistAction';
+import { DeleteArtists } from "../../app/redux/features/artists/artistActions";
 
 const ModalDeleteArtist = () => {
    

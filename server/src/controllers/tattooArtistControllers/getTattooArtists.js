@@ -2,9 +2,7 @@ const {
   TattooArtist,
   TattooStyle,
   Publication,
-  TimeAvailability,
-  TimeAvailabilityException,
-  PriceRange
+  Review,
 } = require("../../db");
 
 const getTattooArtists = async () => {
@@ -19,16 +17,12 @@ const getTattooArtists = async () => {
         required: false
       },
       {
-        model: TimeAvailability,
-        attributes: ["day", "initialHour", "finalHour"],
-      },
-      {
-        model: TimeAvailabilityException,
-        attributes: ["date", "initialHour", "finalHour"],
-      },
-      {
-        model: PriceRange,
-        attributes: ["size", "priceMin", "priceMax"],
+        model: Review,
+        as: "reviews",
+        foreignKey: "TattooArtist_Review",
+        attributes: ["rating", "comment"],
+        where: { disabled: false },
+        required: false
       },
     ],
   });
@@ -56,34 +50,12 @@ const getTattooArtists = async () => {
         updatedAt: publication.updatedAt,
       };
     }),
-    timeAvailabilities: tattooArtist.TimeAvailabilities?.map(
-      (timeAvailability) => {
-        return {
-          day: timeAvailability.day,
-          initialHour: timeAvailability.initialHour,
-          finalHour: timeAvailability.finalHour,
-        };
+    reviews: tattooArtist.reviews?.map((review) => {
+      return {
+        comment: review.comment,
+        rating: review.rating,
       }
-    ),
-    timeAvailabilityExceptions: tattooArtist.TimeAvailabilityExceptions?.map(
-      (timeAvailabilityException) => {
-        return {
-          date: timeAvailabilityException.date,
-          initialHour: timeAvailabilityException.initialHour,
-          finalHour: timeAvailabilityException.finalHour,
-        };
-      }
-    ),
-    priceRanges: tattooArtist.PriceRanges?.map(
-      (priceRange) => {
-        return {
-          size: priceRange.size,
-          priceMin: priceRange.priceMin,
-          priceMax: priceRange.priceMax
-        }
-
-      }
-    )
+    })
   }));
 
   return tattooArtistCleaner;
