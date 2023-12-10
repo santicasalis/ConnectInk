@@ -13,13 +13,13 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-import { logOut } from "@/app/redux/features/user/userActions";
+import { logOut } from "../../app/redux/features/user/userActions";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 
 import { onAuthStateChanged } from "firebase/auth";
-import { getAllArtists } from "@/app/redux/features/artists/artistActions";
+import { getAllArtists } from "../../app/redux/features/artists/artistActions";
 
 const Header = () => {
   const user = useSelector((state) => state.user.logedInUser);

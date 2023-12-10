@@ -7,7 +7,7 @@ import axios from "axios"
 import { uploadImage } from '@/app/utils/uploadImage';
 import Image from 'next/image';
 import {RiEdit2Line} from "react-icons/ri"
-import { closeModalCreateAction } from '@/app/redux/features/modalCreate/modalCreateAction';
+import { closeModalCreateAction } from '../../app/redux/features/modalCreate/modalCreateAction';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

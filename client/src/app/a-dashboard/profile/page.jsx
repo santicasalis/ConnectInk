@@ -4,12 +4,24 @@ import React from 'react'
 import {RiEdit2Line} from "react-icons/ri"
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 
 const Profile = () => {
   const user = useSelector((state) => state.user.logedInUser)
   const imageLoader = ({src}) => {
     return src
   }
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "artist") {
+      router.replace("/");
+    }
+  }, []);
   return (
     <div className='bg-secondary-100 p-8 rounded-xl w-full'>
       <h1 className='text-4xl'> Mi perfil</h1>
@@ -91,7 +103,6 @@ const Profile = () => {
                 <input type="text" value={user.shopName} className='w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default' readOnly/>
               </div>
           </div>
-          {console.log(localStorage)}
         </div>
       </form>
     </div>

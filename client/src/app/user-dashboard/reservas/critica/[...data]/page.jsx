@@ -4,10 +4,25 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { validationSchema } from "./validationSchema";
 import { useState } from "react";
 import ReactStars from "react-stars";
-import { uploadImage } from "@/app/utils/uploadImage";
+import { uploadImage } from "../../../../app/utils/uploadImage";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
-const Critica = () => {
+const Critica = ({params}) => {
+  const [appointmentId, tattooArtistId] = params.data
   const [sent, setSent] = useState(false);
+  const user = useSelector((state) => state.user.logedInUser)
+  const router = useRouter()
+
+  useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    } else if(user.userType !== "customer"){
+      router.replace("/")
+    }
+  }, [])
 
   return (
     <div>
@@ -27,10 +42,17 @@ const Critica = () => {
                 const imageUrl = await uploadImage(values.image);
                 values.image = imageUrl;
               }
-              console.log(values);
+              const data = {
+                ...values,
+                customerId: user.id,
+                appointmentId,
+                tattooArtistId
+              }
+              const response = await axios.post("http://localhost:3001/reviews", data)
+              console.log(response)
               setSent(true);
             } catch (error) {
-              console.log(error);
+              console.log(error)
               throw Error("Error en el formulario");
             }
             setSubmitting(false);

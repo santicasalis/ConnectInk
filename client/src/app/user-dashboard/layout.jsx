@@ -1,9 +1,13 @@
 'use client'
-import UserSideBar from "@/components/userSideBar/UserSideBar";
-import Header from "@/components/header/Header";
+
+import UserSideBar from "../../components/userSideBar/UserSideBar";
+import Header from "../../components/header/Header";
+import Modal from "../../components/modal/Modal";
+import ModalCreate from "../../components/modal/ModalCreate";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
-const ModalDeleteAppointment = dynamic(()=> import('@/components/modal/ModalDeleteAppointment'));
+const ModalDeleteAppointment = dynamic(()=> import('../../components/modal/ModalDeleteAppointment'));
+
 
 export default function DashboardLayout({ children }) {
     const isOpenModalDeleteAppointmentUser = useSelector((state) => state.modalDeleteAppointment.isOpen);

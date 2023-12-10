@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import PostDashboard from "../postDashboard/PostDashboard";
 import { useSelector, useDispatch } from "react-redux";
-import { bringUserPosts } from "@/app/redux/features/user/userActions";
+import { bringUserPosts } from "../../app/redux/features/user/userActions";
 
 const PostsDashboard = () => {
 

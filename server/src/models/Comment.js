@@ -1,24 +1,15 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("Review", {
+  sequelize.define("Comment", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
-    comment: {
+    text: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    image: {
-      type: DataTypes.STRING,
-      isUrl: true,
-      allowNull: true
-    },
-    rating: {
-      type: DataTypes.FLOAT,
       allowNull: false,
     },
     disabled: {

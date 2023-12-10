@@ -5,9 +5,9 @@ import { RiAlertFill, RiCloseFill, RiCheckFill } from "react-icons/ri";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { removeStyle } from '@/app/redux/features/styles/stylesActions';
-import { DeleteArtists } from "@/app/redux/features/artists/artistActions";
-import { closeModalDeleteStyleAction } from '@/app/redux/features/modalDeleteStyle/modalDeleteStyleAction';
+import { removeStyle } from '../../app/redux/features/styles/stylesActions';
+import { DeleteArtists } from "../../app/redux/features/artists/artistActions";
+import { closeModalDeleteStyleAction } from '../../app/redux/features/modalDeleteStyle/modalDeleteStyleAction';
 
 const ModalDeleteStyle = () => {
     

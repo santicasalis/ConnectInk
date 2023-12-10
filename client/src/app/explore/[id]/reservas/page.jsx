@@ -427,16 +427,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { uploadImage } from "@/app/utils/uploadImage";
+
+import { Formik, Form, Field, ErrorMessage} from "formik";
+import { uploadImage } from "../../../../app/utils/uploadImage";
+
 import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import { dayData } from "../../../utils/data/dayData";
 import { useDispatch, useSelector } from "react-redux";
-import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
-import Nav from "@/components/nav/Nav";
+
+import { getArtistDetail } from "../../../../app/redux/features/artists/artistActions";
+import Nav from "../../../../components/nav/Nav";
 import { array } from "yup";
+import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
+
+
 
 const URL_BASE = "http://localhost:3001";
 
@@ -450,6 +456,7 @@ const BookAppointment = ({ params }) => {
   const artist = useSelector((state) => state.artists.detail);
   const user = useSelector((state) => state.user.logedInUser);
   const [sent, setSent] = useState(false);
+  const router = useRouter()
 
   console.log("ESTE ES EL DAYSWITHHOURS", daysWithHours)
 
@@ -472,17 +479,15 @@ const BookAppointment = ({ params }) => {
     })
     let obj = {};
 
-    const allAvailabilities = timeAvailabilities?.map((availabilty) => {
+    const allAvailabilities = timeAvailabilities?.filter((availabilty) =>  availabilty.initialHour)?.map((availabilty) => {
       return { 
-          day: availabilty.day,
-          initialHour:Number(availabilty.initialHour?.split(":")[0]),
-          finalHour: Number(availabilty.finalHour?.split(":")[0]),
-          secondInitialHour: Number(availabilty.secondInitialHour?.split(":")[0]) || null,
-          secondFinalHour: Number(availabilty.secondFinalHour?.split(":")[0]) || null
-        
+        day: availabilty.day,
+        initialHour: Number(availabilty.initialHour.split(":")[0]),
+        finalHour: Number(availabilty.finalHour.split(":")[0]),
+        secondInitialHour: Number(availabilty.secondInitialHour?.split(":")[0]) || null,
+        secondFinalHour: Number(availabilty.secondFinalHour?.split(":")[0]) || null
       };
-    });
-
+    })
 
     timeAvailabilityExceptions?.map((exception) => {
       let hours = []
@@ -595,6 +600,12 @@ const BookAppointment = ({ params }) => {
   };
 
   useEffect(() => {
+    if(!user.userType){
+      router.replace("/auth")
+    }
+    if (user.userType) {
+      if (user.userType == "admin") router.replace("/admin-dashboard/home");
+    }
     dispatch(getArtistDetail(id))
   }, [])
 

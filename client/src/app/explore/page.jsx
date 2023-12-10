@@ -3,8 +3,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getAllArtists } from "../redux/features/artists/artistActions";
 import { useEffect, useState } from "react";
-import Card from "@/components/card/Card";
-import Nav from "@/components/nav/Nav";
+import Card from "../../components/card/Card";
+import Nav from "../../components/nav/Nav";
 import { getAllStyles } from "../redux/features/styles/stylesActions";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Parallax, Autoplay, Pagination, Navigation } from "swiper/modules";
 import FilterSideBar from "../../components/filterSideBar/FilterSideBar";
-import Paginate from "@/components/paginate/Paginate";
+import Paginate from "../../components/paginate/Paginate";
 import "../explore/page.css";
 import Link from "next/link";
 
@@ -55,7 +55,9 @@ export default function ExplorePage() {
   return (
 
     <div className="w-full bg-secondary-900">
+
         <Nav />
+
 
       <div className="w-full">
         <section className="flex flex-col w-full justify-center items-center gap-x-1 text-center">

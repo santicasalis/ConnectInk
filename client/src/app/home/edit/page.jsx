@@ -44,7 +44,7 @@ const Edit = () => {
         onSubmit={(values, { setSubmitting }) => {
           setArtistData(values);
           setSubmitting(false);
-          console.log("Updated Data", values);
+        
         }}
       >
         {({ setFieldValue }) => (

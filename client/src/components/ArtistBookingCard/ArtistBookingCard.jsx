@@ -22,7 +22,7 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
     const user = useSelector((state)=>state.user.logedInUser)
     
     
-        console.log(id,bodyPlace, "apppppp")
+  
         
     
     
@@ -57,7 +57,6 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
         
     },[])
 
-    console.log(response, "ARTISTA")
 
   return (
     <div className='bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105'>

@@ -1,5 +1,5 @@
-import SideBar from "@/components/sidebar/SideBar";
-import Header from "@/components/header/Header";
+import SideBar from "../../components/sidebar/SideBar";
+import Header from "../../components/header/Header";
 import Link from 'next/link'
 
 export default function HomeLayout({ children }) {

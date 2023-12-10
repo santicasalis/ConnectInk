@@ -1,17 +1,25 @@
 "use client"
 import React from 'react'
-import AdminCard from "@/components/adminCard/AdminCard";
+import AdminCard from "../../../components/adminCard/AdminCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
-import { getAllArtists } from '@/app/redux/features/artists/artistActions';
+import { getAllArtists } from '../../../app/redux/features/artists/artistActions';
 import { useState } from 'react';
-import Paginate from '@/components/paginate/Paginate';
+import Paginate from '../../../components/paginate/Paginate';
+import { useRouter } from 'next/navigation';
 
 const RegisteredArtist = () => {
   const { people, filtered } = useSelector((state) => state.artists);
+  const user = useSelector((state) => state.user.logedInUser)
   const dispatch = useDispatch();
-
+  const router = useRouter()
+  
     useEffect(() => {
+      if(!user.userType){
+        router.replace("/auth")
+      } else if (user.userType !== "admin"){
+        router.replace("/")
+      }
     dispatch(getAllArtists());
   }, []);
 
@@ -24,9 +32,9 @@ const RegisteredArtist = () => {
     indexOfFirstArtist,
     indexOfLastArtist
   );
-  console.log(artistsToDisplay);
+
   const totalArtists = filtered.length;
-  console.log(totalArtists);
+ 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

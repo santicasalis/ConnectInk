@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiUpload2Fill, RiMoreFill, RiEmotionHappyLine, RiCloseFill, RiCheckFill } from "react-icons/ri";
 import axios from "axios"
-import { uploadImage } from '@/app/utils/uploadImage';
+import { uploadImage } from '../../app/utils/uploadImage';
 import Image from 'next/image';
 import {RiEdit2Line} from "react-icons/ri"
 

@@ -1,12 +1,12 @@
 "use client"
-import AdminSideBar from "@/components/adminsidebar/AdminSideBar";
-import Header from "@/components/header/Header";
+import AdminSideBar from "../../components/adminSideBar/AdminSideBar";
+import Header from "../../components/header/Header";
 import Link from 'next/link'
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 
-const ModalDeleteArtist = dynamic(()=> import("@/components/modal/ModalDeleteArtist"))
-const ModalDeleteStyle = dynamic(()=> import("@/components/modal/ModalDeleteStyle"))
+const ModalDeleteArtist = dynamic(()=> import("../../components/modal/ModalDeleteArtist"))
+const ModalDeleteStyle = dynamic(()=> import("../../components/modal/ModalDeleteStyle"))
 
 export default function DashboardLayout({ children }) {
     const isOpenModalDeleteArtist = useSelector((state) => state.modalDeleteArtist.isOpen);

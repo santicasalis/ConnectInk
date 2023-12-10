@@ -1,11 +1,11 @@
 "use client"
-import AdminTopBarStyles from "@/components/admintopBarOptions/AdminTopBarOptions";
+import AdminTopBarStyles from "../../../components/admintopBarOptions/AdminTopBarOptions";
 import { RiAddFill } from "react-icons/ri";
 import Link from 'next/link'
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { RiCloseFill } from "react-icons/ri";
-import { addNewStyle } from '@/app/redux/features/styles/stylesActions';
+import { addNewStyle } from '../../../app/redux/features/styles/stylesActions';
 import { useDispatch } from "react-redux";
 
 
@@ -24,7 +24,7 @@ export default function TattooStylesLayout({ children }) {
 
   const handleAddStyle = () => {
     if (newStyleName.trim() !== '') {
-     console.log('Nuevo estilo a añadir:', newStyleName);
+     
      dispatch(addNewStyle({ name: newStyleName }));
     closeModal(); 
     }
