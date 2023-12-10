@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { bringUserInformation } from "@/app/redux/features/user/userActions";
+import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 
 
 const Profile = () => {
@@ -228,7 +229,6 @@ const handleChange = (e) => {
           </div>
           {/* {console.log(localStorage)} */}
         </div>
-
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>Instagram:</p>
@@ -243,8 +243,6 @@ const handleChange = (e) => {
             />
           </div>
         </div>
-
-        {/* Campo para Descripción */}
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>Descripción:</p>
@@ -259,38 +257,46 @@ const handleChange = (e) => {
             />
           </div>
         </div>
-
-        {/* Campo para Nueva Contraseña */}
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>Nueva Contraseña:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 relative">
             <input
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
               className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 cursor-pointer"
+            >
+              {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+            </span>
           </div>
         </div>
-
-        {/* Campo para Confirmar Nueva Contraseña */}
+        
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>Confirmar Nueva Contraseña:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 cursor-pointer"
+            >
+              {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+            </span>
           </div>
         </div>
-
         <button type="submit">BOTON GUARDAR CAMBIOS</button>
       </form>
     </div>
