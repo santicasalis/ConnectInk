@@ -23,7 +23,7 @@ const PostsDashboard = () => {
   return (
     <div className="flex flex-col items-center w-full ">
       {user?.publications?.length > 0 ? (
-        [...user.publications].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((publication) => (
+        [...user.publications].filter((post) => {return post.disabled == false}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((publication) => (
           <PostDashboard
             key={publication.id}
             publication={publication}
