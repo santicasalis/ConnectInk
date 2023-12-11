@@ -46,38 +46,39 @@ const Price = () => {
   });
   const [errorMessages, setErrorMessages] = useState([]);
 
+  const fetchPrices = async () => {
+    try {
+      const artist = await axios.get(`${URL_BASE}/tattooArtists/${user.id}`);
+
+      if (artist && artist.data.priceRanges) {
+        const fetchedPrices = artist.data.priceRanges.reduce((acc, price) => {
+          acc[price.size] = {
+            size: price.size,
+            priceMin: price.priceMin,
+            priceMax: price.priceMax,
+            tattooArtistId: user.id,
+            priceRangeId: price.id,
+          };
+
+          return acc;
+        }, {});
+
+        setPrices((prevPrices) => ({
+          ...prevPrices,
+          ...fetchedPrices,
+        }));
+      }
+    } catch (error) {
+      notifyError(error);
+    }
+  };
+
   useEffect(() => {
     if (!user.userType) {
       router.replace("/auth");
     } else if (user.userType !== "artist") {
       router.replace("/");
     }
-    const fetchPrices = async () => {
-      try {
-        const artist = await axios.get(`${URL_BASE}/tattooArtists/${user.id}`);
-
-        if (artist && artist.data.priceRanges) {
-          const fetchedPrices = artist.data.priceRanges.reduce((acc, price) => {
-            acc[price.size] = {
-              size: price.size,
-              priceMin: price.priceMin,
-              priceMax: price.priceMax,
-              tattooArtistId: user.id,
-              priceRangeId: price.id,
-            };
-
-            return acc;
-          }, {});
-
-          setPrices((prevPrices) => ({
-            ...prevPrices,
-            ...fetchedPrices,
-          }));
-        }
-      } catch (error) {
-        notifyError(error);
-      }
-    };
 
     fetchPrices();
   }, [user.id]);
@@ -100,6 +101,7 @@ const Price = () => {
 
     for (const size in prices) {
       const priceData = prices[size];
+      
 
       if (parseInt(priceData.priceMin) > parseInt(priceData.priceMax)) {
         setErrorMessages((prevMessages) => [
@@ -116,6 +118,7 @@ const Price = () => {
       }
     }
 
+
     if(errorIndicator){
       toast.error(`Error al guardar precios`, {
         className: "toastError",
@@ -124,6 +127,7 @@ const Price = () => {
         hideProgressBar: false,
       });
     } else{
+      fetchPrices()
       toast.success(`Precios guardados con éxito`, {
         className: "toastSuccess",
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -144,14 +148,11 @@ const Price = () => {
   };
 
   const createPrice = async (data) => {
-    console.log(data, "LCDTM");
     try {
-      await axios.post(`${URL_BASE}/priceRanges`, data);
-   
+      const response = await axios.post(`${URL_BASE}/priceRanges`, data);
     } catch (error) {
       console.error(error);
       errorIndicator = true
-
     }
   };
 
