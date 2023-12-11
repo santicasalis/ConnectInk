@@ -4,13 +4,19 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { validationSchema } from "./validationSchema";
 import { useState } from "react";
 import ReactStars from "react-stars";
+
 import { uploadImage } from "../../../../utils/uploadImage";
+
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
+
 import Link from "next/link";
+
+import { notifyError } from "../../../components/notifyError/NotifyError";
+
 
 const Critica = ({params}) => {
   const [appointmentId, tattooArtistId] = params.data
@@ -67,7 +73,7 @@ const Critica = ({params}) => {
               console.log(response)
               setSent(true);
             } catch (error) {
-              console.log(error)
+              notifyError(error);
               throw Error("Error en el formulario");
             }
             setSubmitting(false);

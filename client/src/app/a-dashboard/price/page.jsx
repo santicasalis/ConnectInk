@@ -75,7 +75,7 @@ const Price = () => {
           }));
         }
       } catch (error) {
-        console.error(error);
+        notifyError(error);
       }
     };
 
@@ -138,7 +138,7 @@ const Price = () => {
     try {
       await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
        } catch (error) {
-      console.error(error);
+      notifyError(error);
       errorIndicator = true
     }
   };

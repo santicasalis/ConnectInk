@@ -8,6 +8,7 @@ import { orderPosts } from "../utils/ordenarPosts";
 import UserPostDash from "../../components/userPostDash/UserPostDash";
 import { useRouter } from "next/navigation";
 import { getUserById } from "../redux/features/user/userActions";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 function UDashboard() {
   const dispatch = useDispatch();
@@ -15,12 +16,12 @@ function UDashboard() {
   const router = useRouter()
 
   const user = useSelector((state) => state.user.logedInUser);
-const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
+// const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
 
 
-useEffect (() => {
-dispatch(getUserById(fireBaseUser.tokenId))
-},[])
+// useEffect (() => {
+// dispatch(getUserById(fireBaseUser.tokenId))
+// },[fireBaseUser])
 
   useEffect(() => {
     if(!user.userType){
@@ -49,7 +50,7 @@ dispatch(getUserById(fireBaseUser.tokenId))
         allPosts = orderPosts(allPosts);
         setPosts(allPosts);
       } catch (error) {
-        console.error(error);
+        notifyError(error);
       }
     };
 
