@@ -26,6 +26,7 @@ import { closeModalLoadingAction } from "../redux/features/modalLoading/ModalLoa
 import {
   getUserById,
   getUserInformation,
+  logOut,
 } from "../redux/features/user/userActions.js";
 import { forgetPass } from "../utils/resetPassword.js";
 
@@ -98,37 +99,47 @@ const Login = () => {
 
       const userFireBase = auth.currentUser;
 
-      dispatch(getUserById(userFireBase.uid));
+      dispatch(getUserById(userFireBase.uid))
+        .then(async () => {
+          dispatch(
+            getUserInformation({
+              tokenId: userFireBase.uid,
+              userName: userFireBase.displayName,
+              image: userFireBase.photoURL,
+              email: userFireBase.email,
+              phoneNumber: userFireBase.phoneNumber,
+            })
+          );
 
-      dispatch(
-        getUserInformation({
-          tokenId: userFireBase.uid,
-          userName: userFireBase.displayName,
-          image: userFireBase.photoURL,
-          email: userFireBase.email,
-          phoneNumber: userFireBase.phoneNumber,
+          if (user.userType == "artist") {
+            await new Promise((resolve) => {
+              router.push("/a-dashboard/home").then(() => resolve());
+            });
+            dispatch(closeModalLoadingAction());
+          }
+          if (user.userType == "customer") {
+            await new Promise((resolve) => {
+              router.push("/user-dashboard").then(() => resolve());
+            });
+            dispatch(closeModalLoadingAction());
+          }
+          if (user.userType == "admin") {
+            await new Promise((resolve) => {
+              router.push("/admin-dashboard/home").then(() => resolve());
+            });
+            dispatch(closeModalLoadingAction());
+          }
         })
-      );
-
-      
-      if (user.userType == "artist") {
-          await new Promise(resolve => {
-            router.push("/a-dashboard/home").then(() => resolve());
+        .catch((error) => {
+          toast.error("Cuenta baneada por basuraaaaaa", {
+            className: "toastError",
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 3000,
+            hideProgressBar: true,
           });
           dispatch(closeModalLoadingAction());
-      }
-      if (user.userType == "customer"){
-          await new Promise(resolve => {
-            router.push("/user-dashboard").then(() => resolve());
-          });
-          dispatch(closeModalLoadingAction());
-       } 
-      if (user.userType == "admin") { 
-        await new Promise(resolve => {
-          router.push("/admin-dashboard/home").then(() => resolve());
+          dispatch(logOut())
         });
-        dispatch(closeModalLoadingAction());
-      }
     } catch (createUserError) {
       dispatch(closeModalLoadingAction());
       toast.error("Usuario y o contraseña errónea", {
@@ -137,7 +148,7 @@ const Login = () => {
         autoClose: 3000,
         hideProgressBar: true,
       });
-    } 
+    }
   };
 
   return (
@@ -155,7 +166,7 @@ const Login = () => {
           </span>
         </Link>
       </div> */}
-
+      {console.log(user)}
       <div className=" w-[40%] flex-1 flex flex-col items-center justify-center">
         <div className="mt-4 ml-4 mb-10 ">
           <Link

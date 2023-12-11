@@ -31,6 +31,7 @@ const loginHandler = async (req, res) => {
     //   res.status(403).send("Incorrect password");
     // }
   } catch (error) {
+    
     res.status(400).json({ error: error.message });
   }
 };

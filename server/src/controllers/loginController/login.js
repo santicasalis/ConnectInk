@@ -15,7 +15,7 @@ const login = async (tokenId) => {
   let user = {};
   let cleanUser = {};
   user = await TattooArtist.findOne({
-    where: { tokenId: tokenId, disabled: false },
+    where: { tokenId: tokenId },
     include: [
       { model: TattooStyle, attributes: ["name"] },
       {
@@ -55,6 +55,10 @@ const login = async (tokenId) => {
       }
     ],
   });
+
+  if (user.disabled){
+    throw Error ("Cuenta baneada")
+  }
 
   if (user) {
     cleanUser = {

@@ -22,7 +22,8 @@ export const getUserById =
       if(router){
         router.replace("/auth/register");
       }
-      console.log(error)
+      
+      throw Error(error.response.data.error)
     }
   };
 
