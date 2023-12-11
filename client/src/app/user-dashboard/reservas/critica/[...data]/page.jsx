@@ -15,7 +15,7 @@ import axios from "axios";
 
 import Link from "next/link";
 
-import { notifyError } from "../../../components/notifyError/NotifyError";
+import { notifyError } from "../../../../../components/notifyError/NotifyError";
 
 
 const Critica = ({params}) => {
