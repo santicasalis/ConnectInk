@@ -219,7 +219,11 @@ const login = async (tokenId) => {
       ],
     });
 
-    if (userCustomer) {
+
+    if(userCustomer){
+      if (userCustomer.disabled){
+        throw Error ("Cuenta baneada")
+      }
       cleanUser = {
         id: userCustomer.id,
         fullName: userCustomer.fullName,

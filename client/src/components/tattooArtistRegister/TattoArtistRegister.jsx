@@ -18,7 +18,6 @@ import {
   getUserById,
   getUserInformation,
 } from "../../app/redux/features/user/userActions";
-import { notifyError } from "../notifyError/NotifyError";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
@@ -47,6 +46,8 @@ const TattoArtistRegister = () => {
           passwordConfirm: "",
           tattooStyle: [],
           tokenId: userInformation?.tokenId || "",
+          description: "",
+          instagram: "",
         }}
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
@@ -113,6 +114,18 @@ const TattoArtistRegister = () => {
               />
 
               <Field
+                type="textarea"
+                name="description"
+                placeholder="Descripcion de tu perfil"
+                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
+              />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+
+              <Field
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -155,6 +168,18 @@ const TattoArtistRegister = () => {
               />
               <ErrorMessage
                 name="location"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+
+              <Field
+                type="textarea"
+                name="instagram"
+                placeholder="Enlace a tu perfil de instagram"
+                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
+              />
+              <ErrorMessage
+                name="instagram"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -221,6 +246,23 @@ const TattoArtistRegister = () => {
               )}
             </div>
 
+            <div className="relative w-full">
+              <RiPhoneFill className="absolute left-2 top-4 text-white z-30" />
+              <Field
+                type="text"
+                name="phone"
+                placeholder="Teléfono"
+                className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                pattern="\d*"
+              />
+
+              <ErrorMessage
+                name="phone"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
             {!userInformation?.email && (
               <div>
                 <Field
@@ -254,7 +296,7 @@ const TattoArtistRegister = () => {
               disabled={isSubmitting || !isValid || !dirty}
               className="p-2 mt-5 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300 w-full"
             >
-              Register
+              Registrarme
             </button>
           </Form>
         )}
