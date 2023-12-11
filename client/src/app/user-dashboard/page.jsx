@@ -58,7 +58,7 @@ function UDashboard() {
 
   return (
     <div className="bg-secondary-900 p-8 rounded-xl w-full">
-      <h1 className="text-4xl"> Inicio </h1>
+      <h1 className="text-4xl text-artistfont"> Inicio </h1>
       <hr className="my-8 border-gray-500" />
       <div className="flex flex-col items-center w-full ">
         {posts.map((post) => {

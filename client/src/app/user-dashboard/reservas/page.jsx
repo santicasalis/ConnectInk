@@ -50,7 +50,7 @@ export default function Reservas() {
             </div>
           ))
       ) : (
-        <p>No tienes ninguna reserva aún.</p>
+        <p className='text-artistfont'>No tienes ninguna reserva aún.</p>
       )}
     </div>
   );

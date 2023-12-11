@@ -1,433 +1,9 @@
 "use client";
 
-//  import { useEffect, useState } from "react";
-//  import axios from "axios";
-//  import Calendar from "react-calendar";
-//  import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-//  import { uploadImage } from "@/app/utils/uploadImage";
-//  import { validationSchema } from "./validationSchema";
-//  import { toast } from "react-toastify";
-//  import { dayData } from "../../../utils/data/dayData";
-//  import { useDispatch, useSelector } from "react-redux";
-// import { getArtistDetail } from "@/app/redux/features/artists/artistActions";
-// import Nav from "@/components/nav/Nav";
-
-// const URL_BASE = "http://localhost:3001";
-
-// const bookAppointment = ({ params }) => {
-//   const { id } = params;
-//   const [selectedDate, setSelectedDate] = useState(new Date());
-//   const [selectedTime, setSelectedTime] = useState("");
-//   const [day, setDay] = useState("");
-//   const [month, setMonth] = useState("");
-//   const [year, setYear] = useState("");
-//   const [showTime, setShowTime] = useState(false);
-//   const [obj, setObj] = useState({});
-//   const [objHours, setObjHours] = useState({});
-//   const [exception, setException] = useState([]);
-//   const artist = useSelector((state) => state.artists.detail);
-//   const user = useSelector((state) => state.user.logedInUser);
-//   const [sent, setSent] = useState(false);
-
-//   const dispatch = useDispatch();
-
-//   const durations = {
-//     Pequeño: 1,
-//     "Pequeño a color": 1,
-//     "Mediano a color": 2,
-//     Mediano: 2,
-//     Grande: 3,
-//     "Grande a color": 3,
-//   };
-
-//   useEffect(() => {
-//     let array = [];
-//     if (artist?.timeAvailabilities?.length) {
-//       getDisabled();
-//       getHours();
-//     }
-//     artist?.timeAvailabilityExceptions?.map((e) => {
-//       const [exY, exM, exD] = e.date.split("-");
-//       const date = new Date(exY, exM - 1, exD);
-//       array.push(date.toDateString());
-//     });
-//     setException(array);
-//   }, [artist.timeAvailabilities]);
-
-//   useEffect(() => {
-//     dispatch(getArtistDetail(id));
-//   }, []);
-
-//   function createHourArray(initialTime, FinalTime) {
-//     let resultado = [];
-//     for (let i = initialTime; i < FinalTime; i++) {
-//       resultado.push(`${i}hs`);
-//     }
-//     return resultado;
-//   }
-
-//   function createHourArrayWithAppointment(
-//     initialTime,
-//     FinalTime,
-//     initialTimeApp,
-//     FinalTimeApp
-//   ) {
-//     let resultado = [];
-//     for (let i = initialTime; i <= FinalTime; i++) {
-//       if (i >= initialTimeApp && i <= FinalTimeApp) continue;
-//       resultado.push(`${i}hs`);
-//     }
-//     return resultado;
-//   }
-
-//   const getHours = () => {
-//     let objH = {};
-//     artist?.timeAvailabilities?.forEach((av) => {
-//       dayData.map((da) => {
-//         if (da.day === av.day && av?.initialHour && av?.finalHour) {
-//           objH[da.number] = createHourArray(
-//             Number(av.initialHour.slice(0, 2)),
-//             Number(av.finalHour.slice(0, 2))
-//           );
-//         }
-//       });
-//     });
-//     artist?.timeAvailabilityExceptions?.forEach((ex, index) => {
-//       if (ex.initialHour) {
-//         objH[exception[index]] = createHourArray(
-//           Number(ex?.initialHour?.slice(0, 2)) || 6,
-//           Number(ex?.finalHour?.slice(0, 2)) || 23
-//         );
-//       } else {
-//         objH[ex] = [];
-//       }
-
-//     });
-//     artist?.appointments?.forEach((appointment) => {
-//       const dateAndTime = new Date(appointment.dateAndTime);
-//       const time = dateAndTime.getHours();
-//       const date = dateAndTime.toDateString();
-//       let initial = Number(
-//         (objH[dateAndTime.getDay()]?.at(0) || objH[date].at(0)).slice(0, 2)
-//       );
-//       let final = Number(
-//         (objH[dateAndTime.getDay()]?.at(-1) || objH[date].at(-1)).slice(0, 2)
-//       );
-//       objH[date] = createHourArrayWithAppointment(
-//         initial,
-//         final,
-//         time,
-//         time + appointment.duration
-//       );
-//     });
-//     setObjHours(objH);
-//   };
-
-//   const getDisabled = () => {
-//     let array = [];
-//     let numobj = {};
-//     artist?.timeAvailabilities?.map((av) => {
-//       dayData.map((da) => {
-//         if (da.day === av.day && av.initialHour) {
-//           array.push(da.number);
-//         }
-//       });
-//     });
-//     for (let num of array) {
-//       numobj[num] = true;
-//     }
-//     setObj(numobj);
-//   };
-
-//   const tileStyles = ({ date, view }) => {
-//     if (view == "month") {
-//       if (
-//         date < new Date(Date.now()) ||
-//         !(
-//           obj[date.getDay()] ||
-//           (objHours[date.toDateString] &&
-//             exception.includes(date.toDateString()))
-//         )
-//       ) {
-//         return "text-gray-500";
-//       }
-//       if (
-//         date.toDateString() === selectedDate.toDateString() &&
-//         (objHours[selectedDate.getDay()] ||
-//           objHours[selectedDate.toDateString()])
-//       ) {
-//         return "bg-green-600	text-black";
-//       }
-//     }
-
-//     if (view == "year") {
-//       if (date.getMonth() == new Date(Date.now()).getMonth()) {
-//         return "text-white";
-//       } else if (date.valueOf() < new Date(Date.now()).valueOf()) {
-//         return "text-gray-500";
-//       }
-//     }
-
-//     if (view == "decade") {
-//       if (date.getFullYear() == new Date(Date.now()).getFullYear()) {
-//         return "text-white";
-//       } else if (date.valueOf() < new Date(Date.now()).valueOf()) {
-//         return "text-gray-500";
-//       }
-//     }
-
-//     return "text-white";
-//   };
-
-//   const isPossible = (duration, start, finish) => {
-//     return duration + start <= finish;
-//   };
-
-//   const tileDisabled = ({ activeStartDate, date, view }) => {
-//     if (view == "month")
-//       return !(
-//         obj[date.getDay()] ||
-//         (objHours[date.toDateString] && exception.includes(date.toDateString()))
-//       );
-//   };
-
-//   const changeDate = (form, date) => {
-//     setSelectedTime("");
-//     setShowTime(true);
-//     setSelectedDate(date);
-//     setDay(date.getDate());
-//     setMonth(date.getMonth());
-//     setYear(date.getFullYear());
-//     selectedTime &&
-//       form.setFieldValue(
-//         "dateAndTime",
-//         new Date(
-//           date.getFullYear(),
-//           date.getMonth(),
-//           date.getDate(),
-//           selectedTime
-//         )
-//       );
-//   };
-
-//   const handleTime = (form, event) => {
-//     setSelectedTime(event.target.value.split("h")[0]);
-//     form.setFieldValue(
-//       "dateAndTime",
-//       new Date(year, month, day, event.target.value.split("h")[0])
-//     );
-//   };
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <Nav />
-
-//       <div className="w-full  p-4 shadow-lg flex justify-center">
-//         <div className="p-4 rounded border-primary border-[2px] shadow-lg">
-//           {sent ? (
-//             <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
-//           ) : (
-//             <Formik
-//               initialValues={{
-//                 size: "",
-//                 image: null,
-//                 bodyPlace: "",
-//                 description: "",
-//                 dateAndTime: "",
-//                 duration: "",
-//                 possible: true,
-//               }}
-//               validationSchema={validationSchema}
-//               onSubmit={async (values, { setSubmitting }) => {
-//                 try {
-//                   if (values.image && typeof values.image === "object") {
-//                     const imageUrl = await uploadImage(values.image);
-//                     values.image = imageUrl;
-//                   }
-
-//                   const createResponse = await axios.post(
-//                     `${URL_BASE}/appointments`,
-//                     { ...values, tattooArtistId: id, customerId: user.id }
-//                   );
-
-//                   const createdAppointment = createResponse.data.data;
-
-//                   const paymentMp = await axios.post(`${URL_BASE}/payment`, {
-//                     id: createdAppointment.id,
-//                     description: createdAppointment.description,
-//                     depositPrice: createdAppointment.depositPrice,
-//                   });
-
-//                   const paymentMpResponse = paymentMp.data;
-
-//                   if (paymentMpResponse) {
-//                     setTimeout(() => {
-//                       window.location.href = paymentMpResponse.init_point;
-//                     }, 3000);
-
-//                   }
-//                   setSent(true);
-//                 } catch (error) {
-//                   throw Error("Error en el formulario");
-//                 }
-//                 setSubmitting(false);
-//               }}
-//             >
-//               {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-//                 <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
-//                   {console.log(values)}
-//                   <div className="info-artist mb-4">
-//                     <div className="p-2 m-2">
-//                       <label htmlFor="size">Selecciona una opción:</label>
-//                       <Field as="select" name="size">
-//                         <option value="" disabled>
-//                           Selecciona una opcion
-//                         </option>
-//                         <option value="Pequeño">Pequeño</option>
-//                         <option value="Pequeño a color">Pequeño a color</option>
-//                         <option value="Mediano">Mediano</option>
-//                         <option value="Mediano a color">Mediano a color</option>
-//                         <option value="Grande">Grande</option>
-//                         <option value="Grande a color">Grande a color</option>
-//                       </Field>
-//                       {objHours[selectedDate.getDay()] &&
-//                         values.size &&
-//                         (values.possible = isPossible(
-//                           Number(durations[values.size]),
-//                           Number(selectedTime),
-//                           Number(
-//                             objHours[selectedDate.getDay()].at(-1).split("h")[0]
-//                           ) + 1
-//                         ))}
-//                       <ErrorMessage
-//                         name="fullName"
-//                         component="div"
-//                         className="text-red-500 text-sm"
-//                       />
-//                     </div>
-//                     <Field
-//                       type="text"
-//                       name="bodyPlace"
-//                       placeholder="Lugar del cuerpo"
-//                       className="p-2 mb-3 shadow-md block w-full"
-//                     />
-//                     <ErrorMessage
-//                       name="bodyPlace"
-//                       component="div"
-//                       className="text-red-500 text-sm"
-//                     />
-
-//                     <Field
-//                       type="text"
-//                       name="description"
-//                       placeholder="Descripcion y explicacion del tatuaje a realizar"
-//                       className="p-2 mb-3 shadow-md block w-full"
-//                     />
-//                     <ErrorMessage
-//                       name="description"
-//                       component="div"
-//                       className="text-red-500 text-sm"
-//                     />
-//                     <label>Fecha Seleccionada:</label>
-//                     <Field name="dateAndTime">
-//                       {({ field, form }) => (
-//                         <div>
-//                           <Calendar
-//                             {...field}
-//                             defaultValue={null}
-//                             locale="es"
-//                             tileClassName={tileStyles}
-//                             tileDisabled={tileDisabled}
-//                             onChange={(date) => changeDate(form, date)}
-//                             minDate={new Date(Date.now())}
-//                           />
-//                           <div className="text-black">
-//                             {showTime && (
-//                               <div className="text-gray-300">
-//                                 <p>Horario del comienzo del turno</p>
-//                                 <select
-//                                   name="dateTime"
-//                                   value={selectedTime}
-//                                   onChange={(event) => handleTime(form, event)}
-//                                 >
-//                                   <option name="dateTime" value="" disabled>
-//                                     Seleccionar horario inicial
-//                                   </option>
-//                                   {(
-//                                     objHours[selectedDate.toDateString()] ||
-//                                     objHours[selectedDate.getDay()]
-//                                   )?.map((hour) => {
-//                                     return (
-//                                       <option key={hour} name="dateTime">
-//                                         {hour}
-//                                       </option>
-//                                     );
-//                                   })}
-//                                 </select>
-//                               </div>
-//                             )}
-//                             {values.duration && values.dateAndTime && <p></p>}
-//                           </div>
-//                         </div>
-//                       )}
-//                     </Field>
-//                     <ErrorMessage name="selectedDate" component="div" />
-//                   </div>
-//                   <div className="mb-4">
-//                     <label htmlFor="image" className="font-bold">
-//                       Imagen de perfil
-//                     </label>
-//                     <input
-//                       type="file"
-//                       name="image"
-//                       onChange={(event) => {
-//                         setFieldValue("image", event.currentTarget.files[0]);
-//                       }}
-//                       className="p-2 mb-3 shadow-md block w-full"
-//                     />
-//                     {values.image && (
-//                       <button
-//                         type="button"
-//                         onClick={() => setFieldValue("image", null)}
-//                         className="bg-red-500 text-white p-2 rounded"
-//                       >
-//                         Delete Image
-//                       </button>
-//                     )}
-//                   </div>
-//                   <button
-//                     type="submit"
-//                     disabled={
-//                       isSubmitting || !isValid || !dirty || !values.possible
-//                     }
-//                   >
-//                     Reservar turno
-//                   </button>
-//                   {!values.possible && (
-//                     <div>
-//                       <p>
-//                         El horario es muy tarde para un tatuaje tan grande, por
-//                         favor selecciona un horario anterior o cambia de fecha
-//                         para buscar un dia con mayor disponibilidad
-//                       </p>
-//                     </div>
-//                   )}
-//                 </Form>
-//               )}
-//             </Formik>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default bookAppointment;
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
-// import 'react-calendar/dist/Calendar.css';
+import styled from 'styled-components';
 
 import { Formik, Form, Field, ErrorMessage} from "formik";
 import { uploadImage } from "../../../../app/utils/uploadImage";
@@ -443,8 +19,6 @@ import { array } from "yup";
 import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
 
-
-
 const URL_BASE = "http://localhost:3001";
 
 const BookAppointment = ({ params }) => {
@@ -458,8 +32,6 @@ const BookAppointment = ({ params }) => {
   const user = useSelector((state) => state.user.logedInUser);
   const [sent, setSent] = useState(false);
   const router = useRouter()
-
-
 
   const dispatch = useDispatch();
 
@@ -615,43 +187,7 @@ const BookAppointment = ({ params }) => {
   }, [artist]);
 
 
-  const tileStyles = ({ date, view }) => {
-    if (view == "month") {
-      if (
-        date < new Date(Date.now()) ||
-        !(
-          daysWithHours[dayData[date.getDay()].day] ||
-          daysWithHours[date.toDateString()]
-      )) {
-        return "text-gray-500";
-      }
-      if (
-        date.toDateString() === selectedDate.toDateString() &&
-        (daysWithHours[dayData[selectedDate.getDay()].day] ||
-          daysWithHours[selectedDate.toDateString()])
-      ) {
-        return "bg-green-600	text-black";
-      }
-    }
 
-    if (view == "year") {
-      if (date.getMonth() == new Date(Date.now()).getMonth()) {
-        return "text-white";
-      } else if (date.valueOf() < new Date(Date.now()).valueOf()) {
-        return "text-gray-500";
-      }
-    }
-
-    if (view == "decade") {
-      if (date.getFullYear() == new Date(Date.now()).getFullYear()) {
-        return "text-white";
-      } else if (date.valueOf() < new Date(Date.now()).valueOf()) {
-        return "text-gray-500";
-      }
-    }
-
-    return "text-white";
-  };
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view == "month")
       return !(
@@ -770,17 +306,17 @@ const BookAppointment = ({ params }) => {
                      <label >Fecha Seleccionada:</label>
                      <Field name="dateAndTime">
                        {({ field, form }) => (
-                         <div  >
-                           <Calendar
-                             {...field}
-                             defaultValue={null}
-                             locale="es"
-                             tileClassName={tileStyles}
-                             tileDisabled={tileDisabled}
-                             onChange={(date) => changeDate(form, date)}
-                             minDate={new Date(Date.now())}
-                             
-                           />
+                         <div>
+                          <CalendarContainer>
+                            <Calendar
+                              {...field}
+                              defaultValue={null}
+                              locale="es"
+                              tileDisabled={tileDisabled}
+                              onChange={(date) => changeDate(form, date)}
+                              minDate={new Date(Date.now())}
+                            />
+                          </CalendarContainer>
                            <div className="text-black">
                              {showTime && (
                                <div className="text-artistfont font-rocksalt text-sm mt-8  ">
@@ -789,7 +325,7 @@ const BookAppointment = ({ params }) => {
                                    name="dateTime"
                                    value={selectedTime}
                                    onChange={(event) => handleTime(form, event)}
-                                   className="text-artistfont text-[10px] rounded-md w-[50px] mt-2 bg-secondary-100 "
+                                   className="text-white bg-secondary-100 text-[10px] rounded-md w-[50px] mt-2"
                                  >
                                    <option name="dateTime" value="" disabled>
                                     
@@ -862,3 +398,147 @@ const BookAppointment = ({ params }) => {
 };
 
 export default BookAppointment;
+
+
+const CalendarContainer = styled.div`
+.react-calendar {
+  max-width: 100%;
+  line-height: 1.125em;
+  font: inherit;
+}
+
+.react-calendar--doubleView {
+  width: 700px;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer {
+  display: flex;
+  margin: -0.5em;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer > * {
+  width: 50%;
+  margin: 0.5em;
+}
+
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.react-calendar button {
+  margin: 0;
+  border: 0;
+}
+
+.react-calendar button:enabled:hover {
+  cursor: pointer;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  height: 44px;
+  margin-bottom: 1em;
+}
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: rgb(20, 20, 20);
+}
+
+.react-calendar__navigation button:enabled:hover {
+  background-color: rgb(40, 40,40);
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font: inherit;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 0.5em;
+}
+
+.react-calendar__month-view__weekNumbers .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: black;
+}
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 2em 0.5em;
+}
+
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 10px 6.6667px;
+  background: none;
+  text-align: center;
+  line-height: 16px;
+  font: inherit;
+  font-size: 0.833em;
+}
+
+.react-calendar__tile:disabled {
+  background-color: rgb(20, 20, 20);
+  color: rgb(100, 100, 100)
+} 
+
+.react-calendar__tile:enabled {
+  background-color: rgb(36, 36, 36);
+  color: white
+} 
+
+.react-calendar__tile:enabled:hover{
+  background-color: rgb(40, 40, 40);
+}
+.react-calendar__tile:enabled:focus {
+  background-color: rgb(46, 46, 46);
+}
+
+.react-calendar__tile--now {
+  background: rgb(36, 36, 36);
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background-color: rgb(36, 36, 36);
+}
+
+.react-calendar__tile--active {
+  background-color: gray;
+  color: black;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: rgb(36, 36, 36);
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color:rgb(36, 36, 36);
+}
+
+`;
+
+

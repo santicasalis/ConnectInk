@@ -8,7 +8,6 @@ import TattoArtistRegister from "../../../components/tattooArtistRegister/TattoA
 import { auth } from "../../../firebase";
 import { getUserInformation } from "../../../app/redux/features/user/userActions";
 import { useRouter } from "next/navigation";
-const { onAuthStateChanged } = require("firebase/auth");
 
 
 const RegistrationForm = () => {

@@ -52,7 +52,7 @@ const UserPostDash = ({publication}) => {
                             </Link>
                         </div>
                         <Link href={`/explore/${publication.artistId}`}>
-                        <span className='text-[15px] cursor-pointer'>{`${publication.nameArtist}`}</span>
+                        <span className='text-[15px] cursor-pointer text-artistfont'>{`${publication.nameArtist}`}</span>
                         </Link>
                         <p className='text-white/50 text-[13px]'>• {formatDistance(publication.createdAt)}</p>
                     </div>
@@ -70,7 +70,7 @@ const UserPostDash = ({publication}) => {
                     <RiMessage3Line/>
                 </div>
                 <div className='flex flex-col'>
-                    <p className='mb-1'>Les gusta a 218 personas</p>
+                    <p className='mb-1 text-artistfont'>Les gusta a 218 personas</p>
                     <p className='mb-1'><span className='font-bold text-white text-[16px] mr-2'>{name}</span>{publication?.description}</p>
                     <p className='text-white/50 cursor-pointer mb-1'>Ver comentarios</p>
                     <form className='m-0 p-0'>
@@ -81,7 +81,7 @@ const UserPostDash = ({publication}) => {
                                     <span className='text-primary text-[17px] hover:text-white'>Publicar</span>
                                 </button>
                                 <div className='pt-1 ml-auto'>
-                                    <RiEmotionHappyLine className='cursor-pointer top-0 text-[17px]'/>
+                                    <RiEmotionHappyLine className='cursor-pointer top-0 text-[17px] text-artistfont'/>
                                 </div>
                             </div>
                         </div>
