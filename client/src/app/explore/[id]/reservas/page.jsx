@@ -194,7 +194,7 @@ const BookAppointment = ({ params }) => {
     setSelectedTime("");
     setShowTime(true);
     setSelectedDate(date);
-    selectedTime &&
+    selectedTime ?
       form.setFieldValue(
         "dateAndTime",
         new Date(
@@ -203,7 +203,15 @@ const BookAppointment = ({ params }) => {
           date.getDate(),
           selectedTime
         )
-      );
+      ) : 
+      form.setFieldValue(
+        "dateAndTime",
+        new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+        )
+      )
   };
 
   const handleTime = (form, event) => {
@@ -232,6 +240,14 @@ const BookAppointment = ({ params }) => {
   useEffect(() => {
     filterAvailabilties();
   }, [artist]);
+
+  const tileStyles = ({date, view}) => {
+    if(view == "month"){
+      if(new Date(date).toDateString() == new Date(selectedDate).toDateString()){
+        return "bg-neutral-900"
+      }
+    }
+  }
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view == "month")
@@ -268,28 +284,40 @@ const BookAppointment = ({ params }) => {
                     values.image = imageUrl;
                   }
 
-                  const createResponse = await axios.post(
-                    `${URL_BASE}/appointments`,
-                    { ...values, tattooArtistId: id, customerId: user.id }
-                  );
+                  try{
+                    const createResponse = await axios.post(
+                      `${URL_BASE}/appointments`,
+                      { ...values, tattooArtistId: id, customerId: user.id }
+                    );
+                    const createdAppointment = createResponse.data.data;
 
-                  const createdAppointment = createResponse.data.data;
-
-                  const paymentMp = await axios.post(`${URL_BASE}/payments`, {
-                    id: createdAppointment.id,
-                    description: createdAppointment.description,
-                    depositPrice: createdAppointment.depositPrice,
-                  });
-
-                  const paymentMpResponse = paymentMp.data;
-
-                  if (paymentMpResponse) {
-                    setTimeout(() => {
-                      window.location.href = paymentMpResponse.init_point;
-                    }, 3000);
+                    try{
+                      const paymentMp = await axios.post(`${URL_BASE}/payments`, {
+                        id: createdAppointment.id,
+                        description: createdAppointment.description,
+                        depositPrice: createdAppointment.depositPrice,
+                      });
+    
+                      const paymentMpResponse = paymentMp.data;
+    
+                      if (paymentMpResponse) {
+                        setTimeout(() => {
+                          window.location.href = paymentMpResponse.init_point;
+                        }, 3000);
+                      }
+                      setSent(true);
+                    } catch (error){
+                      console.log(error)
+                    }
+                  } catch (error){
+                    console.log(error)
                   }
-                  setSent(true);
+
+
+
+
                 } catch (error) {
+                  console.log(error)
                   notifyError("Error en el formulario", error);
                   throw Error("Error en el formulario");
                 }
@@ -394,6 +422,7 @@ const BookAppointment = ({ params }) => {
                               defaultValue={null}
                               locale="es"
                               tileDisabled={tileDisabled}
+                              //tileClassName={tileStyles}
                               onChange={(date) => changeDate(form, date)}
                               minDate={new Date(Date.now())}
                             />
@@ -510,6 +539,10 @@ const CalendarContainer = styled.div`
     margin: 0.5em;
   }
 
+  .react-calendar__tile--range {
+    box-shadow: 0 0 10px rgb(0, 0, 0)
+  }
+
   .react-calendar,
   .react-calendar *,
   .react-calendar *:before,
@@ -599,9 +632,12 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__tile:enabled:hover {
-    background-color: rgb(40, 40, 40);
+    background-color: rgb(30, 30, 30);
   }
-  .react-calendar__tile:enabled:focus {
+  .react-calendar__tile:enabled:focus{
+    background-color: rgb(46, 46, 46);
+  }
+  .react-calendar__tile:active{
     background-color: rgb(46, 46, 46);
   }
 
@@ -615,7 +651,7 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__tile--active {
-    background-color: gray;
+    background-color: rgb(46, 46, 46);
     color: black;
   }
 
@@ -624,7 +660,9 @@ const CalendarContainer = styled.div`
     background: rgb(46, 46, 46);
   }
 
-  .react-calendar--selectRange .react-calendar__tile--hover {
-    background-color: rgb(36, 36, 36);
-  }
+  // .react-calendar--selectRange .react-calendar__tile--hover {
+  //   background-color: rgb(36, 36, 36);
+  // }
+
+  
 `;
