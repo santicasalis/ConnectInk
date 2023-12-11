@@ -78,8 +78,8 @@ const PostDashboard = ({publication, name, image}) => {
                         </Menu>
                     </div>
                 </div>
-                <div className="w-full flex flex-col justify-center items-center bg-secondary-100  mb-2 ">
-                    <Image unoptimized src={publication.image} loader={imageLoader} width={500} height={500} alt={publication.description} />
+                <div className="w-full flex flex-col justify-center items-center bg-secondary-100 mb-2 max-h-[500px] ">
+                    <Image unoptimized src={publication.image} loader={imageLoader} height={500} width={1000} className='object-cover max-h-[500px] ' alt={publication.description} />
                 </div>
                 <div  className='cursor-pointer text-[30px] flex gap-x-2 mb-2'>
                 {

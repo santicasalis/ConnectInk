@@ -22,12 +22,6 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
       }
     const user = useSelector((state)=>state.user.logedInUser)
     
-    
-  
-        
-    
-    
-    
         
     let date = new Date(dateAndTime) 
     let opcionesFormato = { 

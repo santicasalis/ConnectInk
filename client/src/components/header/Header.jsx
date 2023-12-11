@@ -66,7 +66,7 @@ const Header = () => {
           className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2 text-artistfont font-newrocker text-[17px]"
         >
           <RiReplyLine className="" />
-          Volver al inicio
+          ir a Explorar
         </Link>
         <div className="flex items-center gap-x-4">
           <button className="relative hover:bg-secondary-100 p-2 rounded-lg transition-colors">

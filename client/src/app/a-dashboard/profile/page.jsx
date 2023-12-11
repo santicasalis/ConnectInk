@@ -14,13 +14,13 @@ import { notifyError } from "@/components/notifyError/NotifyError";
 const Profile = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user.logedInUser);
-  const [showPassword, setShowPassword] = useState(false);
   const [initialData, setInitialData] = useState({});
 
-  const imageLoader = ({ src }) => {
-    return src;
-  };
+  const user = useSelector((state) => state.user.logedInUser)
+  const [showPassword, setShowPassword] = useState(false);
+  const imageLoader = ({src}) => {
+    return src
+  }
   const router = useRouter();
 
   useEffect(() => {
@@ -317,7 +317,7 @@ const Profile = () => {
             </span>
           </div>
         </div>
-        <button type="submit">BOTON GUARDAR CAMBIOS</button>
+        <button className=" w-[250px] hover:scale-105 transition-transform border-[1px] border-artist/60 hover:border-artist hover:bg-artist/60  rounded" type="submit"> GUARDAR CAMBIOS</button>
       </form>
     </div>
   );
