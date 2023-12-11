@@ -63,6 +63,7 @@ const RegisteredArtist = () => {
                   currentPage={currentPage}
                   onPageChange={onPageChange}
                 />
+              </div>
                            
 
       <div className="scroll-fade flex justify-center items-center">
@@ -79,6 +80,7 @@ const RegisteredArtist = () => {
                           shopName={filter.shopName}
                           tattoos={filter.publications}
                           image={filter.image}
+                          reviews={filter.reviews}
                         />
                       </div>
                 ))}
