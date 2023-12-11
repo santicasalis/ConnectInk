@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function RegisteredLayout({ children }) {
     return (
-      <div className='bg-secondary-900 p-8 rounded-xl w-full'>
+      <div className='bg-secondary-900 shadow-admin/50 shadow-lg p-8 rounded-xl w-full'>
           <div className="flex ">
               <h1 className='text-4xl font-rocksalt'> Tatuadores </h1>
               
