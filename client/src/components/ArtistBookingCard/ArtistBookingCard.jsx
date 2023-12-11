@@ -11,8 +11,9 @@ import { useEffect } from 'react';
 import axios from "axios"
 import { useState } from 'react';
 import Image from 'next/image';
-import { openModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
+import { openModalDeleteAppointmentAction } from '../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
 import Link from 'next/link';
+import { notifyError } from "../notifyError/NotifyError";
 
 const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
     const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
         const resp = (await axios.get(`http://localhost:3001/customers/${CustomerId}`)).data
         setResponse(resp)
        } catch (error) {
-        console.error("error")
+        notifyError("error");
        }     
        
     }

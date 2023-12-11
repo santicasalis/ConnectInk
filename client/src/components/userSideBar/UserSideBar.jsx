@@ -20,12 +20,12 @@ const UserSideBar = () => {
   return (
     <>
       <div
-        className={`xl:h-[100vh] overflow-y-scroll fixed xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full top-0 bg-secondary-900 p-4 flex flex-col justify-between z-50 ${
+        className={`xl:h-[100vh] overflow-y-scroll fixed xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full top-0 bg-secondary-900 p-4 flex flex-col justify-between z-40 ${
           showMenu ? "left-0" : "-left-full"
         } transition-all`}
       >
         <div>
-          <h1 className="text-center text-2xl font-bold mb-10 font-rocksalt">
+          <h1 className="text-center text-2xl font-bold mb-10 font-rocksalt text-artistfont">
             Cliente<span className="text-primary text-4xl">.</span>
           </h1>
           <ul>
@@ -34,7 +34,7 @@ const UserSideBar = () => {
                 href="/user-dashboard/"
                 className="flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
-                <RiStore3Line className="text-primary " /> Inicio
+                <RiStore3Line className="text-primary " /> <p className="text-artistfont">Inicio</p>
               </Link>
             </li>
             <li>
@@ -42,13 +42,13 @@ const UserSideBar = () => {
                 href="/user-dashboard/profile"
                 className="w-full flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
-                <span className="flex items-center gap-4">
+                <span className="flex items-center gap-4 text-artistfont">
                   <RiSpeakLine className="text-primary" /> Perfil
                 </span>
               </Link>
             </li>
 
-            <li>
+            <li className="text-artistfont">
               <Link
                 href="/user-dashboard/misFavoritos"
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
@@ -56,7 +56,7 @@ const UserSideBar = () => {
                 <RiMessage3Line className="text-primary" /> Mis favoritos
               </Link>
             </li>
-            <li>
+            <li className="text-artistfont">
               <Link
                 href="/user-dashboard/reservas"
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
@@ -66,7 +66,7 @@ const UserSideBar = () => {
             </li>
           </ul>
         </div>
-        <nav>
+        <nav className="text-artistfont">
           <Link
             href=""
             className="flex items-center gap-4 px-4 py-5 text-[20px] rounded-md font-newrocker hover:bg-secondary-100 transition-colors"

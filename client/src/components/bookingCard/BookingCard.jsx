@@ -20,8 +20,9 @@ import axios from "axios";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { openModalDeleteAppointmentAction } from "@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
+import { openModalDeleteAppointmentAction } from "../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import { useRouter } from "next/navigation";
+import { notifyError } from "../../components/notifyError/NotifyError";
 
 const BookingCard = ({
   paymentId,
@@ -41,7 +42,7 @@ const BookingCard = ({
   };
   const user = useSelector((state) => state.user.logedInUser);
   const router = useRouter();
-
+  const dispatch= useDispatch();
   let date = new Date(dateAndTime);
   let opcionesFormato = {
     year: "numeric",
@@ -65,7 +66,7 @@ const BookingCard = ({
         ).data;
         setResponse(resp);
       } catch (error) {
-        console.error("error");
+        notifyError("error");
       }
     };
 
@@ -73,12 +74,16 @@ const BookingCard = ({
   }, []);
 
   const handleReview = () => {
-    if (new Date(dateAndTime).valueOf() > Date.now()) {
-      console.log(id, tattooArtistId);
-      //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
-    } else {
-      router.push(`/critica/${id}-${tattooArtistId}`);
-    }
+    // if (new Date(dateAndTime).valueOf() > Date.now()) {
+    //   console.log(id, tattooArtistId);
+    //   //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
+    // } else {
+      router.push(`/critica/${id}/${tattooArtistId}`);
+    // }
+  };
+
+  const handleDeleteAppointment = () => {
+    dispatch(openModalDeleteAppointmentAction(id));
   };
 
   return (
@@ -162,8 +167,10 @@ const BookingCard = ({
           >
             <MenuItem className="hover:bg-secondary-100 w-full h-full">
               <RiDeleteBin6Fill />
+              <button onClick={handleDeleteAppointment}>
               Cancelar Reserva
-            </MenuItem>
+              </button>
+              </MenuItem>
           </Menu>
         </div>
 
