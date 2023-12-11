@@ -19,7 +19,7 @@ const createOrderHandler = async (req, res) => {
             title: "Pago de seña para la reserva del turno",
             quantity: 1,
             unit_price: depositPrice,
-            currency_id: "BRL",
+            currency_id: "ARS",
             description: description,
           },
         ],
