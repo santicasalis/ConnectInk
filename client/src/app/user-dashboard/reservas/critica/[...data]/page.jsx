@@ -41,7 +41,7 @@ const Critica = ({params}) => {
             <p className="text-center text-[22px] font-rocksalt mt-10 ">Reseña enviada con exito </p>
             <FaCheckCircle className="text-primary text-[40px] mt-4"/>
             <Link href={"/user-dashboard"}>
-            <button className="mt-8 border-[1px] border-primary rounded w-[30%] hover:bg-primary/50 transition-transform hover:scale-105">Volver al inicio</button>
+            <button className="mt-8 border-[1px] border-primary rounded w-[175px] hover:bg-primary/50 transition-transform hover:scale-105">Volver al inicio</button>
             </Link>
             
 

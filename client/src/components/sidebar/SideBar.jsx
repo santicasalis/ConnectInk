@@ -13,7 +13,8 @@ import {
   RiArrowRightSLine,
   RiMenuFill,
   RiCloseFill,
-  RiBookletLine
+  RiBookletLine,
+  RiMessage2Fill
 } from "react-icons/ri";
 
 const SideBar = () => {
@@ -57,14 +58,7 @@ const SideBar = () => {
                 <RiBarChart2Line className="text-primary" /> Analytic
               </Link>
             </li> */}
-            <li>
-              <Link
-                href=""
-                className="flex items-center text-artistfont gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-artist/30 hover:bg-secondary-100 transition-colors"
-              >
-                <RiStarLine className="text-artist" /> Reseñas
-              </Link>
-            </li>
+            
             <li>
               <Link
                 href="/a-dashboard/price"
@@ -87,6 +81,14 @@ const SideBar = () => {
                 className="flex items-center gap-4 text-artistfont px-4 py-5 rounded-md font-newrocker border-b-[1px] border-artist/30 hover:bg-secondary-100 transition-colors"
               >
                 <RiCalendarCheckLine className="text-artist" /> Calendario
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/a-dashboard/reviews/"
+                className="flex items-center gap-4 text-artistfont px-4 py-5 rounded-md font-newrocker border-b-[1px] border-artist/30 hover:bg-secondary-100 transition-colors"
+              >
+                <RiStarLine className="text-artist" /> Reseñas
               </Link>
             </li>
           </ul>
