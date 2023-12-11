@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { uploadImage } from "../../../../app/utils/uploadImage";
@@ -243,89 +243,119 @@ const BookAppointment = ({ params }) => {
 
   return (
     <div className=" w-full bg-secondary-900  ">
+      <Nav />
 
-       <Nav />
+      <div className="w-full p-4 flex justify-center  text-artistfont">
+        <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
+          {sent ? (
+            <h1>Redireccionando a Mercado Pago para completar la reserva</h1>
+          ) : (
+            <Formik
+              initialValues={{
+                size: "",
+                image: null,
+                bodyPlace: "",
+                description: "",
+                dateAndTime: "",
+                duration: "",
+                possible: true,
+              }}
+              validationSchema={validationSchema}
+              onSubmit={async (values, { setSubmitting }) => {
+                try {
+                  if (values.image && typeof values.image === "object") {
+                    const imageUrl = await uploadImage(values.image);
+                    values.image = imageUrl;
+                  }
 
-       <div className="w-full p-4 flex justify-center  text-artistfont">
-         <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
-           {sent ? (
-             <h1>Redireccionando a Mercado Pago para completar la reserva</h1>
-           ) : (
-             <Formik
-               initialValues={{
-                 size: "",
-                 image: null,
-                 bodyPlace: "",
-                 description: "",
-                 dateAndTime: "",
-                 duration: "",
-                 possible: true,
-               }}
-               validationSchema={validationSchema}
-               onSubmit={async (values, { setSubmitting }) => {
-                 try {
-                   if (values.image && typeof values.image === "object") {
-                     const imageUrl = await uploadImage(values.image);
-                     values.image = imageUrl;
-                   }
+                  const createResponse = await axios.post(
+                    `${URL_BASE}/appointments`,
+                    { ...values, tattooArtistId: id, customerId: user.id }
+                  );
 
-                   const createResponse = await axios.post(
-                     `${URL_BASE}/appointments`,
-                     { ...values, tattooArtistId: id, customerId: user.id }
-                   );
+                  const createdAppointment = createResponse.data.data;
 
-                   const createdAppointment = createResponse.data.data;
+                  const paymentMp = await axios.post(`${URL_BASE}/payments`, {
+                    id: createdAppointment.id,
+                    description: createdAppointment.description,
+                    depositPrice: createdAppointment.depositPrice,
+                  });
 
-                   const paymentMp = await axios.post(`${URL_BASE}/payments`, {
-                     id: createdAppointment.id,
-                     description: createdAppointment.description,
-                     depositPrice: createdAppointment.depositPrice,
-                   });
+                  const paymentMpResponse = paymentMp.data;
 
-                   const paymentMpResponse = paymentMp.data;
-
-                   if (paymentMpResponse) {
-                     setTimeout(() => {
-                       window.location.href = paymentMpResponse.init_point;
-                     }, 3000);
-
-                   }
-                   setSent(true);
-                 } catch (error) {
+                  if (paymentMpResponse) {
+                    setTimeout(() => {
+                      window.location.href = paymentMpResponse.init_point;
+                    }, 3000);
+                  }
+                  setSent(true);
+                } catch (error) {
                   notifyError("Error en el formulario", error);
-                   throw Error("Error en el formulario");
-                 }
-                 setSubmitting(false);
-               }}
-             >
-               {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-                 <Form className="flex flex-col  shadow-2xl p-5 max-w-xl mx-auto ">
-                   <div className="info-artist mb-4">
-                     <div className="p-2 m-2">
-                       <label className="font-rocksalt text-lg text-artistfont" htmlFor="size">Selecciona una opción:</label>
-                       <Field as="select" name="size" className=" text-artistfont  bg-secondary-100 text-[15px] ml-4 rounded-md p-2">
-                         <option value="" disabled   >
-                           Selecciona una opcion
-                         </option>
-                        
-                         <option className="text-artistfont" value="Pequeño">Pequeño</option>
-                         <option className="text-artistfont" value="Pequeño a color">Pequeño a color</option>
-                         <option className="text-artistfont" value="Mediano">Mediano</option>
-                         <option className="text-artistfont" value="Mediano a color">Mediano a color</option>
-                         <option className="text-artistfont" value="Grande">Grande</option>
-                         <option className="text-artistfonte" value="Grande a color">Grande a color</option>
-                         
-                       </Field>
-                       <ErrorMessage
-                         name="size"
-                         component="div"
-                         className="text-red-500 text-sm"
-                       />
-                     </div>
-                     <label className="font-rocksalt text-xs"> Lugar del cuerpo:</label>
-                     <Field
-                       type="text"
-                       name="bodyPlace"
+                  throw Error("Error en el formulario");
+                }
+                setSubmitting(false);
+              }}
+            >
+              {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
+                <Form className="flex flex-col  shadow-2xl p-5 max-w-xl mx-auto ">
+                  <div className="info-artist mb-4">
+                    <div className="p-2 m-2">
+                      <label
+                        className="font-rocksalt text-lg text-artistfont"
+                        htmlFor="size"
+                      >
+                        Selecciona una opción:
+                      </label>
+                      <Field
+                        as="select"
+                        name="size"
+                        className=" text-artistfont  bg-secondary-100 text-[15px] ml-4 rounded-md p-2"
+                      >
+                        <option value="" disabled>
+                          Selecciona una opcion
+                        </option>
+
+                        <option className="text-artistfont" value="Pequeño">
+                          Pequeño
+                        </option>
+                        <option
+                          className="text-artistfont"
+                          value="Pequeño a color"
+                        >
+                          Pequeño a color
+                        </option>
+                        <option className="text-artistfont" value="Mediano">
+                          Mediano
+                        </option>
+                        <option
+                          className="text-artistfont"
+                          value="Mediano a color"
+                        >
+                          Mediano a color
+                        </option>
+                        <option className="text-artistfont" value="Grande">
+                          Grande
+                        </option>
+                        <option
+                          className="text-artistfonte"
+                          value="Grande a color"
+                        >
+                          Grande a color
+                        </option>
+                      </Field>
+                      <ErrorMessage
+                        name="size"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                    <label className="font-rocksalt text-xs">
+                      {" "}
+                      Lugar del cuerpo:
+                    </label>
+                    <Field
+                      type="text"
+                      name="bodyPlace"
                       //  placeholder="Lugar del cuerpo"
                       className="p-2 mb-3 shadow-md block w-50  text-white  bg-secondary-100 rounded-md "
                     />
@@ -347,17 +377,17 @@ const BookAppointment = ({ params }) => {
                       type="text"
                       name="description"
                       //  placeholder="Descripcion y explicacion del tatuaje a realizar"
-                       className="p-2 mb-3 shadow-md block w-full rounded-md text-white  bg-secondary-100"
-                     />
-                     <ErrorMessage
-                       name="description"
-                       component="div"
-                       className="text-red-500 text-sm"
-                     />
-                     <label >Fecha Seleccionada:</label>
-                     <Field name="dateAndTime">
-                       {({ field, form }) => (
-                         <div>
+                      className="p-2 mb-3 shadow-md block w-full rounded-md text-white  bg-secondary-100"
+                    />
+                    <ErrorMessage
+                      name="description"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                    <label>Fecha Seleccionada:</label>
+                    <Field name="dateAndTime">
+                      {({ field, form }) => (
+                        <div>
                           <CalendarContainer>
                             <Calendar
                               {...field}
@@ -368,228 +398,233 @@ const BookAppointment = ({ params }) => {
                               minDate={new Date(Date.now())}
                             />
                           </CalendarContainer>
-                           <div className="text-black">
-                             {showTime && (
-                               <div className="text-artistfont font-rocksalt text-sm mt-8  ">
-                                 <p>Horario del comienzo del turno:</p>
-                                 <select
-                                   name="dateTime"
-                                   value={selectedTime}
-                                   onChange={(event) => handleTime(form, event)}
-                                   className="text-white bg-secondary-100 text-[10px] rounded-md w-[50px] mt-2"
-                                 >
-                                   <option name="dateTime" value="" disabled>
-                                    
-                                   </option>
-                                   {(
-                                     daysWithHours[selectedDate.toDateString()] ||
-                                     daysWithHours[dayData[selectedDate.getDay()].day]
-                                   )?.map((hour) => {
-                                     return (
-                                       <option key={hour} name="dateTime">
-                                         {hour}
-                                       </option>
-                                     );
-                                   })}
-                                 </select>
-                               </div>
-                             )}
-                           </div>
-                         </div>
-                       )}
-                     </Field>
-                     <ErrorMessage name="selectedDate" component="div" />
-                   </div>
-                   <div className="mb-4 flex flex-col">
-                     <label htmlFor="image" className="font-rocksalt">
-                       Imagen de referencia:
-                     </label>
-                     <label className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" htmlFor="imagenReferencia">
-                     <MdFileUpload className="mr-2 " />
+                          <div className="text-black">
+                            {showTime && (
+                              <div className="text-artistfont font-rocksalt text-sm mt-8  ">
+                                <p>Horario del comienzo del turno:</p>
+                                <select
+                                  name="dateTime"
+                                  value={selectedTime}
+                                  onChange={(event) => handleTime(form, event)}
+                                  className="text-white bg-secondary-100 text-[10px] rounded-md w-[50px] mt-2"
+                                >
+                                  <option
+                                    name="dateTime"
+                                    value=""
+                                    disabled
+                                  ></option>
+                                  {(
+                                    daysWithHours[
+                                      selectedDate.toDateString()
+                                    ] ||
+                                    daysWithHours[
+                                      dayData[selectedDate.getDay()].day
+                                    ]
+                                  )?.map((hour) => {
+                                    return (
+                                      <option key={hour} name="dateTime">
+                                        {hour}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <ErrorMessage name="selectedDate" component="div" />
+                  </div>
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="image" className="font-rocksalt">
+                      Imagen de referencia:
+                    </label>
+                    <label
+                      className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
+                      htmlFor="imagenReferencia"
+                    >
+                      <MdFileUpload className="mr-2 " />
                       Cargar
-                     </label>
-                     <input
-                       type="file"
-                       name="image"
-                       id="imagenReferencia"
-                       onChange={(event) => {
-                         setFieldValue("image", event.currentTarget.files[0]);
-                       }}
-                       className="hidden "
-                     />
-                     {values.image && (
-                       <button
-                         type="button"
-                         onClick={() => setFieldValue("image", null)}
-                         className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
-                       >
-                         Delete Image
-                       </button>
-                     )}
-                   </div>
-                   <div className="flex justify-center items-center " >
-                   <button
-                     type="submit"
-                     disabled={
-                       isSubmitting || !isValid || !dirty || !values.possible
-                     }
-                     className=" border-[1px] w-[35%] text-lg p-2 rounded-md hover:bg-primary/80 hover:font-bold disabled:bg-transparent"
-                   >
-                    Abonar seña
-                   </button>
-                   </div>
-                 </Form>
-               )}
-             </Formik>
-           )}
-         </div>
-       </div>
-     </div>
+                    </label>
+                    <input
+                      type="file"
+                      name="image"
+                      id="imagenReferencia"
+                      onChange={(event) => {
+                        setFieldValue("image", event.currentTarget.files[0]);
+                      }}
+                      className="hidden "
+                    />
+                    {values.image && (
+                      <button
+                        type="button"
+                        onClick={() => setFieldValue("image", null)}
+                        className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                      >
+                        Delete Image
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex justify-center items-center ">
+                    <button
+                      type="submit"
+                      disabled={
+                        isSubmitting || !isValid || !dirty || !values.possible
+                      }
+                      className=" border-[1px] w-[35%] text-lg p-2 rounded-md hover:bg-primary/80 hover:font-bold disabled:bg-transparent"
+                    >
+                      Abonar seña
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default BookAppointment;
 
-
 const CalendarContainer = styled.div`
-.react-calendar {
-  max-width: 100%;
-  line-height: 1.125em;
-  font: inherit;
-}
+  .react-calendar {
+    max-width: 100%;
+    line-height: 1.125em;
+    font: inherit;
+  }
 
-.react-calendar--doubleView {
-  width: 700px;
-}
+  .react-calendar--doubleView {
+    width: 700px;
+  }
 
-.react-calendar--doubleView .react-calendar__viewContainer {
-  display: flex;
-  margin: -0.5em;
-}
+  .react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: -0.5em;
+  }
 
-.react-calendar--doubleView .react-calendar__viewContainer > * {
-  width: 50%;
-  margin: 0.5em;
-}
+  .react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 50%;
+    margin: 0.5em;
+  }
 
-.react-calendar,
-.react-calendar *,
-.react-calendar *:before,
-.react-calendar *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+  .react-calendar,
+  .react-calendar *,
+  .react-calendar *:before,
+  .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
 
-.react-calendar button {
-  margin: 0;
-  border: 0;
-}
+  .react-calendar button {
+    margin: 0;
+    border: 0;
+  }
 
-.react-calendar button:enabled:hover {
-  cursor: pointer;
-}
+  .react-calendar button:enabled:hover {
+    cursor: pointer;
+  }
 
-.react-calendar__navigation {
-  display: flex;
-  height: 44px;
-  margin-bottom: 1em;
-}
+  .react-calendar__navigation {
+    display: flex;
+    height: 44px;
+    margin-bottom: 1em;
+  }
 
-.react-calendar__navigation button {
-  min-width: 44px;
-  background: none;
-}
+  .react-calendar__navigation button {
+    min-width: 44px;
+    background: none;
+  }
 
-.react-calendar__navigation button:disabled {
-  background-color: rgb(20, 20, 20);
-}
+  .react-calendar__navigation button:disabled {
+    background-color: rgb(20, 20, 20);
+  }
 
-.react-calendar__navigation button:enabled:hover {
-  background-color: rgb(40, 40,40);
-}
+  .react-calendar__navigation button:enabled:hover {
+    background-color: rgb(40, 40, 40);
+  }
 
-.react-calendar__month-view__weekdays {
-  text-align: center;
-  text-transform: uppercase;
-  font: inherit;
-  font-size: 0.75em;
-  font-weight: bold;
-}
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font: inherit;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
 
-.react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em;
-}
+  .react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+  }
 
-.react-calendar__month-view__weekNumbers .react-calendar__tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: inherit;
-  font-size: 0.75em;
-  font-weight: bold;
-}
+  .react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
 
-.react-calendar__month-view__days__day--weekend {
-  color: black;
-}
+  .react-calendar__month-view__days__day--weekend {
+    color: black;
+  }
 
-.react-calendar__year-view .react-calendar__tile,
-.react-calendar__decade-view .react-calendar__tile,
-.react-calendar__century-view .react-calendar__tile {
-  padding: 2em 0.5em;
-}
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 2em 0.5em;
+  }
 
-.react-calendar__tile {
-  max-width: 100%;
-  padding: 10px 6.6667px;
-  background: none;
-  text-align: center;
-  line-height: 16px;
-  font: inherit;
-  font-size: 0.833em;
-}
+  .react-calendar__tile {
+    max-width: 100%;
+    padding: 10px 6.6667px;
+    background: none;
+    text-align: center;
+    line-height: 16px;
+    font: inherit;
+    font-size: 0.833em;
+  }
 
-.react-calendar__tile:disabled {
-  background-color: rgb(20, 20, 20);
-  color: rgb(100, 100, 100)
-} 
+  .react-calendar__tile:disabled {
+    background-color: rgb(20, 20, 20);
+    color: rgb(100, 100, 100);
+  }
 
-.react-calendar__tile:enabled {
-  background-color: rgb(36, 36, 36);
-  color: white
-} 
+  .react-calendar__tile:enabled {
+    background-color: rgb(36, 36, 36);
+    color: white;
+  }
 
-.react-calendar__tile:enabled:hover{
-  background-color: rgb(40, 40, 40);
-}
-.react-calendar__tile:enabled:focus {
-  background-color: rgb(46, 46, 46);
-}
+  .react-calendar__tile:enabled:hover {
+    background-color: rgb(40, 40, 40);
+  }
+  .react-calendar__tile:enabled:focus {
+    background-color: rgb(46, 46, 46);
+  }
 
-.react-calendar__tile--now {
-  background: rgb(36, 36, 36);
-}
+  .react-calendar__tile--now {
+    background: rgb(46, 46, 46);
+  }
 
-.react-calendar__tile--hasActive:enabled:hover,
-.react-calendar__tile--hasActive:enabled:focus {
-  background-color: rgb(36, 36, 36);
-}
+  .react-calendar__tile--hasActive:enabled:hover,
+  .react-calendar__tile--hasActive:enabled:focus {
+    background-color: rgb(46, 46, 46);
+  }
 
-.react-calendar__tile--active {
-  background-color: gray;
-  color: black;
-}
+  .react-calendar__tile--active {
+    background-color: gray;
+    color: black;
+  }
 
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
-  background: rgb(36, 36, 36);
-}
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: rgb(46, 46, 46);
+  }
 
-.react-calendar--selectRange .react-calendar__tile--hover {
-  background-color:rgb(36, 36, 36);
-}
-
+  .react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: rgb(36, 36, 36);
+  }
 `;
-
-

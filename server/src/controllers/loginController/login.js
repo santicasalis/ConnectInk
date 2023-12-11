@@ -57,11 +57,11 @@ const login = async (tokenId) => {
     ],
   });
 
-  if (user.disabled){
-    throw Error ("Cuenta baneada")
-  }
-
+  
   if (user) {
+    if (user.disabled){
+      throw Error ("Cuenta baneada")
+    }
     cleanUser = {
       id: user.id,
       fullName: user.fullName,
