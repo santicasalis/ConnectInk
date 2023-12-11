@@ -14,7 +14,11 @@ import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase";
-import { getUserById, getUserInformation } from "../../app/redux/features/user/userActions";
+import {
+  getUserById,
+  getUserInformation,
+} from "../../app/redux/features/user/userActions";
+import { notifyError } from "../notifyError/NotifyError";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
@@ -57,29 +61,22 @@ const TattoArtistRegister = () => {
             }
 
             if (!values.userName) {
-              values.tokenId = await emailSignUp(
-                values.email,
-                values.password
-              );
+              values.tokenId = await emailSignUp(values.email, values.password);
             }
 
             await axios.post(`${urlBase}/tattooArtists`, values);
 
-            toast.success(
-              `${values.fullName} se ha registrado existosamente`,
-              {
-                className: "toastSuccess",
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: true,
-              }
-            );
+            toast.success(`${values.fullName} se ha registrado existosamente`, {
+              className: "toastSuccess",
+              position: toast.POSITION.BOTTOM_RIGHT,
+              autoClose: 3000,
+              hideProgressBar: true,
+            });
             await axios.post(`${urlBase}/nodemailer/welcome`, {
               email: values.email,
               name: values.fullName,
             });
 
-            
             const userFireBase = auth.currentUser;
             const token = userFireBase.reloadUserInfo.localId;
 
@@ -92,7 +89,7 @@ const TattoArtistRegister = () => {
                 email: userFireBase.email,
                 phoneNumber: userFireBase.phoneNumber,
               })
-            )
+            );
             router.replace("/a-dashboard/home");
           } catch (error) {
             notifyError("Error during form submission", error);
@@ -163,7 +160,7 @@ const TattoArtistRegister = () => {
               />
 
               <h3 className="text-lg mb-3 font-bold">Estilos de tatuaje</h3>
-              
+
               <FieldArray
                 name="tattooStyle"
                 render={(arrayHelpers) => (
@@ -171,9 +168,7 @@ const TattoArtistRegister = () => {
                     <label
                       className="text-lg font-weight:800 flex items-center gap-4 px-4 py-1 justify-center mb-6  text-[22px]"
                       htmlFor="style"
-                    >
-                      
-                    </label>
+                    ></label>
                     <div className="flex flex-wrap justify-center gap-4 mb-8">
                       {styles.map((style) => (
                         <label
@@ -201,7 +196,6 @@ const TattoArtistRegister = () => {
                   </div>
                 )}
               />
-
             </div>
 
             <div className="mb-4">
