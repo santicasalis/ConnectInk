@@ -85,19 +85,23 @@ export default function Page({ params }) {
               <div>
                 <h1 className=" text-artistfont">Reseñas dejadas por clientes sobre el artista: </h1>
                 {artist.reviews.map((review) => {
-                  return <ReviewCard 
-                    key={review.appointmentId}
-                    customerId={review.customerId}
-                    comment={review.comment}
-                    image={review?.image}
-                    rating={review.rating}
+                  return (
+                    <ReviewCard
+                      key={review.appointmentId}
+                      customerId={review.customerId}
+                      comment={review.comment}
+                      image={review?.image}
+                      rating={review.rating}
                     />
+                  );
                 })}
               </div>
             ) : (
-              <h1>El artista todavía no tiene reseñas, saca un turno y se el primero en dejar una!</h1>
-            )
-            }
+              <h1>
+                El artista todavía no tiene reseñas, saca un turno y se el
+                primero en dejar una!
+              </h1>
+            )}
           </div>
         </div>
 
@@ -107,10 +111,12 @@ export default function Page({ params }) {
               {" "}
               <FaMapLocationDot className="text-primary" /> <p className=" text-artistfont">Ubicacion </p>
             </h3>
-            <MapComponent
-              location={artist?.location}
-              address={artist?.address}
-            />
+            {artist.location && artist.address && (
+              <MapComponent
+                location={artist.location}
+                address={artist.address}
+              />
+            )}
           </div>
 
           <div className="flex flex-wrap justify-around p-4 rounded mt-4  bg-secondary-900">

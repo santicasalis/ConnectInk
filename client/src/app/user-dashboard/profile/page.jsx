@@ -8,6 +8,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { bringUserInformation } from "../../../app/redux/features/user/userActions";
 import axios from "axios";
+import { getAuth, updatePassword } from "firebase/auth";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 const UProfile = () => {
   const user = useSelector((state) => state.user.logedInUser);
@@ -15,6 +17,7 @@ const UProfile = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [initialData, setInitialData] = useState({});
 
   useEffect(() => {
     if (!user.userType) {
@@ -32,10 +35,11 @@ const UProfile = () => {
     email: user.email,
     image: user.image,
     password: user.password,
-    phone: user.phone
+    phone: user.phone,
   });
 
   useEffect(() => {
+    setInitialData({ ...user });
     setFormData({
       fullName: user.fullName,
       email: user.email,
@@ -47,26 +51,49 @@ const UProfile = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    if (formData.password !== confirmPassword) {
-      console.error("Las contraseñas no coinciden");
-      return;
-    }
+
+    const updatedFields = {};
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== initialData[key]) {
+        updatedFields[key] = formData[key];
+      }
+    });
+
+   if (formData.password && formData.password !== confirmPassword) {
+     notifyError("Las contraseñas no coinciden");
+     return;
+   }
+
     try {
+      const auth = getAuth();
+      const firebaseUser = auth.currentUser;
+
+      if (firebaseUser) {
+        await updatePassword(firebaseUser, formData.password);
+        console.log("Contraseña actualizada con éxito en Firebase");
+      } else {
+        notifyError("No hay usuario de Firebase autenticado");
+        return;
+      }
+
       const response = await axios.put(
         `http://localhost:3001/customers/${user.id}`,
         formData
       );
 
-      dispatch(bringUserInformation(formData));
+       if (response.status === 200) {
+         dispatch(bringUserInformation(formData));
+         console.log("Datos actualizados con éxito");
+         setFormData({ ...formData, password: "" });
+         setConfirmPassword("");
+       }
 
-      if (response.status === 200) {
-        console.log("Datos actualizados con éxito");
-      }
+
+      
     } catch (error) {
-      console.error("Error al actualizar datos", error);
+      notifyError("Error al actualizar datos", error);
     }
   };
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -148,19 +175,18 @@ const UProfile = () => {
           <div className="flex-1">
             <input
               name="password"
-              type={showPassword ? "text" : "password"} 
+              type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
               className="w-[50%] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
             />
-        
+
             <span onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
             </span>
           </div>
         </div>
 
-        
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p className="text-artistfont">Confirmar Nueva Contraseña:</p>
@@ -182,4 +208,3 @@ const UProfile = () => {
 };
 
 export default UProfile;
-

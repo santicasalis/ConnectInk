@@ -28,7 +28,7 @@ useEffect(() => {
       })
       .catch((error) => {
      
-        console.error("Error al buscar la dirección y provincia:", error);
+        notifyError("Error al buscar la dirección y provincia:", error);
       });
   }
 }, [address, location]); 

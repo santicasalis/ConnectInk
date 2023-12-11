@@ -9,6 +9,9 @@ import { TbPointFilled } from "react-icons/tb";
 
 import { useRouter } from "next/navigation";
 
+import { notifyError } from "../../../components/notifyError/NotifyError";
+
+
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -268,7 +271,7 @@ const Page = () => {
       }
       dispatch(getUserById(user.fireBaseUser.tokenId));
     } catch (error) {
-      console.error("Error al guardar el horario:", error);
+      notifyError("Error al guardar el horario:", error);
     }
   };
 

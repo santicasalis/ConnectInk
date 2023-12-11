@@ -95,7 +95,7 @@ const TattoArtistRegister = () => {
             )
             router.replace("/a-dashboard/home");
           } catch (error) {
-            console.error("Error during form submission", error);
+            notifyError("Error during form submission", error);
           }
           setSubmitting(false);
         }}
