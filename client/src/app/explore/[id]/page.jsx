@@ -24,6 +24,8 @@ export default function Page({ params }) {
   const artist = useSelector((state) => state.artists.detail);
   const [priceRanges, setPriceRanges] = useState({})
 
+  console.log(artist, "quiero la descr")
+
   useEffect(() => {
     if (params.id) {
       // setLoading(true);
@@ -85,7 +87,11 @@ export default function Page({ params }) {
                     </button>
                   </Link>
               </div>
+              
             </div>
+            <div className="text-artistfont">
+                {artist.description}
+              </div>
 
             <div className="flex p-4 rounded mt-4 ">
                 <div className="w-[50%] pr-4">
@@ -145,8 +151,8 @@ export default function Page({ params }) {
 
             
             {artist.reviews ? (
-              <div>
-                <h1 className=" text-artistfont">Reseñas dejadas por clientes sobre el artista: </h1>
+              <div className="max-h-[300px] overflow-y-auto">
+                <h1 className=" text-artistfont font-rocksalt text-[20px]">Reseñas de Clientes: </h1>
                 {artist.reviews.map((review) => {
                   return (
                     <ReviewCard
@@ -169,7 +175,7 @@ export default function Page({ params }) {
         </div>
 
         <div className="w-full md:w-1/2 p-4 flex flex-col">
-          <div className="p-4 rounded  bg-secondary-900 flex-grow">
+          <div className="p-4 rounded  bg-secondary-100 flex-grow">
             <h3 className="text-xl font-bold  font-rocksalt flex gap-2 mb-4">
               {" "}
               <FaMapLocationDot className="text-primary" /> <p className=" text-artistfont">Ubicacion </p>
@@ -191,7 +197,7 @@ export default function Page({ params }) {
           {artist?.publications?.map((publication, index) => (
             <div
               key={index}
-              className="border-[5px] border-secondary-900/50 bg-secondary-900 rounded-lg shadow-lg p-4"
+              className=" bg-secondary-100 rounded-lg shadow-lg p-4"
             >
               <img
                 src={publication.image}
