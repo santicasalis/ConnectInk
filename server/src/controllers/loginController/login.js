@@ -20,8 +20,9 @@ const login = async (tokenId) => {
       { model: TattooStyle, attributes: ["name"] },
       {
         model: Publication,
-        attributes: ["id", "description", "image", "createdAt", "updatedAt"],
-        required: false
+        attributes: ["id", "description", "image", "createdAt", "updatedAt", "disabled"],
+        required: false,
+        where: { disabled: false }
       },
       {
         model: TimeAvailability,
@@ -78,6 +79,7 @@ const login = async (tokenId) => {
           image: publication.image,
           createdAt: publication.createdAt,
           updatedAt: publication.updatedAt,
+          disabled: publication.disabled,
         };
       }),
       timeAvailabilities: user.TimeAvailabilities?.map((timeAvailability) => {
@@ -158,38 +160,53 @@ const login = async (tokenId) => {
       ]
     });
 
-    cleanUser = {
-      id: userCustomer.id,
-      fullName: userCustomer.fullName,
-      email: userCustomer.email,
-      phone: userCustomer.phone,
-      image: userCustomer.image,
-      disabled: userCustomer.disabled,
-      userType: userCustomer.userType,
-      appointments: userCustomer.appointments?.map((appointment) => {
-        return {
-          id: appointment.id,
-          size: appointment.size,
-          image: appointment.image,
-          bodyPlace: appointment.bodyPlace,
-          description: appointment.description,
-          dateAndTime: appointment.dateAndTime,
-          duration: appointment.duration,
-          depositPrice: appointment.depositPrice,
-          paymentId: appointment.paymentId,
-          tattooArtistId: appointment.TattooArtist_Appointment
+    if(userCustomer){
+
+      cleanUser = {
+        id: userCustomer.id,
+        fullName: userCustomer.fullName,
+        email: userCustomer.email,
+        phone: userCustomer.phone,
+        image: userCustomer.image,
+        disabled: userCustomer.disabled,
+        userType: userCustomer.userType,
+        appointments: userCustomer.appointments?.map((appointment) => {
+          return {
+            id: appointment.id,
+            size: appointment.size,
+            image: appointment.image,
+            bodyPlace: appointment.bodyPlace,
+            description: appointment.description,
+            dateAndTime: appointment.dateAndTime,
+            duration: appointment.duration,
+            depositPrice: appointment.depositPrice,
+            paymentId: appointment.paymentId,
+            tattooArtistId: appointment.TattooArtist_Appointment
+          }
+        }),
+        reviews: userCustomer.reviews?.map((review) => {
+          return {
+            comment: review.comment,
+            image: review.image,
+            rating: review.rating,
+            tattooArtistId: review.TattooArtist_Review,
+            appointmentId: review.Appointment_Review
+          }
+        })
+      };
+    }
+    if(!userCustomer){
+      let userAdmin = await Admin.findOne({where: {tokenId: tokenId}})
+      if(userAdmin){
+        cleanUser = {
+          id: userAdmin.id,
+          userType: userAdmin.userType,
+          disabled: userAdmin.disabled,
+          fullName: userAdmin.fullName,
+          email: userAdmin.email,
         }
-      }),
-      reviews: userCustomer.reviews?.map((review) => {
-        return {
-          comment: review.comment,
-          image: review.image,
-          rating: review.rating,
-          tattooArtistId: review.TattooArtist_Review,
-          appointmentId: review.Appointment_Review
-        }
-      })
-    };
+      }
+    }
   }
 
   return cleanUser;

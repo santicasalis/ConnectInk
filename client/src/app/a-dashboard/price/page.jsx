@@ -18,32 +18,30 @@ const Price = () => {
   const URL_BASE = "http://localhost:3001";
 
   let errorIndicator = false
-
-
   const router = useRouter();
 
   const [prices, setPrices] = useState({
-    Pequeño: { size: "Pequeño", priceMin: "", priceMax: "", artistId: user.id },
+    Pequeño: { size: "Pequeño", priceMin: "", priceMax: "", tattooArtistId: user.id },
 
     "Pequeño a color": {
       size: "Pequeño a color",
       priceMin: "",
       priceMax: "",
-      artistId: user.id,
+      tattooArtistId: user.id,
     },
-    Mediano: { size: "Mediano", priceMin: "", priceMax: "", artistId: user.id },
+    Mediano: { size: "Mediano", priceMin: "", priceMax: "", tattooArtistId: user.id },
     "Mediano a color": {
       size: "Mediano a color",
       priceMin: "",
       priceMax: "",
-      artistId: user.id,
+      tattooArtistId: user.id,
     },
-    Grande: { size: "Grande", priceMin: "", priceMax: "", artistId: user.id },
+    Grande: { size: "Grande", priceMin: "", priceMax: "", tattooArtistId: user.id },
     "Grande a color": {
       size: "Grande a color",
       priceMin: "",
       priceMax: "",
-      artistId: user.id,
+      tattooArtistId: user.id,
     },
   });
   const [errorMessages, setErrorMessages] = useState([]);
@@ -64,7 +62,7 @@ const Price = () => {
               size: price.size,
               priceMin: price.priceMin,
               priceMax: price.priceMax,
-              artistId: user.id,
+              tattooArtistId: user.id,
               priceRangeId: price.id,
             };
 
@@ -136,24 +134,24 @@ const Price = () => {
 
   };
 
-  const createPrice = async (data) => {
-    try {
-      await axios.post(`${URL_BASE}/priceRanges`, data);
-   
-    } catch (error) {
-      console.error(error);
-
-      errorIndicator = true
-
-    }
-  };
-
   const updatePrice = async (data) => {
     try {
       await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
        } catch (error) {
       console.error(error);
       errorIndicator = true
+    }
+  };
+
+  const createPrice = async (data) => {
+    console.log(data, "LCDTM");
+    try {
+      await axios.post(`${URL_BASE}/priceRanges`, data);
+   
+    } catch (error) {
+      console.error(error);
+      errorIndicator = true
+
     }
   };
 
@@ -177,7 +175,7 @@ const Price = () => {
                         onChange={(event) =>
                           handleInputChange(size, "priceMin", event.target.value)
                         }
-                        className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
+                        className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-artist/60 "
                       />
                     </div>
                     <p className="font-rocksalt"> $ </p>
@@ -190,7 +188,7 @@ const Price = () => {
                           onChange={(event) =>
                             handleInputChange(size, "priceMax", event.target.value)
                           }
-                          className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-primary/60 "
+                          className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 shadow-md shadow-artist/60 "
                         />
                         </div>
                       </div>
@@ -207,7 +205,7 @@ const Price = () => {
         <div className="flex justify-center mt-8">
         <button
           type="submit"
-          className="hover:bg-primary font-rocksalt hover:text-black flex items-center justify-center gap-1 border-primary text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer"
+          className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer"
                  
         >
           Guardar Precios

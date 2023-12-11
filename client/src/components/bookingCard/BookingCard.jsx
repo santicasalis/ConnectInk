@@ -20,7 +20,7 @@ import axios from "axios";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { openModalDeleteAppointmentAction } from "@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
+import { openModalDeleteAppointmentAction } from "../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import { useRouter } from "next/navigation";
 
 const BookingCard = ({
@@ -41,7 +41,7 @@ const BookingCard = ({
   };
   const user = useSelector((state) => state.user.logedInUser);
   const router = useRouter();
-
+  const dispatch= useDispatch();
   let date = new Date(dateAndTime);
   let opcionesFormato = {
     year: "numeric",
@@ -79,6 +79,10 @@ const BookingCard = ({
     } else {
       router.push(`/critica/${id}-${tattooArtistId}`);
     }
+  };
+
+  const handleDeleteAppointment = () => {
+    dispatch(openModalDeleteAppointmentAction(id));
   };
 
   return (
@@ -162,8 +166,10 @@ const BookingCard = ({
           >
             <MenuItem className="hover:bg-secondary-100 w-full h-full">
               <RiDeleteBin6Fill />
+              <button onClick={handleDeleteAppointment}>
               Cancelar Reserva
-            </MenuItem>
+              </button>
+              </MenuItem>
           </Menu>
         </div>
 
