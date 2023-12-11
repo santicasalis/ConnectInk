@@ -202,7 +202,7 @@ const BookingCard = ({
         <div>
           {paymentStatus &&
             (paymentStatus === "approved" ? (
-              <p>Pago Aprovado</p>
+              <p>Pago Aprobado</p>
             ) : paymentStatus === "in_process" ? (
               <p>Pago no confirmado aun</p>
             ) : paymentStatus === "rejected" ? (
