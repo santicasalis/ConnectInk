@@ -1,7 +1,6 @@
 import React from "react";
-import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
-const Paginate = ({
+const PaginateAdmin = ({
   onPageChange,
   totalArtists,
   currentPage,
@@ -13,13 +12,13 @@ const Paginate = ({
   }
 
   return (
-    <div className='flex justify-center mt-4 mb-9  text-primary text-xl font-bold  focus:outline-none"'>
+    <div className='flex justify-center mt-4 mb-9  text-admin text-xl font-bold  focus:outline-none"'>
       <nav>
         <ul className="flex space-x-2">
           {currentPage > 1 && (
-            <li className="flex items-center">
+            <li className="">
               <button onClick={() => onPageChange(currentPage - 1)}>
-                <RiArrowLeftSLine className="text-[30px]"/>
+                {"<"}
               </button>
             </li>
           )}
@@ -29,8 +28,8 @@ const Paginate = ({
               <button
                 className={`text-xl font-bold ${
                   currentPage === number
-                    ? "border-[2px] border-primary text-black bg-primary rounded-2xl"
-                    : "border-[2px] border-primary text-primary bg-transparent rounded-2xl"
+                    ? "border-[2px] border-admin text-black bg-admin rounded-2xl"
+                    : "border-[2px] border-admin text-admin bg-transparent rounded-2xl"
                 } px-4 py-2 focus:outline-none`}
                 onClick={() => onPageChange(number)}
               >
@@ -40,12 +39,12 @@ const Paginate = ({
           ))}
 
           {currentPage < pageNumbers.length && (
-            <li className="flex items-center">
+            <li className="">
               <button
-                className="flex items-center justify-center"
+                className=" "
                 onClick={() => onPageChange(currentPage + 1)}
               >
-                  <RiArrowRightSLine className="text-[30px]"/>
+                {">"}
               </button>
             </li>
           )}
@@ -55,4 +54,4 @@ const Paginate = ({
   );
 };
 
-export default Paginate;
+export default PaginateAdmin;
