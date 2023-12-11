@@ -21,7 +21,8 @@ const login = async (tokenId) => {
       {
         model: Publication,
         attributes: ["id", "description", "image", "createdAt", "updatedAt", "disabled"],
-        required: false
+        required: false,
+        where: { disabled: false }
       },
       {
         model: TimeAvailability,
