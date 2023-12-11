@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import axios from "axios";
+
 import ArtistBookingCard from "../../../components/ArtistBookingCard/ArtistBookingCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -11,7 +11,6 @@ export default function Appointments() {
 
   const user = useSelector((state) => state.user.logedInUser);
   const appointment = user.appointments;
-  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {

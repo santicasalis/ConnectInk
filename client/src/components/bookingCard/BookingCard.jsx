@@ -77,7 +77,8 @@ const BookingCard = ({
     //   console.log(id, tattooArtistId);
     //   //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
     // } else {
-    router.push(`/critica/${id}/${tattooArtistId}`);
+
+      router.push(`reservas/critica/${id}/${tattooArtistId}`);
     // }
   };
 
