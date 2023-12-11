@@ -29,7 +29,7 @@ const createOrderHandler = async (req, res) => {
           success: `http://localhost:3001/payments/result/${id}`,
         },
         notification_url:
-          "https://webhook.site/aba5ed31-610a-4241-8b81-131b4e3025bc/payments/webhook",
+          "https://webhook.site/95a6fd8f-442f-407a-92ac-54976654b519/payments/webhook",
       },
     };
     const response = await payment.create(preference);

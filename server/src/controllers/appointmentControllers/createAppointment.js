@@ -61,6 +61,7 @@ const createAppointment = async ({
         ],
       },
       paymentStatus: { [Op.or]: ["approved", "in_process"] },
+      disabled: false,
     },
   });
 
