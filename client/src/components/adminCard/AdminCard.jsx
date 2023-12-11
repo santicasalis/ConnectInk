@@ -27,31 +27,27 @@ export default function AdminCard({ fullName, location, shopName, image, id }) {
     return src;
   };
 
-
-
-
-
   return (
-    <div>
-      <div className="bg-secondary-100 w-[550px] h-[250px] ml-[10px] mb-[10px] rounded-xl">
+     <div className="bg-secondary-100 w-[550px]  ml-[10px] mb-[10px] rounded-xl pb-5">
         <div className="flex gap-x-1 items-center p-4">
           <Image
             unoptimized
-            className="rounded-full object-cover"
+            className="rounded-full object-cover "
             src={image}
             loader={imageLoader}
-            width={40}
-            height={40}
+            width={90}
+            height={90}
             alt={`${fullName} profile pic`}
           />
+           <div className="max-w-[300px]">
           <h1 className="font-bolt text-center text-4xl font-newrocker ml-4">
             {fullName}
           </h1>
-
-          <div className='p-2 flex items-center justify-center ml-auto'>
+          </div>
+          <div className='p-2 flex items-center justify-center ml-auto '>
             <Menu menuButton={
               <MenuButton >
-                <RiMoreFill className='text-white text-[25px] cursor-pointer' />
+                <RiMoreFill className='text-white text-[25px] cursor-pointer ' />
               </MenuButton>}
               transition
               menuClassName={'hover:bg-red text-red-500'}>
@@ -73,14 +69,14 @@ export default function AdminCard({ fullName, location, shopName, image, id }) {
         {/* <div className="font-bolt text-center text-4xl font-newrocker">
             {shopName}
           </div> */}
-        <div className="font-bolt text-center text-xl mt-[20px] font-newrocker">
+        <div className="font-bolt text-center text-xl mt-[20px] font-newrocker ">
           {shopName}
         </div>
         <div className="font-bolt text-center text-xl mt-[20px] font-newrocker">
           {location}
         </div>
 
-        <div className="mt-[40px] ml-[10px]">
+        <div className="font-bolt text-center text-xl mt-[20px] mb-[10px]">
           ☆☆☆☆☆
         </div>
 
@@ -89,6 +85,6 @@ export default function AdminCard({ fullName, location, shopName, image, id }) {
 
 
 
-    </div>
+    
   )
 }

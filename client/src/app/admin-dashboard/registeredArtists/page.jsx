@@ -5,8 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import { getAllArtists } from '../../../app/redux/features/artists/artistActions';
 import { useState } from 'react';
-import Paginate from '../../../components/paginate/Paginate';
+import PaginateAdmin from '../../../components/paginateAdmin/PaginateAdmin';
 import { useRouter } from 'next/navigation';
+import AdminTopBarOptions from "../../../components/admintopBarOptions/AdminTopBarOptions";
+
 
 const RegisteredArtist = () => {
   const { people, filtered } = useSelector((state) => state.artists);
@@ -41,26 +43,32 @@ const RegisteredArtist = () => {
 
   return (
     <div>
+
       
 
       <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2 text-artistfont">
+
+      <div className='w-full'>
+       <AdminTopBarOptions />
+       </div>
+      <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
+
               <div className="scroll-content w-full">
                 
               <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
               <div className="scroll-content w-full">
-                <Paginate
+                <PaginateAdmin
                   artistsPerPage={artistsPerPage}
                   totalArtists={totalArtists}
                   currentPage={currentPage}
                   onPageChange={onPageChange}
                 />
-               
-                
+                           
 
-      <div className="scroll-fade md:w-3/4 ">
+      <div className="scroll-fade flex justify-center items-center">
               <div >
-                {filtered?.map((filter) => (
-                  <div key={filter.id} className="mb-4 w-full  ">
+                {artistsToDisplay?.map((filter) => (
+                  <div key={filter.id} className="mb-4 w-full flex justify-center items-center   ">
 
 
                         <AdminCard

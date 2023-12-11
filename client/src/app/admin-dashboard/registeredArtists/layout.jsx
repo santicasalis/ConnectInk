@@ -1,4 +1,4 @@
-import AdminTopBarOptions from "../../../components/admintopBarOptions/AdminTopBarOptions";
+
 import { RiAddFill } from "react-icons/ri";
 import Link from 'next/link'
 
@@ -12,7 +12,7 @@ export default function RegisteredLayout({ children }) {
           </div>
          
           <hr className='my-8 border-gray-500'/>
-          <AdminTopBarOptions />
+         
           {children}
       </div>    
     )
