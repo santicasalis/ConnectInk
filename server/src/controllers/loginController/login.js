@@ -197,6 +197,7 @@ const login = async (tokenId) => {
             "depositPrice",
             "paymentId",
             "TattooArtist_Appointment",
+            "paymentStatus",
           ],
           where: { disabled: false },
           required: false,
@@ -239,6 +240,7 @@ const login = async (tokenId) => {
             depositPrice: appointment.depositPrice,
             paymentId: appointment.paymentId,
             tattooArtistId: appointment.TattooArtist_Appointment,
+            paymentStatus: appointment.paymentStatus,
           };
         }),
         reviews: userCustomer.reviews?.map((review) => {
