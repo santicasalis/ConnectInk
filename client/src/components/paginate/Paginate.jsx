@@ -1,4 +1,5 @@
 import React from "react";
+import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 const Paginate = ({
   onPageChange,
@@ -16,9 +17,9 @@ const Paginate = ({
       <nav>
         <ul className="flex space-x-2">
           {currentPage > 1 && (
-            <li className="">
+            <li className="flex items-center">
               <button onClick={() => onPageChange(currentPage - 1)}>
-                {"<"}
+                <RiArrowLeftSLine className="text-[30px]"/>
               </button>
             </li>
           )}
@@ -39,12 +40,12 @@ const Paginate = ({
           ))}
 
           {currentPage < pageNumbers.length && (
-            <li className="">
+            <li className="flex items-center">
               <button
-                className=" "
+                className="flex items-center justify-center"
                 onClick={() => onPageChange(currentPage + 1)}
               >
-                {">"}
+                  <RiArrowRightSLine className="text-[30px]"/>
               </button>
             </li>
           )}
