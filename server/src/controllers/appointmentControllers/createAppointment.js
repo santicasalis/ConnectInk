@@ -130,7 +130,10 @@ const createAppointment = async ({
 
   //comparar las horas
   //caso la hora del turno sea antes de la hora que el tatuador empieza, error
-  if (dateOrTime[1] < initialHour) {
+  if (
+    Number(dateOrTime[1].split(":")[0]) <
+    Number(initialHour.split(":")[0]) + 3
+  ) {
     return {
       code: 400,
       error: "The tattoo artist starts working later",
@@ -138,14 +141,22 @@ const createAppointment = async ({
   }
   // caso la hora del turno sea entre las horas que el tatuador trabaja, error
   if (secondInitialHour !== null) {
-    if (dateOrTime[1] > finalHour && dateOrTime[1] < secondInitialHour) {
+    if (
+      Number(dateOrTime[1].split(":")[0]) >
+        Number(finalHour.split(":")[0]) + 3 &&
+      Number(dateOrTime[1].split(":")[0]) <
+        Number(secondInitialHour.split(":")[0]) + 3
+    ) {
       return {
         code: 400,
         error: "The tattoo artist doesn't work during that hour",
       };
     }
     //caso la hora del turno sea después de la hora que el tatuador termina, error
-    if (dateOrTime[1] > secondFinalHour) {
+    if (
+      Number(dateOrTime[1].split(":")[0]) >
+      Number(secondFinalHour.split(":")[0]) + 3
+    ) {
       return {
         code: 400,
         error: "The tattoo artist finishes work early",
@@ -153,8 +164,13 @@ const createAppointment = async ({
     }
   }
   //caso la hora del turno sea después de la hora que el tatuador termina, error
+  console.log("1", Number(dateOrTime[1].split(":")[0]));
+  console.log("2", Number(finalHour.split(":")[0]) + 3);
   if (secondInitialHour === null) {
-    if (dateOrTime[1] > finalHour) {
+    if (
+      Number(dateOrTime[1].split(":")[0]) >
+      Number(finalHour.split(":")[0]) + 3
+    ) {
       return {
         code: 400,
         error: "The tattoo artist finishes work early",
@@ -169,26 +185,36 @@ const createAppointment = async ({
   if (secondInitialHour !== null) {
     const secondInitialHourSplit = Number(secondInitialHour.split(":")[0]);
     const secondFinalHourSplit = Number(secondFinalHour.split(":")[0]);
-    if (hourSplit > secondInitialHourSplit) {
-      if (hourSplit + sizesAndDurations[size] > secondFinalHourSplit) {
-        return { code: 400, error: "The appointment must start earlier" };
+    if (hourSplit > secondInitialHourSplit + 3) {
+      if (hourSplit + sizesAndDurations[size] > secondFinalHourSplit + 3) {
+        return { code: 400, error: "1 The appointment must start earlier" };
       }
     }
-    if (hourSplit < finalHourSplit) {
-      if (hourSplit + sizesAndDurations[size] > finalHourSplit) {
-        return { code: 400, error: "The appointment must start earlier" };
+    if (hourSplit < finalHourSplit + 3) {
+      if (hourSplit + sizesAndDurations[size] > finalHourSplit + 3) {
+        return { code: 400, error: "2 The appointment must start earlier" };
       }
     }
   } else if (secondInitialHour === null) {
-    if (hourSplit + sizesAndDurations[size] > finalHourSplit) {
-      return { code: 400, error: "The appointment must start earlier" };
+    if (hourSplit + sizesAndDurations[size] > finalHourSplit + 3) {
+      console.log(
+        "Hora split ",
+        hourSplit,
+        "size ",
+        sizesAndDurations[size],
+        "final hour ",
+        finalHourSplit + 3
+      );
+      return { code: 400, error: "3 The appointment must start earlier" };
     }
   }
 
   //caso la hora elegida para el turno + la duración calculada esté dentro del rango laboral, se crea el turno
   if (
-    hourSplit + sizesAndDurations[size] <= finalHourSplit ||
-    hourSplit + sizesAndDurations[size] <= Number(secondFinalHour.split(":")[0])
+    hourSplit + sizesAndDurations[size] <= finalHourSplit + 3 ||
+    (secondFinalHour &&
+      hourSplit + sizesAndDurations[size] <=
+        Number(secondFinalHour.split(":")[0]) + 3)
   ) {
     //cálculo del valor de la seña
     const priceRangeFound = await PriceRange.findOne({
