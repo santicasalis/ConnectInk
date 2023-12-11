@@ -15,12 +15,12 @@ function UDashboard() {
   const router = useRouter()
 
   const user = useSelector((state) => state.user.logedInUser);
-const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
+// const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
 
 
-useEffect (() => {
-dispatch(getUserById(fireBaseUser.tokenId))
-},[])
+// useEffect (() => {
+// dispatch(getUserById(fireBaseUser.tokenId))
+// },[fireBaseUser])
 
   useEffect(() => {
     if(!user.userType){

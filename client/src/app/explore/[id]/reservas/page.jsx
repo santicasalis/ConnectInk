@@ -431,7 +431,7 @@ import Calendar from "react-calendar";
 
 import { Formik, Form, Field, ErrorMessage} from "formik";
 import { uploadImage } from "../../../../app/utils/uploadImage";
-
+//import { SiMercadopago } from "react-icons/si";
 import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import { dayData } from "../../../utils/data/dayData";
@@ -459,7 +459,7 @@ const BookAppointment = ({ params }) => {
   const [sent, setSent] = useState(false);
   const router = useRouter()
 
-  console.log("ESTE ES EL DAYSWITHHOURS", daysWithHours)
+
 
   const dispatch = useDispatch();
 
@@ -697,7 +697,7 @@ const BookAppointment = ({ params }) => {
 
                    const createdAppointment = createResponse.data.data;
 
-                   const paymentMp = await axios.post(`${URL_BASE}/payment`, {
+                   const paymentMp = await axios.post(`${URL_BASE}/payments`, {
                      id: createdAppointment.id,
                      description: createdAppointment.description,
                      depositPrice: createdAppointment.depositPrice,
@@ -848,7 +848,7 @@ const BookAppointment = ({ params }) => {
                      }
                      className=" border-[1px] w-[35%] text-lg p-2 rounded-md hover:bg-primary/80 hover:font-bold disabled:bg-transparent"
                    >
-                     Reservar turno
+                    Abonar seña
                    </button>
                    </div>
                  </Form>

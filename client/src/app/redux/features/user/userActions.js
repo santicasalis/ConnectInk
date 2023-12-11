@@ -4,6 +4,7 @@ import {
   getFirebaseInfo,
   cleanFireBaseInfo,
   getUserPosts,
+  getAppointment
 } from "./userSlice";
 import axios from "axios";
 
@@ -45,6 +46,11 @@ export const bringUserInformation = (data) => async dispatch => {
 export const bringUserPosts = (id) => async dispatch => {
   const response = await axios.post(`${URL_BASE}/publications/tattooArtistId`, {id})
   dispatch(getUserPosts(response.data))
+}
+
+export const getAllAppointments = (id) => async (dispatch) =>{
+    const allApointments = (await axios(`${URL_BASE}/customers/${id}`)).data.appointments
+    dispatch(getAppointment(allApointments))
 }
 
 // export const bringUserAvailabilities = (id) => async dispatch => {
