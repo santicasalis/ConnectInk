@@ -43,19 +43,13 @@ const RegisteredArtist = () => {
 
   return (
     <div>
-
-      
-
       <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2 text-artistfont">
-
-      <div className='w-full'>
-       <AdminTopBarOptions />
-       </div>
-      <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
-
-              <div className="scroll-content w-full">
-                
-              <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
+        <div className='w-full'>
+           <AdminTopBarOptions />
+        </div>
+        <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
+          <div className="scroll-content w-full">
+            <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
               <div className="scroll-content w-full">
                 <PaginateAdmin
                   artistsPerPage={artistsPerPage}
@@ -63,9 +57,8 @@ const RegisteredArtist = () => {
                   currentPage={currentPage}
                   onPageChange={onPageChange}
                 />
-                           
-
-      <div className="scroll-fade flex justify-center items-center">
+              </div>  
+              <div className="scroll-fade flex justify-center items-center">
               <div >
                 {artistsToDisplay?.map((filter) => (
                   <div key={filter.id} className="mb-4 w-full flex justify-center items-center   ">
@@ -107,7 +100,7 @@ const RegisteredArtist = () => {
     </div>
 
             </div>
-            
+             
 
   
   )
