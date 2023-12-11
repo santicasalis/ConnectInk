@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 const {
   Appointment,
   TattooArtist,
@@ -8,12 +10,6 @@ const {
 } = require("../../db");
 
 const sizesAndDurations = {
-  Pequeño: 1,
-  "Pequeño a color": 1,
-  Mediano: 2,
-  "Mediano a color": 2,
-  Grande: 3,
-  "Grande a color": 3,
   Pequeño: 1,
   "Pequeño a color": 1,
   Mediano: 2,
@@ -39,8 +35,7 @@ const createAppointment = async ({
   image,
   bodyPlace,
   description,
-  dateAndTime,
-  paymentStatus,
+  newDateAndTime,
 }) => {
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
@@ -54,25 +49,47 @@ const createAppointment = async ({
     return { code: 404, error: "Customer not found" };
   }
 
-  //chequea que no exista un turno para esa fecha y hora
-  const appointmentExist = await Appointment.findOne({
+  //busca los turnos existentes para esa fecha, con estado de pago aprobado o pendiente
+  let dateToCompare = newDateAndTime.split("T");
+  let appointmentsExist = await Appointment.findAll({
     where: {
       TattooArtist_Appointment: tattooArtistId,
-      dateAndTime: dateAndTime,
-      paymentStatus: "approved" || "in_process",
+      dateAndTime: {
+        [Op.between]: [
+          new Date(dateToCompare[0] + "T00:00:00.000Z"),
+          new Date(dateToCompare[0] + "T23:59:59.999Z"),
+        ],
+      },
+      paymentStatus: { [Op.or]: ["approved", "in_process"] },
     },
   });
-  if (appointmentExist) {
-    return {
-      code: 404,
-      error:
-        "That date and time are not available, the tattoo artist already has an appointment scheduled at that time",
-    };
+
+  //si existen, chequea que no coincida algún turno existente con el que se intenta crear
+  if (appointmentsExist !== null) {
+    const dateOrTime = newDateAndTime.split("T");
+    const hourSplit = Number(dateOrTime[1].split(":")[0]);
+    for (let i = 0; i < appointmentsExist.length; i++) {
+      let existDateOrTime = appointmentsExist[i].dateAndTime
+        .toISOString()
+        .split("T");
+      let existHourSplit = Number(existDateOrTime[1].split(":")[0]);
+      if (
+        hourSplit < existHourSplit + appointmentsExist[i].duration &&
+        hourSplit + sizesAndDurations[size] > existHourSplit
+      ) {
+        return {
+          code: 404,
+          error:
+            "The tattoo artist already has an appointment scheduled at that time",
+        };
+      }
+    }
   }
 
   //cálculo del día de la semana:
-  const date = new Date(dateAndTime);
+  const date = new Date(newDateAndTime);
   const exactDate = date.toISOString();
+  console.log(exactDate);
   const dayOfWeek = date.getDay();
   const dayName = daysOfWeekNames[dayOfWeek];
 
@@ -82,7 +99,7 @@ const createAppointment = async ({
   });
   //si no tiene disponibilidad horaria cargada ese día dice que ese día no está disponible
   if (possibleAvialability === null) {
-    return { code: 404, error: "Day not available" };
+    return { code: 404, error: "The tattoo artist doesn't work that day" };
   }
   // si existe disponibilidad horaria, se queda con los horarios cargados para ese día
   let initialHour = possibleAvialability.initialHour;
@@ -92,14 +109,17 @@ const createAppointment = async ({
 
   //cálculo fecha
   const dateOrTime = exactDate.split("T");
-
   //busca dentro de timeAvailabilityException si esa fecha ese tatuador tiene una excepcion cargada
   const possibleException = await TimeAvailabilityException.findOne({
     where: { TattooArtistId: tattooArtistId, date: dateOrTime[0] },
   });
   //si hay una excepcion y el horario es nulo significa que esa fecha no trabaja
   if (possibleException && possibleException.initialHour === null) {
-    return { code: 400, error: "The tattoo artist doesn't work that day" };
+    return {
+      code: 400,
+      error:
+        "The tattoo artist doesn't work that date or has a special schedule",
+    };
   }
   //si esa fecha sí trabaja, se queda con los horarios cargados para ese día
   if (possibleException && possibleException.initialHour !== null) {
@@ -125,13 +145,22 @@ const createAppointment = async ({
         error: "The tattoo artist doesn't work during that hour",
       };
     }
+    //caso la hora del turno sea después de la hora que el tatuador termina, error
+    if (dateOrTime[1] > secondFinalHour) {
+      return {
+        code: 400,
+        error: "The tattoo artist finishes work early",
+      };
+    }
   }
   //caso la hora del turno sea después de la hora que el tatuador termina, error
-  if (dateOrTime[1] > secondFinalHour) {
-    return {
-      code: 400,
-      error: "The tattoo artist finishes work early",
-    };
+  if (secondInitialHour === null) {
+    if (dateOrTime[1] > finalHour) {
+      return {
+        code: 400,
+        error: "The tattoo artist finishes work early",
+      };
+    }
   }
 
   //caso la hora elegida para el turno + la duración calculada supere la hora laboral final, error
@@ -151,7 +180,7 @@ const createAppointment = async ({
         return { code: 400, error: "The appointment must start earlier" };
       }
     }
-  } else {
+  } else if (secondInitialHour === null) {
     if (hourSplit + sizesAndDurations[size] > finalHourSplit) {
       return { code: 400, error: "The appointment must start earlier" };
     }
@@ -180,20 +209,19 @@ const createAppointment = async ({
         image,
         bodyPlace,
         description,
-        dateAndTime,
+        dateAndTime: newDateAndTime,
         duration: sizesAndDurations[size],
         depositPrice: depositAmount,
         Customer_Appointment: customerId,
         TattooArtist_Appointment: tattooArtistId,
       });
-
       return {
         code: 201,
         message: "Appointment created successfully",
         data: appointment,
       };
     } catch (error) {
-      return { code: 400, error: "Something went wrong" };
+      return { code: 400, error: error.message };
     }
   }
 };

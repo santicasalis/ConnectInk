@@ -8,7 +8,7 @@ const createAppointmentHandler = async (req, res) => {
     image,
     bodyPlace,
     description,
-    dateAndTime,
+    newDateAndTime,
   } = req.body;
   try {
     const newAppointment = await createAppointment({
@@ -18,7 +18,7 @@ const createAppointmentHandler = async (req, res) => {
       image,
       bodyPlace,
       description,
-      dateAndTime,
+      newDateAndTime,
     });
     if (newAppointment.code === 201) {
       res
