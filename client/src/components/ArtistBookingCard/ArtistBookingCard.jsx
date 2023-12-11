@@ -13,7 +13,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { openModalDeleteAppointmentAction } from '../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
 import Link from 'next/link';
-import { notifyError } from "../../../components/notifyError/NotifyError";
+import { notifyError } from "../notifyError/NotifyError";
 
 const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
     const dispatch = useDispatch();
