@@ -89,7 +89,6 @@ const createAppointment = async ({
   //cálculo del día de la semana:
   const date = new Date(dateAndTime);
   const exactDate = date.toISOString();
-  console.log(exactDate);
   const dayOfWeek = date.getDay();
   const dayName = daysOfWeekNames[dayOfWeek];
 
