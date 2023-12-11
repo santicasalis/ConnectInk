@@ -41,7 +41,7 @@ const Login = () => {
     if (user.userType) {
       if (user.userType == "artist") router.replace("/a-dashboard/home");
       if (user.userType == "customer") router.replace("/user-dashboard");
-      if (user.userType == "admin") router.replace("/admin-dashboard/home");
+      if (user.userType == "admin") router.replace("/admin-dashboard/");
     }
   }, [user]);
 
@@ -98,7 +98,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const userFireBase = auth.currentUser;
-
+     
       dispatch(getUserById(userFireBase.uid))
         .then(async () => {
           dispatch(
@@ -110,7 +110,7 @@ const Login = () => {
               phoneNumber: userFireBase.phoneNumber,
             })
           );
-
+      
           if (user.userType == "artist") {
             await new Promise((resolve) => {
               router.push("/a-dashboard/home").then(() => resolve());
@@ -125,7 +125,7 @@ const Login = () => {
           }
           if (user.userType == "admin") {
             await new Promise((resolve) => {
-              router.push("/admin-dashboard/home").then(() => resolve());
+              router.push("/admin-dashboard/").then(() => resolve());
             });
             dispatch(closeModalLoadingAction());
           }
