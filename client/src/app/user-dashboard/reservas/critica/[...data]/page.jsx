@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 const Critica = ({params}) => {
   const [appointmentId, tattooArtistId] = params.data

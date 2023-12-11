@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { bringUserInformation } from "@/app/redux/features/user/userActions";
 import axios from "axios";
 import { getAuth, updatePassword } from "firebase/auth";
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 const UProfile = () => {
   const user = useSelector((state) => state.user.logedInUser);

@@ -9,7 +9,7 @@ import { TbPointFilled } from "react-icons/tb";
 
 import { useRouter } from "next/navigation";
 
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 
 

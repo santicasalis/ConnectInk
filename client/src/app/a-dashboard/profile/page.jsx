@@ -9,7 +9,7 @@ import axios from "axios";
 import { bringUserInformation } from "@/app/redux/features/user/userActions";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { getAuth, updatePassword } from "firebase/auth";
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 const Profile = () => {
   const dispatch = useDispatch();

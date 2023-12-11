@@ -10,7 +10,7 @@ import { validationSchemaArtist } from "../../components/tattooArtistRegister/va
 
 import axios from "axios";
 
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";

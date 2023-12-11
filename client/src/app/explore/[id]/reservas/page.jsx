@@ -18,7 +18,7 @@ import Nav from "../../../../components/nav/Nav";
 import { array } from "yup";
 import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 const URL_BASE = "http://localhost:3001";
 

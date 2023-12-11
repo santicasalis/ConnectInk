@@ -8,7 +8,7 @@ import { orderPosts } from "../utils/ordenarPosts";
 import UserPostDash from "../../components/userPostDash/UserPostDash";
 import { useRouter } from "next/navigation";
 import { getUserById } from "../redux/features/user/userActions";
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 function UDashboard() {
   const dispatch = useDispatch();

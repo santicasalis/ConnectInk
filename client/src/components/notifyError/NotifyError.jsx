@@ -7,11 +7,3 @@ export const notifyError = (error) => {
     "Ocurrió un error inesperado";
   toast.error(message);
 };
-
-
-/*
-
-import { notifyError } from "@/components/notifyError/NotifyError";
-
-
-*/

@@ -1,7 +1,7 @@
 import React from "react";
 import { uploadImage } from '../../app/utils/uploadImage';
 import { Formik, Form, Field, ErrorMessage, useField } from "formik";
-import { notifyError } from "@/components/notifyError/NotifyError";
+import { notifyError } from "../../../components/notifyError/NotifyError";
 
 import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
 import { emailSignUp } from "../../app/utils/emailSignUp";
