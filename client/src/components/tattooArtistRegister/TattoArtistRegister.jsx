@@ -74,7 +74,7 @@ const TattoArtistRegister = () => {
                 hideProgressBar: true,
               }
             );
-            await axios.post(`${urlBase}/nodemailer/welcome`, {
+            await axios.post(`${urlBase}/nodemailer/welcomeArtist`, {
               email: values.email,
               name: values.fullName,
             });

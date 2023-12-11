@@ -85,7 +85,7 @@ const CustomerRegister = () => {
                 }
               );
 
-              await axios.post(`${urlBase}/nodemailer/welcome`, {
+              await axios.post(`${urlBase}/nodemailer/welcomeCustomer`, {
                 email: values.email,
                 name: values.fullName,
               });
