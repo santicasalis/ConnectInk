@@ -35,7 +35,7 @@ const createAppointment = async ({
   image,
   bodyPlace,
   description,
-  newDateAndTime,
+  dateAndTime,
 }) => {
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
@@ -50,7 +50,7 @@ const createAppointment = async ({
   }
 
   //busca los turnos existentes para esa fecha, con estado de pago aprobado o pendiente
-  let dateToCompare = newDateAndTime.split("T");
+  let dateToCompare = dateAndTime.split("T");
   let appointmentsExist = await Appointment.findAll({
     where: {
       TattooArtist_Appointment: tattooArtistId,
@@ -66,7 +66,7 @@ const createAppointment = async ({
 
   //si existen, chequea que no coincida algún turno existente con el que se intenta crear
   if (appointmentsExist !== null) {
-    const dateOrTime = newDateAndTime.split("T");
+    const dateOrTime = dateAndTime.split("T");
     const hourSplit = Number(dateOrTime[1].split(":")[0]);
     for (let i = 0; i < appointmentsExist.length; i++) {
       let existDateOrTime = appointmentsExist[i].dateAndTime
@@ -87,7 +87,7 @@ const createAppointment = async ({
   }
 
   //cálculo del día de la semana:
-  const date = new Date(newDateAndTime);
+  const date = new Date(dateAndTime);
   const exactDate = date.toISOString();
   console.log(exactDate);
   const dayOfWeek = date.getDay();
@@ -209,7 +209,7 @@ const createAppointment = async ({
         image,
         bodyPlace,
         description,
-        dateAndTime: newDateAndTime,
+        dateAndTime,
         duration: sizesAndDurations[size],
         depositPrice: depositAmount,
         Customer_Appointment: customerId,
