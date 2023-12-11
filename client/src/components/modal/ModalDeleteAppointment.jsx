@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RiAlertFill, RiCloseFill, RiCheckFill } from "react-icons/ri";
-import { closeModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
+import { closeModalDeleteAppointmentAction } from '../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
 import axios from 'axios';
-import { removeAppointment } from '@/app/redux/features/appointments/appointmentsActions';
+import { removeAppointment } from '../../app/redux/features/appointments/appointmentsActions';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -6,7 +6,7 @@ import BookingCard from '../../../components/bookingCard/BookingCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import ModalDeleteAppointment from '@/components/modal/ModalDeleteAppointment';
+import ModalDeleteAppointment from '../../../components/modal/ModalDeleteAppointment'
 import {getAllAppointments} from "../../redux/features/user/userActions"
 
 
