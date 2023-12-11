@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import axios from "axios"
 import { useState } from 'react';
 import Image from 'next/image';
-import { openModalDeleteAppointmentAction } from '@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
+import { openModalDeleteAppointmentAction } from '../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
 import Link from 'next/link';
 import { notifyError } from "../../../components/notifyError/NotifyError";
 

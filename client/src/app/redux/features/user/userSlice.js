@@ -40,6 +40,9 @@ export const userSlice = createSlice({
         state.logedInUser.shopName = action.payload.shopName;
         state.logedInUser.image = action.payload.image;
     },
+    getAppointment: (state, action) => {
+      state.logedInUser.appointments = action.payload
+  },
   },
 });
 
@@ -50,6 +53,7 @@ export const {
   getFirebaseInfo,
   cleanFireBaseInfo,
   getUserPosts,
+  getAppointment
 } = userSlice.actions;
 
 export default userSlice.reducer;
