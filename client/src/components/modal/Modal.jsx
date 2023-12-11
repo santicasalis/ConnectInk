@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation'
 
 const Modal = () => {
-  const URL_BASE = "http://localhost:3001"
+  const URL_BASE = "https://serverconnectink.up.railway.app"
   const router = useRouter();
   const dispatch = useDispatch();
   const { isOpen, data } = useSelector((state) => state.modalEdit);

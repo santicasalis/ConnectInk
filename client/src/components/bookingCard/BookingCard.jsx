@@ -61,7 +61,7 @@ const BookingCard = ({
       try {
         const resp = (
           await axios.get(
-            `http://localhost:3001/tattooArtists/${tattooArtistId}`
+            `https://serverconnectink.up.railway.app/tattooArtists/${tattooArtistId}`
           )
         ).data;
         setResponse(resp);

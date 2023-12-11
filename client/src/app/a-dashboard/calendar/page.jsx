@@ -33,7 +33,7 @@ const Page = () => {
     user.logedInUser.timeAvailabilities || []
   );
   const [newException, setNewException] = useState({ date: "" });
-  const URL_BASE = "http://localhost:3001";
+  const URL_BASE = "https://serverconnectink.up.railway.app";
   const [showHours, setShowHours] = useState({});
   const [moreTime, setMoreTime] = useState({});
   const [moreExceptionTime, setMoreExceptionTime] = useState(false);

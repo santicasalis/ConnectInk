@@ -77,7 +77,7 @@ const UProfile = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:3001/customers/${user.id}`,
+        `https://serverconnectink.up.railway.app/customers/${user.id}`,
         formData
       );
 

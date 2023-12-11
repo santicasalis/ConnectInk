@@ -24,9 +24,9 @@ const createOrderHandler = async (req, res) => {
           },
         ],
         back_urls: {
-          failure: `http://localhost:3001/payments/result/${id}`,
-          pending: `http://localhost:3001/payments/result/${id}`,
-          success: `http://localhost:3001/payments/result/${id}`,
+          failure: `https://serverconnectink.up.railway.app/payments/result/${id}`,
+          pending: `https://serverconnectink.up.railway.app/payments/result/${id}`,
+          success: `https://serverconnectink.up.railway.app/payments/result/${id}`,
         },
         notification_url:
           "https://webhook.site/aba5ed31-610a-4241-8b81-131b4e3025bc/payments/webhook",

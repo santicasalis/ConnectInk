@@ -40,7 +40,7 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
       
     const artistId = async ()=>{
        try {
-        const resp = (await axios.get(`http://localhost:3001/customers/${CustomerId}`)).data
+        const resp = (await axios.get(`https://serverconnectink.up.railway.app/customers/${CustomerId}`)).data
         setResponse(resp)
        } catch (error) {
         notifyError("error");

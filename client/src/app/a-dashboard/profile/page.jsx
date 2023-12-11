@@ -91,7 +91,7 @@ const Profile = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:3001/tattooArtists/${user.id}`,
+        `https://serverconnectink.up.railway.app/tattooArtists/${user.id}`,
         formData
       );
 

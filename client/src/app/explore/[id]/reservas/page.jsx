@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { MdFileUpload } from "react-icons/md";
 import { notifyError } from "../../../../components/notifyError/NotifyError";
 
-const URL_BASE = "http://localhost:3001";
+const URL_BASE = "https://serverconnectink.up.railway.app";
 
 const BookAppointment = ({ params }) => {
   const { id } = params;

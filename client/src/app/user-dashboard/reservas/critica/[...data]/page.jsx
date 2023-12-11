@@ -69,7 +69,7 @@ const Critica = ({params}) => {
                 tattooArtistId
               }
               console.log(data, "holiei")
-              const response = await axios.post("http://localhost:3001/reviews", data)
+              const response = await axios.post("https://serverconnectink.up.railway.app/reviews", data)
               console.log(response)
               setSent(true);
             } catch (error) {

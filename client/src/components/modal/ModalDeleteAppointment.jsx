@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ModalDeleteAppointment = () => {
     const dispatch = useDispatch();
-    const URL_BASE = "http://localhost:3001"
+    const URL_BASE = "https://serverconnectink.up.railway.app"
     const [id, setId] = useState('');
     const {isOpen,data} = useSelector((state) => state.modalDeleteAppointment);
 
