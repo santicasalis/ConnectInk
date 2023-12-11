@@ -20,7 +20,7 @@ import axios from "axios";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { openModalDeleteAppointmentAction } from "@/app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
+import { openModalDeleteAppointmentAction } from "../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import { useRouter } from "next/navigation";
 
 const BookingCard = ({

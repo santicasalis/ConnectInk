@@ -1,6 +1,6 @@
+'use client'
 
 import ArtistPost from '../../../../components/artistPost/artistPost'
-import React from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
