@@ -17,8 +17,8 @@
           100: "#181717",
         },
         artist:"#D252D0",
-        artistfont:"#fdecda"
-        // admin:"#E8EA36"
+        artistfont:"#fdecda",
+        admin:"#E8EA36"
       },
       fontFamily: {
         rocksalt: ["Rock Salt"],
