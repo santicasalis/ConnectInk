@@ -5,7 +5,7 @@ import axios from "axios";
 import Calendar from "react-calendar";
 import styled from 'styled-components';
 
-import { Formik, Form, Field, ErrorMessage} from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { uploadImage } from "../../../../app/utils/uploadImage";
 //import { SiMercadopago } from "react-icons/si";
 import { validationSchema } from "./validationSchema";
@@ -27,13 +27,12 @@ const BookAppointment = ({ params }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [showTime, setShowTime] = useState(false);
-  const [daysWithHours, setDaysWithHours] = useState({})
+  const [daysWithHours, setDaysWithHours] = useState({});
   const [exception, setException] = useState([]);
   const artist = useSelector((state) => state.artists.detail);
   const user = useSelector((state) => state.user.logedInUser);
   const [sent, setSent] = useState(false);
-  const router = useRouter()
-
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const durations = {
@@ -46,107 +45,149 @@ const BookAppointment = ({ params }) => {
   };
 
   const filterAvailabilties = () => {
-    const { appointments, timeAvailabilities, timeAvailabilityExceptions } = artist;
+    const { appointments, timeAvailabilities, timeAvailabilityExceptions } =
+      artist;
     const exceptions = timeAvailabilityExceptions?.map((exception) => {
-      const [year, month, day] = exception.date.split("-")
-      return (new Date(year, month - 1, day)).toDateString()
-    })
+      const [year, month, day] = exception.date.split("-");
+      return new Date(year, month - 1, day).toDateString();
+    });
     let obj = {};
 
-    const allAvailabilities = timeAvailabilities?.filter((availabilty) =>  availabilty.initialHour)?.map((availabilty) => {
-      return { 
-        day: availabilty.day,
-        initialHour: Number(availabilty.initialHour.split(":")[0]),
-        finalHour: Number(availabilty.finalHour.split(":")[0]),
-        secondInitialHour: Number(availabilty.secondInitialHour?.split(":")[0]) || null,
-        secondFinalHour: Number(availabilty.secondFinalHour?.split(":")[0]) || null
-      };
-    })
+    const allAvailabilities = timeAvailabilities
+      ?.filter((availabilty) => availabilty.initialHour)
+      ?.map((availabilty) => {
+        return {
+          day: availabilty.day,
+          initialHour: Number(availabilty.initialHour.split(":")[0]),
+          finalHour: Number(availabilty.finalHour.split(":")[0]),
+          secondInitialHour:
+            Number(availabilty.secondInitialHour?.split(":")[0]) || null,
+          secondFinalHour:
+            Number(availabilty.secondFinalHour?.split(":")[0]) || null,
+        };
+      });
 
     timeAvailabilityExceptions?.map((exception) => {
-      let hours = []
-      if(exception.initialHour){
-        for (let i = Number(exception.initialHour.split(":")[0]); i<= Number(exception.finalHour.split(":")[0]); i++){
-          hours.push(i)
+      let hours = [];
+      if (exception.initialHour) {
+        for (
+          let i = Number(exception.initialHour.split(":")[0]);
+          i <= Number(exception.finalHour.split(":")[0]);
+          i++
+        ) {
+          hours.push(i);
         }
-        if(exception.secondInitialHour){
-          for (let i = exception.secondInitialHour.split(":")[0]; i<= exception.secondFinalHour.split(":")[0]; i++){
-            hours.push(i)
+        if (exception.secondInitialHour) {
+          for (
+            let i = exception.secondInitialHour.split(":")[0];
+            i <= exception.secondFinalHour.split(":")[0];
+            i++
+          ) {
+            hours.push(i);
           }
         }
-        
       }
-      const [year, month, day] = exception.date.split("-")
-      obj[new Date(year, month - 1, day).toDateString()] = hours
-    })
+      const [year, month, day] = exception.date.split("-");
+      obj[new Date(year, month - 1, day).toDateString()] = hours;
+    });
 
     appointments?.map((appointment) => {
-      const date = new Date(appointment.dateAndTime)
-      const day = dayData[date.getDay()].day
-      const time = date.getHours()
-      let hours = []
+      const date = new Date(appointment.dateAndTime);
+      const day = dayData[date.getDay()].day;
+      const time = date.getHours();
+      let hours = [];
 
-      if(exceptions.includes(date.toDateString())){
+      if (exceptions.includes(date.toDateString())) {
         timeAvailabilityExceptions.map((exception) => {
-          const [year, month, day] = exception.date.split("-")
-          if(new Date(year, month - 1, day).toDateString() == date.toDateString()){
-            for(let i = Number(exception.initialHour.split(":")[0]); i<= Number(exception.finalHour.split(":")[0]); i++){
-              if(!((i >= time && i < time + appointment.duration))){
-                hours.push(i)
+          const [year, month, day] = exception.date.split("-");
+          if (
+            new Date(year, month - 1, day).toDateString() == date.toDateString()
+          ) {
+            for (
+              let i = Number(exception.initialHour.split(":")[0]);
+              i <= Number(exception.finalHour.split(":")[0]);
+              i++
+            ) {
+              if (!(i >= time && i < time + appointment.duration)) {
+                hours.push(i);
               }
             }
-            if(exception.secondInitialHour && exception.secondFinalHour){
-              for(let i = Number(exception.secondInitialHour.split(":")[0]); i<= Number(exception.secondFinalHour.split(":")[0]); i++){
-                if(!((i >= time && i < time + appointment.duration))){
-                  hours.push(i)
+            if (exception.secondInitialHour && exception.secondFinalHour) {
+              for (
+                let i = Number(exception.secondInitialHour.split(":")[0]);
+                i <= Number(exception.secondFinalHour.split(":")[0]);
+                i++
+              ) {
+                if (!(i >= time && i < time + appointment.duration)) {
+                  hours.push(i);
                 }
               }
             }
           }
-        })
+        });
       } else {
         allAvailabilities.map((availability) => {
-          if(availability.day == day){
-            for(let i = availability.initialHour; i <= availability.finalHour; i++){
-              if(!((i >= time && i < time + appointment.duration))){
-                hours.push(i)
+          if (availability.day == day) {
+            for (
+              let i = availability.initialHour;
+              i <= availability.finalHour;
+              i++
+            ) {
+              if (!(i >= time && i < time + appointment.duration)) {
+                hours.push(i);
               }
             }
-            if(availability.secondInitialHour && availability.secondFinalHour){
-              for(let i = availability.secondInitialHour; i <= availability.secondFinalHour; i++){
-                if(!((i >= time && i < time + appointment.duration))){
-                  hours.push(i)
+            if (
+              availability.secondInitialHour &&
+              availability.secondFinalHour
+            ) {
+              for (
+                let i = availability.secondInitialHour;
+                i <= availability.secondFinalHour;
+                i++
+              ) {
+                if (!(i >= time && i < time + appointment.duration)) {
+                  hours.push(i);
                 }
               }
             }
           }
-        })
+        });
       }
-      
-      if(obj[date.toDateString()]){
-        obj[date.toDateString()] = obj[date.toDateString()].filter((hour) => hours.includes(hour))
+
+      if (obj[date.toDateString()]) {
+        obj[date.toDateString()] = obj[date.toDateString()].filter((hour) =>
+          hours.includes(hour)
+        );
       } else {
-        obj[date.toDateString()] = hours
+        obj[date.toDateString()] = hours;
       }
-    })
+    });
 
-    
     allAvailabilities?.map((availability) => {
-      let hours = []
-      if(availability.initialHour){
-        for(let i = availability.initialHour; i <= availability.finalHour; i++){
-          hours.push(i)
+      let hours = [];
+      if (availability.initialHour) {
+        for (
+          let i = availability.initialHour;
+          i <= availability.finalHour;
+          i++
+        ) {
+          hours.push(i);
         }
       }
-      if(availability.secondInitialHour && availability.secondFinalHour){
-        for(let i = availability.secondInitialHour; i <= availability.secondFinalHour; i++){
-          hours.push(i)
+      if (availability.secondInitialHour && availability.secondFinalHour) {
+        for (
+          let i = availability.secondInitialHour;
+          i <= availability.secondFinalHour;
+          i++
+        ) {
+          hours.push(i);
         }
       }
-      obj[availability.day] = hours
-    })
+      obj[availability.day] = hours;
+    });
 
-    setDaysWithHours(obj)
+    setDaysWithHours(obj);
   };
 
   const changeDate = (form, date) => {
@@ -169,25 +210,28 @@ const BookAppointment = ({ params }) => {
     setSelectedTime(event.target.value);
     form.setFieldValue(
       "dateAndTime",
-      new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), event.target.value)
+      new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        event.target.value
+      )
     );
   };
 
   useEffect(() => {
-    if(!user.userType){
-      router.replace("/auth")
+    if (!user.userType) {
+      router.replace("/auth");
     }
     if (user.userType) {
       if (user.userType == "admin") router.replace("/admin-dashboard/home");
     }
-    dispatch(getArtistDetail(id))
-  }, [])
+    dispatch(getArtistDetail(id));
+  }, []);
 
   useEffect(() => {
-    filterAvailabilties()
+    filterAvailabilties();
   }, [artist]);
-
-
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view == "month")
@@ -197,17 +241,15 @@ const BookAppointment = ({ params }) => {
       );
   };
 
-
-
-
   return (
     <div className=" w-full bg-secondary-900  ">
+
        <Nav />
 
        <div className="w-full p-4 flex justify-center  text-artistfont">
          <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
            {sent ? (
-             <h1>Turno creado con exito! Redireccionando a Mercado Pago para completar la reserva</h1>
+             <h1>Redireccionando a Mercado Pago para completar la reserva</h1>
            ) : (
              <Formik
                initialValues={{
@@ -285,18 +327,25 @@ const BookAppointment = ({ params }) => {
                        type="text"
                        name="bodyPlace"
                       //  placeholder="Lugar del cuerpo"
-                       className="p-2 mb-3 shadow-md block w-50  text-white  bg-secondary-100 rounded-md "
-                     />
-                     <ErrorMessage
-                       name="bodyPlace"
-                       component="div"
-                       className="text-red-500 text-sm"
-                     />
-                      <label className="font-rocksalt text-xs"> Descripción: </label>
-                      <p className="text-[9px]"> *Describa en el mayor detalle posible el tatuaje a realizar</p>
-                     <Field
-                       type="text"
-                       name="description"
+                      className="p-2 mb-3 shadow-md block w-50  text-white  bg-secondary-100 rounded-md "
+                    />
+                    <ErrorMessage
+                      name="bodyPlace"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                    <label className="font-rocksalt text-xs">
+                      {" "}
+                      Descripción:{" "}
+                    </label>
+                    <p className="text-[9px]">
+                      {" "}
+                      *Describa en el mayor detalle posible el tatuaje a
+                      realizar
+                    </p>
+                    <Field
+                      type="text"
+                      name="description"
                       //  placeholder="Descripcion y explicacion del tatuaje a realizar"
                        className="p-2 mb-3 shadow-md block w-full rounded-md text-white  bg-secondary-100"
                      />
