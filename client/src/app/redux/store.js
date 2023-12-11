@@ -13,6 +13,7 @@ import modalDeleteArtistReducer from "./features/modalDeleteArtist/modalDeleteAr
 import modaleDeleteStyleReducer from "./features/modalDeleteStyle/modalDeleteStyleSlice"
 import ModalDeleteAppointmentReducer from "./features/modalDeleteAppointment/modalDeleteAppointmentSlice"
 import ModalLoadingReducer from "./features/modalLoading/ModalLoadingSlice"
+import ModalCreateStyleReducer from "./features/modalCreateStyle/modalCreateStyleSlice"
 export const store = configureStore({
     reducer: {
         artists: artistReducer,
@@ -27,5 +28,6 @@ export const store = configureStore({
         modalDeleteStyle:modaleDeleteStyleReducer,
         modalDeleteAppointment:ModalDeleteAppointmentReducer,
         modalLoading : ModalLoadingReducer,
+        modalCreateStyle : ModalCreateStyleReducer,
     }
 })

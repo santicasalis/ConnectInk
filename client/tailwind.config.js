@@ -14,11 +14,11 @@
         //primary:"#E74D40",
         secondary: {
           900: "#0A0707",
-          100: "#1C1C1C",
+          100: "#181717",
         },
         artist:"#D252D0",
-        artistfont:"#fdecda"
-        // admin:"#E8EA36"
+        artistfont:"#fdecda",
+        admin:"#E8EA36"
       },
       fontFamily: {
         rocksalt: ["Rock Salt"],

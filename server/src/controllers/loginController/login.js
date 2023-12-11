@@ -8,7 +8,7 @@ const {
   Customer,
   Admin,
   Appointment,
-  Review
+  Review,
 } = require("../../db");
 
 const login = async (tokenId) => {
@@ -20,19 +20,40 @@ const login = async (tokenId) => {
       { model: TattooStyle, attributes: ["name"] },
       {
         model: Publication,
-        attributes: ["id", "description", "image", "createdAt", "updatedAt", "disabled"],
+        attributes: [
+          "id",
+          "description",
+          "image",
+          "createdAt",
+          "updatedAt",
+          "disabled",
+        ],
         required: false,
-        where: { disabled: false }
+        where: { disabled: false },
       },
       {
         model: TimeAvailability,
-        attributes: ["id", "day", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
-        required: false
+        attributes: [
+          "id",
+          "day",
+          "initialHour",
+          "finalHour",
+          "secondInitialHour",
+          "secondFinalHour",
+        ],
+        required: false,
       },
       {
         model: TimeAvailabilityException,
-        attributes: ["id", "date", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
-        required: false
+        attributes: [
+          "id",
+          "date",
+          "initialHour",
+          "finalHour",
+          "secondInitialHour",
+          "secondFinalHour",
+        ],
+        required: false,
       },
       {
         model: PriceRange,
@@ -42,25 +63,41 @@ const login = async (tokenId) => {
         model: Appointment,
         as: "appointments",
         foreignKey: "TattooArtist_Appointment",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "Customer_Appointment"],
+        attributes: [
+          "id",
+          "size",
+          "image",
+          "bodyPlace",
+          "description",
+          "dateAndTime",
+          "duration",
+          "depositPrice",
+          "paymentId",
+          "Customer_Appointment",
+        ],
         where: { disabled: false },
-        required: false
+        required: false,
       },
       {
         model: Review,
         as: "reviews",
         foreignKey: "TattooArtist_Review",
-        attributes: ["id", "comment", "rating", "Customer_Review", "Appointment_Review"],
+        attributes: [
+          "id",
+          "comment",
+          "rating",
+          "Customer_Review",
+          "Appointment_Review",
+        ],
         where: { disabled: false },
-        required: false
-      }
+        required: false,
+      },
     ],
   });
 
-  
   if (user) {
-    if (user.disabled){
-      throw Error ("Cuenta baneada")
+    if (user.disabled) {
+      throw Error("Cuenta baneada");
     }
     cleanUser = {
       id: user.id,
@@ -93,7 +130,7 @@ const login = async (tokenId) => {
           initialHour: timeAvailability.initialHour,
           finalHour: timeAvailability.finalHour,
           secondInitialHour: timeAvailability.secondInitialHour,
-          secondFinalHour: timeAvailability.secondFinalHour
+          secondFinalHour: timeAvailability.secondFinalHour,
         };
       }),
       timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
@@ -103,7 +140,7 @@ const login = async (tokenId) => {
             initialHour: timeAvailabilityException.initialHour,
             finalHour: timeAvailabilityException.finalHour,
             secondInitialHour: timeAvailabilityException.secondInitialHour,
-            secondFinalHour: timeAvailabilityException.secondFinalHour
+            secondFinalHour: timeAvailabilityException.secondFinalHour,
           };
         }
       ),
@@ -126,8 +163,8 @@ const login = async (tokenId) => {
           duration: appointment.duration,
           depositPrice: appointment.depositPrice,
           paymentId: appointment.paymentId,
-          CustomerId: appointment.Customer_Appointment
-        }
+          CustomerId: appointment.Customer_Appointment,
+        };
       }),
       reviews: user.reviews?.map((review) => {
         return {
@@ -135,9 +172,9 @@ const login = async (tokenId) => {
           image: review.image,
           rating: review.rating,
           customerId: review.Customer_Review,
-          appointmentId: review.Appointment_Review
-        }
-      })
+          appointmentId: review.Appointment_Review,
+        };
+      }),
     };
   }
 
@@ -149,20 +186,39 @@ const login = async (tokenId) => {
           model: Appointment,
           as: "appointments",
           foreignKey: "Customer_Appointment",
-          attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "TattooArtist_Appointment"],
+          attributes: [
+            "id",
+            "size",
+            "image",
+            "bodyPlace",
+            "description",
+            "dateAndTime",
+            "duration",
+            "depositPrice",
+            "paymentId",
+            "TattooArtist_Appointment",
+            "paymentStatus",
+          ],
           where: { disabled: false },
-          required: false
+          required: false,
         },
         {
           model: Review,
           as: "reviews",
           foreignKey: "Customer_Review",
-          attributes: ["id", "comment", "rating", "TattooArtist_Review", "Appointment_Review"],
+          attributes: [
+            "id",
+            "comment",
+            "rating",
+            "TattooArtist_Review",
+            "Appointment_Review",
+          ],
           where: { disabled: false },
-          required: false
-        }
-      ]
+          required: false,
+        },
+      ],
     });
+
 
     if(userCustomer){
       if (userCustomer.disabled){
@@ -187,8 +243,9 @@ const login = async (tokenId) => {
             duration: appointment.duration,
             depositPrice: appointment.depositPrice,
             paymentId: appointment.paymentId,
-            tattooArtistId: appointment.TattooArtist_Appointment
-          }
+            tattooArtistId: appointment.TattooArtist_Appointment,
+            paymentStatus: appointment.paymentStatus,
+          };
         }),
         reviews: userCustomer.reviews?.map((review) => {
           return {
@@ -196,21 +253,21 @@ const login = async (tokenId) => {
             image: review.image,
             rating: review.rating,
             tattooArtistId: review.TattooArtist_Review,
-            appointmentId: review.Appointment_Review
-          }
-        })
+            appointmentId: review.Appointment_Review,
+          };
+        }),
       };
     }
-    if(!userCustomer){
-      let userAdmin = await Admin.findOne({where: {tokenId: tokenId}})
-      if(userAdmin){
+    if (!userCustomer) {
+      let userAdmin = await Admin.findOne({ where: { tokenId: tokenId } });
+      if (userAdmin) {
         cleanUser = {
           id: userAdmin.id,
           userType: userAdmin.userType,
           disabled: userAdmin.disabled,
           fullName: userAdmin.fullName,
           email: userAdmin.email,
-        }
+        };
       }
     }
   }

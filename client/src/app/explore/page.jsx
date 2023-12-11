@@ -34,16 +34,19 @@ export default function ExplorePage() {
     setFilterSidebarVisible(true);
   }, []);
 
+  const artistConPubli = filtered.filter((ar)=> ar.publications.length > 0)
+  console.log(artistConPubli, "ppepepepepepe")
+
   //paginado
   const [currentPage, setCurrentPage] = useState(1);
   const artistsPerPage = 5;
   const indexOfLastArtist = currentPage * artistsPerPage;
   const indexOfFirstArtist = indexOfLastArtist - artistsPerPage;
-  const artistsToDisplay = filtered.slice(
+  const artistsToDisplay = artistConPubli.slice(
     indexOfFirstArtist,
     indexOfLastArtist
   );
-  const totalArtists = filtered.length;
+  const totalArtists = artistConPubli.length;
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -142,7 +145,7 @@ export default function ExplorePage() {
             </div>
 
             <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
-              <div className=" flex flex-col items-center scroll-content w-full ">
+              <div className=" flex flex-col items-center scroll-content w-full overflow-hidden ">
                 <Paginate
                   artistsPerPage={artistsPerPage}
                   totalArtists={totalArtists}

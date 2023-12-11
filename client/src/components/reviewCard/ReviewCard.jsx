@@ -22,11 +22,11 @@ const ReviewCard = ({customerId, comment, image, rating}) => {
     return (
         <div>
             {customer.fullName ? (
-                <div>
+                <div className="border-b-[1px] border-primary/30 mt-6">
                     <h1>Review hecha por {customer.fullName}</h1>
                     <Image className="w-20" unoptimized loader={imageLoader} src={customer.image} alt={customer.fullName} width={40} height={40} />
                     <h2>Puntaje: {rating}</h2>
-                    <h3>{comment}</h3>
+                    <h3 className="mb-4">{comment}</h3>
                     {image && 
                     <div>
                         Imagen final: 

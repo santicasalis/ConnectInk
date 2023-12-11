@@ -57,7 +57,7 @@ export default function Nav() {
           </li>
           <li>
             <div>
-              <Link href={!user.userType ? "/auth" : user.userType == "artist" ? "/a-dashboard/home" : user.userType == "customer" ? "/user-dashboard/home" : "/admin-dashboard/home"}>
+              <Link href={!user.userType ? "/auth" : user.userType == "artist" ? "/a-dashboard/home" : user.userType == "customer" ? "/user-dashboard" : "/admin-dashboard/home"}>
                 {userLoaded ? (
                   <Image
                       unoptimized
