@@ -78,6 +78,10 @@ body {
   background: linear-gradient(to bottom, #101010, rgba(0, 0, 0, 0.7));
 }
 
+.custom-gradient-reviews{
+  background: linear-gradient(to bottom, transparent, rgba(13, 12, 12, 0.8));
+}
+
 .gotic{
   font-family: 'UnifrakturMaguntia', cursive!important;
 }
