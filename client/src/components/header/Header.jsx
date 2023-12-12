@@ -73,6 +73,7 @@ const Header = () => {
             menuButton={
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
                 <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                  {user.image && 
                   <Image
                     unoptimized
                     src={user.image}
@@ -86,6 +87,7 @@ const Header = () => {
                     height={40}
                     alt={user.fullName}
                   />
+                  }
                 </div>
 
                 <span className="text-artistfont">{`${user.fullName}`}</span>
@@ -106,6 +108,7 @@ const Header = () => {
                 className="flex items-center gap-x-4 w-full h-[40px]"
               >
                 <div className="rounded-full w-[25px] h-[25px] overflow-hidden">
+                  {user.image &&
                   <Image
                     unoptimized
                     src={user.image}
@@ -115,6 +118,7 @@ const Header = () => {
                     style={{ width: "100%", height: "100%" }}
                     alt={`${user.fullName} profile pic`}
                   />
+                  }
                 </div>
                 <div className="flex flex-col gap-1 text-sm text-artistfont">
                   <span>{`${user.fullName}`}</span>

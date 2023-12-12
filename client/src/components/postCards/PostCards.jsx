@@ -22,6 +22,7 @@ export default function PostCards({fullName,image, id, description}){
                 <h1 className="font-bold col-span-2">
                   {fullName}
                 </h1>
+                {image && 
                 <Image
                   className="rounded-full object-cover"
                   src={image}
@@ -30,6 +31,7 @@ export default function PostCards({fullName,image, id, description}){
                   height={40}
                   alt={`${fullName} profile pic`}
                  />
+                }
 
               </div>
               <div className="font-bolt text-center text-xl mt-[20px]">

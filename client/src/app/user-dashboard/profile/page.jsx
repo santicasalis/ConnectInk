@@ -112,8 +112,10 @@ const UProfile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
+
           <div className="w-1/4 flex items-center">
             <div className=" mb-2   mx-auto">
+
               <Image
                 src={user.image}
                 loader={imageLoader}
@@ -122,6 +124,7 @@ const UProfile = () => {
                 alt={`${user.fullName} profile pic`}
                 className="rounded-full"
               />
+
             </div>
           </div>
         </div>
