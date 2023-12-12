@@ -98,7 +98,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
       const userFireBase = auth.currentUser;
-     
+
       dispatch(getUserById(userFireBase.uid))
         .then(async () => {
           dispatch(
@@ -110,7 +110,7 @@ const Login = () => {
               phoneNumber: userFireBase.phoneNumber,
             })
           );
-      
+
           if (user.userType == "artist") {
             await new Promise((resolve) => {
               router.push("/a-dashboard/home").then(() => resolve());
@@ -138,7 +138,7 @@ const Login = () => {
             hideProgressBar: true,
           });
           dispatch(closeModalLoadingAction());
-          dispatch(logOut())
+          dispatch(logOut());
         });
     } catch (createUserError) {
       dispatch(closeModalLoadingAction());
