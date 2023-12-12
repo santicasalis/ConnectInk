@@ -457,6 +457,7 @@ const Page = () => {
                       handleSecondInitialTimeChange(day, null);
                       handleSecondFinalTimeChange(day, null);
                     }}
+                    className="mr-4 mb-4"
                   >
                     {moreTime[day] ? "➖" : "➕"}
                   </button>
@@ -605,7 +606,10 @@ const Page = () => {
             {user.logedInUser.timeAvailabilityExceptions.map(
               (exception, index) => (
                 <div key={index}>
-                  <button onClick={() => deleteException(exception.id)}>
+                  <button
+                    onClick={() => deleteException(exception.id)}
+                    className="mr-2"
+                  >
                     ❌
                   </button>
                   Fecha: {exception.date},
