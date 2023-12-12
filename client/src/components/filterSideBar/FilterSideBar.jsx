@@ -21,7 +21,6 @@ export default function FilterSideBar() {
     location: "",
     name: "",
     tattooStyle: [],
-    
   });
 
   useEffect(() => {
@@ -53,8 +52,8 @@ export default function FilterSideBar() {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
 
-//rating order
-  const [ ratingOrder, setRatingOrder] = useState("");
+  //rating order
+  const [ratingOrder, setRatingOrder] = useState("");
 
   useEffect(() => {
     dispatch(OrderAllArtistsRating(ratingOrder));
@@ -63,7 +62,6 @@ export default function FilterSideBar() {
   const handleSortChange = (event) => {
     const ratings = event.target.value;
     setRatingOrder(ratings);
-   
   };
   const resetFilters = () => {
     setFilters({
@@ -76,7 +74,15 @@ export default function FilterSideBar() {
     setRatingOrder("")
   };
 
-
+  const resetFilters = () => {
+    setFilters({
+      location: "",
+      name: "",
+      tattooStyle: [],
+    });
+    setStyleSelected([]);
+    setRatingOrder("");
+  };
 
   return (
     <div className="border-[2px] border-primary/40 rounded-3xl overflow-hidden shadow-md shadow-primary">
@@ -125,7 +131,8 @@ export default function FilterSideBar() {
               className="text-2xl font-weight:800  text-artistfont flex items-center  px-4 py-1 justify-center mb-[15px] font-newrocker"
               htmlFor="sort"
             >
-              <FaRegStar className="mr-[8px] text-primary/75" />Raiting:
+              <FaRegStar className="mr-[8px] text-primary/75" />
+              Rating:
             </label>
             <select
               className="mb-8 w-[80%] bg-secondary-100  text-artistfont rounded-lg outline-none p-2"
@@ -133,7 +140,7 @@ export default function FilterSideBar() {
               name="sort"
               onChange={handleSortChange}
             >
-              <option value="">Raiting</option>
+              <option value="">Rating</option>
               <option value="asc">1-5</option>
               <option value="desc">5-1</option>
             </select>
@@ -171,7 +178,7 @@ export default function FilterSideBar() {
               onClick={resetFilters}
               className=" bg-primary text-black text-[20px] font-newrocker font-bold rounded-lg flex gap-x-2 items-center justify-center py-3 px-3"
             >
-              <RiRefreshLine className="text-black"/>
+              <RiRefreshLine className="text-black" />
               Reiniciar Filtros
             </button>
           </div>
