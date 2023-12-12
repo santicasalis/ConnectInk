@@ -1,4 +1,4 @@
-const { TattooArtist, TattooStyle, Publication , Review } = require("../../db");
+const { TattooArtist, TattooStyle, Publication, Review } = require("../../db");
 const { Op } = require("sequelize");
 
 const getTattooArtistFiltered = async (location, name, styles) => {
@@ -25,7 +25,14 @@ const getTattooArtistFiltered = async (location, name, styles) => {
             },
           },
           { model: Publication, attributes: ["description", "image"] },
-          { model: Review, attributes: ["rating" ]}
+          {
+            model: Review,
+            as: "reviews",
+            foreignKey: "TattooArtist_Review",
+            attributes: ["rating"],
+            where: { disabled: false },
+            required: false,
+          },
         ],
       });
 
@@ -51,11 +58,12 @@ const getTattooArtistFiltered = async (location, name, styles) => {
             image: publication.image,
           };
         }),
-        reviews: artist.Reviews?.map((review)=>{
-          return{
-            rating:review.rating,
-          }
-        })
+        reviews: artist.reviews?.map((review) => {
+          console.log(review, "reviewssssss");
+          return {
+            rating: review.rating,
+          };
+        }),
       }));
       return tattooArtistsFoundCleaner;
     } catch (error) {
@@ -77,7 +85,14 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         include: [
           { model: TattooStyle, attributes: ["name"] },
           { model: Publication, attributes: ["description", "image"] },
-          { model: Review, attributes: ["rating" ]},
+          {
+            model: Review,
+            as: "reviews",
+            foreignKey: "TattooArtist_Review",
+            attributes: ["rating"],
+            where: { disabled: false },
+            required: false,
+          },
         ],
       });
 
@@ -103,11 +118,11 @@ const getTattooArtistFiltered = async (location, name, styles) => {
             image: publication.image,
           };
         }),
-        reviews: artist.Reviews?.map((review)=>{
-          return{
-            rating:review.rating,
-          }
-        })
+        reviews: artist.reviews?.map((review) => {
+          return {
+            rating: review.rating,
+          };
+        }),
       }));
 
       return tattooArtistsFoundCleaner;
