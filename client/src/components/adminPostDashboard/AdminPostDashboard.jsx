@@ -47,7 +47,9 @@ const AdminPostDashboard = ({publication, name, image}) => {
                 <div className='flex justify-between'>
                     <div className='flex gap-x-2 p-2 items-center'>
                         <div className='rounded-full w-[32px] h-[32px] overflow-hidden'>
+                            {image &&
                             <Image unoptimized loader={imageLoader} src={image} height={32} width={32} alt={name} style={{width:'100%', height:'100%' }}/>
+                            }
                         </div>
                         <span className='text-[15px] text-artistfont'>{`${name}`}</span>
                         <p className='text-artistfont/60 text-[13px]'>• {formatDistance(publication.createdAt)}</p>
@@ -79,7 +81,9 @@ const AdminPostDashboard = ({publication, name, image}) => {
                     </div>
                 </div>
                 <div className="w-full flex flex-col justify-center items-center bg-secondary-100 mb-2 max-h-[500px] ">
+                    {publication.image &&
                     <Image unoptimized src={publication.image} loader={imageLoader} height={500} width={1000} className='object-cover max-h-[500px] ' alt={publication.description} />
+                    }
                 </div>
                 <div  className='cursor-pointer text-[30px] flex gap-x-2 mb-2'>
                 {
