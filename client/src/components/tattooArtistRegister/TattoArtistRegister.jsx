@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
-
 import { uploadImage } from "../../app/utils/uploadImage";
 import { validationSchemaArtist } from "../../components/tattooArtistRegister/validationSchemaArtist";
-
 import axios from "axios";
-
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -18,7 +13,18 @@ import {
   getUserById,
   getUserInformation,
 } from "../../app/redux/features/user/userActions";
-import { RiPhoneFill } from "react-icons/ri";
+
+import {
+  RiMailLine,
+  RiLock2Line,
+  RiUserLine,
+  RiPhoneFill,
+  RiLockLine,
+  RiEyeLine,
+  RiEyeOffLine,
+  RiGoogleFill,
+} from "react-icons";
+
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
@@ -26,12 +32,15 @@ const TattoArtistRegister = () => {
   const dispatch = useDispatch();
   const urlBase = "http://localhost:3001";
   const router = useRouter();
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     dispatch(getAllStyles());
+    setLoaded(true)
   }, []);
 
   return (
+    loaded ? 
     <div className="h-full">
       <Formik
         initialValues={{
@@ -302,7 +311,9 @@ const TattoArtistRegister = () => {
           </Form>
         )}
       </Formik>
-    </div>
+    </div> 
+    :
+    <></>
   );
 };
 
