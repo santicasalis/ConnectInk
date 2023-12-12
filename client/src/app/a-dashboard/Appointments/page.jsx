@@ -27,6 +27,7 @@ export default function Appointments() {
 
   return (
     <div className="">
+      <h1 className=" text-center font-rocksalt text-artistfont text-[28px]"> Mis turnos</h1>
       {appointment && appointment.length > 0 ? (
         [...user.appointments]
           .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
