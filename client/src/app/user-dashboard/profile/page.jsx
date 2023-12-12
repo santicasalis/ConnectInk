@@ -10,6 +10,8 @@ import { bringUserInformation } from "../../../app/redux/features/user/userActio
 import axios from "axios";
 import { getAuth, updatePassword } from "firebase/auth";
 import { notifyError } from "../../../components/notifyError/NotifyError";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const UProfile = () => {
   const user = useSelector((state) => state.user.logedInUser);
@@ -90,6 +92,16 @@ const UProfile = () => {
          setConfirmPassword("");
        }
 
+       toast.success(
+        `Cambios guardados con exito!`,
+        {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        }
+      );
+
 
       
     } catch (error) {
@@ -102,7 +114,7 @@ const UProfile = () => {
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
-      <h1 className="text-4xl text-artistfont"> Mi perfil</h1>
+      <h1 className="text-4xl text-artistfont font-rocksalt"> Mi perfil</h1>
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
@@ -184,7 +196,7 @@ const UProfile = () => {
             />
 
             <span onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+              {showPassword ? <RiEyeLine />  :  <RiEyeOffLine /> }
             </span>
           </div>
         </div>
@@ -203,7 +215,7 @@ const UProfile = () => {
           </div>
         </div>
 
-        <button className="mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px]" type="submit"> GUARDAR CAMBIOS</button>
+        <button className="mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px] rounded" type="submit"> GUARDAR CAMBIOS</button>
       </form>
     </div>
   );

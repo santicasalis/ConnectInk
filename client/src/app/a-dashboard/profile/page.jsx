@@ -12,6 +12,9 @@ import { bringUserInformation } from "../../../app/redux/features/user/userActio
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { getAuth, updatePassword } from "firebase/auth";
 import { notifyError } from "../../../components/notifyError/NotifyError";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -101,8 +104,23 @@ const Profile = () => {
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
       }
+      toast.success(
+        `Cambios guardados con exito!`,
+        {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        }
+      );
     } catch (error) {
-      notifyError(error);
+      
+      toast.error(`Error al guardar cambios`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     }
   };
 
@@ -110,10 +128,23 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+  
+    // Realiza la lógica para manejar el nuevo archivo seleccionado
+    // Puedes utilizar FileReader para leer el archivo y actualizar la vista
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFormData({ ...formData, image: e.target.result });
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
-      <h1 className="text-4xl"> Mi perfil</h1>
+      <h1 className="text-4xl font-rocksalt"> Mi perfil</h1>
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
@@ -136,7 +167,8 @@ const Profile = () => {
               >
                 <RiEdit2Line />
               </label>
-              <input type="file" id="avatar" className="hidden" />
+              <input type="file" id="avatar" className="hidden" onChange={handleFileChange}
+                  />
             </div>
             <p className="text-gray-500 text-sm">
               Extensiones permitidas: png, jpg, jpeg
@@ -295,7 +327,7 @@ const Profile = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-3 cursor-pointer"
             >
-              {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+              {showPassword ?  <RiEyeLine /> :<RiEyeOffLine /> }
             </span>
           </div>
         </div>
@@ -319,7 +351,7 @@ const Profile = () => {
             </span>
           </div>
         </div>
-        <button className=" w-[250px] hover:scale-105 transition-transform border-[1px] border-artist/60 hover:border-artist hover:bg-artist/60  rounded" type="submit"> GUARDAR CAMBIOS</button>
+        <button className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer" type="submit"> GUARDAR CAMBIOS</button>
       </form>
     </div>
   );
