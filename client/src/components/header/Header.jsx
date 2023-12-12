@@ -69,13 +69,6 @@ const Header = () => {
           ir a Explorar
         </Link>
         <div className="flex items-center gap-x-4">
-          <button className="relative hover:bg-secondary-100 p-2 rounded-lg transition-colors">
-            <RiNotification3Line className="text-artistfont"/>
-            <span className="absolute -top-0 -right-0 bg-red-600 py-0.5 px-1 text-artistfont rounded-full text-[8px] font-bold">
-              2
-            </span>
-          </button>
-
           <Menu
             menuButton={
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
@@ -98,7 +91,7 @@ const Header = () => {
                 </div>
 
                 <span className="text-artistfont">{`${user.fullName}`}</span>
-                <RiArrowDownSLine className="text-artistfont"/>
+                <RiArrowDownSLine className="text-artistfont" />
               </MenuButton>
             }
             menuStyle={{
@@ -135,7 +128,7 @@ const Header = () => {
             </MenuItem>
             <MenuItem className="hover:bg-secondary-100 text-artistfont">
               <Link href="" className="flex items-center gap-2  py-1.5">
-                <RiSettings5Fill className="text-artistfont/70"/>
+                <RiSettings5Fill className="text-artistfont/70" />
                 Configuración
               </Link>
             </MenuItem>
