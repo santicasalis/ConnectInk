@@ -52,6 +52,7 @@ export default function AdminCard({
     <div className="bg-secondary-100 w-[550px]  ml-[10px] mb-[10px] rounded-xl pb-5">
       <div className="flex gap-x-1 items-center p-4">
         <div className="w-[90px] h-[90px] rounded-full">
+          {image &&
           <Image
             unoptimized
             className="rounded-full object-cover w-full h-full"
@@ -61,6 +62,7 @@ export default function AdminCard({
             height={90}
             alt={`${fullName} profile pic`}
           />
+          }
         </div>
         <div className="max-w-[300px]">
           <h1 className="font-bolt text-center text-4xl font-newrocker ml-4">

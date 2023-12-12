@@ -63,10 +63,10 @@ const UProfile = () => {
       }
     });
 
-   if (formData.password && formData.password !== confirmPassword) {
-     notifyError("Las contraseñas no coinciden");
-     return;
-   }
+    if (formData.password && formData.password !== confirmPassword) {
+      notifyError("Las contraseñas no coinciden");
+      return;
+    }
 
     try {
       const auth = getAuth();
@@ -85,25 +85,19 @@ const UProfile = () => {
         formData
       );
 
-       if (response.status === 200) {
-         dispatch(bringUserInformation(formData));
-         console.log("Datos actualizados con éxito");
-         setFormData({ ...formData, password: "" });
-         setConfirmPassword("");
-       }
+      if (response.status === 200) {
+        dispatch(bringUserInformation(formData));
+        console.log("Datos actualizados con éxito");
+        setFormData({ ...formData, password: "" });
+        setConfirmPassword("");
+      }
 
-       toast.success(
-        `Cambios guardados con exito!`,
-        {
-          className: "toastSuccess",
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 3000,
-          hideProgressBar: false,
-        }
-      );
-
-
-      
+      toast.success(`Cambios guardados con exito!`, {
+        className: "toastSuccess",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     } catch (error) {
       notifyError("Error al actualizar datos", error);
     }
@@ -118,30 +112,20 @@ const UProfile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
-          <div className="w-1/4">
-            <p className="text-artistfont">Foto de Pefil:</p>
-          </div>
-          <div className="flex-1">
-            <div className="relative mb-2">
+
+          <div className="w-1/4 flex items-center">
+            <div className=" mb-2   mx-auto">
+
               <Image
                 src={user.image}
                 loader={imageLoader}
-                width={80}
-                height={80}
+                width={150}
+                height={150}
                 alt={`${user.fullName} profile pic`}
+                className="rounded-full"
               />
 
-              <label
-                htmlFor="avatar"
-                className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
-              >
-                <RiEdit2Line />
-              </label>
-              <input type="file" id="avatar" className="hidden" />
             </div>
-            <p className="text-gray-500 text-sm ">
-              Extensiones permitidas: png, jpg, jpeg
-            </p>
           </div>
         </div>
         <div className="flex items-center mb-4">
@@ -196,7 +180,7 @@ const UProfile = () => {
             />
 
             <span onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <RiEyeLine />  :  <RiEyeOffLine /> }
+              {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
         </div>
@@ -214,8 +198,15 @@ const UProfile = () => {
             />
           </div>
         </div>
-
-        <button className="mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px] rounded" type="submit"> GUARDAR CAMBIOS</button>
+        <div className=" mb-2 w-full flex items-center  mx-auto">
+          <button
+            className="mx-auto mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px] rounded px-2 py-3 "
+            type="submit"
+          >
+            {" "}
+            GUARDAR CAMBIOS
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -49,7 +49,6 @@ export default function FilterSideBar() {
     }
   };
 
-
   useEffect(() => {
     setFilters({ ...filters, tattooStyle: styleSelected });
   }, [styleSelected]);
@@ -64,16 +63,6 @@ export default function FilterSideBar() {
   const handleSortChange = (event) => {
     const ratings = event.target.value;
     setRatingOrder(ratings);
-  };
-  const resetFilters = () => {
-    setFilters({
-      location: "",
-      name: "",
-      tattooStyle: [],
-      
-    });
-    setStyleSelected([]);
-    setRatingOrder("")
   };
 
   const resetFilters = () => {

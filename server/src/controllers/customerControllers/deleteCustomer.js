@@ -6,13 +6,13 @@ const deleteCustomer = async (id) => {
     if (customerFound) {
         await Customer.update(
             {
-                disabled: true
+                disabled: !customerFound.disabled
             },
             {
                 where: { id: id }
             }
         )
-        return 'Customer deleted successfully'
+        return 'update successfully'
     } 
 }
 

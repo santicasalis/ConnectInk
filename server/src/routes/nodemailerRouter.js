@@ -8,6 +8,7 @@ const deleteAccountHandler = require("../handlers/nodemailer/deleteAccountHandle
 const deletePublicationHandler = require("../handlers/nodemailer/deletePublicationHandler");
 const cancelDateHandler = require("../handlers/nodemailer/cancelDateHandler");
 const confirmDateHandler = require("../handlers/nodemailer/confirmDateHandler");
+const rejectDateHandler = require("../handlers/nodemailer/rejectDateHandler");
 
 nodemailerRouter.post("/welcomeArtist", welcomeArtistHandler)
 nodemailerRouter.post("/welcomeCustomer", welcomeCustomerHandler)
@@ -15,6 +16,7 @@ nodemailerRouter.post("/deleteAccount", deleteAccountHandler)
 nodemailerRouter.post("/deletePublication", deletePublicationHandler)
 nodemailerRouter.post("/cancelDate", cancelDateHandler)
 nodemailerRouter.post("/confirmDate", confirmDateHandler)
+nodemailerRouter.post("/rejectDate", rejectDateHandler)
 
 
 module.exports = nodemailerRouter;
