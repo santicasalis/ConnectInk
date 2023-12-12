@@ -62,7 +62,7 @@ const AdminPostDashboard = ({publication, name, image}) => {
                         transition
                         menuStyle={{backgroundColor:'#252524', color:'white'}}
                         menuClassName={'hover:bg-secondary-900 hover:text-black-900'}>
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full text-artistfont' onClick={()=> dispatch(openModalAction(publication)) }>
+                            {/* <MenuItem className='hover:bg-secondary-100 w-full h-full text-artistfont' onClick={()=> dispatch(openModalAction(publication)) }>
                                 <div>
                                     <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
                                         <RiEditFill />
@@ -70,7 +70,7 @@ const AdminPostDashboard = ({publication, name, image}) => {
                                     </Link>
                                 </div>
                                 
-                            </MenuItem>
+                            </MenuItem> */}
                             <MenuItem className='hover:bg-secondary-100 w-full h-full text-artistfont' onClick={() => dispatch(openModalDeleteAction(publication))}>
                                 <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
                                     <RiDeleteBin6Fill />
@@ -102,7 +102,7 @@ const AdminPostDashboard = ({publication, name, image}) => {
                             <textarea type='text' onChange={handleChange} value={textCommend} placeholder='Añadir comentario...' rows={2} className='flex-1 py-0 h-auto resize-none text-[16px]  outline-none bg-transparent text-artistfont '/>
                             <div className='flex gap-x-2  w-[100px] text-artistfont'>
                                 <button type='submit' className={`flex items-start pt-0.5 ${textCommend.length==0 && 'hidden'} `}>
-                                    <span className='text-red-600 text-[17px] hover:text-white'>Publicar</span>
+                                    <span className='text-admin/60 text-[17px] hover:text-white'>Publicar</span>
                                 </button>
                                 <div className='pt-1 ml-auto'>
                                     <RiEmotionHappyLine className='cursor-pointer top-0 text-[17px] text-artistfont'/>
