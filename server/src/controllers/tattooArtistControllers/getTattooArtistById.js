@@ -39,8 +39,8 @@ const getTattooArtistById = async (id) => {
         model: Appointment,
         as: "appointments",
         foreignKey: "TattooArtist_Appointment",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "Customer_Appointment"],
-        where: { disabled: false },
+        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "paymentStatus", "Customer_Appointment"],
+        where: { disabled: false, [Op.or]: [{paymentStatus: "approved"}, {paymentStatus: "in_process"}] },
         required: false
       },
       {
