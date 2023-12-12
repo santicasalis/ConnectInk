@@ -24,6 +24,8 @@ export default function Page({ params }) {
   const artist = useSelector((state) => state.artists.detail);
   const [priceRanges, setPriceRanges] = useState({})
 
+  console.log(artist, "quiero la descr")
+
   useEffect(() => {
     if (params.id) {
       // setLoading(true);
@@ -86,7 +88,11 @@ export default function Page({ params }) {
                     </button>
                   </Link>
               </div>
+              
             </div>
+            <div className="text-artistfont">
+                {artist.description}
+              </div>
 
             <div className="flex p-4 rounded mt-4 mb-5">
                 <div className="w-[50%] pr-4">
@@ -157,6 +163,7 @@ export default function Page({ params }) {
                   </div>
             </div>
 
+
             <div className="flex pt-8 mb-8">
               <div className="w-1/2  flex flex-col">
                 <div className="p-4 rounded  flex-grow pr-4">
@@ -202,6 +209,7 @@ export default function Page({ params }) {
                 )}
             </div>
             
+
           </div>
         </div>
       </div>
@@ -212,7 +220,7 @@ export default function Page({ params }) {
           {artist?.publications?.map((publication, index) => (
             <div
               key={index}
-              className="border-[5px] border-secondary-900/50 bg-secondary-900 rounded-lg shadow-lg p-4"
+              className=" bg-secondary-100 rounded-lg shadow-lg p-4"
             >
               <img
                 src={publication.image}

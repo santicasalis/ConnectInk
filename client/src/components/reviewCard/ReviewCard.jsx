@@ -24,6 +24,7 @@ const ReviewCard = ({customerId, comment, image, rating}) => {
     return (
         <div className="bg-secondary-100 rounded-lg  p-3 w-full mb-4">
             {customer.fullName ? (
+
                 <div >
                     <div className="flex items-center justify-between mb-3">
                         <div className="flex gap-x-1">
@@ -42,6 +43,7 @@ const ReviewCard = ({customerId, comment, image, rating}) => {
                     </div>
                     
                     <h3>{comment}</h3>
+
                     {image && 
                     <div>
                         Imagen final: 
