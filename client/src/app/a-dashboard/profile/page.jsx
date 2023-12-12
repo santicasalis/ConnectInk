@@ -122,6 +122,7 @@ const Profile = () => {
           </div>
           <div className="flex-1">
             <div className="relative mb-2">
+              {user.image &&
               <Image
                 unoptimized
                 src={user.image}
@@ -130,6 +131,7 @@ const Profile = () => {
                 height={80}
                 alt={`${user.fullName} profile pic`}
               />
+              }
               <label
                 htmlFor="avatar"
                 className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"

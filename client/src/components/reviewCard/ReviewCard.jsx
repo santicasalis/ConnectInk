@@ -29,7 +29,9 @@ const ReviewCard = ({customerId, comment, image, rating}) => {
                     <div className="flex items-center justify-between mb-3">
                         <div className="flex gap-x-1">
                             <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
+                                {customer.image && 
                                 <Image className="w-full h-full" unoptimized loader={imageLoader} src={customer.image} alt={customer.fullName} width={40} height={40} />
+                                }
                             </div>
                             <h1 className="flex gap-x-0.5 items-center font-newrocker text-[20px]"> {customer.fullName}</h1>
                         </div>

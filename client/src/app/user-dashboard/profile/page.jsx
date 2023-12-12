@@ -111,6 +111,7 @@ const UProfile = () => {
           </div>
           <div className="flex-1">
             <div className="relative mb-2">
+              {user.image &&
               <Image
                 src={user.image}
                 loader={imageLoader}
@@ -118,6 +119,7 @@ const UProfile = () => {
                 height={80}
                 alt={`${user.fullName} profile pic`}
               />
+              }
 
               <label
                 htmlFor="avatar"
