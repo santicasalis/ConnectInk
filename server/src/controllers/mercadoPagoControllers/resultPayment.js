@@ -16,6 +16,7 @@ const resultPayment = async (id, payment_id, status) => {
       code: 200,
       message: "Appointment updated successfully",
       data: appointmentFound,
+      paymentStatus: status
     };
   } else {
     return { code: 404, error: "Appointment not found" };

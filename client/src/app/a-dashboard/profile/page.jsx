@@ -154,12 +154,33 @@ const Profile = () => {
           </div>
           <div className="flex-1">
             <div className="relative mb-2">
+
               <input
                 type="file"
                 id="avatar"
                 className="hidden"
                 onChange={handleFileChange}
               />
+
+              {user.image &&
+              <Image
+                unoptimized
+                src={user.image}
+                loader={imageLoader}
+                width={80}
+                height={80}
+                alt={`${user.fullName} profile pic`}
+              />
+              }
+              <label
+                htmlFor="avatar"
+                className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
+              >
+                <RiEdit2Line />
+              </label>
+              <input type="file" id="avatar" className="hidden" onChange={handleFileChange}
+                  />
+
             </div>
             <p className="text-gray-500 text-sm"></p>
           </div>
