@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -40,7 +39,6 @@ const AdminSideBar = () => {
             Admin<span className="text-admin text-4xl">.</span>
           </h1>
           <ul>
-          
             <li>
               <Link
                 href="/admin-dashboard/registeredArtists"
@@ -51,7 +49,6 @@ const AdminSideBar = () => {
                 </span>
               </Link>
             </li>
-            
 
             <li>
               <Link
@@ -61,11 +58,9 @@ const AdminSideBar = () => {
                 <RiMessage3Line className="text-admin" /> Estilos de tatuaje
               </Link>
             </li>
-            <li>
-  
-         </ul>
-      </div>
-      
+          </ul>
+        </div>
+
         <nav>
           <Link
             onClick={handleLogout}

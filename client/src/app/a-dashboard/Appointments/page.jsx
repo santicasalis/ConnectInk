@@ -7,8 +7,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Appointments() {
-
-
   const user = useSelector((state) => state.user.logedInUser);
   const appointment = user.appointments;
   const router = useRouter();
@@ -33,7 +31,6 @@ export default function Appointments() {
           .map((tur) => (
             <div className="mt-[50px]">
               <ArtistBookingCard
-
                 id={tur.id}
                 bodyPlace={tur.bodyPlace}
                 description={tur.description}
@@ -47,7 +44,14 @@ export default function Appointments() {
             </div>
           ))
       ) : (
-        <p>No tienes ninguna reserva aún.</p>
+        <div>
+          {" "}
+          <p>No tienes ninguna reserva aún.</p> <br />{" "}
+          <p>
+            Recuerda ingresar el rango de precios para cada tamaño de tatuajes y
+            mantenenlo actualizado.{" "}
+          </p>{" "}
+        </div>
       )}
     </div>
   );
