@@ -8,8 +8,8 @@ const resultPaymentHandler = async (req, res) => {
     const result = await resultPayment(id, payment_id, status);
     if (result.code === 200) {
       return res
-        .status(200)
-        .redirect("http://localhost:3000/user-dashboard/reservas");
+          .status(200)
+          .redirect(`http://localhost:3000/user-dashboard/payments/${id}`);
     } else {
       return res.status(result.code).json({ error: result.error });
     }

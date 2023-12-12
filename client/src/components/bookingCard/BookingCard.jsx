@@ -52,6 +52,7 @@ const BookingCard = ({
     timeZoneName: "short",
   };
   let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
+  const [loaded, setLoaded] = useState(false)
 
   const [response, setResponse] = useState({});
   const [Loaded, setLoaded] = useState(false);
@@ -110,7 +111,9 @@ const BookingCard = ({
   };
 
   return (
+
     Loaded ?
+
     <div
       className={`
         ${
@@ -166,6 +169,7 @@ const BookingCard = ({
                   Artista:
                 </p>
                 <div className="flex justify-center items-center gap-2">
+
                   {response.image && 
                    <Image
                    unoptimized
@@ -178,6 +182,7 @@ const BookingCard = ({
                  />
                   }
                  
+
                   <p className="text-center">{response.fullName}</p>
                 </div>
               </div>
@@ -210,6 +215,7 @@ const BookingCard = ({
           <p className="text-center mt-2 ">Duracion:{duration}</p>
           <p className="text-center mt-2">Tu diseño:</p>
           <div className="flex justify-center items-center mt-2">
+
             {image && 
             <Image
             unoptimized
@@ -221,7 +227,7 @@ const BookingCard = ({
             className=" rounded-full"
           />
             }
-            
+
           </div>
         </div>
         <button onClick={handleReview}>Dejar reseña</button>
@@ -239,8 +245,10 @@ const BookingCard = ({
             ))}
         </div>
       </div>
+
     </div>
     : <></>
+
   );
 };
 
