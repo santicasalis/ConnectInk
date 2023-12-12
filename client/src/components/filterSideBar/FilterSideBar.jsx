@@ -70,10 +70,14 @@ export default function FilterSideBar() {
       location: "",
       name: "",
       tattooStyle: [],
+      
     });
     setStyleSelected([]);
-    setRatingOrder("");
+    setRatingOrder("reset")
   };
+
+
+
 
   return (
     <div className="border-[2px] border-primary/40 rounded-3xl overflow-hidden shadow-md shadow-primary">

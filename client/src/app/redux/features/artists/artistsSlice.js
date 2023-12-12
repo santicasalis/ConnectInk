@@ -52,6 +52,7 @@ export const artistsSlice = createSlice({
 
 
   orderArtistRating: (state, action) => {
+    const filterdCopy = state.filtered
     let reviewedArtists = state.filtered.map((artist) => ({
       ...artist,
       averageRating: artist.reviews?.length 
@@ -70,9 +71,21 @@ export const artistsSlice = createSlice({
         reviewedArtists.sort((a, b) =>
           b.averageRating - a.averageRating
         );
-      break;
-    }
-    state.filtered = reviewedArtists;
+
+        break;
+        case "reset":
+          return {
+            ...state,
+            filtered: filterdCopy,
+          };
+          break;
+           
+}
+
+state.filtered = reviewedArtists;
+      
+    
+
   },
 
     orderAndFilterArtists: (state, action) => {
