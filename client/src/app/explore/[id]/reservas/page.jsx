@@ -300,6 +300,16 @@ const BookAppointment = ({ params }) => {
     
                       const paymentMpResponse = paymentMp.data;
     
+                  const data = {
+                    dateAndTime: values.dateAndTime,
+                    customerName: user.fullName,
+                    customerEmail: user.email,
+                    artistName: artist.fullName,
+                    artistEmail: artist.email
+                  }
+
+                  await axios.post("http://localhost:3001/nodemailer/confirmDate", data)
+
                       if (paymentMpResponse) {
                         setTimeout(() => {
                           window.location.href = paymentMpResponse.init_point;
@@ -539,10 +549,6 @@ const CalendarContainer = styled.div`
     margin: 0.5em;
   }
 
-  .react-calendar__tile--range {
-    box-shadow: 0 0 10px rgb(0, 0, 0)
-  }
-
   .react-calendar,
   .react-calendar *,
   .react-calendar *:before,
@@ -555,6 +561,7 @@ const CalendarContainer = styled.div`
   .react-calendar button {
     margin: 0;
     border: 0;
+    border: solid 1px rgb(30, 30, 30);
   }
 
   .react-calendar button:enabled:hover {
@@ -570,6 +577,7 @@ const CalendarContainer = styled.div`
   .react-calendar__navigation button {
     min-width: 44px;
     background: none;
+    text-transform: uppercase;
   }
 
   .react-calendar__navigation button:disabled {
@@ -601,20 +609,16 @@ const CalendarContainer = styled.div`
     font-weight: bold;
   }
 
-  .react-calendar__month-view__days__day--weekend {
-    color: black;
-  }
-
   .react-calendar__year-view .react-calendar__tile,
   .react-calendar__decade-view .react-calendar__tile,
   .react-calendar__century-view .react-calendar__tile {
     padding: 2em 0.5em;
+    text-transform: uppercase;
   }
 
   .react-calendar__tile {
     max-width: 100%;
     padding: 10px 6.6667px;
-    background: none;
     text-align: center;
     line-height: 16px;
     font: inherit;
@@ -622,27 +626,15 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__tile:disabled {
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(50, 50, 50);
     color: rgb(100, 100, 100);
-  }
-
-  .react-calendar__tile:enabled {
-    background-color: rgb(36, 36, 36);
-    color: white;
   }
 
   .react-calendar__tile:enabled:hover {
     background-color: rgb(30, 30, 30);
   }
   .react-calendar__tile:enabled:focus{
-    background-color: rgb(46, 46, 46);
-  }
-  .react-calendar__tile:active{
-    background-color: rgb(46, 46, 46);
-  }
-
-  .react-calendar__tile--now {
-    background: rgb(46, 46, 46);
+    background-color: rgb(80, 80, 80);
   }
 
   .react-calendar__tile--hasActive:enabled:hover,
@@ -651,18 +643,12 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__tile--active {
-    background-color: rgb(46, 46, 46);
-    color: black;
+    background-color: rgb(80, 80, 80);
   }
 
-  .react-calendar__tile--active:enabled:hover,
-  .react-calendar__tile--active:enabled:focus {
-    background: rgb(46, 46, 46);
+  .react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: rgb(36, 36, 36);
   }
-
-  // .react-calendar--selectRange .react-calendar__tile--hover {
-  //   background-color: rgb(36, 36, 36);
-  // }
 
   
 `;

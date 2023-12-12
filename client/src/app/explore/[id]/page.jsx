@@ -24,6 +24,8 @@ export default function Page({ params }) {
   const artist = useSelector((state) => state.artists.detail);
   const [priceRanges, setPriceRanges] = useState({})
 
+  console.log(artist, "quiero la descr")
+
   useEffect(() => {
     if (params.id) {
       // setLoading(true);
@@ -57,9 +59,9 @@ export default function Page({ params }) {
     <div className="w-full bg-secondary-900">
       <Nav />
 
-      <div className="flex flex-wrap   ">
-        <div className="w-full md:w-1/2 p-4 flex flex-col ">
-          <div className="rounded bg-secondary-100 px-4 ">
+      <div className="flex flex-wrap items-center justify-center">
+        <div className="w-[70%] flex flex-col rounded-2xl shadow-primary/50 shadow-lg">
+          <div className=" bg-secondary-100/30 px-4 rounded-2xl">
             <div className="flex justify-between border-b-[1px] border-primary/30 py-4 mb-4">
               <div className="flex gap-x-4">
                   <div className="w-[130px] h-[130px] rounded-full overflow-hidden">
@@ -69,13 +71,14 @@ export default function Page({ params }) {
                       className="w-[130px] h-[130px] object-cover rounded-full "
                     />
                   </div>
-                  <div className="flex flex-col gap-y-3 items-center justify-center">
-                    <h2 className="items-center justify-center text-2xl font-bold flex gap-x-2">
-                      <p className=" text-artistfont text-[47px] font-newrocker"> {artist?.fullName} </p>
+                  <div className="flex flex-1 flex-col gap-y-3 items-center ">
+                    <h2 className="w-full items-center text-left text-2xl font-bold flex gap-x-2">
+                      <p className=" text-artistfont text-[47px] font-newrocker text-left"> {artist?.fullName} </p>
                     </h2>
-                    <h2 className=" font-bold flex gap-x-1 items-center justify-center">
-                      <CiShop className="text-primary text-[20px]" /> <p className=" text-artistfont/80 text-[20px]">{artist?.shopName}</p>
+                    <h2 className="w-full font-bold flex gap-x-1 items-center text-left">
+                      <CiShop className="text-primary text-[20px]" /> <p className=" text-artistfont/90 text-[20px]">{artist?.shopName}</p>
                     </h2>
+                    <p className="mr-5 font-newrocker text-artistfont/60">"{artist?.description}"</p>
                   </div>
               </div>
               <div className="flex items-center justify-center ">
@@ -85,9 +88,13 @@ export default function Page({ params }) {
                     </button>
                   </Link>
               </div>
+              
             </div>
+            <div className="text-artistfont">
+                {artist.description}
+              </div>
 
-            <div className="flex p-4 rounded mt-4 ">
+            <div className="flex p-4 rounded mt-4 mb-5">
                 <div className="w-[50%] pr-4">
                     <h3 className="text-[29px] font-rocksalt mb-4 text-artistfont">Información:</h3>
                     <div className="flex justify-center items-center mb-3">
@@ -126,62 +133,84 @@ export default function Page({ params }) {
                 </div>
             </div>
 
-            <div>
-                <div className="p-4 rounded ">
-                    <div className="flex flex-col items-center">
-                      <label className="text-md  font-rocksalt text-artistfont">Pequeño</label>
-                      <span className="text-gray-600">$ {priceRanges.Pequeño?.priceMin} - {priceRanges.Pequeño?.priceMax}</span>
+            <div className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/30 pb-8">
+                  <h3 className="font-rocksalt text-[29px] w-full text-center mb-4 text-artistfont">Rango de precios:</h3>
+                  <div className="flex  gap-0">
+                    <div className="flex flex-col items-center  border-r-[1px] border-artistfont/30 w-[150px]">
+                        <label className="text-md  font-newrocker w-full text-artistfont border-b-[1px] border-artistfont/30 text-center">Pequeño</label>
+                        <span className="text-artistfont/80 pt-2">$ {priceRanges.Pequeño?.priceMin} - {priceRanges.Pequeño?.priceMax}</span>
                     </div>
-                    <div className="flex flex-col items-center mt-2">
-                      <label className="text-md  font-rocksalt text-artistfont">Mediano</label>
-                      <span className="text-gray-600">$ {priceRanges.Mediano?.priceMin} - {priceRanges.Mediano?.priceMax}</span>
+                    <div className="flex flex-col items-center  border-r-[1px] border-artistfont/30 w-[150px]">
+                        <label className="text-md  font-newrocker w-full text-artistfont border-b-[1px] border-artistfont/30 text-center">Pequeño a Color</label>
+                        <span className="text-artistfont/80 pt-2">$ {priceRanges['Pequeño a color']?.priceMin} - {priceRanges['Pequeño a color']?.priceMax}</span>
                     </div>
-                    <div className="flex flex-col items-center mt-2">
-                      <label className="text-md  font-rocksalt text-artistfont">Grande</label>
-                      <span className="text-gray-600">$ {priceRanges.Grande?.priceMin} - {priceRanges.Grande?.priceMax}</span>
+                    <div className="flex flex-col items-center   border-r-[1px] border-artistfont/30 w-[150px]">
+                        <label className="text-md  font-newrocker w-full text-artistfont border-b-[1px] border-artistfont/30 text-center">Mediano</label>
+                        <span className="text-artistfont/80 pt-2">$ {priceRanges.Mediano?.priceMin} - {priceRanges.Mediano?.priceMax}</span>
                     </div>
-                </div>
+                    <div className="flex flex-col items-center  border-r-[1px] border-artistfont/30 w-[150px]">
+                        <label className="text-md  font-newrocker w-full text-artistfont border-b-[1px] border-artistfont/30 text-center">Mediano a Color</label>
+                        <span className="text-artistfont/80 pt-2">$ {priceRanges['Mediano a color']?.priceMin} - {priceRanges['Mediano a color']?.priceMax}</span>
+                    </div>
+                    <div className="flex flex-col items-center  border-r-[1px] border-artistfont/30 w-[150px]">
+                        <label className="text-md  font-newrocker w-full text-artistfont border-b-[1px] border-artistfont/30 text-center">Grande</label>
+                        <span className="text-artistfont/80 pt-2">$ {priceRanges.Grande?.priceMin} - {priceRanges.Grande?.priceMax}</span>
+                    </div>
+                    <div className="flex flex-col items-center w-[150px]">
+                        <label className="text-md  font-newrocker w-full text-artistfont border-b-[1px] border-artistfont/30 text-center">Grande a Color</label>
+                        <span className="text-artistfont/80 pt-2">$ {priceRanges['Grande a color']?.priceMin} - {priceRanges['Grande a color']?.priceMax}</span>
+                    </div>
+                  </div>
             </div>
 
-            
-            {artist.reviews ? (
-              <div>
-                <h1 className=" text-artistfont">Reseñas dejadas por clientes sobre el artista: </h1>
-                {artist.reviews.map((review) => {
-                  return (
-                    <ReviewCard
-                      key={review.appointmentId}
-                      customerId={review.customerId}
-                      comment={review.comment}
-                      image={review?.image}
-                      rating={review.rating}
-                    />
-                  );
-                })}
+
+            <div className="flex pt-8 mb-8">
+              <div className="w-1/2  flex flex-col">
+                <div className="p-4 rounded  flex-grow pr-4">
+                  <h3 className="font-bold  font-rocksalt flex gap-2 text-[29px] mb-4">
+                     Ubicación:
+                  </h3>
+                  {artist.location && artist.address && (
+                    <div className="opacity-70 rounded-lg overflow-hidden h-[500px]">
+                      <MapComponent
+                        location={artist.location}
+                        address={artist.address}
+                        className='opacity-50 h-[500px]'
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-            ) : (
-              <h1>
-                El artista todavía no tiene reseñas, saca un turno y se el
-                primero en dejar una!
-              </h1>
-            )}
-          </div>
-        </div>
+              {artist.reviews ? (
+                <div className="w-1/2 p-4">
+                  <h3 className=" text-artistfont text-[29px] mb-4 font-rocksalt w-full text-center">Reseñas:</h3>
+                  <div className="flex flex-col items-center justify-center h-[500px] overflow-hidden">
+                    <div className="w-[70%] mb-4 relative">
+                      <div className="absolute custom-gradient-reviews w-full h-full"></div>
+                      {artist.reviews.map((review) => {
+                        return (
+                          <ReviewCard
+                            key={review.appointmentId}
+                            customerId={review.customerId}
+                            comment={review.comment}
+                            image={review?.image}
+                            rating={review.rating}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+                ) : (
+                  <h1>
+                    El artista todavía no tiene reseñas, saca un turno y se el
+                    primero en dejar una!
+                  </h1>
+                )}
+            </div>
+            
 
-        <div className="w-full md:w-1/2 p-4 flex flex-col">
-          <div className="p-4 rounded  bg-secondary-900 flex-grow">
-            <h3 className="text-xl font-bold  font-rocksalt flex gap-2 mb-4">
-              {" "}
-              <FaMapLocationDot className="text-primary" /> <p className=" text-artistfont">Ubicacion </p>
-            </h3>
-            {artist.location && artist.address && (
-              <MapComponent
-                location={artist.location}
-                address={artist.address}
-              />
-            )}
           </div>
-
         </div>
       </div>
 
@@ -191,7 +220,7 @@ export default function Page({ params }) {
           {artist?.publications?.map((publication, index) => (
             <div
               key={index}
-              className="border-[5px] border-secondary-900/50 bg-secondary-900 rounded-lg shadow-lg p-4"
+              className=" bg-secondary-100 rounded-lg shadow-lg p-4"
             >
               <img
                 src={publication.image}
