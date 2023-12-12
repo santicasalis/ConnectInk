@@ -78,6 +78,7 @@ export default function FilterSideBar() {
 
 
 
+
   return (
     <div className="border-[2px] border-primary/40 rounded-3xl overflow-hidden shadow-md shadow-primary">
       <div className="bg-secondary-900 p-4 flex flex-col transition-all pt-10">

@@ -43,29 +43,58 @@ export const artistsSlice = createSlice({
       }
     },
 
-    orderArtistRating: (state, action) => {
-      let reviewedArtists = state.filtered.filter((artist) => artist.reviews?.length != 0);
-      let sortedArtists;
-      switch (action.payload) {
-        case "asc":
-          sortedArtists = [...reviewedArtists].sort((a, b) =>
-            a.reviews?.rating - b.reviews?.rating
+  //   orderArtistRating: (state, action) => {
+  //     let reviewedArtists = state.filtered.filter((artist) => artist.reviews?.length != 0);
+  //     let sortedArtists;
+      
+  //     switch (action.payload) {
+  //       case "asc":
+  //         sortedArtists = [...reviewedArtists].sort((a, b) =>
+  //           a.reviews?.rating - b.reviews?.rating
         
-          );
-          break;
-        case "desc":
-          sortedArtists = [...reviewedArtists].sort((a, b) =>
-            b.reviews?.rating - a.reviews?.rating
-          );
-          break;
-          default:
-      sortedArtists = [...reviewedArtists];
-  }
+  //         );
+  //         break;
+  //       case "desc":
+  //         sortedArtists = [...reviewedArtists].sort((a, b) =>
+  //           b.reviews?.rating - a.reviews?.rating
+  //         );
+  //         break;
+  //         default:
+  //     sortedArtists = [...reviewedArtists];
+  // }
 
-  state.filtered = sortedArtists;
+  // state.filtered = sortedArtists;
         
       
-    },
+  //   },
+
+  orderArtistRating: (state, action) => {
+    let reviewedArtists = state.filtered.map((artist) => ({
+      ...artist,
+      averageRating: artist.reviews?.length 
+        ? artist.reviews.reduce((acc,review)=> acc + review.rating, 0 ) / artist.reviews.length
+        : 0
+    }));
+   
+    switch (action.payload) {
+      case "asc":
+        reviewedArtists.sort((a, b) =>
+          a.averageRating - b.averageRating
+      
+        );
+        break;
+      case "desc":
+        reviewedArtists.sort((a, b) =>
+          b.averageRating - a.averageRating
+        );
+        break;
+           
+}
+
+state.filtered = reviewedArtists;
+      
+    
+  },
 
 
     orderAndFilterArtists: (state, action) => {
