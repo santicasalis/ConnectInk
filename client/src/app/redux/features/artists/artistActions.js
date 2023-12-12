@@ -11,7 +11,7 @@ import {
   deleteArtist,
   getDetail,
   cleanDetail,
-  
+  disabledArtists
 } from "./artistsSlice";
 import axios from "axios";
 
@@ -51,6 +51,12 @@ export const CleanArtist = () => async (dispatch) => {
   dispatch(cleanDetail())
 }
 
+export const getDisabledArtists = () => async (dispatch) => {
+  const response = await axios.get(`${URL_BASE}/tattooArtists/`);
+  const data = response.data
+  //console.log(data,"DATITA")
+  dispatch(disabledArtists(data));
+};
 
 
 /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
