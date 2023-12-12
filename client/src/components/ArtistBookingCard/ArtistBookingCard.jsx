@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { openModalDeleteAppointmentAction } from '../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction';
 import Link from 'next/link';
 import { notifyError } from "../notifyError/NotifyError";
+import { current } from '@reduxjs/toolkit';
 
 const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
     const dispatch = useDispatch();
@@ -52,6 +53,30 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
         
     },[])
 
+    const handleCancelation = async () => {
+        dispatch(openModalDeleteAppointmentAction(id))
+
+        const customer = (await axios(`http://localhost:3001/customers/${CustomerId}`)).data
+
+        const year = new Date(dateAndTime).getFullYear()
+        const month = new Date(dateAndTime).getMonth() + 1
+        const day = new Date(dateAndTime).getDate()
+        const hour = new Date(dateAndTime).getHours()
+
+        const dateData = `${day}/${month}/${year} a las ${hour} horas`
+        const data = {
+            dateData,
+            customerName: customer.fullName,
+            customerEmail: customer.email,
+            artistName: user.fullName,
+            artistEmail: user.email,
+            depositPrice
+        }
+
+        await axios.post("http://localhost:3001/nodemailer/cancelDate", data)
+       
+    }
+
 
   return (
     <div className='bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105'>
@@ -78,7 +103,9 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
             <div>
                 {/* <p className='ml-6 text-2xl mt-2 font-rocksalt'>Cliente:</p> */}
                 <div className='ml-6 flex items-center mt-2  gap-2'>
+                    {response.image && 
                     <Image unoptimized src={response.image} loader={imageLoader} width={80} height={80} alt={`${response.fullName} profile pic`} className=' rounded-full'/>
+                    }
                     <p className='text-center text-[18px]'>{response.fullName}</p>
                 </div>
                 <div className='ml-6 mt-4 '>
@@ -99,7 +126,7 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
                         menuStyle={{backgroundColor:'#252524', color:'white'}}
                         menuClassName={'hover:bg-secondary-900 hover:text-black-900'}>
                         
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full' onClick={()=>dispatch(openModalDeleteAppointmentAction(id))}>
+                            <MenuItem className='hover:bg-secondary-100 w-full h-full' onClick={handleCancelation}>
                                 
                                     <RiDeleteBin6Fill />
                                     Cancelar Reserva
@@ -114,7 +141,9 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
              <p className='text-center mt-2 '>Duracion:{duration}</p>
              <p className='text-center mt-2'>Boceto:</p>
             <div className='flex justify-center items-center mt-2'>
+                {image && 
                  <Image unoptimized src={image} loader={imageLoader} width={70} height={70} alt={"Tu Tattoo"} className=' rounded-full'/> 
+                }
            </div>
             
              

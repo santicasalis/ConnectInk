@@ -42,7 +42,7 @@ const BookingCard = ({
   };
   const user = useSelector((state) => state.user.logedInUser);
   const router = useRouter();
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
   let date = new Date(dateAndTime);
   let opcionesFormato = {
     year: "numeric",
@@ -78,12 +78,31 @@ const BookingCard = ({
     //   console.log(id, tattooArtistId);
     //   //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
     // } else {
-      router.push(`/critica/${id}/${tattooArtistId}`);
+    router.push(`/critica/${id}/${tattooArtistId}`);
     // }
   };
 
-  const handleDeleteAppointment = () => {
+  const handleDeleteAppointment = async () => {
     dispatch(openModalDeleteAppointmentAction(id));
+
+    const artist = (await axios(`http://localhost:3001/tattooArtists/${tattooArtistId}`)).data
+
+    const year = new Date(dateAndTime).getFullYear()
+    const month = new Date(dateAndTime).getMonth() + 1
+    const day = new Date(dateAndTime).getDate()
+    const hour = new Date(dateAndTime).getHours()
+
+    const dateData = `${day}/${month}/${year} a las ${hour} horas`
+    const data = {
+        dateData,
+        customerName: user.fullName,
+        customerEmail: user.email,
+        artistName: artist.fullName,
+        artistEmail: artist.email,
+        depositPrice
+    }
+
+    await axios.post("http://localhost:3001/nodemailer/cancelDate", data)
   };
 
   return (
@@ -168,9 +187,9 @@ const BookingCard = ({
             <MenuItem className="hover:bg-secondary-100 w-full h-full">
               <RiDeleteBin6Fill />
               <button onClick={handleDeleteAppointment}>
-              Cancelar Reserva
+                Cancelar Reserva
               </button>
-              </MenuItem>
+            </MenuItem>
           </Menu>
         </div>
 

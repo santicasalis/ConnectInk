@@ -283,6 +283,16 @@ const BookAppointment = ({ params }) => {
 
                   const paymentMpResponse = paymentMp.data;
 
+                  const data = {
+                    dateAndTime: values.dateAndTime,
+                    customerName: user.fullName,
+                    customerEmail: user.email,
+                    artistName: artist.fullName,
+                    artistEmail: artist.email
+                  }
+
+                  await axios.post("http://localhost:3001/nodemailer/confirmDate", data)
+
                   if (paymentMpResponse) {
                     setTimeout(() => {
                       window.location.href = paymentMpResponse.init_point;
