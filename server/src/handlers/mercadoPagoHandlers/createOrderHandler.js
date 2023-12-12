@@ -8,6 +8,8 @@ const client = new MercadoPagoConfig({
 
 const payment = new Preference(client);
 
+const urlLocal = "http://localhost:3001";
+
 const createOrderHandler = async (req, res) => {
   try {
     const { id, depositPrice, description } = req.body;
@@ -24,9 +26,9 @@ const createOrderHandler = async (req, res) => {
           },
         ],
         back_urls: {
-          failure: `http://localhost:3001/payments/result/${id}`,
-          pending: `http://localhost:3001/payments/result/${id}`,
-          success: `http://localhost:3001/payments/result/${id}`,
+          failure: `${urlLocal}/payments/result/${id}`,
+          pending: `${urlLocal}/payments/result/${id}`,
+          success: `${urlLocal}/payments/result/${id}`,
         },
         notification_url:
           "https://webhook.site/95a6fd8f-442f-407a-92ac-54976654b519/payments/webhook",

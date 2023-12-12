@@ -12,6 +12,7 @@ import axios from "axios";
 
 import { emailSignUp } from "../../app/utils/emailSignUp";
 import { toast } from "react-toastify";
+import { RiPhoneFill } from "react-icons";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase";
 import {
@@ -67,15 +68,12 @@ const TattoArtistRegister = () => {
 
             await axios.post(`${urlBase}/tattooArtists`, values);
 
-            toast.success(
-              `${values.fullName} se ha registrado existosamente`,
-              {
-                className: "toastSuccess",
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: true,
-              }
-            );
+            toast.success(`${values.fullName} se ha registrado existosamente`, {
+              className: "toastSuccess",
+              position: toast.POSITION.BOTTOM_RIGHT,
+              autoClose: 3000,
+              hideProgressBar: true,
+            });
             await axios.post(`${urlBase}/nodemailer/welcomeArtist`, {
               email: values.email,
               name: values.fullName,

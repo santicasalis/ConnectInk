@@ -336,7 +336,7 @@ const Page = () => {
     <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-artist">
       <div className=" text-center">
         <h3 className="font-rocksalt text-[26px] mt-8 mb-2 text-artistfont ">
-          Disponibilidad de Tiempo
+          Disponibilidad Horaria
         </h3>
         <div className="flex items-center justify-center ">
           <hr className="mt-6 mb-6 w-[90%] border-artist/50 "></hr>
@@ -452,13 +452,13 @@ const Page = () => {
 
       <div className="">
         <h3 className="text-[26px] font-rocksalt text-center mt-4 mb-6">
-          Excepciones de horarios
+          Excepciones
         </h3>
         <ul className="ml-10 mt-4">
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
-            Si en alguna fecha en específico vas a usar un horario diferente al
-            normal, agrégala aquí.
+            Si en alguna fecha específica vas a trabajar en un horario diferente
+            al normal, agrégala aquí.
           </li>
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
@@ -574,13 +574,13 @@ const Page = () => {
                       {exception.secondInitialHour &&
                         exception.secondFinalHour && (
                           <p>
-                            Segundo inicio: {exception.secondInitialHour},
-                            Segundo fin: {exception.secondFinalHour}
+                            Inicio: {exception.secondInitialHour}, Fin:{" "}
+                            {exception.secondFinalHour}
                           </p>
                         )}
                     </div>
                   ) : (
-                    <p>Sin trabajo</p>
+                    <p>Fecha no laboral</p>
                   )}
                   <div className="flex items-center justify-center ">
                     <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr>
