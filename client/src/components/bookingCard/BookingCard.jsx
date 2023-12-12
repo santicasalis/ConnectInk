@@ -52,10 +52,12 @@ const BookingCard = ({
     timeZoneName: "short",
   };
   let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
+  const [loaded, setLoaded] = useState(false)
 
   const [response, setResponse] = useState({});
 
   useEffect(() => {
+    setLoaded(true)
     const artistId = async () => {
       try {
         const resp = (
@@ -108,6 +110,7 @@ const BookingCard = ({
   };
 
   return (
+    loaded ?
     <div
       className={`
         ${
@@ -163,6 +166,7 @@ const BookingCard = ({
                   Artista:
                 </p>
                 <div className="flex justify-center items-center gap-2">
+                  {response.image &&
                   <Image
                     unoptimized
                     src={response.image}
@@ -172,6 +176,7 @@ const BookingCard = ({
                     alt={`${response.fullName} profile pic`}
                     className=" rounded-full"
                   />
+                  }
                   <p className="text-center">{response.fullName}</p>
                 </div>
               </div>
@@ -204,6 +209,7 @@ const BookingCard = ({
           <p className="text-center mt-2 ">Duracion:{duration}</p>
           <p className="text-center mt-2">Tu diseño:</p>
           <div className="flex justify-center items-center mt-2">
+            {image &&
             <Image
               unoptimized
               src={image}
@@ -213,6 +219,7 @@ const BookingCard = ({
               alt={"Tu Tattoo"}
               className=" rounded-full"
             />
+            }
           </div>
         </div>
         <button onClick={handleReview}>Dejar reseña</button>
@@ -230,7 +237,9 @@ const BookingCard = ({
             ))}
         </div>
       </div>
-    </div>
+    </div> 
+    :
+    <></>
   );
 };
 
