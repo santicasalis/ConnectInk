@@ -476,7 +476,7 @@ const Page = () => {
         })}
         <button
           onClick={saveTimeAvailability}
-          className="w-[20%] border-[3px] p-3  border-artist/40 hover:border-artist transition-transform hover:scale-105 mb-2 rounded-lg mt-3 hover:bg-artist/70 hover:text-lg "
+          className="hover:bg-artist font-rocksalt gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer my-2"
         >
           Guardar Horarios
         </button>
@@ -589,7 +589,7 @@ const Page = () => {
         <div className="flex items-center justify-center mt-8 mr-6">
           <button
             onClick={addTimeException}
-            className="ml-6 hover:scale-105 transition-transform border-[1px] border-artist/60 hover:border-artist hover:bg-artist/60  rounded mb-6 p-2"
+            className="hover:bg-artist font-rocksalt gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer mb-4 ml-4"
             disabled={
               !newException.initialHour ||
               (!newException.finalHour &&
