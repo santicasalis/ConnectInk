@@ -130,7 +130,7 @@ const TopBarOptions = () => {
             <option value="desc">5-1</option>
           </select>
         </div>
-        <div className="flex flex-col items-center justify-center mb-8">
+        {/* <div className="flex flex-col items-center justify-center mb-8">
           <label
             className="text-2xl font-weight:800 flex items-center  px-4 py-1 justify-center mb-[15px] font-newrocker"
             htmlFor="sort"
@@ -148,7 +148,7 @@ const TopBarOptions = () => {
             <option value="asc">A-Z</option>
             <option value="desc">Z-A</option>
           </select>
-        </div>
+        </div> */}
         {/* <div className="flex justify-center items-center">
             <button onClick={resetFilters} className="font-newrocker  border-[1px] border-primary text-sm rounded">
               Reiniciar Filtros

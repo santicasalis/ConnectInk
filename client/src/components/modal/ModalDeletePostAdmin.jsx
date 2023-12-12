@@ -51,11 +51,11 @@ const ModalDeletePostAdmin = () => {
                     <RiCloseFill className='absolute top-2 right-2 text-artistfont text-[35px]  cursor-pointer hover:text-admin' onClick={handleClose}/>
                     <div className="bg-secondary-900 z-50 opacity-100  w-[400px] flex flex-col p-6 rounded-lg shadow-md shadow-admin/40">
                         <form onSubmit={handleSubmit} className='flex flex-col '>
-                            <h3 className='font-newrocker text-[20px] mb-4 text-artistfont flex'> <RiAlertFill className='text-admin/70 text-[30px]'/> Estás seguro que quieres borrar esta publicación?</h3>
+                            <h3 className='font-newrocker text-[20px] mb-4 text-artistfont flex'> <RiAlertFill className='text-admin/70 text-[30px]'/> Estás seguro que quieres eliminar esta publicación?</h3>
                             
                             <div className='flex gap-x-5 w-full justify-center items-center'>
                                 <label className='cursor-pointer flex gap-x-0.5 items-center hover:text-admin text-artistfont' onClick={handleClose} > <RiCloseFill className='text-[18px] ' /> Cancelar</label>
-                                <button type='submit' className='flex gap-x-0.5 items-center hover:text-artistfont/70 text-artistfont'> <RiCheckFill className='text-[18px] '/> Borrar Publicación</button>
+                                <button type='submit' className='flex gap-x-0.5 items-center hover:text-artistfont/70 text-artistfont'> <RiCheckFill className='text-[18px] '/> Eliminar publicación</button>
                             </div>
                         </form>
                     </div>

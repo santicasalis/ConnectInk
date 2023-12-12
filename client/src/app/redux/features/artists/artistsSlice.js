@@ -5,7 +5,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   people: [],
   filtered: [],
-  detail: {}
+  detail: {},
+  disabled:[]
 };
 
 export const artistsSlice = createSlice({
@@ -27,6 +28,12 @@ export const artistsSlice = createSlice({
         (artist) => artist.id !== deletedId
       );
     },
+
+    disabledArtists:(state, action) => {
+     state.disabled = action.payload;
+    },
+
+
     orderArtist: (state, action) => {
       switch (action.payload) {
         case "asc":
@@ -43,30 +50,6 @@ export const artistsSlice = createSlice({
       }
     },
 
-  //   orderArtistRating: (state, action) => {
-  //     let reviewedArtists = state.filtered.filter((artist) => artist.reviews?.length != 0);
-  //     let sortedArtists;
-      
-  //     switch (action.payload) {
-  //       case "asc":
-  //         sortedArtists = [...reviewedArtists].sort((a, b) =>
-  //           a.reviews?.rating - b.reviews?.rating
-        
-  //         );
-  //         break;
-  //       case "desc":
-  //         sortedArtists = [...reviewedArtists].sort((a, b) =>
-  //           b.reviews?.rating - a.reviews?.rating
-  //         );
-  //         break;
-  //         default:
-  //     sortedArtists = [...reviewedArtists];
-  // }
-
-  // state.filtered = sortedArtists;
-        
-      
-  //   },
 
   orderArtistRating: (state, action) => {
     const filterdCopy = state.filtered
@@ -88,6 +71,7 @@ export const artistsSlice = createSlice({
         reviewedArtists.sort((a, b) =>
           b.averageRating - a.averageRating
         );
+
         break;
         case "reset":
           return {
@@ -101,8 +85,8 @@ export const artistsSlice = createSlice({
 state.filtered = reviewedArtists;
       
     
-  },
 
+  },
 
     orderAndFilterArtists: (state, action) => {
       const { filters, sortCriteria } = action.payload;
@@ -151,6 +135,8 @@ state.filtered = reviewedArtists;
 
       state.filtered = filteredArtists;
     },
+
+   
 
     /*MANEJO DE LA DISPONIBILIDAD HORARIA*/
 
@@ -215,6 +201,7 @@ export const {
   getDetail,
   cleanDetail,
   orderArtistRating,
+  disabledArtists,
 } = artistsSlice.actions;
 
 export default artistsSlice.reducer;

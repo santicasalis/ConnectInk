@@ -419,6 +419,7 @@ const Page = () => {
                   )}
 
                   <button
+                    className="mt-4 mr-4"
                     onClick={() =>
                       setMoreTime({ ...moreTime, [day]: !moreTime[day] })
                     }
@@ -427,6 +428,7 @@ const Page = () => {
                   </button>
 
                   <button onClick={() => deleteHourDay(day)}>❌</button>
+                  <hr className="mt-6 mb-6 w-[90%] border-artist/50 mx-auto"></hr>
                 </div>
               ) : (
                 <button
