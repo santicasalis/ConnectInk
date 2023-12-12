@@ -5,16 +5,15 @@ import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { RiMoreFill, RiEyeLine, RiStarLine, RiStarSFill } from "react-icons/ri";
 import { MdBlock } from "react-icons/md";
-import { DeleteArtists } from "../../app/redux/features/artists/artistActions";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { RiCloseFill } from "react-icons/ri";
-import Modal from "react-modal";
-import Link from "next/link";
-import { openModalDeleteArtistAction } from "../../app/redux/features/modalDeleteArtist/modalDeleteArtistAction";
+
+import { openModalDisabledArtistAction } from "../../app/redux/features/modalDisabledArtist/modalDisabledArtistAction";
 import Star from "../Star/Star";
 
-export default function AdminCard({
+
+export default function AdminCardSuspended({
   fullName,
   location,
   shopName,
@@ -24,6 +23,8 @@ export default function AdminCard({
 }) {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
+  const disabledArtists = useSelector((state) => state.artists.disabled);
+
 
   const calcPonderRating = (reviews) => {
     if (reviews?.length > 0) {
@@ -35,24 +36,23 @@ export default function AdminCard({
       setRating(ponderRating / reviews?.length);
     }
   };
-
-  const handleBannear = () => {
-    dispatch(openModalDeleteArtistAction(id));
+ 
+  const handleBanneados = () => {
+    dispatch(openModalDisabledArtistAction(id));
   };
 
   useEffect(() => {
-    calcPonderRating(reviews);
-  }, [reviews]);
+     calcPonderRating(reviews);
+  }, [dispatch, reviews]);
 
   const imageLoader = ({ src }) => {
     return src;
   };
 
   return (
-    <div className="bg-secondary-100 w-[550px]  ml-[10px] mb-[10px] rounded-xl pb-5">
+    <div className="bg-secondary-900/50 w-[550px]  ml-[10px] mb-[10px] rounded-xl pb-5">
       <div className="flex gap-x-1 items-center p-4">
         <div className="w-[90px] h-[90px] rounded-full">
-          {image &&
           <Image
             unoptimized
             className="rounded-full object-cover w-full h-full"
@@ -62,14 +62,13 @@ export default function AdminCard({
             height={90}
             alt={`${fullName} profile pic`}
           />
-          }
         </div>
         <div className="max-w-[300px]">
           <h1 className="font-bolt text-center text-4xl font-newrocker ml-4">
             {fullName}
           </h1>
         </div>
-        <div className="p-2 flex items-center justify-center ml-auto ">
+        <div className="p-2 flex items-center justify-center ml-auto">
           <Menu
             menuButton={
               <MenuButton>
@@ -80,29 +79,18 @@ export default function AdminCard({
             menuClassName={"hover:bg-red text-red-500"}
           >
             <MenuItem>
-              <Link
-                href={`registeredArtists/${id}`}
-                className="flex items-center gap-2 text-sm py-1.5"
-              >
-                <RiEyeLine />
-                Ver Publicaciones
-              </Link>
-            </MenuItem>
-            <MenuItem>
               <button
-                onClick={handleBannear}
+                onClick={handleBanneados}
                 className="flex items-center gap-2 text-sm py-1.5"
               >
                 <MdBlock />
-                Suspender artista
+                Restablecer artista
               </button>
             </MenuItem>
           </Menu>
         </div>
       </div>
-      {/* <div className="font-bolt text-center text-4xl font-newrocker">
-            {shopName}
-          </div> */}
+
       <div className="font-bolt text-center text-xl mt-[20px] font-newrocker ">
         {shopName}
       </div>

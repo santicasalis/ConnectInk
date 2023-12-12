@@ -69,17 +69,11 @@ const Header = () => {
           ir a Explorar
         </Link>
         <div className="flex items-center gap-x-4">
-          <button className="relative hover:bg-secondary-100 p-2 rounded-lg transition-colors">
-            <RiNotification3Line className="text-artistfont"/>
-            <span className="absolute -top-0 -right-0 bg-red-600 py-0.5 px-1 text-artistfont rounded-full text-[8px] font-bold">
-              2
-            </span>
-          </button>
-
           <Menu
             menuButton={
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
                 <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                  {user.image && 
                   <Image
                     unoptimized
                     src={user.image}
@@ -93,10 +87,13 @@ const Header = () => {
                     height={40}
                     alt={user.fullName}
                   />
+                  }
                 </div>
 
                 <span className="text-artistfont">{`${user.fullName}`}</span>
-                <RiArrowDownSLine className="text-artistfont"/>
+
+                {/* <RiArrowDownSLine className="text-artistfont"/> */}
+
               </MenuButton>
             }
             menuStyle={{
@@ -107,12 +104,13 @@ const Header = () => {
             }}
             transition
           >
-            <MenuItem className="rounded-lg transition-colors  border-b-2 border-gray-500/50 hover:bg-secondary-100 w-full h-full">
+            {/* <MenuItem className="rounded-lg transition-colors  border-b-2 border-gray-500/50 hover:bg-secondary-100 w-full h-full">
               <Link
                 href="/a-dashboard/profile"
                 className="flex items-center gap-x-4 w-full h-[40px]"
               >
                 <div className="rounded-full w-[25px] h-[25px] overflow-hidden">
+                  {user.image &&
                   <Image
                     unoptimized
                     src={user.image}
@@ -122,16 +120,17 @@ const Header = () => {
                     style={{ width: "100%", height: "100%" }}
                     alt={`${user.fullName} profile pic`}
                   />
+                  }
                 </div>
                 <div className="flex flex-col gap-1 text-sm text-artistfont">
                   <span>{`${user.fullName}`}</span>
                   <span className="text-[9px]">{user.email}</span>
                 </div>
               </Link>
-            </MenuItem>
-            <MenuItem className="hover:bg-secondary-100 text-artistfont">
+            </MenuItem> */}
+            {/* <MenuItem className="hover:bg-secondary-100 text-artistfont">
               <Link href="" className="flex items-center gap-2  py-1.5">
-                <RiSettings5Fill className="text-artistfont/70"/>
+                <RiSettings5Fill className="text-artistfont/70" />
                 Configuración
               </Link>
             </MenuItem>
@@ -143,7 +142,7 @@ const Header = () => {
                 <RiLogoutCircleRLine className="text-artistfont" />
                 Cerrar sesión
               </button>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </div>
       </nav>

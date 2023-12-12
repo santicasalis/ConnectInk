@@ -56,7 +56,16 @@ export default function ExplorePage() {
     setFilterSidebarVisible(!filterSidebarVisible);
   };
 
+//msj
+const [noResults, setNoResults] = useState(false);
 
+useEffect(() => {
+  if (artistConPubli.length === 0) {
+    setNoResults(true);
+  } else {
+    setNoResults(false);
+  }
+}, [artistConPubli]);
 
 
   return (
@@ -146,6 +155,12 @@ export default function ExplorePage() {
 
             <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
               <div className=" flex flex-col items-center scroll-content w-full overflow-hidden ">
+              {noResults ? (
+                  <p className="text-primary text-center mt-[180px] font-rocksalt text-2xl ">
+                    ¡No se encontraron coincidencias con tu búsqueda!
+                  </p>
+                ) : (
+                  <>
                 <Paginate
                   artistsPerPage={artistsPerPage}
                   totalArtists={totalArtists}
@@ -168,6 +183,8 @@ export default function ExplorePage() {
                     />
                   </div>
                 ))}
+                </>
+    )}
               </div>
             </div>
           </div>

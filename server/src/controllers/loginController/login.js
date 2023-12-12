@@ -10,6 +10,7 @@ const {
   Appointment,
   Review,
 } = require("../../db");
+const { Op } = require("sequelize");
 
 const login = async (tokenId) => {
   let user = {};
@@ -73,9 +74,10 @@ const login = async (tokenId) => {
           "duration",
           "depositPrice",
           "paymentId",
+          "paymentStatus",
           "Customer_Appointment",
         ],
-        where: { disabled: false },
+        where: { disabled: false, [Op.or]: [{paymentStatus: "approved"}, {paymentStatus: "in_process"}] },
         required: false,
       },
       {
@@ -163,6 +165,7 @@ const login = async (tokenId) => {
           duration: appointment.duration,
           depositPrice: appointment.depositPrice,
           paymentId: appointment.paymentId,
+          paymentStatus: appointment.paymentStatus,
           CustomerId: appointment.Customer_Appointment,
         };
       }),
@@ -199,7 +202,7 @@ const login = async (tokenId) => {
             "TattooArtist_Appointment",
             "paymentStatus",
           ],
-          where: { disabled: false },
+          where: { disabled: false, [Op.or]: [{paymentStatus: "approved"}, {paymentStatus: "in_process"}]},
           required: false,
         },
         {

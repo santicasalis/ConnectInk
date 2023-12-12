@@ -13,6 +13,7 @@ import {
   getUserById,
   getUserInformation,
 } from "../../app/redux/features/user/userActions";
+
 import {
   RiMailLine,
   RiLock2Line,
@@ -22,7 +23,8 @@ import {
   RiEyeLine,
   RiEyeOffLine,
   RiGoogleFill,
-} from "react-icons/ri";
+} from "react-icons";
+
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
@@ -75,15 +77,12 @@ const TattoArtistRegister = () => {
 
             await axios.post(`${urlBase}/tattooArtists`, values);
 
-            toast.success(
-              `${values.fullName} se ha registrado existosamente`,
-              {
-                className: "toastSuccess",
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: true,
-              }
-            );
+            toast.success(`${values.fullName} se ha registrado existosamente`, {
+              className: "toastSuccess",
+              position: toast.POSITION.BOTTOM_RIGHT,
+              autoClose: 3000,
+              hideProgressBar: true,
+            });
             await axios.post(`${urlBase}/nodemailer/welcomeArtist`, {
               email: values.email,
               name: values.fullName,

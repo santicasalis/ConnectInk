@@ -52,9 +52,9 @@ const BookingCard = ({
     timeZoneName: "short",
   };
   let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
-  const [loaded, setLoaded] = useState(false);
 
   const [response, setResponse] = useState({});
+  const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setLoaded(true);
@@ -109,7 +109,7 @@ const BookingCard = ({
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
   };
 
-  return loaded ? (
+  return Loaded ? (
     <div
       className={`
         ${
@@ -176,6 +176,7 @@ const BookingCard = ({
                       className=" rounded-full"
                     />
                   )}
+
                   <p className="text-center">{response.fullName}</p>
                 </div>
               </div>

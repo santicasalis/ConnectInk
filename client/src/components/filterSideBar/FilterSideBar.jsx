@@ -17,6 +17,7 @@ export default function FilterSideBar() {
   const { people, filtered } = useSelector((state) => state.artists);
   const [artistOrder, setArtistOrder] = useState("");
   const [styleSelected, setStyleSelected] = useState([]);
+
   const [filters, setFilters] = useState({
     location: "",
     name: "",
@@ -25,6 +26,7 @@ export default function FilterSideBar() {
 
   useEffect(() => {
     dispatch(filterAllArtists(filters));
+    //
   }, [filters]);
 
   const handleChange = (event) => {
@@ -70,7 +72,7 @@ export default function FilterSideBar() {
       tattooStyle: [],
     });
     setStyleSelected([]);
-    setRatingOrder("");
+    setRatingOrder("reset");
   };
 
   return (
@@ -162,6 +164,7 @@ export default function FilterSideBar() {
               })}
             </div>
           </div>
+
           <div className="flex justify-center items-center mb-6">
             <button
               onClick={resetFilters}

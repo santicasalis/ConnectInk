@@ -58,6 +58,7 @@ export default function Card({
           <Link href={`/explore/${id}`}>
             <div className="flex  items-center gap-x-2 ">
               <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
+                {image &&
                 <Image
                   unoptimized
                   className="rounded-full object-cover w-full h-full"
@@ -68,6 +69,7 @@ export default function Card({
                   height={40}
                   alt={`${fullName} profile pic`}
                 />
+                }
               </div>
 
               <h1 className="font-bold col-span-2  text-artistfont">{fullName}</h1>

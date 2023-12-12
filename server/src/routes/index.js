@@ -16,6 +16,8 @@ const adminRouter = require("./adminRouter");
 const reviewRouter = require("./reviewRouter");
 const mercadoPagoRouter = require("./mercadoPagoRouter");
 const commentRouter = require("./commentRouter");
+const tattooArtistsRouterDisabled = require("./tattooArtistDisabledRouter");
+const customerRouterDisabled = require("./customerDisabledRouter");
 
 router.use("/tattooStyles", tattoStyleRouter);
 router.use("/tattooArtists", tattooArtistsRouter);
@@ -30,6 +32,8 @@ router.use("/auth", loginRouter);
 router.use("/nodemailer", nodemailerRouter);
 router.use("/admins", adminRouter);
 router.use("/reviews", reviewRouter);
+router.use("/tattooArtistsDisabled", tattooArtistsRouterDisabled);
+router.use("/customerDisabled", customerRouterDisabled);
 
 router.use("/payments", mercadoPagoRouter);
 
