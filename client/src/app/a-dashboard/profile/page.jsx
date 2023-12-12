@@ -6,8 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-
-import axios from 'axios'
+import axios from "axios";
 import { bringUserInformation } from "../../../app/redux/features/user/userActions";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { getAuth, updatePassword } from "firebase/auth";
@@ -15,17 +14,16 @@ import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
-
 const Profile = () => {
   const dispatch = useDispatch();
 
   const [initialData, setInitialData] = useState({});
 
-  const user = useSelector((state) => state.user.logedInUser)
+  const user = useSelector((state) => state.user.logedInUser);
   const [showPassword, setShowPassword] = useState(false);
-  const imageLoader = ({src}) => {
-    return src
-  }
+  const imageLoader = ({ src }) => {
+    return src;
+  };
   const router = useRouter();
 
   useEffect(() => {
@@ -104,17 +102,13 @@ const Profile = () => {
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
       }
-      toast.success(
-        `Cambios guardados con exito!`,
-        {
-          className: "toastSuccess",
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 3000,
-          hideProgressBar: false,
-        }
-      );
+      toast.success(`Cambios guardados con exito!`, {
+        className: "toastSuccess",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     } catch (error) {
-      
       toast.error(`Error al guardar cambios`, {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -124,13 +118,12 @@ const Profile = () => {
     }
   };
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-  
+
     // Realiza la lógica para manejar el nuevo archivo seleccionado
     // Puedes utilizar FileReader para leer el archivo y actualizar la vista
     if (selectedFile) {
@@ -148,31 +141,27 @@ const Profile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
-          <div className="w-1/4">
-            <p>Foto de Pefil:</p>
+          <div className="w-1/4 ">
+            <Image
+              unoptimized
+              src={user.image}
+              loader={imageLoader}
+              width={150}
+              height={150}
+              alt={`${user.fullName} profile pic`}
+              className="rounded-full"
+            />
           </div>
           <div className="flex-1">
             <div className="relative mb-2">
-              <Image
-                unoptimized
-                src={user.image}
-                loader={imageLoader}
-                width={80}
-                height={80}
-                alt={`${user.fullName} profile pic`}
+              <input
+                type="file"
+                id="avatar"
+                className="hidden"
+                onChange={handleFileChange}
               />
-              <label
-                htmlFor="avatar"
-                className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
-              >
-                <RiEdit2Line />
-              </label>
-              <input type="file" id="avatar" className="hidden" onChange={handleFileChange}
-                  />
             </div>
-            <p className="text-gray-500 text-sm">
-              Extensiones permitidas: png, jpg, jpeg
-            </p>
+            <p className="text-gray-500 text-sm"></p>
           </div>
         </div>
         <div className="flex items-center mb-4">
@@ -214,7 +203,7 @@ const Profile = () => {
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>
-              Phone: <span className="text-red-500">*</span>
+              Celular: <span className="text-red-500">*</span>
             </p>
           </div>
           <div className="flex-1 flex items-center gap-4">
@@ -232,7 +221,7 @@ const Profile = () => {
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>
-              Address: <span className="text-red-500">*</span>
+              Dirección: <span className="text-red-500">*</span>
             </p>
           </div>
           <div className="flex-1 flex items-center gap-4">
@@ -250,7 +239,7 @@ const Profile = () => {
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>
-              Location: <span className="text-red-500">*</span>
+              Localidad: <span className="text-red-500">*</span>
             </p>
           </div>
           <div className="flex-1 flex items-center gap-4">
@@ -274,7 +263,7 @@ const Profile = () => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-                name="shopName"
+                name="Estudio"
                 type="text"
                 value={formData.shopName}
                 onChange={handleChange}
@@ -327,7 +316,7 @@ const Profile = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-3 cursor-pointer"
             >
-              {showPassword ?  <RiEyeLine /> :<RiEyeOffLine /> }
+              {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
         </div>
@@ -347,11 +336,17 @@ const Profile = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-3 cursor-pointer"
             >
-              {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+              {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
         </div>
-        <button className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer" type="submit"> GUARDAR CAMBIOS</button>
+        <button
+          className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
+          type="submit"
+        >
+          {" "}
+          GUARDAR CAMBIOS
+        </button>
       </form>
     </div>
   );
