@@ -71,18 +71,10 @@ export default function FilterSideBar() {
       
     });
     setStyleSelected([]);
-    setRatingOrder("")
+    setRatingOrder("reset")
   };
 
-  const resetFilters = () => {
-    setFilters({
-      location: "",
-      name: "",
-      tattooStyle: [],
-    });
-    setStyleSelected([]);
-    setRatingOrder("");
-  };
+
 
   return (
     <div className="border-[2px] border-primary/40 rounded-3xl overflow-hidden shadow-md shadow-primary">

@@ -69,6 +69,7 @@ export const artistsSlice = createSlice({
   //   },
 
   orderArtistRating: (state, action) => {
+    const filterdCopy = state.filtered
     let reviewedArtists = state.filtered.map((artist) => ({
       ...artist,
       averageRating: artist.reviews?.length 
@@ -88,6 +89,12 @@ export const artistsSlice = createSlice({
           b.averageRating - a.averageRating
         );
         break;
+        case "reset":
+          return {
+            ...state,
+            filtered: filterdCopy,
+          };
+          break;
            
 }
 
