@@ -52,10 +52,12 @@ const BookingCard = ({
     timeZoneName: "short",
   };
   let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
+  const [loaded, setLoaded] = useState(false);
 
   const [response, setResponse] = useState({});
 
   useEffect(() => {
+    setLoaded(true);
     const artistId = async () => {
       try {
         const resp = (
@@ -107,7 +109,7 @@ const BookingCard = ({
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
   };
 
-  return (
+  return loaded ? (
     <div
       className={`
         ${
@@ -163,15 +165,17 @@ const BookingCard = ({
                   Artista:
                 </p>
                 <div className="flex justify-center items-center gap-2">
-                  <Image
-                    unoptimized
-                    src={response.image}
-                    loader={imageLoader}
-                    width={80}
-                    height={80}
-                    alt={`${response.fullName} profile pic`}
-                    className=" rounded-full"
-                  />
+                  {response.image && (
+                    <Image
+                      unoptimized
+                      src={response.image}
+                      loader={imageLoader}
+                      width={80}
+                      height={80}
+                      alt={`${response.fullName} profile pic`}
+                      className=" rounded-full"
+                    />
+                  )}
                   <p className="text-center">{response.fullName}</p>
                 </div>
               </div>
@@ -204,15 +208,17 @@ const BookingCard = ({
           <p className="text-center mt-2 ">Duracion:{duration}</p>
           <p className="text-center mt-2">Tu diseño:</p>
           <div className="flex justify-center items-center mt-2">
-            <Image
-              unoptimized
-              src={image}
-              loader={imageLoader}
-              width={50}
-              height={50}
-              alt={"Tu Tattoo"}
-              className=" rounded-full"
-            />
+            {image && (
+              <Image
+                unoptimized
+                src={image}
+                loader={imageLoader}
+                width={50}
+                height={50}
+                alt={"Tu Tattoo"}
+                className=" rounded-full"
+              />
+            )}
           </div>
         </div>
         <button onClick={handleReview}>Dejar reseña</button>
@@ -231,6 +237,8 @@ const BookingCard = ({
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
