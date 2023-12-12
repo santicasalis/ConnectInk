@@ -96,7 +96,7 @@ const Header = () => {
                 </div>
 
                 <span className="text-artistfont">{`${user.fullName}`}</span>
-                <RiArrowDownSLine className="text-artistfont"/>
+                {/* <RiArrowDownSLine className="text-artistfont"/> */}
               </MenuButton>
             }
             menuStyle={{
@@ -107,7 +107,7 @@ const Header = () => {
             }}
             transition
           >
-            <MenuItem className="rounded-lg transition-colors  border-b-2 border-gray-500/50 hover:bg-secondary-100 w-full h-full">
+            {/* <MenuItem className="rounded-lg transition-colors  border-b-2 border-gray-500/50 hover:bg-secondary-100 w-full h-full">
               <Link
                 href="/a-dashboard/profile"
                 className="flex items-center gap-x-4 w-full h-[40px]"
@@ -128,8 +128,8 @@ const Header = () => {
                   <span className="text-[9px]">{user.email}</span>
                 </div>
               </Link>
-            </MenuItem>
-            <MenuItem className="hover:bg-secondary-100 text-artistfont">
+            </MenuItem> */}
+            {/* <MenuItem className="hover:bg-secondary-100 text-artistfont">
               <Link href="" className="flex items-center gap-2  py-1.5">
                 <RiSettings5Fill className="text-artistfont/70"/>
                 Configuración
@@ -143,7 +143,7 @@ const Header = () => {
                 <RiLogoutCircleRLine className="text-artistfont" />
                 Cerrar sesión
               </button>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </div>
       </nav>
