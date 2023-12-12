@@ -25,7 +25,8 @@ export const getAllArtists = () => async (dispatch) =>{
 
 export const filterAllArtists = (filter) => async (dispatch) =>{
     const filteredArtists = (await axios.post(`${URL_BASE}/filters`, filter)).data
-    dispatch(filterArtist(filteredArtists))
+    console.log(filteredArtists, "GILTEREDDDD")
+    //dispatch(filterArtist(filteredArtists))
 }
 
 

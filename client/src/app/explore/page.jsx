@@ -161,6 +161,7 @@ export default function ExplorePage() {
                       shopName={filter.shopName}
                       publications={filter.publications}
                       image={filter.image}
+                      reviews={filter.reviews}
                     />
                   </div>
                 ))}

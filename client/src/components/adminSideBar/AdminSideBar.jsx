@@ -3,9 +3,34 @@
 import React, {useState} from 'react'
 import Link from 'next/link'
 import {RiBarChart2Line, RiStore3Line, RiStarLine, RiMessage3Line, RiCalendarCheckLine, RiSpeakLine, RiLogoutCircleRLine, RiArrowRightSLine, RiMenuFill,RiCloseFill} from 'react-icons/ri'
+import { logOut } from "../../app/redux/features/user/userActions";
+import { useRouter } from "next/navigation";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const AdminSideBar = () => {
   const [showMenu,setShowMenu] = useState(false)
+  
+  const user = useSelector((state) => state.user.logedInUser);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogOut = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(logOut());
+      })
+      .catch((error) => {
+        notifyError(error);
+        throw error;
+      });
+
+    router.replace("/");
+  };
+
+ 
+
   return (
     <>
         <div className={`xl:h-[100vh] overflow-y-scroll text-artistfont fixed xl:static md:w-[40%] ls:w-[30%] xl:w-auto w-[80%] h-full top-0 bg-secondary-900 p-4 flex flex-col justify-between z-40 ${showMenu ? "left-0" : "-left-full"} transition-all`}>
@@ -21,11 +46,11 @@ const AdminSideBar = () => {
                     </span>
                   </Link>
               </li>
-              <li>
+              {/* <li>
                   <Link href='/admin-dashboard/profile' className='flex items-center rounded-md border-b-[1px] border-admin/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors'>
                     <RiStore3Line className='text-admin '/> Perfil
                   </Link>
-              </li>
+              </li> */}
              
                        
               <li>
@@ -33,16 +58,19 @@ const AdminSideBar = () => {
                     <RiMessage3Line className='text-admin'/> Estilos de tatuaje
                   </Link>
               </li>
-              <li>
+              {/* <li>
                   <Link href='' className='flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-admin/20 hover:bg-secondary-100 transition-colors'>
                     <RiCalendarCheckLine className='text-admin'/> Otros
                   </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <nav>
               <Link href='' className='flex items-center gap-4 px-4 py-5 text-[20px] rounded-md font-newrocker hover:bg-secondary-100 transition-colors'>
-                <RiLogoutCircleRLine className='text-admin'/> Logout
+                <p onClick={handleLogOut}>
+
+                <RiLogoutCircleRLine className='text-admin'/> Cerrar sesión
+                </p>
               </Link>
           </nav>
         </div>
