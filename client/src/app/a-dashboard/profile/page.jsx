@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { uploadImage } from "../../utils/uploadImage";
 
 import axios from "axios";
 import { bringUserInformation } from "../../../app/redux/features/user/userActions";
@@ -16,15 +17,14 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useDispatch();
-
   const [initialData, setInitialData] = useState({});
-
   const user = useSelector((state) => state.user.logedInUser);
   const [showPassword, setShowPassword] = useState(false);
   const imageLoader = ({ src }) => {
     return src;
   };
   const router = useRouter();
+  const [imagePreview, setImagePreview] = useState(user.image);
 
   useEffect(() => {
     if (!user.userType) {
@@ -83,21 +83,23 @@ const Profile = () => {
       const auth = getAuth();
       const firebaseUser = auth.currentUser;
 
-      if (firebaseUser) {
+      if (firebaseUser && formData.password) {
         await updatePassword(firebaseUser, formData.password);
         console.log("Contraseña actualizada con éxito en Firebase");
-      } else {
+      } else if (!firebaseUser) {
         notifyError(new Error("No hay usuario de Firebase autenticado"));
         return;
       }
 
+      const dataToUpdate = { ...updatedFields, image: formData.image };
+
       const response = await axios.put(
         `http://localhost:3001/tattooArtists/${user.id}`,
-        formData
+        dataToUpdate
       );
 
       if (response.status === 200) {
-        dispatch(bringUserInformation(formData));
+        dispatch(bringUserInformation(dataToUpdate));
         console.log("Datos actualizados con éxito");
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
@@ -121,17 +123,25 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleFileChange = (event) => {
+
+  const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
 
-    // Realiza la lógica para manejar el nuevo archivo seleccionado
-    // Puedes utilizar FileReader para leer el archivo y actualizar la vista
     if (selectedFile) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setFormData({ ...formData, image: e.target.result });
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(selectedFile);
+      try {
+        const imageUrl = await uploadImage(selectedFile);
+
+        setFormData({ ...formData, image: imageUrl });
+      } catch (error) {
+        console.error("Error al subir la imagen:", error);
+
+        notifyError("Error al subir la imagen");
+      }
     }
   };
 
@@ -144,43 +154,45 @@ const Profile = () => {
           <div className="w-1/4 ">
             <Image
               unoptimized
-              src={user.image}
+              src={imagePreview || user.image}
               loader={imageLoader}
-              width={150}
-              height={150}
+              width={100}
+              height={100}
               alt={`${user.fullName} profile pic`}
               className="rounded-full"
             />
+            <p>vista previa</p>
           </div>
+
           <div className="flex-1">
             <div className="relative mb-2">
-
               <input
                 type="file"
                 id="avatar"
                 className="hidden"
                 onChange={handleFileChange}
+                accept="image/png, image/jpeg"
               />
 
-              {user.image &&
-              <Image
-                unoptimized
-                src={user.image}
-                loader={imageLoader}
-                width={80}
-                height={80}
-                alt={`${user.fullName} profile pic`}
-              />
-              }
+              {user.image && (
+                <div>
+                  <Image
+                    unoptimized
+                    src={imagePreview}
+                    loader={imageLoader}
+                    width={80}
+                    height={80}
+                    alt={`${user.fullName} profile pic`}
+                  />
+                </div>
+              )}
+
               <label
                 htmlFor="avatar"
                 className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
               >
                 <RiEdit2Line />
               </label>
-              <input type="file" id="avatar" className="hidden" onChange={handleFileChange}
-                  />
-
             </div>
             <p className="text-gray-500 text-sm"></p>
           </div>
