@@ -14,6 +14,7 @@ import { FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewCard from "../../../components/reviewCard/ReviewCard";
 import { getArtistDetail, CleanArtist } from "../../../app/redux/features/artists/artistActions";
+import { RiMailLine, RiPhoneLine, RiMapPinLine, RiBuilding4Line } from "react-icons/ri";
 
 
 export default function Page({ params }) {
@@ -22,6 +23,8 @@ export default function Page({ params }) {
   const dispatch = useDispatch();
   const artist = useSelector((state) => state.artists.detail);
   const [priceRanges, setPriceRanges] = useState({})
+
+  console.log(artist, "quiero la descr")
 
   useEffect(() => {
     if (params.id) {
@@ -53,37 +56,103 @@ export default function Page({ params }) {
     return <div className="text-center">No se encontró el tatuador</div>;
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full bg-secondary-900">
       <Nav />
-
-      <div className="text-center  text-artistfont bg-secondary-900 text-6xl font-bold p-10 font-rocksalt m-4 rounded">
-        Artista
-      </div>
 
       <div className="flex flex-wrap   ">
         <div className="w-full md:w-1/2 p-4 flex flex-col ">
-          <div className="p-4 rounded bg-secondary-900   flex-grow">
-            <img
-              src={artist?.image}
-              alt={artist?.name}
-              className="w-48 h-48 object-cover rounded-full mx-auto"
-            />
-            <h2 className="items-center justify-center text-2xl font-bold mt-4 flex gap-2">
-              <VscAccount className="text-primary" /> <p className=" text-artistfont"> {artist?.fullName} </p>
-            </h2>
-            <div className="mt-[10px]">
-              <h2 className="text-2xl font-bold flex gap-2">
-                <CiShop className="text-primary" /> <p className=" text-artistfont">{artist?.shopName}</p>
-              </h2>
-              <Link href={`/explore/${params.id}/reservas`}>
-                <button className="mt-[20px] ml-[50px] border-[1px] border-primary/75 text-primary/75 hover:border-primary hover:text-primary font-bold py-2 px-4 rounded">
-                  Reservar
-                </button>
-              </Link>
+          <div className="rounded bg-secondary-100 px-4 ">
+            <div className="flex justify-between border-b-[1px] border-primary/30 py-4 mb-4">
+              <div className="flex gap-x-4">
+                  <div className="w-[130px] h-[130px] rounded-full overflow-hidden">
+                    <img
+                      src={artist?.image}
+                      alt={artist?.name}
+                      className="w-[130px] h-[130px] object-cover rounded-full "
+                    />
+                  </div>
+                  <div className="flex flex-col gap-y-3 items-center justify-center">
+                    <h2 className="items-center justify-center text-2xl font-bold flex gap-x-2">
+                      <p className=" text-artistfont text-[47px] font-newrocker"> {artist?.fullName} </p>
+                    </h2>
+                    <h2 className=" font-bold flex gap-x-1 items-center justify-center">
+                      <CiShop className="text-primary text-[20px]" /> <p className=" text-artistfont/80 text-[20px]">{artist?.shopName}</p>
+                    </h2>
+                  </div>
+              </div>
+              <div className="flex items-center justify-center ">
+                  <Link href={`/explore/${params.id}/reservas`}>
+                    <button className="border-[1px] border-primary text-primary hover:bg-primary hover:text-black font-bold py-2 px-4 rounded-lg text-[20px]">
+                      Reservar
+                    </button>
+                  </Link>
+              </div>
+              
             </div>
+            <div className="text-artistfont">
+                {artist.description}
+              </div>
+
+            <div className="flex p-4 rounded mt-4 ">
+                <div className="w-[50%] pr-4">
+                    <h3 className="text-[29px] font-rocksalt mb-4 text-artistfont">Información:</h3>
+                    <div className="flex justify-center items-center mb-3">
+                        <span className="text-[20px] w-[50%] flex items-center gap-x-1 text-artistfont"><RiMailLine className="text-lg text-primary"/>Email:</span>
+                        <p className="text-artistfont w-[50%]">  {artist?.email}</p>
+                    </div>
+                    <div className="flex justify-center items-center mb-3">
+                        <span className="text-[20px] w-[50%] flex items-center gap-x-1 text-artistfont"> <RiPhoneLine className="text-lg text-primary"/> Teléfono:</span>
+                        <p className="text-artistfont w-[50%]"> {artist?.phone != '' ? artist?.phone : 'No agregó su número de Teléfono'}</p>
+                    </div>
+                    <div className="flex justify-center items-center mb-3">
+                        <span className="text-[20px] w-[50%] flex items-center gap-x-1 text-artistfont"> <RiMapPinLine className="text-lg text-primary"/> Dirección:</span>
+                        <p className="text-artistfont  w-[50%]">  {artist?.address}</p>
+                    </div>
+                    <div className="flex justify-center items-center mb-3">
+                        <span className="text-[20px] w-[50%] flex items-center gap-x-1 text-artistfont"> <RiBuilding4Line className="text-lg text-primary"/>  Ciudad:</span>
+                        <p className="text-artistfont w-[50%]">  {artist?.location}</p>
+                    </div>
+                    <div className="flex justify-center items-center mb-3">
+                        <span className="text-[20px] w-[50%] flex gap-x-1 items-center text-artistfont"><FaInstagram className="text-lg text-primary" />Instagram:</span>
+                        <p className="text-artistfont w-[50%]">  No agregó su cuenta de instagram</p>
+                    </div>
+                </div>
+                
+                <div className="border-l-[1px] border-primary/30 pl-8">
+                  <h3 className="text-[29px] font-rocksalt mb-5 text-artistfont">
+                    Estilos de tatuaje:
+                  </h3>
+                  <div className="flex flex-wrap gap-4">
+                    {artist?.tattooStyles?.map((style, index) => (
+                      <label key={index} className="flex items-center text-artistfont/80 border-[1px] border-artistfont/80 rounded-lg p-2">
+                        {style}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+            </div>
+
+            <div>
+                <div className="p-4 rounded ">
+                    <div className="flex flex-col items-center">
+                      <label className="text-md  font-rocksalt text-artistfont">Pequeño</label>
+                      <span className="text-gray-600">$ {priceRanges.Pequeño?.priceMin} - {priceRanges.Pequeño?.priceMax}</span>
+                    </div>
+                    <div className="flex flex-col items-center mt-2">
+                      <label className="text-md  font-rocksalt text-artistfont">Mediano</label>
+                      <span className="text-gray-600">$ {priceRanges.Mediano?.priceMin} - {priceRanges.Mediano?.priceMax}</span>
+                    </div>
+                    <div className="flex flex-col items-center mt-2">
+                      <label className="text-md  font-rocksalt text-artistfont">Grande</label>
+                      <span className="text-gray-600">$ {priceRanges.Grande?.priceMin} - {priceRanges.Grande?.priceMax}</span>
+                    </div>
+                </div>
+            </div>
+
+            
             {artist.reviews ? (
-              <div>
-                <h1 className=" text-artistfont">Reseñas dejadas por clientes sobre el artista: </h1>
+              <div className="max-h-[300px] overflow-y-auto">
+                <h1 className=" text-artistfont font-rocksalt text-[20px]">Reseñas de Clientes: </h1>
                 {artist.reviews.map((review) => {
                   return (
                     <ReviewCard
@@ -106,7 +175,7 @@ export default function Page({ params }) {
         </div>
 
         <div className="w-full md:w-1/2 p-4 flex flex-col">
-          <div className="p-4 rounded  bg-secondary-900 flex-grow">
+          <div className="p-4 rounded  bg-secondary-100 flex-grow">
             <h3 className="text-xl font-bold  font-rocksalt flex gap-2 mb-4">
               {" "}
               <FaMapLocationDot className="text-primary" /> <p className=" text-artistfont">Ubicacion </p>
@@ -119,47 +188,6 @@ export default function Page({ params }) {
             )}
           </div>
 
-          <div className="flex flex-wrap justify-around p-4 rounded mt-4  bg-secondary-900">
-            <div>
-              <h3 className="text-xl font-bold mb-2 font-rocksalt text-artistfont">
-                Estilos de tatuaje
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {artist?.tattooStyles?.map((style, index) => (
-                  <p key={index} className="flex items-center text-artistfont">
-                    {style}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-4 ">
-              <h3 className="text-xl  font-rocksalt mb-2 text-artistfont">Contacto</h3>
-              <p className="text-artistfont"> {artist?.fullName}</p>
-              <p className="text-artistfont">{artist?.email}</p>
-              <p className="text-artistfont">{artist?.phone}</p>
-              <p className="text-artistfont">{artist?.address}</p>
-              <p className="text-artistfont">{artist?.location}</p>
-              <p className="mb-1">
-                <FaInstagram className="text-xl text-artistfont" />
-              </p>
-            </div>
-
-            <div className="p-4 rounded ">
-              <div className="flex flex-col items-center">
-                <label className="text-md  font-rocksalt text-artistfont">Pequeño</label>
-                <span className="text-gray-600">$ {priceRanges.Pequeño?.priceMin} - {priceRanges.Pequeño?.priceMax}</span>
-              </div>
-              <div className="flex flex-col items-center mt-2">
-                <label className="text-md  font-rocksalt text-artistfont">Mediano</label>
-                <span className="text-gray-600">$ {priceRanges.Mediano?.priceMin} - {priceRanges.Mediano?.priceMax}</span>
-              </div>
-              <div className="flex flex-col items-center mt-2">
-                <label className="text-md  font-rocksalt text-artistfont">Grande</label>
-                <span className="text-gray-600">$ {priceRanges.Grande?.priceMin} - {priceRanges.Grande?.priceMax}</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -169,7 +197,7 @@ export default function Page({ params }) {
           {artist?.publications?.map((publication, index) => (
             <div
               key={index}
-              className="border-[5px] border-secondary-900/50 bg-secondary-900 rounded-lg shadow-lg p-4"
+              className=" bg-secondary-100 rounded-lg shadow-lg p-4"
             >
               <img
                 src={publication.image}

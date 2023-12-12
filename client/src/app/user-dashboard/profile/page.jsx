@@ -46,6 +46,8 @@ const UProfile = () => {
       image: user.image,
       password: user.password,
       phone: user.phone,
+      instagram: user?.instagram,
+      description: user?.description,
     });
   }, [user]);
 

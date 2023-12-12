@@ -25,7 +25,6 @@ import { useRouter } from "next/navigation";
 import { notifyError } from "../../components/notifyError/NotifyError";
 
 const BookingCard = ({
-  paymentId,
   paymentStatus,
   id,
   bodyPlace,
@@ -78,7 +77,8 @@ const BookingCard = ({
     //   console.log(id, tattooArtistId);
     //   //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
     // } else {
-    router.push(`/critica/${id}/${tattooArtistId}`);
+
+      router.push(`reservas/critica/${id}/${tattooArtistId}`);
     // }
   };
 
@@ -106,35 +106,45 @@ const BookingCard = ({
   };
 
   return (
-    <div className="bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105">
-      <div className="w-[26%] h-full   border-r-[2px] border-r-neutral-700">
-        <div className="pt-2 ">
-          <p className="flex gap-2 ml-8">
-            {" "}
-            <TbCalendarCheck className="text-primary text-[27px]" />
-            Reserva:
-          </p>
-          <p className="mt-[4px] text-center"> {fechaFormateada}</p>
+    <div
+      className={`
+        ${
+          paymentStatus === "in_process"
+            ? "shadow-md shadow-orange-500"
+            : paymentStatus === "approved"
+            ? "shadow-md shadow-green-500"
+            : "shadow-md shadow-red-500"
+        }`}
+    >
+      <div className="bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105">
+        <div className="w-[26%] h-full   border-r-[2px] border-r-neutral-700">
+          <div className="pt-2 ">
+            <p className="flex gap-2 ml-8">
+              {" "}
+              <TbCalendarCheck className="text-primary text-[27px]" />
+              Reserva:
+            </p>
+            <p className="mt-[4px] text-center"> {fechaFormateada}</p>
+          </div>
+          <div className="pt-4">
+            <p className="flex gap-2 ml-4">
+              {" "}
+              <IoBodyOutline className="text-primary text-[27px]" />
+              Donde: {bodyPlace}
+            </p>
+          </div>
+          <div className="pt-4">
+            <p className=" flex gap-2 ml-4 ">
+              <MdOutlineAttachMoney className="text-primary text-[27px]" />
+              Seña: {depositPrice}
+            </p>
+          </div>
+          <div className="mt-[35px] ml-4 ">
+            <p className="font-rocksalt text-[18px]">
+              Connect<span className="text-primary">Ink.</span>
+            </p>
+          </div>
         </div>
-        <div className="pt-4">
-          <p className="flex gap-2 ml-4">
-            {" "}
-            <IoBodyOutline className="text-primary text-[27px]" />
-            Donde: {bodyPlace}
-          </p>
-        </div>
-        <div className="pt-4">
-          <p className=" flex gap-2 ml-4 ">
-            <MdOutlineAttachMoney className="text-primary text-[27px]" />
-            Seña: {depositPrice}
-          </p>
-        </div>
-        <div className="mt-[35px] ml-4 ">
-          <p className="font-rocksalt text-[18px]">
-            Connect<span className="text-primary">Ink.</span>
-          </p>
-        </div>
-      </div>
 
       <div
         className={`w-[20%] mr-4 ${
@@ -193,23 +203,37 @@ const BookingCard = ({
           </Menu>
         </div>
 
-        <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
-        <p className="text-center mt-2 ">Tamaño: {size}</p>
-        <p className="text-center mt-2 ">Duracion:{duration}</p>
-        <p className="text-center mt-2">Tu diseño:</p>
-        <div className="flex justify-center items-center mt-2">
-          <Image
-            unoptimized
-            src={image}
-            loader={imageLoader}
-            width={50}
-            height={50}
-            alt={"Tu Tattoo"}
-            className=" rounded-full"
-          />
+          <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
+          <p className="text-center mt-2 ">Tamaño: {size}</p>
+          <p className="text-center mt-2 ">Duracion:{duration}</p>
+          <p className="text-center mt-2">Tu diseño:</p>
+          <div className="flex justify-center items-center mt-2">
+            <Image
+              unoptimized
+              src={image}
+              loader={imageLoader}
+              width={50}
+              height={50}
+              alt={"Tu Tattoo"}
+              className=" rounded-full"
+            />
+          </div>
+        </div>
+        <button onClick={handleReview}>Dejar reseña</button>
+
+        <div>
+          {paymentStatus &&
+            (paymentStatus === "approved" ? (
+              <p>Pago Aprobado</p>
+            ) : paymentStatus === "in_process" ? (
+              <p>Pago no confirmado aun</p>
+            ) : paymentStatus === "rejected" ? (
+              <p>Pago rechazado</p>
+            ) : (
+              <p>Error al procesar el pago, intentelo mas tarde</p>
+            ))}
         </div>
       </div>
-      <button onClick={handleReview}>Dejar reseña</button>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { getAllStyles, removeStyle } from '../../../app/redux/features/styles/stylesActions';
 import { openModalDeleteStyleAction } from '../../../app/redux/features/modalDeleteStyle/modalDeleteStyleAction';
 import { useRouter } from "next/navigation";
+import { RiEdit2Fill, RiDeleteBin2Fill  } from "react-icons/ri";
 
 
 const TattooStyles = () => {
@@ -32,19 +33,28 @@ const TattooStyles = () => {
 
   return (
     <div>
-      <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
-        <div className="scroll-content w-full">
+      <div className="scroll-fade flex gap-x-2 w-full">
+        <div className="scroll-content w-full flex flex-wrap gap-7">
           {styles.map((style) => (
-            <div key={style.id} className="mb-4 w-1/4 flex items-center ">
-              <label className="flex items-center gap-2 px-3 py-1 border rounded-lg font-newrocker text-lg border-primary bg-black text-primary">
-                {style.name}
+            <div key={style.id} className="flex flex-col items-center border-[1px] shadow-inner shadow-admin/25 border-artistfont/70 rounded-lg p-6 bg-secondary-100/40">
+              <label className="flex items-center gap-2  rounded-lg font-newrocker text-[28px] mb-5">
+                <span className="text-[15px] text-artistfont/90">Estilo: </span>{style.name}
               </label>
-              <button
-                className="text-red-500 ml-3"
-                onClick={() => handleRemoveStyle(style.id)}
-              >
-                X
-              </button>
+              <div className="flex ">
+                  <button
+                    className=" flex gap-x-0.5 text-[16px] border-r-[1px] border-admin/50 pr-3 hover:text-admin"
+                  >
+                    <RiEdit2Fill />
+                    Editar
+                  </button>
+                  <button
+                    className=" flex gap-x-0.5 text-[16px] pl-3 hover:text-artistfont/70"
+                    onClick={() => handleRemoveStyle(style.id)}
+                  >
+                    <RiDeleteBin2Fill />
+                    Eliminar
+                  </button>
+              </div>
             </div>
           ))}
         </div>
