@@ -26,13 +26,14 @@ const Suspended = () => {
         router.replace("/")
       }
     dispatch(getDisabledArtists());
+    dispatch(getAllArtists());
   }, []);
   //paginado
   const [currentPage, setCurrentPage] = useState(1);
   const artistsPerPage = 5;
   const indexOfLastArtist = currentPage * artistsPerPage;
   const indexOfFirstArtist = indexOfLastArtist - artistsPerPage;
-  const artistsToDisplay = filtered.slice(
+  const artistsToDisplay = disabledArtists.slice(
     indexOfFirstArtist,
     indexOfLastArtist
   );
@@ -44,15 +45,15 @@ const Suspended = () => {
   };
   return (
     <div>
-       <PaginateAdmin
+       {/* <PaginateAdmin
           artistsPerPage={artistsPerPage}
           totalArtists={totalArtists}
           currentPage={currentPage}
           onPageChange={onPageChange}
-        />
+        /> */}
         <div className="scroll-fade flex justify-center items-center">
           <div >
-            {disabledArtists?.map((filter) => (
+            {artistsToDisplay?.map((filter) => (
               <div key={filter.id} className="mb-4 w-full flex justify-center items-center   ">
                 <AdminCardSuspended
                     key={filter.id}

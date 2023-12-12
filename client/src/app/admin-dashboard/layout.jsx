@@ -11,12 +11,12 @@ const ModalDeleteStyle = dynamic(()=> import("../../components/modal/ModalDelete
 const ModalCreateStyle = dynamic(()=> import("../../components/modal/ModalCreateStyle"))
 const ModalEditAdmin = dynamic(() => import("../../components/modal/ModalEditAdmin"));
 const ModalDeletePostAdmin = dynamic(() => import("../../components/modal/ModalDeletePostAdmin"));
-
+const ModalDisabledArtist = dynamic(()=> import("../../components/modal/ModalDisabledArtist"));
 
 export default function DashboardLayout({ children }) {
     const isOpenModalDeleteArtist = useSelector((state) => state.modalDeleteArtist.isOpen);
     const isOpenModalDeleteStyle = useSelector((state) => state.modalDeleteStyle.isOpen);
-
+    const isModalDisabledOpen = useSelector((state)=>state.modalDisabledArtist.isOpen)
     const isOpenModalCreateStyle = useSelector((state) => state.modalCreateStyle.isOpen);
 
     const isModalEditOpen = useSelector((state) => state.modalEdit.isOpen);
@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }) {
                 { isOpenModalCreateStyle && <ModalCreateStyle  className="absolute " /> }
                 {isModalEditOpen && <ModalEditAdmin className="absolute" />}
                 {isModalDeleteOpen && <ModalDeletePostAdmin className="absolute" />}
-
+                {isModalDisabledOpen && <ModalDisabledArtist className="absolute" />}
                 <AdminSideBar /> 
                 <div className="xl:col-span-5 ">
                     <Header/>

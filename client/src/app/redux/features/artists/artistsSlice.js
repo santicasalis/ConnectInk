@@ -30,11 +30,7 @@ export const artistsSlice = createSlice({
     },
 
     disabledArtists:(state, action) => {
-      const disabledArtists = action.payload
-      console.log(disabledArtists, "AVBREH");
-      //state.people  = disabledArtists.map(artist => artist.disabled == true);
-     
-      //console.log(state.people, "GGGGGG")
+     state.disabled = action.payload;
     },
 
 

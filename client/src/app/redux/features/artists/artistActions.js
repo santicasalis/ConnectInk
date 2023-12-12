@@ -52,7 +52,7 @@ export const CleanArtist = () => async (dispatch) => {
 }
 
 export const getDisabledArtists = () => async (dispatch) => {
-  const response = await axios.get(`${URL_BASE}/tattooArtists/`);
+  const response = await axios.get(`${URL_BASE}/tattooArtistsDisabled/`);
   const data = response.data
   //console.log(data,"DATITA")
   dispatch(disabledArtists(data));

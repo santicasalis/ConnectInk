@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { openModalDeleteArtistAction } from "../../app/redux/features/modalDeleteArtist/modalDeleteArtistAction";
+import { openModalDisabledArtistAction } from "../../app/redux/features/modalDisabledArtist/modalDisabledArtistAction";
 import Star from "../Star/Star";
 
 
@@ -37,8 +37,8 @@ export default function AdminCardSuspended({
     }
   };
  
-  const handleBannear = () => {
-    dispatch(openModalDeleteArtistAction(id));
+  const handleBanneados = () => {
+    dispatch(openModalDisabledArtistAction(id));
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function AdminCardSuspended({
   };
 
   return (
-    <div className="bg-secondary-100 w-[550px] ml-[10px] mb-[10px] rounded-xl pb-5">
+    <div className="bg-secondary-900/50 w-[550px]  ml-[10px] mb-[10px] rounded-xl pb-5">
       <div className="flex gap-x-1 items-center p-4">
         <div className="w-[90px] h-[90px] rounded-full">
           <Image
@@ -80,7 +80,7 @@ export default function AdminCardSuspended({
           >
             <MenuItem>
               <button
-                onClick={handleBannear}
+                onClick={handleBanneados}
                 className="flex items-center gap-2 text-sm py-1.5"
               >
                 <MdBlock />
