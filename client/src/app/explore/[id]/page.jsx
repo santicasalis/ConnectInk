@@ -13,25 +13,51 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewCard from "../../../components/reviewCard/ReviewCard";
-import {
-  getArtistDetail,
-  CleanArtist,
-} from "../../../app/redux/features/artists/artistActions";
-import {
-  RiMailLine,
-  RiPhoneLine,
-  RiMapPinLine,
-  RiBuilding4Line,
-} from "react-icons/ri";
+
+import { getArtistDetail, CleanArtist } from "../../../app/redux/features/artists/artistActions";
+import { RiMailLine, RiPhoneLine, RiMapPinLine, RiBuilding4Line } from "react-icons/ri";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+
+
 
 export default function Page({ params }) {
   // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  const router = useRouter();
   const artist = useSelector((state) => state.artists.detail);
-  const [priceRanges, setPriceRanges] = useState({});
+
+  const user = useSelector((state) => state.user.logedInUser);
+  const [priceRanges, setPriceRanges] = useState({})
+
 
   console.log(artist, "quiero la descr");
+
+  console.log(artist, "quiero la descr")
+
+  // useEffect(() => {
+  //   if (!user.userType) {
+  //     router.replace("/auth");
+  //   }
+  // }, []);
+
+  const handleAppoint = ()=>{
+    if(!user.userType){
+      toast.error(`Deber registrarte para reservar un turno`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+      router.replace(`/auth`);
+    } else {
+      router.replace(`/explore/${params.id}/reservas`);
+
+    }
+  }
 
   useEffect(() => {
     if (params.id) {
@@ -100,11 +126,13 @@ export default function Page({ params }) {
                 </div>
               </div>
               <div className="flex items-center justify-center ">
-                <Link href={`/explore/${params.id}/reservas`}>
-                  <button className="border-[1px] border-primary text-primary hover:bg-primary hover:text-black font-bold py-2 px-4 rounded-lg text-[20px]">
-                    Reservar
-                  </button>
-                </Link>
+
+                  
+                    <button onClick={handleAppoint} className="border-[1px] border-primary text-primary hover:bg-primary hover:text-black font-bold py-2 px-4 rounded-lg text-[20px]">
+                      Reservar
+                    </button>
+                  
+
               </div>
             </div>
 
