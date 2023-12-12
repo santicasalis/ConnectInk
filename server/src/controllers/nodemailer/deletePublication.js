@@ -1,15 +1,15 @@
 require("dotenv").config()
 const {NODEMAILER_USER} = process.env
 const transporter = require("../../../config/nodemailer")
-const welcome = require("../../utils/nodemailer/welcome")
+const deletePost = require("../../utils/nodemailer/delete-publication")
 
-const welcomeRegister = async (name, email) => {
+const deletePublication = async (email) => {
     await transporter.sendMail({
         from: NODEMAILER_USER,
         to: email,
-        subject:"Welcome to ConnectInk",
-        html: `${welcome(name)}`
+        subject:"Publicacion eliminada",
+        html: deletePost
     })
 }
 
-module.exports = welcomeRegister
+module.exports = deletePublication
