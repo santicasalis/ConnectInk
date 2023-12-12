@@ -30,7 +30,7 @@ export default function AdminCard({ fullName, location, shopName, image, id , re
       setRating(ponderRating/reviews?.length);
     }
   }
-
+  console.log(calcPonderRating, "CACLCCC")
   const handleBannear = () => {
     dispatch(openModalDeleteArtistAction(id))
   }

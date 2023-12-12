@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -26,6 +27,7 @@ const AdminSideBar = () => {
     dispatch(logOut());
     dispatch(closeModalLoadingAction());
   };
+
   return (
     <>
       <div
@@ -38,6 +40,7 @@ const AdminSideBar = () => {
             Admin<span className="text-admin text-4xl">.</span>
           </h1>
           <ul>
+          
             <li>
               <Link
                 href="/admin-dashboard/registeredArtists"
@@ -48,14 +51,7 @@ const AdminSideBar = () => {
                 </span>
               </Link>
             </li>
-            <li>
-              <Link
-                href="/admin-dashboard/profile"
-                className="flex items-center rounded-md border-b-[1px] border-admin/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
-              >
-                <RiStore3Line className="text-admin " /> Perfil
-              </Link>
-            </li>
+            
 
             <li>
               <Link
@@ -66,15 +62,10 @@ const AdminSideBar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                href=""
-                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-admin/20 hover:bg-secondary-100 transition-colors"
-              >
-                <RiCalendarCheckLine className="text-admin" /> Otros
-              </Link>
-            </li>
-          </ul>
-        </div>
+  
+         </ul>
+      </div>
+      
         <nav>
           <Link
             onClick={handleLogout}

@@ -1,4 +1,4 @@
-const { TattooArtist, TattooStyle, Publication } = require("../../db");
+const { TattooArtist, TattooStyle, Publication , Review } = require("../../db");
 const { Op } = require("sequelize");
 
 const getTattooArtistFiltered = async (location, name, styles) => {
@@ -25,6 +25,7 @@ const getTattooArtistFiltered = async (location, name, styles) => {
             },
           },
           { model: Publication, attributes: ["description", "image"] },
+          { model: Review, attributes: ["rating" ]}
         ],
       });
 
@@ -34,6 +35,7 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         email: artist.email,
         phone: artist.phone,
         instagram: artist.instagram,
+        reviews: artist.reviews,
         description: artist.description,
         location: artist.location,
         address: artist.address,
@@ -49,6 +51,11 @@ const getTattooArtistFiltered = async (location, name, styles) => {
             image: publication.image,
           };
         }),
+        reviews: artist.Reviews?.map((review)=>{
+          return{
+            rating:review.rating,
+          }
+        })
       }));
       return tattooArtistsFoundCleaner;
     } catch (error) {
@@ -70,6 +77,7 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         include: [
           { model: TattooStyle, attributes: ["name"] },
           { model: Publication, attributes: ["description", "image"] },
+          { model: Review, attributes: ["rating" ]},
         ],
       });
 
@@ -79,6 +87,7 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         email: artist.email,
         phone: artist.phone,
         instagram: artist.instagram,
+        reviews: artist.reviews,
         description: artist.description,
         location: artist.location,
         address: artist.address,
@@ -94,6 +103,11 @@ const getTattooArtistFiltered = async (location, name, styles) => {
             image: publication.image,
           };
         }),
+        reviews: artist.Reviews?.map((review)=>{
+          return{
+            rating:review.rating,
+          }
+        })
       }));
 
       return tattooArtistsFoundCleaner;

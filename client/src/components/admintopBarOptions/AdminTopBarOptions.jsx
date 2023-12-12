@@ -10,6 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdAbc } from "react-icons/md";
 import { FaMapPin, FaRegStar } from "react-icons/fa";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
+import { OrderAllArtistsRating } from "../../app/redux/features/artists/artistActions";
 
 const TopBarOptions = () => {
   const dispatch = useDispatch();
@@ -56,9 +57,16 @@ const TopBarOptions = () => {
     dispatch(OrderAllArtists(artistOrder));
   }, [artistOrder]);
 
+  const [ ratingOrder, setRatingOrder] = useState("");
+
+  useEffect(() => {
+    dispatch(OrderAllArtistsRating(ratingOrder));
+  }, [ratingOrder]);
+
   const handleSortChange = (event) => {
-    const order = event.target.value;
-    setArtistOrder(order);
+    const ratings = event.target.value;
+    setRatingOrder(ratings);
+   
   };
 
   const resetFilters = () =>{

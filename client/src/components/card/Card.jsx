@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { RiStarLine } from "react-icons/ri";
 import Image from "next/image";
 import {
@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation, Autoplay, Parallax } from "swiper/modules";
 import Link from "next/link";
+import Star from "../Star/Star";
 
 export default function Card({
   id,
@@ -24,10 +25,31 @@ export default function Card({
   shopName,
   publications,
   image,
+  reviews
 }) {
   const imageLoader = ({ src }) => {
     return src;
   };
+
+ // console.log(reviews, "REVVV")
+  const [rating , setRating] = useState(null);
+
+  const calcPonderRating = (reviews) => {
+    
+    if(reviews?.length > 0){
+      let ponderRating = 0;
+      
+      reviews?.map((review) => {
+        return ponderRating += review.rating
+      });
+      setRating(ponderRating/reviews?.length);
+    }
+    
+  }
+
+  useEffect(() => {
+    calcPonderRating(reviews)
+  },[reviews])
 
   return (
     <div className="w-[800px] mb-5 mr-4 ml-4 pb-4 border-b-primary/50 border-transparent border-[1px]  transition-transform transform ">
@@ -52,13 +74,19 @@ export default function Card({
             </div>
           </Link>
 
-          <div className="flex gap-x-0.5 mr-4 items-center justify-center ">
-            <RiStarLine className="text-[18px]" />
-            <RiStarLine className="text-[18px]" />
-            <RiStarLine className="text-[18px]" />
-            <RiStarLine className="text-[18px]" />
-            <RiStarLine className="text-[18px]" />
-          </div>
+          
+        <div className="font-bolt text-center text-xl mt-[20px] mb-[10px] flex items-center justify-center">
+          <Star value={1} rating={rating}/>
+          <Star value={2} rating={rating}/>
+          <Star value={3} rating={rating}/>
+          <Star value={4} rating={rating}/>
+          <Star value={5} rating={rating}/>
+          {
+            rating != null 
+            ? <p className="ml-2 text-[22px]">{rating.toFixed(1)}</p>
+            : <p className="ml-2 text-[22px]">0.0</p>
+          }
+        </div>
         </div>
       </div>
 
