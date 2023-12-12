@@ -10,6 +10,8 @@ import { TbPointFilled } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 
 import { notifyError } from "../../../components/notifyError/NotifyError";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ const Page = () => {
 
     let obj = {};
     let objH = {};
+    let secondObj = {};
     user.logedInUser.timeAvailabilities?.map((timeAvailability) => {
       obj[timeAvailability.day] = {
         initialHour: timeAvailability.initialHour,
@@ -57,10 +60,15 @@ const Page = () => {
         id: timeAvailability.id,
       };
       if (timeAvailability.initialHour) objH[timeAvailability.day] = true;
+      if (
+        timeAvailability.secondInitialHour &&
+        timeAvailability.secondFinalHour
+      )
+        secondObj[timeAvailability.day] = true;
     });
     setDayObj({ ...obj });
     setShowHours({ ...objH });
-    setMoreTime({ ...objH });
+    setMoreTime({ ...secondObj });
   }, [user]);
 
   useEffect(() => {
@@ -241,8 +249,11 @@ const Page = () => {
             secondFinalHour: secondFinalHour || null,
             secondInitialHour: secondInitialHour || null,
           };
-
-          await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, data);
+          try {
+            await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, data);
+          } catch (error) {
+            console.log(error);
+          }
         } else if (initialHour && finalHour) {
           let data = {};
           if (secondInitialHour && secondFinalHour) {
@@ -294,31 +305,46 @@ const Page = () => {
   useEffect(() => {}, [newException]);
 
   const addTimeException = async () => {
-    if (newException.initialHour == "No trabajo") {
-      await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
-        date: newException.date,
-        tattooArtistId: user.logedInUser.id,
+    try {
+      if (newException.initialHour == "No trabajo") {
+        await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
+          date: newException.date,
+          tattooArtistId: user.logedInUser.id,
+        });
+      } else if (
+        newException.secondInitialHour &&
+        !newException.secondFinalHour
+      ) {
+        await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
+          date: newException.date,
+          initialHour: newException.initialHour,
+          finalHour: newException.finalHour,
+          tattooArtistId: user.logedInUser.id,
+        });
+      } else {
+        await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
+          ...newException,
+          tattooArtistId: user.logedInUser.id,
+        });
+      }
+
+      dispatch(getUserById(user.fireBaseUser.tokenId));
+
+      setNewException({ date: "" });
+      toast.success("Cambios guardados con éxito", {
+        className: "toastSuccess",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
       });
-    } else if (
-      newException.secondInitialHour &&
-      !newException.secondFinalHour
-    ) {
-      await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
-        date: newException.date,
-        initialHour: newException.initialHour,
-        finalHour: newException.finalHour,
-        tattooArtistId: user.logedInUser.id,
-      });
-    } else {
-      await axios.post(`${URL_BASE}/timeAvailabilityExceptions`, {
-        ...newException,
-        tattooArtistId: user.logedInUser.id,
+    } catch (error) {
+      toast.error("Error al guardar cambios", {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
       });
     }
-
-    dispatch(getUserById(user.fireBaseUser.tokenId));
-
-    setNewException({ date: "" });
   };
 
   const deleteHourDay = (day) => {
@@ -332,11 +358,18 @@ const Page = () => {
     });
   };
 
+  const deleteException = async (id) => {
+    const response = await axios.delete(
+      `${URL_BASE}/timeAvailabilityExceptions/${id}`
+    );
+    dispatch(getUserById(user.fireBaseUser.tokenId));
+  };
+
   return (
     <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-artist">
       <div className=" text-center">
         <h3 className="font-rocksalt text-[26px] mt-8 mb-2 text-artistfont ">
-          Disponibilidad de Tiempo
+          Disponibilidad Horaria
         </h3>
         <div className="flex items-center justify-center ">
           <hr className="mt-6 mb-6 w-[90%] border-artist/50 "></hr>
@@ -352,7 +385,7 @@ const Page = () => {
                     <label>
                       Inicio:
                       <select
-                        className="bg-transparent border-[1px] border-artist/50 ml-4 rounded-md "
+                        className="bg-transparent border-[1px] border-artist/50 ml-4 rounded-md p-2"
                         defaultValue={dayObj[day]?.initialHour || ""}
                         onChange={(e) =>
                           handleInitialTimeChange(day, e.target.value)
@@ -368,7 +401,7 @@ const Page = () => {
                     <label>
                       Fin:
                       <select
-                        className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md "
+                        className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md p-2"
                         defaultValue={dayObj[day]?.finalHour || ""}
                         onChange={(e) =>
                           handleFinalTimeChange(day, e.target.value)
@@ -387,7 +420,7 @@ const Page = () => {
                       <label>
                         Inicio:
                         <select
-                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md"
+                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md p-2"
                           defaultValue={dayObj[day]?.secondInitialHour || ""}
                           onChange={(e) =>
                             handleSecondInitialTimeChange(day, e.target.value)
@@ -403,7 +436,7 @@ const Page = () => {
                       <label>
                         Fin:
                         <select
-                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md "
+                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md p-2"
                           defaultValue={dayObj[day]?.secondFinalHour || ""}
                           onChange={(e) =>
                             handleSecondFinalTimeChange(day, e.target.value)
@@ -419,9 +452,11 @@ const Page = () => {
                   )}
 
                   <button
-                    onClick={() =>
-                      setMoreTime({ ...moreTime, [day]: !moreTime[day] })
-                    }
+                    onClick={() => {
+                      setMoreTime({ ...moreTime, [day]: !moreTime[day] });
+                      handleSecondInitialTimeChange(day, null);
+                      handleSecondFinalTimeChange(day, null);
+                    }}
                   >
                     {moreTime[day] ? "➖" : "➕"}
                   </button>
@@ -452,18 +487,18 @@ const Page = () => {
 
       <div className="">
         <h3 className="text-[26px] font-rocksalt text-center mt-4 mb-6">
-          Excepciones de horarios
+          Excepciones
         </h3>
         <ul className="ml-10 mt-4">
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
-            Si en alguna fecha en específico vas a usar un horario diferente al
-            normal, agrégala aquí.
+            Si en alguna fecha específica vas a trabajar en un horario diferente
+            al normal, agrégala aquí.
           </li>
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
-            Selecciona la fecha especial e ingresa el horario en el que SÍ
-            trabajarías.
+            Selecciona la fecha especial e ingresa el horario en el que SÍ vas a
+            trabajar.
           </li>
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
@@ -482,26 +517,32 @@ const Page = () => {
         </div>
         {newException.date && (
           <div className=" flex items-center justify-center mt-4 mb-4 gap-[25px]">
-            <select
-              name="initialHour"
-              defaultValue=""
-              onChange={handleExceptionChange}
-              className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
-            >
-              <option value="">Horario inicial</option>
-              {generateTimeOptions()}
-              <option value="No trabajo">No trabajo</option>
-            </select>
-            {newException?.initialHour !== "No trabajo" && (
+            <label>
+              Inicio:
               <select
-                name="finalHour"
+                name="initialHour"
                 defaultValue=""
                 onChange={handleExceptionChange}
                 className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
               >
-                <option>Horario final</option>
-                {generateTimeOptionsException()}
+                <option value="">Horario inicial</option>
+                {generateTimeOptions()}
+                <option value="No trabajo">No trabajo</option>
               </select>
+            </label>
+            {newException?.initialHour !== "No trabajo" && (
+              <label>
+                Fin:
+                <select
+                  name="finalHour"
+                  defaultValue=""
+                  onChange={handleExceptionChange}
+                  className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
+                >
+                  <option>Horario final</option>
+                  {generateTimeOptionsException()}
+                </select>
+              </label>
             )}
           </div>
         )}
@@ -518,7 +559,7 @@ const Page = () => {
                   Inicio:
                   <select
                     name="secondInitialHour"
-                    className="bg-transparent"
+                    className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
                     onChange={handleExceptionChange}
                   >
                     <option value="" disabled>
@@ -532,7 +573,7 @@ const Page = () => {
                   Fin:
                   <select
                     name="secondFinalHour"
-                    className="bg-transparent"
+                    className="bg-transparent border-[1px] border-artist/60 rounded-md p-2"
                     onChange={handleExceptionChange}
                   >
                     <option value="" disabled>
@@ -564,6 +605,9 @@ const Page = () => {
             {user.logedInUser.timeAvailabilityExceptions.map(
               (exception, index) => (
                 <div key={index}>
+                  <button onClick={() => deleteException(exception.id)}>
+                    ❌
+                  </button>
                   Fecha: {exception.date},
                   {exception.initialHour && exception.finalHour ? (
                     <div>
@@ -574,13 +618,13 @@ const Page = () => {
                       {exception.secondInitialHour &&
                         exception.secondFinalHour && (
                           <p>
-                            Segundo inicio: {exception.secondInitialHour},
-                            Segundo fin: {exception.secondFinalHour}
+                            Inicio: {exception.secondInitialHour}, Fin:{" "}
+                            {exception.secondFinalHour}
                           </p>
                         )}
                     </div>
                   ) : (
-                    <p>Sin trabajo</p>
+                    <p>Fecha no laboral</p>
                   )}
                   <div className="flex items-center justify-center ">
                     <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr>
