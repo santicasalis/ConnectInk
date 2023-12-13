@@ -12,7 +12,7 @@ export default function About() {
           Sobre Connect<span className="text-primary">Ink</span>
         </h1>
         <p className="text-lg mb-4  ">
-          <p className="font-serif">
+          <p className="text-lg mb-4 font-serif text-justify">
             ConnectInk es más que una aplicación; es una comunidad creada por un
             grupo de estudiantes de Henry con una visión única. Nuestra
             plataforma nace del deseo de facilitar la conexión entre amantes del
@@ -26,7 +26,7 @@ export default function About() {
         <p className="font-bold text-2xl mb-4 font-rocksalt text-primary">
           ¿Quiénes somos?
         </p>
-        <p className="font-serif">
+        <p className="text-lg mb-4 font-serif text-justify">
           {" "}
           Somos un equipo apasionado que cree en la diversidad y la creatividad.
           En ConnectInk, entendemos que cada tatuaje cuenta una historia única,
@@ -39,7 +39,7 @@ export default function About() {
         <p className="font-bold text-2xl mb-4 font-rocksalt text-primary">
           Nuestra Misión
         </p>
-        <p className="font-serif">
+        <p className="text-lg mb-4 font-serif text-justify">
           ConnectInk tiene su base en la idea de que cada tatuaje es una obra
           maestra en sí misma. Queremos proporcionar a los artistas una
           plataforma donde puedan mostrar su talento y a los entusiastas del
@@ -52,7 +52,7 @@ export default function About() {
         <p className=" font-bold text-2xl mb-4 font-rocksalt text-primary">
           ¿Por qué ConnectInk ?
         </p>
-        <p className="font-serif">
+        <p className="text-lg mb-4 font-serif text-justify">
           Desde las aulas de Henry, nos embarcamos en este viaje para ofrecerte
           más que una aplicación; queremos brindarte una experiencia única.
           Imagina encontrar el artista perfecto que llevará a la realidad tu
@@ -64,7 +64,7 @@ export default function About() {
         <p className=" font-bold text-2xl mb-4 font-rocksalt text-primary">
           Únete a la Comunidad ConnectInk
         </p>
-        <p className="font-serif">
+        <p className="text-lg mb-4 font-serif text-justify">
           Ya sea que estés buscando tu próximo tatuaje o que desees mostrar tu
           portafolio como artista, ConnectInk es el lugar donde la creatividad
           encuentra su hogar. Únete a nosotros y forma parte de una comunidad
@@ -76,16 +76,16 @@ export default function About() {
         <br />
         <div className="mx-2 my-4 text-artistfont md:mx-auto md:max-w-2xl md:px-2 text-center">
           <p className="font-bold text-2xl mb-4 font-rocksalt text-primary">
-            Integrantes
+            Creadores
           </p>
 
-          <ul className="flex flex-wrap list-none p-0 justify-center">
+          <ul className="flex flex-wrap list-none p-0 text-lg font-serif justify-center">
             <li className="mr-8 mb-6 text-xl ">
               <a
                 href="https://www.linkedin.com/in/santiagocasalis"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Santiago Casalis
               </a>
@@ -95,7 +95,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/constanza-weiner/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Constanza Maria Weiner
               </a>
@@ -105,7 +105,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/ludmila-grisel-viale/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Ludmila Grisel Viale
               </a>
@@ -115,7 +115,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/pedro-gochman/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Pedro Gochman
               </a>
@@ -125,7 +125,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/facundofernandez1991/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Facundo Fernandez
               </a>
@@ -135,7 +135,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/jareddelgado454/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Jared Delgado Tejada
               </a>
@@ -145,7 +145,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/alejo-guzm%C3%A1n-811988288/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Alejo Guzmán
               </a>
@@ -155,7 +155,7 @@ export default function About() {
                 href="http://linkedin.com/in/facundo-padilla-60371b26a"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-primary"
+                className="text-[#FDECDA] hover:text-primary"
               >
                 Facundo Padilla
               </a>
