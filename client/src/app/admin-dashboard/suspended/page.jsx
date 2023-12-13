@@ -17,7 +17,6 @@ const Suspended = () => {
   const dispatch = useDispatch();
   const router = useRouter()
   const disabledArtists = useSelector((state) => state.artists.disabled);
-  console.log(disabledArtists, "DISABLEDDDDDDDD")
   
     useEffect(() => {
       if(!user.userType){
@@ -28,7 +27,6 @@ const Suspended = () => {
     dispatch(getDisabledArtists());
     dispatch(getAllArtists());
   }, []);
-  //paginado
   const [currentPage, setCurrentPage] = useState(1);
   const artistsPerPage = 5;
   const indexOfLastArtist = currentPage * artistsPerPage;
@@ -64,6 +62,7 @@ const Suspended = () => {
                     tattoos={filter.publications}
                     image={filter.image}
                     reviews={filter.reviews}
+                    email={filter.email}
                   />
               </div>
            ))}

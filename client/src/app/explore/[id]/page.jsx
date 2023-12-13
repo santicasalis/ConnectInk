@@ -29,20 +29,10 @@ export default function Page({ params }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const artist = useSelector((state) => state.artists.detail);
+  const [loaded, setLoaded] = useState(false)
 
   const user = useSelector((state) => state.user.logedInUser);
   const [priceRanges, setPriceRanges] = useState({})
-
-
-  console.log(artist, "quiero la descr");
-
-  console.log(artist, "quiero la descr")
-
-  // useEffect(() => {
-  //   if (!user.userType) {
-  //     router.replace("/auth");
-  //   }
-  // }, []);
 
   const handleAppoint = ()=>{
     if(!user.userType){
@@ -58,6 +48,10 @@ export default function Page({ params }) {
 
     }
   }
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
 
   useEffect(() => {
     if (params.id) {
@@ -92,6 +86,8 @@ export default function Page({ params }) {
     return <div className="text-center">No se encontró el tatuador</div>;
 
   return (
+    loaded ? (
+
     <div className="w-full bg-secondary-900">
       <Nav />
 
@@ -191,7 +187,7 @@ export default function Page({ params }) {
                   Estilos de tatuaje:
                 </h3>
                 <div className="flex flex-wrap gap-4">
-                  {artist?.tattooStyles?.map((style, index) => (
+                  {artist.tattooStyles?.length && artist?.tattooStyles?.map((style, index) => (
                     <label
                       key={index}
                       className="flex items-center text-artistfont/80 border-[1px] border-artistfont/80 rounded-lg p-2"
@@ -282,7 +278,7 @@ export default function Page({ params }) {
                   )}
                 </div>
               </div>
-              {artist.reviews ? (
+              {artist.reviews && artist.reviews.length ? (
                 <div className="w-1/2 p-4">
                   <h3 className=" text-artistfont text-[29px] mb-4 font-rocksalt w-full text-center">
                     Reseñas:
@@ -293,7 +289,7 @@ export default function Page({ params }) {
                       {artist.reviews.map((review) => {
                         return (
                           <ReviewCard
-                            key={review.appointmentId}
+                            key={review.AppointmentId}
                             customerId={review.customerId}
                             comment={review.comment}
                             image={review?.image}
@@ -322,7 +318,7 @@ export default function Page({ params }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
           {artist?.publications?.map((publication, index) => (
             <div
-              key={index}
+              key={publication.id}
               className=" bg-secondary-100 rounded-lg shadow-lg p-4"
             >
               <img
@@ -340,5 +336,8 @@ export default function Page({ params }) {
         </div>
       </div>
     </div>
+    ) : (
+      <></>
+    )
   );
 }
