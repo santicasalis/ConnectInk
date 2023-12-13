@@ -194,24 +194,20 @@ const BookAppointment = ({ params }) => {
     setSelectedTime("");
     setShowTime(true);
     setSelectedDate(date);
-    selectedTime ?
-      form.setFieldValue(
-        "dateAndTime",
-        new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          selectedTime
+    selectedTime
+      ? form.setFieldValue(
+          "dateAndTime",
+          new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            selectedTime
+          )
         )
-      ) : 
-      form.setFieldValue(
-        "dateAndTime",
-        new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-        )
-      )
+      : form.setFieldValue(
+          "dateAndTime",
+          new Date(date.getFullYear(), date.getMonth(), date.getDate())
+        );
   };
 
   const handleTime = (form, event) => {
@@ -241,13 +237,15 @@ const BookAppointment = ({ params }) => {
     filterAvailabilties();
   }, [artist]);
 
-  const tileStyles = ({date, view}) => {
-    if(view == "month"){
-      if(new Date(date).toDateString() == new Date(selectedDate).toDateString()){
-        return "bg-neutral-900"
+  const tileStyles = ({ date, view }) => {
+    if (view == "month") {
+      if (
+        new Date(date).toDateString() == new Date(selectedDate).toDateString()
+      ) {
+        return "bg-neutral-900";
       }
     }
-  }
+  };
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view == "month")
@@ -262,7 +260,7 @@ const BookAppointment = ({ params }) => {
       <Nav />
 
       <div className="w-full p-4 flex justify-center  text-artistfont">
-        <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
+        <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden p-2">
           {sent ? (
             <h1>Redireccionando a Mercado Pago para completar la reserva</h1>
           ) : (
@@ -284,40 +282,38 @@ const BookAppointment = ({ params }) => {
                     values.image = imageUrl;
                   }
 
-                  try{
+                  try {
                     const createResponse = await axios.post(
                       `${URL_BASE}/appointments`,
                       { ...values, tattooArtistId: id, customerId: user.id }
                     );
                     const createdAppointment = createResponse.data.data;
 
-                    try{
-                      const paymentMp = await axios.post(`${URL_BASE}/payments`, {
-                        id: createdAppointment.id,
-                        description: createdAppointment.description,
-                        depositPrice: createdAppointment.depositPrice,
-                      });
-    
-                      const paymentMpResponse = paymentMp.data;
+                    try {
+                      const paymentMp = await axios.post(
+                        `${URL_BASE}/payments`,
+                        {
+                          id: createdAppointment.id,
+                          description: createdAppointment.description,
+                          depositPrice: createdAppointment.depositPrice,
+                        }
+                      );
 
+                      const paymentMpResponse = paymentMp.data;
                       if (paymentMpResponse) {
                         setTimeout(() => {
                           window.location.href = paymentMpResponse.init_point;
                         }, 3000);
                       }
                       setSent(true);
-                    } catch (error){
-                      console.log(error)
+                    } catch (error) {
+                      console.log(error);
                     }
-                  } catch (error){
-                    console.log(error)
+                  } catch (error) {
+                    console.log(error);
                   }
-
-
-
-
                 } catch (error) {
-                  console.log(error)
+                  console.log(error);
                   notifyError("Error en el formulario", error);
                   throw Error("Error en el formulario");
                 }
@@ -623,7 +619,7 @@ const CalendarContainer = styled.div`
   .react-calendar__tile:enabled:hover {
     background-color: rgb(30, 30, 30);
   }
-  .react-calendar__tile:enabled:focus{
+  .react-calendar__tile:enabled:focus {
     background-color: rgb(80, 80, 80);
   }
 
@@ -639,6 +635,4 @@ const CalendarContainer = styled.div`
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: rgb(36, 36, 36);
   }
-
-  
 `;
