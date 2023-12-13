@@ -127,6 +127,7 @@ const createAppointment = async ({
     finalHour = possibleException.finalHour;
     secondInitialHour = possibleException.secondInitialHour;
     secondFinalHour = possibleException.secondFinalHour;
+    console.log(initialHour, finalHour, secondFinalHour, secondInitialHour)
   }
 
   //comparar las horas
@@ -141,7 +142,7 @@ const createAppointment = async ({
     };
   }
   // caso la hora del turno sea entre las horas que el tatuador trabaja, error
-  if (secondInitialHour !== null) {
+  if (secondInitialHour !== null && secondFinalHour !== null) {
     if (
       Number(dateOrTime[1].split(":")[0]) >
         Number(finalHour.split(":")[0]) + 3 &&
@@ -183,7 +184,7 @@ const createAppointment = async ({
   const hourSplit = Number(dateOrTime[1].split(":")[0]);
   const finalHourSplit = Number(finalHour.split(":")[0]);
 
-  if (secondInitialHour !== null) {
+  if (secondInitialHour !== null && secondFinalHour !== null) {
     const secondInitialHourSplit = Number(secondInitialHour.split(":")[0]);
     const secondFinalHourSplit = Number(secondFinalHour.split(":")[0]);
     if (hourSplit > secondInitialHourSplit + 3) {

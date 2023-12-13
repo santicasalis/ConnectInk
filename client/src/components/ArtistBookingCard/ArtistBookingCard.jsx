@@ -22,36 +22,29 @@ import Image from "next/image";
 import { openModalDeleteAppointmentAction } from "../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import Link from "next/link";
 import { notifyError } from "../notifyError/NotifyError";
-import { current } from "@reduxjs/toolkit";
+import { current } from '@reduxjs/toolkit';
+import { getUserById } from "../../app/redux/features/user/userActions";
 
-const ArtistBookingCard = ({
-  id,
-  bodyPlace,
-  description,
-  duration,
-  image,
-  size,
-  dateAndTime,
-  depositPrice,
-  CustomerId,
-  paymentStatus,
-}) => {
-  const dispatch = useDispatch();
-  const imageLoader = ({ src }) => {
-    return src;
-  };
-  const user = useSelector((state) => state.user.logedInUser);
 
-  let date = new Date(dateAndTime);
-  let opcionesFormato = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    timeZoneName: "short",
-  };
-  let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
+const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
+    const dispatch = useDispatch();
+    const imageLoader = ({src}) => {
+        return src
+      }
+    const user = useSelector((state)=>state.user.logedInUser)
+    const fireBaseUser = useSelector((state)=>state.user.fireBaseUser)
+    
+        
+    let date = new Date(dateAndTime) 
+    let opcionesFormato = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZoneName: 'short' 
+    };
+    let fechaFormateada = date.toLocaleDateString('es-ES', opcionesFormato)
 
   const [response, setResponse] = useState({});
 
@@ -93,6 +86,7 @@ const ArtistBookingCard = ({
     };
 
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
+    dispatch(getUserById(fireBaseUser.tokenId))
   };
 
   return (
