@@ -304,7 +304,7 @@ const Profile = () => {
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>
-              Shop Name: <span className="text-red-500">*</span>
+              Estudio: <span className="text-red-500">*</span>
             </p>
           </div>
           <div className="flex-1 flex items-center gap-4">
