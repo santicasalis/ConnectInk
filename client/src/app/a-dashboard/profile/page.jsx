@@ -8,23 +8,29 @@ import React, { useEffect, useState } from "react";
 import { uploadImage } from "../../utils/uploadImage";
 
 import axios from "axios";
-import { bringUserInformation } from "../../../app/redux/features/user/userActions";
+import {
+  bringUserInformation,
+  getUserById,
+} from "../../../app/redux/features/user/userActions";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { getAuth, updatePassword } from "firebase/auth";
 import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { getAllStyles } from "../../redux/features/styles/stylesActions";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const [initialData, setInitialData] = useState({});
   const user = useSelector((state) => state.user.logedInUser);
+  const styles = useSelector((state) => state.styles.names);
   const [showPassword, setShowPassword] = useState(false);
   const imageLoader = ({ src }) => {
     return src;
   };
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(user.image);
+  const [styleSelected, setStyleSelected] = useState([]);
 
   useEffect(() => {
     if (!user.userType) {
@@ -32,6 +38,10 @@ const Profile = () => {
     } else if (user.userType !== "artist") {
       router.replace("/");
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAllStyles());
   }, []);
 
   const [formData, setFormData] = useState({
@@ -45,6 +55,7 @@ const Profile = () => {
     instagram: user.instagram,
     description: user.description,
     password: user.password,
+    tattooStyles: user.tattooStyles,
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -62,6 +73,7 @@ const Profile = () => {
       instagram: user.instagram,
       description: user.description,
     });
+    setStyleSelected(user?.tattooStyles?.map((style) => style));
   }, [user]);
 
   const handleUpdate = async (e) => {
@@ -73,6 +85,8 @@ const Profile = () => {
         updatedFields[key] = formData[key];
       }
     });
+
+    updatedFields.tattooStyles = styleSelected;
 
     if (formData.password && formData.password !== confirmPassword) {
       notifyError(new Error("Las contraseñas no coinciden"));
@@ -97,6 +111,8 @@ const Profile = () => {
         `http://localhost:3001/tattooArtists/${user.id}`,
         dataToUpdate
       );
+
+      dispatch(getUserById(firebaseUser.tokenId));
 
       if (response.status === 200) {
         dispatch(bringUserInformation(dataToUpdate));
@@ -143,6 +159,14 @@ const Profile = () => {
         notifyError("Error al subir la imagen");
       }
     }
+  };
+
+  const handleStyleChange = (styleName) => {
+    const updatedStyles = styleSelected.includes(styleName)
+      ? styleSelected.filter((style) => style !== styleName)
+      : [...styleSelected, styleName];
+
+    setStyleSelected(updatedStyles);
   };
 
   return (
@@ -373,6 +397,42 @@ const Profile = () => {
             </span>
           </div>
         </div>
+
+        <div>
+          <label htmlFor="">Estilos actuales</label>
+          {user?.tattooStyles?.map((userStyle) => {
+            return <div>{userStyle}</div>;
+          })}
+        </div>
+
+        <div className="flex flex-col items-center justify-center mb-8">
+          <label
+            className="text-2xl font-weight:800 text-artistfont flex items-center gap-4 px-4 py-1 justify-center mb-6 font-newrocker text-[22px]"
+            htmlFor="style"
+          >
+            Estilos de Tatuaje:
+          </label>
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {styles?.map((style) => {
+              const isSelected = styleSelected.includes(style.name);
+              return (
+                <label
+                  className={`flex items-center gap-2 px-3 py-1 border rounded cursor-pointer ${
+                    isSelected
+                      ? "bg-primary/75 text-black border-primary border-[1px]"
+                      : "bg-transparent border-[1px] border-primary text-primary rounded-lg"
+                  }`}
+                  htmlFor={style.name}
+                  key={style.name}
+                  onClick={() => handleStyleChange(style.name)}
+                >
+                  {style.name}
+                </label>
+              );
+            })}
+          </div>
+        </div>
+
         <button
           className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
           type="submit"
