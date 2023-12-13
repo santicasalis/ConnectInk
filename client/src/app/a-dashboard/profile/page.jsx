@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { uploadImage } from "../../utils/uploadImage";
-
 import axios from "axios";
 import {
   bringUserInformation,
@@ -31,6 +30,8 @@ const Profile = () => {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(user.image);
   const [styleSelected, setStyleSelected] = useState([]);
+
+  console.log(user.shopName);
 
   useEffect(() => {
     if (!user.userType) {
@@ -117,15 +118,17 @@ const Profile = () => {
       if (response.status === 200) {
         dispatch(bringUserInformation(dataToUpdate));
         console.log("Datos actualizados con éxito");
+
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
+
+        toast.success(`Cambios guardados con exito!`, {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        });
       }
-      toast.success(`Cambios guardados con exito!`, {
-        className: "toastSuccess",
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
     } catch (error) {
       toast.error(`Error al guardar cambios`, {
         className: "toastError",
@@ -175,19 +178,6 @@ const Profile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
-          <div className="w-1/4 ">
-            <Image
-              unoptimized
-              src={imagePreview || user.image}
-              loader={imageLoader}
-              width={100}
-              height={100}
-              alt={`${user.fullName} profile pic`}
-              className="rounded-full"
-            />
-            <p>vista previa</p>
-          </div>
-
           <div className="flex-1">
             <div className="relative mb-2">
               <input
@@ -320,7 +310,7 @@ const Profile = () => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-                name="Estudio"
+                name="shopName"
                 type="text"
                 value={formData.shopName}
                 onChange={handleChange}
