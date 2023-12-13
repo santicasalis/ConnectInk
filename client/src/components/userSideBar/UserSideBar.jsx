@@ -64,7 +64,7 @@ const UserSideBar = () => {
                 href="/user-dashboard/reservas"
                 className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
               >
-                <RiCalendarCheckLine className="text-primary" /> Reservas
+                <RiCalendarCheckLine className="text-primary" /> Mis turnos
               </Link>
             </li>
           </ul>
