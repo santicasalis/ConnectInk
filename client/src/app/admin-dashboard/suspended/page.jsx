@@ -36,11 +36,15 @@ const Suspended = () => {
     indexOfLastArtist
   );
 
-  const totalArtists = filtered.length;
+  const totalArtists = disabledArtists.length;
  
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const noResults = artistsToDisplay.length === 0;
+
+
   return (
     <div>
        {/* <PaginateAdmin
@@ -51,6 +55,12 @@ const Suspended = () => {
         /> */}
         <div className="scroll-fade flex justify-center items-center">
           <div >
+          {noResults ? (
+                  <p className="text-admin/50 text-center mt-[180px] font-rocksalt text-2xl ">
+                    ¡No hay artistas suspendidos!
+                  </p>
+                ) : (
+                  <>
             {artistsToDisplay?.map((filter) => (
               <div key={filter.id} className="mb-4 w-full flex justify-center items-center   ">
                 <AdminCardSuspended
@@ -66,6 +76,8 @@ const Suspended = () => {
                   />
               </div>
            ))}
+            </>
+                )}
           </div>
         </div>
     </div>

@@ -12,16 +12,17 @@ import { getAuth, updatePassword } from "firebase/auth";
 import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import { uploadImage } from "../../utils/uploadImage";
+import { CldUploadWidget } from "next-cloudinary";
 
 const UProfile = () => {
-  const user = useSelector((state) => state.user.logedInUser);
+  const user = useSelector((state) => state.user.logedInUser);  
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [initialData, setInitialData] = useState({});
-  const [imagePreview, setImagePreview] = useState(user.image);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     if (!user.userType) {
@@ -84,12 +85,15 @@ const UProfile = () => {
 
       const response = await axios.put(
         `http://localhost:3001/customers/${user.id}`,
-        formData
+        updatedFields
       );
 
+      setImage(null)
+
       if (response.status === 200) {
-        dispatch(bringUserInformation(formData));
+        dispatch(bringUserInformation(updatedFields));
         console.log("Datos actualizados con éxito");
+
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
       }
@@ -104,29 +108,9 @@ const UProfile = () => {
       notifyError("Error al actualizar datos", error);
     }
   };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = async (event) => {
-    const selectedFile = event.target.files[0];
-
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
-      try {
-        const imageUrl = await uploadImage(selectedFile);
-
-        setFormData({ ...formData, image: imageUrl });
-      } catch (error) {
-        console.error("Error al subir la imagen:", error);
-
-        notifyError("Error al subir la imagen");
-      }
-    }
   };
 
   return (
@@ -135,34 +119,33 @@ const UProfile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
-          <div className="w-1/4 ">
-            <Image
-              unoptimized
-              src={imagePreview || user.image}
-              loader={imageLoader}
-              width={100}
-              height={100}
-              alt={`${user.fullName} profile pic`}
-              className="rounded-full"
-            />
-            <p>vista previa</p>
-          </div>
-
           <div className="flex-1">
             <div className="relative mb-2">
-              <input
-                type="file"
-                id="avatar"
-                className="hidden"
-                onChange={handleFileChange}
-                accept="image/png, image/jpeg"
-              />
+            <CldUploadWidget
+                uploadPreset="cloudinary-upload-images-connectInk"
+                onUpload={(result) => {
+                  setFormData({ ...formData, image: result.info.secure_url });
+                  setImage(result.info.secure_url);
+                }}
+              >
+                {({ open }) => {
+                  return (
+                    <button
+                      type="button"
+                      className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
+                      onClick={() => open()}
+                    >
+                      <RiEdit2Line />
+                    </button>
+                  );
+                }}
+              </CldUploadWidget>
 
               {user.image && (
                 <div>
                   <Image
                     unoptimized
-                    src={imagePreview}
+                    src={user.image}
                     loader={imageLoader}
                     width={80}
                     height={80}
@@ -171,12 +154,31 @@ const UProfile = () => {
                 </div>
               )}
 
-              <label
-                htmlFor="avatar"
-                className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
-              >
-                <RiEdit2Line />
-              </label>
+              {image && (
+                <div>
+                  <p>Nueva imagen de perfil:</p>
+                  <Image
+                    src={image}
+                    loader={imageLoader}
+                    unoptimized
+                    alt="tattoo image"
+                    height={80}
+                    width={80}
+                  />
+                </div>
+              )}
+              {image && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, image: null });
+                    setImage(null);
+                  }}
+                  className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                >
+                  Delete Image
+                </button>
+              )}
             </div>
             <p className="text-gray-500 text-sm"></p>
           </div>
@@ -223,16 +225,18 @@ const UProfile = () => {
           <div className="w-1/4">
             <p className="text-artistfont">Nueva Contraseña:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex items-center">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
-              className="w-[50%] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+              className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
             />
-
-            <span onClick={() => setShowPassword(!showPassword)}>
+            <span
+              className="ml-4 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
@@ -242,18 +246,25 @@ const UProfile = () => {
           <div className="w-1/4">
             <p className="text-artistfont">Confirmar Nueva Contraseña:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex items-center">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-[50%] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default text-artistfont"
+              className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default text-artistfont"
             />
+            <span
+              className="ml-4 cursor-pointer"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <RiEyeLine /> : <RiEyeOffLine />}
+            </span>
           </div>
         </div>
+
         <div className=" mb-2 w-full flex items-center  mx-auto">
           <button
-            className="mx-auto mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px] rounded px-2 py-3 "
+            className="mx-auto mt-6 border-[1px] border-primary/50 hover:bg-primary/75 rounded-md px-2 py-3 "
             type="submit"
           >
             {" "}

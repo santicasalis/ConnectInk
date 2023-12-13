@@ -37,7 +37,7 @@ const reviews = () => {
             );
           })
         ) : (
-          <p className="text-center mt-8">No tienes ninguna reseña aún </p>
+          <p className="text-center  font-rocksalt text text-3xl text-artist/80 mt-[180px]">¡No tienes ninguna reseña aún! </p>
         )}
       </div>
     </div>

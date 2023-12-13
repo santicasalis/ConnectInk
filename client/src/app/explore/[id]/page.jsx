@@ -264,7 +264,7 @@ export default function Page({ params }) {
             <div className="flex pt-8 mb-8">
               <div className="w-1/2  flex flex-col">
                 <div className="p-4 rounded  flex-grow pr-4">
-                  <h3 className="font-bold  font-rocksalt flex gap-2 text-[29px] mb-4">
+                  <h3 className="font-bold font-rocksalt text-[#FDECDA] flex gap-2 text-[29px] mb-4">
                     Ubicación:
                   </h3>
                   {artist.location && artist.address && (
@@ -285,7 +285,7 @@ export default function Page({ params }) {
                   </h3>
                   <div className="flex flex-col items-center justify-center h-[500px] overflow-hidden">
                     <div className="w-[70%] mb-4 relative">
-                      <div className="absolute custom-gradient-reviews w-full h-full"></div>
+                      <div className="absolute custom-gradient-reviews w-full h-full "></div>
                       {artist.reviews.map((review) => {
                         return (
                           <ReviewCard
@@ -301,10 +301,16 @@ export default function Page({ params }) {
                   </div>
                 </div>
               ) : (
-                <h1>
-                  El artista todavía no tiene reseñas, saca un turno y se el
-                  primero en dejar una!
-                </h1>
+                <div className="max-w-[400px] mx-auto">
+                  <h3 className=" text-artistfont text-[29px] mb-4 mt-4 font-rocksalt w-full text-center">
+                    Reseñas:
+                  </h3>
+                  <p className="text-lg mb-4 text-artistfont text-justify mt-8 ml-5 mr-5">
+                    El artista todavía no tiene reseñas, reserva un turno para
+                    hacer realidad ese tatuaje que tanto deseas y sé el primero
+                    en dejar una valoración.
+                  </p>
+                </div>
               )}
             </div>
           </div>

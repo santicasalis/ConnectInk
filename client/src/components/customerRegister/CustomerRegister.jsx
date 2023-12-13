@@ -1,7 +1,9 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
-import { uploadImage } from "../../app/utils/uploadImage";
 import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import { notifyError } from "../../components/notifyError/NotifyError";
+import Image from "next/image";
 
 import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
 import { emailSignUp } from "../../app/utils/emailSignUp";
@@ -24,6 +26,7 @@ import {
   RiGoogleFill,
 } from "react-icons/ri";
 import { auth } from "../../firebase";
+import { CldUploadWidget } from "next-cloudinary";
 
 const CustomerRegister = () => {
   const urlBase = "http://localhost:3001";
@@ -31,6 +34,10 @@ const CustomerRegister = () => {
   const dispatch = useDispatch();
   const userInformation = useSelector((state) => state.user.fireBaseUser);
   const [loaded, setLoaded] = useState(false);
+  const [image, setImage] = useState(userInformation?.image || null)
+  const imageLoader = ({src}) => {
+    return src
+  }
 
   useEffect(() => {
     setLoaded(true);
@@ -59,7 +66,7 @@ const CustomerRegister = () => {
           userName: userInformation?.userName ? true : false,
           email: userInformation?.email || "",
           mobile: "",
-          image: "",
+          image: userInformation?.image || null,
           password: "",
           passwordConfirm: "",
           tokenId: userInformation?.tokenId || "",
@@ -68,13 +75,8 @@ const CustomerRegister = () => {
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            if (values.image && typeof values.image === "object") {
-              const imageUrl = await uploadImage(values.image);
-              values.image = imageUrl;
-            } else {
-              values.image =
-                userInformation?.image ||
-                "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
+            if (!values.image) {
+              values.image = userInformation?.image || "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
 
             if (!values.userName) {
@@ -121,29 +123,39 @@ const CustomerRegister = () => {
       >
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
-            <div className="mb-4">
-              <label htmlFor="image" className="font-bold">
-                Imagen de Perfil
-              </label>
-              <input
-                type="file"
-                name="image"
-                onChange={(event) => {
-                  setFieldValue("image", event.currentTarget.files[0]);
-                }}
-                className="p-2 mb-3 shadow-md block w-full"
-                accept="image/png, image/jpeg"
-              />
-              {values.image && (
-                <button
-                  type="button"
-                  onClick={() => setFieldValue("image", null)}
-                  className="bg-red-500 text-white p-2 rounded"
-                >
-                  Delete Image
-                </button>
-              )}
-            </div>
+            <div className="mb-4 flex">
+                    <label htmlFor="image" className="font-rocksalt">
+                      Imagen de perfil:
+                    </label>
+                    <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
+                      {({ open }) => {
+                          return (
+                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
+                            Cargar imagen
+                          </button>
+                          );
+                      }}
+                    </CldUploadWidget>
+                    {image && 
+                    <Image 
+                    src={image}
+                    loader={imageLoader}
+                    unoptimized
+                    alt="tattoo image"
+                    height={100}
+                    width={100}
+                    />
+                    }
+                    {image && (
+                      <button
+                        type="button"
+                        onClick={() => {setFieldValue("image", null); setImage(null)}}
+                        className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                      >
+                        Delete Image
+                      </button>
+                    )}
+                  </div>
 
             <div className="relative w-full">
               <RiUserLine className="absolute left-2 top-4 text-white z-30" />

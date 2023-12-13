@@ -24,19 +24,20 @@ const ModalDeletePostAdmin = () => {
         event.preventDefault();
         try {
             await axios.delete(`${URL_BASE}/publications/${id}`);
+            await axios.post(`${URL_BASE}/nodemailer/deletePublication`, {email: data.email})
             dispatch(closeModalDeleteAction());
             toast.success(`La publicacion se eliminó con éxito`, {
               className: "toastSuccess",
               position: toast.POSITION.BOTTOM_RIGHT,
               autoClose: 3000,
-              hideProgressBar: true,
+              hideProgressBar: false,
             });
         } catch (error) {
             toast.error(`Hubo un error al eliminar la publicación`, {
               className: "toastError",
               position: toast.POSITION.BOTTOM_RIGHT,
               autoClose: 3000,
-              hideProgressBar: true,
+              hideProgressBar: false,
             });
         }
         

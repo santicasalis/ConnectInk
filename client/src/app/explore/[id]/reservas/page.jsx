@@ -4,14 +4,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import styled from "styled-components";
+import Image from "next/image";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { uploadImage } from "../../../../app/utils/uploadImage";
 //import { SiMercadopago } from "react-icons/si";
 import { validationSchema } from "./validationSchema";
 import { toast } from "react-toastify";
 import { dayData } from "../../../utils/data/dayData";
 import { useDispatch, useSelector } from "react-redux";
+import { CldUploadWidget } from "next-cloudinary";
 
 import { getArtistDetail } from "../../../../app/redux/features/artists/artistActions";
 import Nav from "../../../../components/nav/Nav";
@@ -34,6 +35,11 @@ const BookAppointment = ({ params }) => {
   const [sent, setSent] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const [image, setImage] = useState(null)
+
+  const imageLoader = ({src}) => {
+    return src
+  }
 
   const durations = {
     Pequeño: 1,
@@ -277,10 +283,6 @@ const BookAppointment = ({ params }) => {
               validationSchema={validationSchema}
               onSubmit={async (values, { setSubmitting }) => {
                 try {
-                  if (values.image && typeof values.image === "object") {
-                    const imageUrl = await uploadImage(values.image);
-                    values.image = imageUrl;
-                  }
 
                   try {
                     const createResponse = await axios.post(
@@ -466,27 +468,30 @@ const BookAppointment = ({ params }) => {
                     <label htmlFor="image" className="font-rocksalt">
                       Imagen de referencia:
                     </label>
-                    <label
-                      className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
-                      htmlFor="imagenReferencia"
-                    >
-                      <MdFileUpload className="mr-2 " />
-                      Cargar
-                    </label>
-                    <input
-                      type="file"
-                      name="image"
-                      id="imagenReferencia"
-                      onChange={(event) => {
-                        setFieldValue("image", event.currentTarget.files[0]);
+                    <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
+                      {({ open }) => {
+                          return (
+                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
+                            <MdFileUpload className="mr-2 " />
+                            Cargar
+                          </button>
+                          );
                       }}
-                      className="hidden "
-                      accept="image/png, image/jpeg"
+                    </CldUploadWidget>
+                    {image && 
+                    <Image 
+                    src={image}
+                    loader={imageLoader}
+                    unoptimized
+                    alt="tattoo image"
+                    height={100}
+                    width={100}
                     />
-                    {values.image && (
+                    }
+                    {image && (
                       <button
                         type="button"
-                        onClick={() => setFieldValue("image", null)}
+                        onClick={() => {setFieldValue("image", null); setImage(null)}}
                         className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
                       >
                         Delete Image
