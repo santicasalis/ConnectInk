@@ -15,6 +15,8 @@ import { openModalDeleteAppointmentAction } from '../../app/redux/features/modal
 import Link from 'next/link';
 import { notifyError } from "../notifyError/NotifyError";
 import { current } from '@reduxjs/toolkit';
+import { getUserById } from "../../app/redux/features/user/userActions";
+
 
 const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
     const dispatch = useDispatch();
@@ -22,6 +24,7 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
         return src
       }
     const user = useSelector((state)=>state.user.logedInUser)
+    const fireBaseUser = useSelector((state)=>state.user.fireBaseUser)
     
         
     let date = new Date(dateAndTime) 
@@ -74,6 +77,8 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
         }
 
         await axios.post("http://localhost:3001/nodemailer/cancelDate", data)
+
+        dispatch(getUserById(fireBaseUser.tokenId))
        
     }
 

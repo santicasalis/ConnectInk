@@ -15,6 +15,7 @@ const RegisteredArtist = () => {
   const user = useSelector((state) => state.user.logedInUser)
   const dispatch = useDispatch();
   const router = useRouter()
+  const { isOpen, data } = useSelector((state) => state.modalDeleteArtist);
   
     useEffect(() => {
       if(!user.userType){
@@ -25,15 +26,22 @@ const RegisteredArtist = () => {
     dispatch(getAllArtists());
   }, []);
 
+  useEffect(() => {
+    setArtistsToDisplay(filtered.slice(
+      indexOfFirstArtist,
+      indexOfLastArtist
+    ))
+  }, [isOpen])
+
   //paginado
   const [currentPage, setCurrentPage] = useState(1);
   const artistsPerPage = 5;
   const indexOfLastArtist = currentPage * artistsPerPage;
   const indexOfFirstArtist = indexOfLastArtist - artistsPerPage;
-  const artistsToDisplay = filtered.slice(
+  const [artistsToDisplay, setArtistsToDisplay] = useState(filtered.slice(
     indexOfFirstArtist,
     indexOfLastArtist
-  );
+  ))
 
   const totalArtists = filtered.length;
  

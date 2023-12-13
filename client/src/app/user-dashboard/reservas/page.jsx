@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import BookingCard from "../../../components/bookingCard/BookingCard";
@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ModalDeleteAppointment from "../../../components/modal/ModalDeleteAppointment.jsx";
-import { getAllAppointments } from "../../redux/features/user/userActions";
+import { getAllAppointments, getUserById } from "../../redux/features/user/userActions";
 import Link from "next/link";
 import AdminCard from "../../../components/adminCard/AdminCard";
 import { getAllArtists } from "../../redux/features/artists/artistActions";
@@ -15,9 +15,10 @@ import Card from "../../../components/card/Card";
 
 export default function Reservas() {
   const user = useSelector((state) => state.user.logedInUser);
+  const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
   const artist = useSelector((state) => state.artists.people.slice(0, 3));
 
-  const appointment = user.appointments;
+  const [appointment, setAppointment] = useState(user.appointments) ;
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -28,9 +29,16 @@ export default function Reservas() {
       router.replace("/");
     }
   }, []);
+
   useEffect(() => {
     dispatch(getAllArtists());
+    dispatch(getUserById(fireBaseUser.tokenId))
   }, []);
+
+  useEffect(() => {
+    setAppointment(user.appointments)
+  }, [user])
+
   const isOpenModalDeleteAppointment = useSelector(
     (state) => state.ModalDeleteAppointment?.isOpen
   );

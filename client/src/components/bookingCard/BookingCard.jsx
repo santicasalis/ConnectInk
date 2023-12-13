@@ -23,6 +23,7 @@ import Link from "next/link";
 import { openModalDeleteAppointmentAction } from "../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import { useRouter } from "next/navigation";
 import { notifyError } from "../../components/notifyError/NotifyError";
+import { getUserById } from "../../app/redux/features/user/userActions";
 
 const BookingCard = ({
   paymentStatus,
@@ -40,6 +41,7 @@ const BookingCard = ({
     return src;
   };
   const user = useSelector((state) => state.user.logedInUser);
+  const fireBaseUser = useSelector((state) => state.user.fireBaseUser);
   const router = useRouter();
   const dispatch = useDispatch();
   let date = new Date(dateAndTime);
@@ -108,6 +110,8 @@ const BookingCard = ({
     };
 
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
+
+    dispatch(getUserById(fireBaseUser.tokenId))
   };
 
 
