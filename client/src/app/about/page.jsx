@@ -12,7 +12,7 @@ export default function About() {
           Sobre Connect<span className="text-primary">Ink</span>
         </h1>
         <p className="text-lg mb-4  ">
-          <p className="text-lg mb-4 font-serif text-justify">
+          <p className="text-lg mb-4 text-artistfont text-justify">
             ConnectInk es más que una aplicación; es una comunidad creada por un
             grupo de estudiantes de Henry con una visión única. Nuestra
             plataforma nace del deseo de facilitar la conexión entre amantes del
@@ -26,7 +26,7 @@ export default function About() {
         <p className="font-bold text-2xl mb-4 font-rocksalt text-primary">
           ¿Quiénes somos?
         </p>
-        <p className="text-lg mb-4 font-serif text-justify">
+        <p className="text-lg mb-4 text-artistfont text-justify">
           {" "}
           Somos un equipo apasionado que cree en la diversidad y la creatividad.
           En ConnectInk, entendemos que cada tatuaje cuenta una historia única,
@@ -39,7 +39,7 @@ export default function About() {
         <p className="font-bold text-2xl mb-4 font-rocksalt text-primary">
           Nuestra Misión
         </p>
-        <p className="text-lg mb-4 font-serif text-justify">
+        <p className="text-lg mb-4 text-artistfont text-justify">
           ConnectInk tiene su base en la idea de que cada tatuaje es una obra
           maestra en sí misma. Queremos proporcionar a los artistas una
           plataforma donde puedan mostrar su talento y a los entusiastas del
@@ -52,7 +52,7 @@ export default function About() {
         <p className=" font-bold text-2xl mb-4 font-rocksalt text-primary">
           ¿Por qué ConnectInk ?
         </p>
-        <p className="text-lg mb-4 font-serif text-justify">
+        <p className="text-lg mb-4 text-artistfont text-justify">
           Desde las aulas de Henry, nos embarcamos en este viaje para ofrecerte
           más que una aplicación; queremos brindarte una experiencia única.
           Imagina encontrar el artista perfecto que llevará a la realidad tu
@@ -64,7 +64,7 @@ export default function About() {
         <p className=" font-bold text-2xl mb-4 font-rocksalt text-primary">
           Únete a la Comunidad ConnectInk
         </p>
-        <p className="text-lg mb-4 font-serif text-justify">
+        <p className="text-lg mb-4 text-artistfont text-justify">
           Ya sea que estés buscando tu próximo tatuaje o que desees mostrar tu
           portafolio como artista, ConnectInk es el lugar donde la creatividad
           encuentra su hogar. Únete a nosotros y forma parte de una comunidad
@@ -79,7 +79,7 @@ export default function About() {
             Creadores
           </p>
 
-          <ul className="flex flex-wrap list-none p-0 text-lg font-serif justify-center">
+          <ul className="flex flex-wrap list-none p-0 text-lg text-artistfont justify-center">
             <li className="mr-8 mb-6 text-xl ">
               <a
                 href="https://www.linkedin.com/in/santiagocasalis"
