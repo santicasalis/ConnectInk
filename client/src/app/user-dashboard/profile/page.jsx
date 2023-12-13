@@ -17,6 +17,7 @@ import { uploadImage } from "../../utils/uploadImage";
 const UProfile = () => {
   const user = useSelector((state) => state.user.logedInUser);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -84,12 +85,13 @@ const UProfile = () => {
 
       const response = await axios.put(
         `http://localhost:3001/customers/${user.id}`,
-        formData
+        updatedFields
       );
 
       if (response.status === 200) {
-        dispatch(bringUserInformation(formData));
+        dispatch(bringUserInformation(updatedFields));
         console.log("Datos actualizados con éxito");
+
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
       }
@@ -104,6 +106,7 @@ const UProfile = () => {
       notifyError("Error al actualizar datos", error);
     }
   };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -135,19 +138,6 @@ const UProfile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
-          <div className="w-1/4 ">
-            <Image
-              unoptimized
-              src={imagePreview || user.image}
-              loader={imageLoader}
-              width={100}
-              height={100}
-              alt={`${user.fullName} profile pic`}
-              className="rounded-full"
-            />
-            <p>vista previa</p>
-          </div>
-
           <div className="flex-1">
             <div className="relative mb-2">
               <input
@@ -223,16 +213,18 @@ const UProfile = () => {
           <div className="w-1/4">
             <p className="text-artistfont">Nueva Contraseña:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex items-center">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
-              className="w-[50%] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+              className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
             />
-
-            <span onClick={() => setShowPassword(!showPassword)}>
+            <span
+              className="ml-4 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
@@ -242,15 +234,22 @@ const UProfile = () => {
           <div className="w-1/4">
             <p className="text-artistfont">Confirmar Nueva Contraseña:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex items-center">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-[50%] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default text-artistfont"
+              className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default text-artistfont"
             />
+            <span
+              className="ml-4 cursor-pointer"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <RiEyeLine /> : <RiEyeOffLine />}
+            </span>
           </div>
         </div>
+
         <div className=" mb-2 w-full flex items-center  mx-auto">
           <button
             className="mx-auto mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px] rounded px-2 py-3 "
