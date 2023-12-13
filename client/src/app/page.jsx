@@ -13,19 +13,12 @@ const Loading = dynamic(() => import("../components/loading/Loading"));
 export default function Home() {
   const dispatch = useDispatch();
   const isOpenModalLoading = useSelector((state) => state.modalLoading.isOpen);
-  const [showTattooAR, setShowTattooAR] = useState(false); // Estado para controlar la visualización de TattooAR
 
   useEffect(() => {
     dispatch(getAllStyles());
     dispatch(getAllArtists());
     dispatch(getAllPosts());
   }, []);
-
-  const handleTattooARButtonClick = () => {
-    console.log("Antes del cambio:", showTattooAR);
-    setShowTattooAR(!showTattooAR);
-    console.log("Después del cambio:", showTattooAR);
-  };
 
   return (
     <div className="flex flex-col w-full h-screen p-0 overflow-hidden relative">
