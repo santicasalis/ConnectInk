@@ -69,6 +69,7 @@ export default function Reservas() {
           )
       ) : (
         <div className="flex flex-col items-center">
+
           {" "}
           <p className="text-artistfont mt-8">
             No tienes ninguna reserva aún. ¡Descubre increíbles artistas y sus
@@ -80,6 +81,7 @@ export default function Reservas() {
             perfil y reservar un turno para hacer realidad ese tatuaje que tanto
             deseas.{" "}
           </p>{" "}
+
           <div className="scroll-fade flex justify-center items-center">
             <div>
               {artist?.map((filter) => (

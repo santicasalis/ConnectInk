@@ -31,14 +31,14 @@ const ModalDeleteArtist = () => {
         className: "toastSuccess",
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
-        hideProgressBar: true,
+        hideProgressBar: false,
       });
     } catch (error) {
       toast.error(`Hubo un error al eliminar el artista`, {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
-        hideProgressBar: true,
+        hideProgressBar: false,
       });
     }
   };
