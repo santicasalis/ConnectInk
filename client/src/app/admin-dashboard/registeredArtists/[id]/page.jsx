@@ -89,6 +89,7 @@ const RegArtistById = ({ params }) => {
             publication={publication}
             image={artist.image}
             name={artist.fullName}
+            email={artist.email}
           />
         ))
       ) : (

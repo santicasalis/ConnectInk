@@ -8,6 +8,7 @@ const {
   Appointment,
   Review
 } = require("../../db");
+const {Op} = require("sequelize")
 
 const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {

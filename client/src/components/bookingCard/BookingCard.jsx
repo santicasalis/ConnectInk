@@ -55,7 +55,6 @@ const BookingCard = ({
   const [loaded, setLoaded] = useState(false)
 
   const [response, setResponse] = useState({});
-  const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setLoaded(true)
@@ -112,7 +111,7 @@ const BookingCard = ({
 
   return (
 
-    Loaded ?
+    loaded ?
 
     <div
       className={`
