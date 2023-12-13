@@ -23,7 +23,7 @@ import {
   RiEyeLine,
   RiEyeOffLine,
   RiGoogleFill,
-} from "react-icons";
+} from "react-icons/ri";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
