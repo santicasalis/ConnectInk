@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import React from "react";
-import { RiEdit2Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
