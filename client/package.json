@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/drawing_utils": "^0.3.1675466124",
+    "@mediapipe/pose": "^0.5.1675469404",
     "@reduxjs/toolkit": "^1.9.7",
     "@szhsin/react-menu": "^4.1.0",
     "axios": "^1.6.2",
