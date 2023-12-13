@@ -24,7 +24,12 @@ const getTattooArtistFiltered = async (location, name, styles) => {
               },
             },
           },
-          { model: Publication, attributes: ["description", "image"] },
+          {
+            model: Publication,
+            attributes: ["description", "image"],
+            where: { disabled: false },
+            required: false
+          },
           {
             model: Review,
             as: "reviews",
@@ -84,7 +89,12 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         },
         include: [
           { model: TattooStyle, attributes: ["name"] },
-          { model: Publication, attributes: ["description", "image"] },
+          {
+            model: Publication,
+            attributes: ["description", "image"],
+            where: { disabled: false },
+            required: false
+          },
           {
             model: Review,
             as: "reviews",

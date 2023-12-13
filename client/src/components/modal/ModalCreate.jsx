@@ -37,7 +37,7 @@ const ModalCreate = () => {
             className:'toastSuccess',
             position: toast.POSITION.BOTTOM_RIGHT,
             autoClose: 3000,
-            hideProgressBar: true,
+            hideProgressBar: false,
          });
         dispatch(closeModalCreateAction());
 
@@ -46,7 +46,7 @@ const ModalCreate = () => {
             className:'toastError',
             position: toast.POSITION.BOTTOM_RIGHT,
             autoClose: 3000,
-            hideProgressBar: true,
+            hideProgressBar: false,
          });
     }
 

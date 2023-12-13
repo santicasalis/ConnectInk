@@ -80,7 +80,7 @@ const TattoArtistRegister = () => {
               className: "toastSuccess",
               position: toast.POSITION.BOTTOM_RIGHT,
               autoClose: 3000,
-              hideProgressBar: true,
+              hideProgressBar: false,
             });
             await axios.post(`${urlBase}/nodemailer/welcomeArtist`, {
               email: values.email,
@@ -148,7 +148,7 @@ const TattoArtistRegister = () => {
               <Field
                 type="text"
                 name="shopName"
-                placeholder="Nombre de la tienda"
+                placeholder="Nombre del estudio"
                 className="p-2 mb-3 shadow-md w-full bg-secondary-100 rounded-2xl"
               />
               <ErrorMessage

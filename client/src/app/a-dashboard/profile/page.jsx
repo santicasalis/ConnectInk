@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
-
 import axios from "axios";
 import {
   bringUserInformation,
@@ -32,6 +31,8 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(user.image);
   const [styleSelected, setStyleSelected] = useState([]);
   const [image, setImage] = useState(null);
+
+  console.log(user.shopName);
 
   useEffect(() => {
     if (!user.userType) {
@@ -120,15 +121,17 @@ const Profile = () => {
       if (response.status === 200) {
         dispatch(bringUserInformation(dataToUpdate));
         console.log("Datos actualizados con éxito");
+
         setFormData({ ...formData, password: "" });
         setConfirmPassword("");
+
+        toast.success(`Cambios guardados con exito!`, {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        });
       }
-      toast.success(`Cambios guardados con exito!`, {
-        className: "toastSuccess",
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
     } catch (error) {
       console.log(error)
       toast.error(`Error al guardar cambios`, {
@@ -161,7 +164,6 @@ const Profile = () => {
           <div className="w-1/4 ">
             <p>Foto de perfil: </p>
           </div>
-
           <div className="flex-1">
             <div className="relative mb-2 flex justify-between	items-center	">
               <CldUploadWidget
@@ -326,13 +328,13 @@ const Profile = () => {
         <div className="flex items-center mb-4">
           <div className="w-1/4">
             <p>
-              Shop Name: <span className="text-red-500">*</span>
+              Estudio: <span className="text-red-500">*</span>
             </p>
           </div>
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-                name="Estudio"
+                name="shopName"
                 type="text"
                 value={formData.shopName}
                 onChange={handleChange}
