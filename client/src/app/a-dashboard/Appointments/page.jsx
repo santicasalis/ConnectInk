@@ -50,17 +50,24 @@ export default function Appointments() {
       ) : (
         <div className="flex flex-col items-center">
           {" "}
-          <p className="text-center mt-8">
+          <p className="text-center mt-[120px] font-rocksalt text-3xl text-artist/75">
             No tienes ninguna reserva aún.
           </p>{" "}
           <br />{" "}
-          <p className="text-center mr-5 ml-5">
-            Recuerda ingresar el rango de precios para los diferentes tamaños de
-            tatuajes y mantenerlo actualizado. Además, asegúrate de cargar tu
-            disponibilidad horaria y cualquier fecha de excepción. Estos
-            detalles son esenciales para que los clientes puedan programar sus
-            turnos de manera más efectiva.{" "}
+          <p className=" mt-[100px] text-lg">
+            <ul className="list-disc ml-[80px] ">
+               <li>
+                  Recuerda ingresar el rango de precios para los diferentes tamaños de tatuajes y mantenerlo actualizado. 
+                </li>
+                <li>
+                  Asegúrate de cargar tu disponibilidad horaria y cualquier fecha de excepción. 
+                </li>
+            </ul>
+            <p className="text-2xl font-bold mt-12 text text-center">
+            Estos detalles son esenciales para que los clientes puedan programar sus turnos de manera más efectiva.{" "}
+            </p>
           </p>{" "}
+          
         </div>
       )}
     </div>

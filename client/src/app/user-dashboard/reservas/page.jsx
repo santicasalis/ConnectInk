@@ -65,14 +65,14 @@ export default function Reservas() {
           )
       ) : (
         <div className="flex flex-col items-center">
-          <h5 className="text-artistfont">
+          <h5 className="text-primary/70 text-xl font-rocksalt mb-8">
             {" "}
             No tienes ninguna reserva aún. ¡Descubre increíbles artistas y sus
             últimas obras!
           </h5>
           <Link href="/explore">
-            <button className="bg-primary text-white py-2 px-4 rounded mt-4">
-              Explorar Artistas
+            <button className=" hover:bg-primary/50 text-artistfont py-2 px-4  border-[1px] border-artistfont rounded-xl mt-4 mb-10">
+              Ir a explorar artistas
             </button>
           </Link>
           <div className="scroll-fade flex justify-center items-center">

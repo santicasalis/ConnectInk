@@ -253,7 +253,7 @@ const UProfile = () => {
         </div>
         <div className=" mb-2 w-full flex items-center  mx-auto">
           <button
-            className="mx-auto mt-6 border-[1px] border-primary/50 hover:border-primary w-[250px] rounded px-2 py-3 "
+            className="mx-auto mt-6 border-[1px] border-primary/50 hover:bg-primary/75 rounded-md px-2 py-3 "
             type="submit"
           >
             {" "}
