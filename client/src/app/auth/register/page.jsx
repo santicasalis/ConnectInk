@@ -29,9 +29,9 @@ const RegistrationForm = () => {
 
   return (
     <div className="bg-secondary-900/90 flex opacity-90 absolute h-[80vh] rounded-3xl w-full xl:w-1/2 lg:w-1/3 md:w-1/2">
-      <div className="w-[35%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">
-        <h2 className="font-rocksalt text-[40px] text-white/90 mb-2">
-          Registrate{" "}
+      <div className="w-[37%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">
+        <h2 className="font-rocksalt text-[35px] text-white/90 mb-2">
+          Registrate
         </h2>
         <p className="text-primary/80 mb-4">como:</p>
         <div className="flex mb-4">

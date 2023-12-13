@@ -18,6 +18,7 @@ import {
   RiLock2Line,
   RiUserLine,
   RiPhoneFill,
+  RiUpload2Fill,
   RiLockLine,
   RiEyeLine,
   RiEyeOffLine,
@@ -45,7 +46,7 @@ const CustomerRegister = () => {
           {children}
         </label>
         {meta.touched && meta.error ? (
-          <div className="error">{meta.error}</div>
+          <div className="error text-red-500">{meta.error}</div>
         ) : null}
       </div>
     );
@@ -122,16 +123,21 @@ const CustomerRegister = () => {
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
             <div className="mb-4">
-              <label htmlFor="image" className="font-bold">
+              <label htmlFor="image" className="font-bold mb-3">
                 Imagen de Perfil
               </label>
+              <label htmlFor='customerImage' className='mt-3 w-1/2 font-newrocker  flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-white border-white border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-primary hover:border-primary'>
+                 <RiUpload2Fill/>
+                 Subir imagen
+              </label> 
               <input
                 type="file"
+                id="customerImage"
                 name="image"
                 onChange={(event) => {
                   setFieldValue("image", event.currentTarget.files[0]);
                 }}
-                className="p-2 mb-3 shadow-md block w-full"
+                className="p-2 mb-3 shadow-md  w-full hidden"
                 accept="image/png, image/jpeg"
               />
               {values.image && (
@@ -231,15 +237,15 @@ const CustomerRegister = () => {
                 Acepto los Términos y Condiciones
               </MyCheckbox>
             </label>
-            <ErrorMessage
+            {/* <ErrorMessage
               name="acceptedTerms"
               component="div"
               className="text-red-500 text-sm"
-            />
+            /> */}
             <button
               type="submit"
               disabled={isSubmitting || !isValid || !dirty}
-              className="p-2 mt-5 bg-primary text-white rounded hover:bg-primary/80 disabled:bg-blue-300"
+              className="p-2 mt-5 bg-primary text-white rounded hover:bg-primary disabled:bg-primary/30 w-full"
             >
               Registrarme
             </button>

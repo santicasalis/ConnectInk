@@ -366,11 +366,11 @@ const Page = () => {
   };
 
   return (
-    <div className="bg-secondary-900 rounded w-[70%] shadow-lg shadow-artist">
+    <div className="bg-secondary-900 rounded w-full shadow-lg shadow-artist">
       <div className=" text-center">
-        <h3 className="font-rocksalt text-[26px] mt-8 mb-2 text-artistfont ">
-          Disponibilidad Horaria
-        </h3>
+      <div className=" w-full px-10 mb-10">
+        <h1 className="text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]"> Disponibilidad Horaria</h1>
+      </div>
         <div className="flex items-center justify-center ">
           <hr className="mt-6 mb-6 w-[90%] border-artist/50 "></hr>
         </div>
