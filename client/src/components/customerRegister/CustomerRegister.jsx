@@ -1,7 +1,9 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
-import { uploadImage } from "../../app/utils/uploadImage";
 import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import { notifyError } from "../../components/notifyError/NotifyError";
+import Image from "next/image";
 
 import { validationSchemaClient } from "../customerRegister/validationSchemaCliente";
 import { emailSignUp } from "../../app/utils/emailSignUp";
@@ -25,6 +27,7 @@ import {
   RiGoogleFill,
 } from "react-icons/ri";
 import { auth } from "../../firebase";
+import { CldUploadWidget } from "next-cloudinary";
 
 const CustomerRegister = () => {
   const urlBase = "http://localhost:3001";
@@ -32,6 +35,10 @@ const CustomerRegister = () => {
   const dispatch = useDispatch();
   const userInformation = useSelector((state) => state.user.fireBaseUser);
   const [loaded, setLoaded] = useState(false);
+  const [image, setImage] = useState(userInformation?.image || null)
+  const imageLoader = ({src}) => {
+    return src
+  }
 
   useEffect(() => {
     setLoaded(true);
@@ -60,7 +67,7 @@ const CustomerRegister = () => {
           userName: userInformation?.userName ? true : false,
           email: userInformation?.email || "",
           mobile: "",
-          image: "",
+          image: userInformation?.image || null,
           password: "",
           passwordConfirm: "",
           tokenId: userInformation?.tokenId || "",
@@ -69,13 +76,8 @@ const CustomerRegister = () => {
         validationSchema={validationSchemaClient}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            if (values.image && typeof values.image === "object") {
-              const imageUrl = await uploadImage(values.image);
-              values.image = imageUrl;
-            } else {
-              values.image =
-                userInformation?.image ||
-                "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
+            if (!values.image) {
+              values.image = userInformation?.image || "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
 
             if (!values.userName) {
@@ -122,6 +124,7 @@ const CustomerRegister = () => {
       >
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
+
             <div className="mb-4">
               <label htmlFor="image" className="font-bold mb-3">
                 Imagen de Perfil
@@ -150,6 +153,7 @@ const CustomerRegister = () => {
                 </button>
               )}
             </div>
+
 
             <div className="relative w-full">
               <RiUserLine className="absolute left-2 top-4 text-white z-30" />

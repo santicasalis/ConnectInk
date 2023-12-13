@@ -86,7 +86,7 @@ const Login = () => {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
-        hideProgressBar: true,
+        hideProgressBar: false,
       });
 
       throw error;
@@ -135,7 +135,7 @@ const Login = () => {
             className: "toastError",
             position: toast.POSITION.BOTTOM_CENTER,
             autoClose: 3000,
-            hideProgressBar: true,
+            hideProgressBar: false,
           });
           dispatch(closeModalLoadingAction());
           dispatch(logOut());
@@ -146,7 +146,7 @@ const Login = () => {
         className: "toastError",
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,
-        hideProgressBar: true,
+        hideProgressBar: false,
       });
     }
   };

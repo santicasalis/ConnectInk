@@ -1,15 +1,19 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import ArtistBookingCard from "../../../components/ArtistBookingCard/ArtistBookingCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getUserById } from "../../redux/features/user/userActions";
 
 export default function Appointments() {
   const user = useSelector((state) => state.user.logedInUser);
-  const appointment = user.appointments;
+  const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
+  const [appointment, setAppointment] = useState(user.appointments || []) ;
   const router = useRouter();
+  const dispatch = useDispatch()
+  const {isOpen,data} = useSelector((state) => state.modalDeleteAppointment);
 
   useEffect(() => {
     if (!user.userType) {
@@ -19,9 +23,9 @@ export default function Appointments() {
     }
   }, []);
 
-  useEffect(() => {}, [user]);
-
-  console.log(user, "holaaa");
+  useEffect(() => {
+    dispatch(getUserById(fireBaseUser.tokenId))
+  }, [isOpen]);
 
   return (
     <div className=" bg-secondary-900 w-full shadow-artist/50 shadow-lg">
@@ -43,11 +47,13 @@ export default function Appointments() {
                 dateAndTime={tur.dateAndTime}
                 depositPrice={tur.depositPrice}
                 CustomerId={tur.CustomerId}
+                paymentStatus={tur.paymentStatus}
               />
             </div>
           ))
       ) : (
         <div className="flex flex-col items-center">
+
           <h5 className="text-artistfont font-newrocker text-[25px] mb-8 ">
               "No tienes ninguna reserva aún."
           </h5>
@@ -69,6 +75,7 @@ export default function Appointments() {
               
           </div>
           <br />
+
         </div>
       )}
     </div>

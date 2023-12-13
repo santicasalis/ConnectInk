@@ -15,6 +15,7 @@ const RegArtistById = ({ params }) => {
   const [artist, setArtist] = useState({ publications: [] });
   const user = useSelector((state) => state.user.logedInUser);
   const router = useRouter();
+  const isOpenModalDelete = useSelector((state) => state.modalDelete.isOpen);
 
   useEffect(() => {
     if (!user.userType) {
@@ -22,12 +23,15 @@ const RegArtistById = ({ params }) => {
     } else if (user.userType !== "admin") {
       router.replace("/");
     }
+  }, [params.id]);
+
+  useEffect(() => {
     axios
       .get(`http://localhost:3001/tattooArtists/${params.id}`)
       .then((response) => {
         setArtist(response.data);
       });
-  }, [params.id]);
+  }, [isOpenModalDelete])
 
 
 

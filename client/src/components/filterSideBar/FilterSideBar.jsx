@@ -11,7 +11,7 @@ import {
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
 import { OrderAllArtistsRating } from "../../app/redux/features/artists/artistActions";
 
-export default function FilterSideBar() {
+export default function FilterSideBar({ onFilterChange }) {
   const dispatch = useDispatch();
   const styles = useSelector((state) => state.styles.names);
   const { people, filtered } = useSelector((state) => state.artists);
@@ -35,6 +35,7 @@ export default function FilterSideBar() {
       ...filters,
       [event.target.name]: value,
     });
+    onFilterChange();
   };
 
   const handleSubmit = (event) => {
@@ -47,6 +48,7 @@ export default function FilterSideBar() {
     } else {
       setStyleSelected([...styleSelected, styleName]);
     }
+    onFilterChange();
   };
 
   useEffect(() => {

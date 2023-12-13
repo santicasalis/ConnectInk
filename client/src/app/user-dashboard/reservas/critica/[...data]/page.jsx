@@ -5,8 +5,6 @@ import { validationSchema } from "./validationSchema";
 import { useState } from "react";
 import ReactStars from "react-stars";
 
-import { uploadImage } from "../../../../utils/uploadImage";
-
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -21,8 +19,8 @@ const Critica = ({ params }) => {
   const [appointmentId, tattooArtistId] = params.data;
   const [sent, setSent] = useState(false);
   const user = useSelector((state) => state.user.logedInUser);
-  console.log(user);
   const router = useRouter();
+  const [image, setImage] = useState(null)
 
   useEffect(() => {
     if (!user.userType) {
@@ -53,27 +51,21 @@ const Critica = ({ params }) => {
           initialValues={{
             rating: 0,
             comment: "",
-            image: "",
+            image: null,
           }}
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting }) => {
             try {
-              if (values.image && typeof values.image === "object") {
-                const imageUrl = await uploadImage(values.image);
-                values.image = imageUrl;
-              }
               const data = {
                 ...values,
                 customerId: user.id,
                 appointmentId,
                 tattooArtistId,
               };
-              console.log(data, "holiei");
               const response = await axios.post(
                 "http://localhost:3001/reviews",
                 data
               );
-              console.log(response);
               setSent(true);
             } catch (error) {
               notifyError(error);
@@ -135,24 +127,35 @@ const Critica = ({ params }) => {
                 >
                   Si quieres, puedes dejar una foto del resultado!
                 </label>
-                <input
-                  type="file"
-                  name="image"
-                  onChange={(event) => {
-                    setFieldValue("image", event.currentTarget.files[0]);
-                  }}
-                  className="ml-6 p-2 mb-3 shadow-md block w-full text-artistfont"
-                  accept="image/png, image/jpeg"
-                />
-                {values.image && (
-                  <button
-                    type="button"
-                    onClick={() => setFieldValue("image", null)}
-                    className="bg-red-500 text-artistfont p-2 rounded ml-8"
-                  >
-                    Borrar Imagen
-                  </button>
-                )}
+                <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
+                      {({ open }) => {
+                          return (
+                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
+                            <MdFileUpload className="mr-2 " />
+                            Cargar
+                          </button>
+                          );
+                      }}
+                    </CldUploadWidget>
+                    {image && 
+                    <Image 
+                    src={image}
+                    loader={imageLoader}
+                    unoptimized
+                    alt="tattoo image"
+                    height={100}
+                    width={100}
+                    />
+                    }
+                    {image && (
+                      <button
+                        type="button"
+                        onClick={() => {setFieldValue("image", null); setImage(null)}}
+                        className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                      >
+                        Delete Image
+                      </button>
+                    )}
               </div>
               <div className="flex items-center justify-center">
                 <button

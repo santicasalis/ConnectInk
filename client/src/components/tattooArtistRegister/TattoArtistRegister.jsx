@@ -1,8 +1,9 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
-import { uploadImage } from "../../app/utils/uploadImage";
 import { validationSchemaArtist } from "../../components/tattooArtistRegister/validationSchemaArtist";
 import axios from "axios";
 import { emailSignUp } from "../../app/utils/emailSignUp";
@@ -13,6 +14,8 @@ import {
   getUserById,
   getUserInformation,
 } from "../../app/redux/features/user/userActions";
+import { CldUploadWidget } from "next-cloudinary";
+import Image from "next/image";
 
 import {
   RiMailLine,
@@ -38,11 +41,15 @@ const TattoArtistRegister = () => {
   const urlBase = "http://localhost:3001";
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
+  const [image, setImage] = useState(userInformation?.image || null)
 
   useEffect(() => {
     dispatch(getAllStyles());
     setLoaded(true);
   }, []);
+  const imageLoader = ({src}) => {
+    return src
+  }
 
   return loaded ? (
     <div className="h-full">
@@ -66,13 +73,9 @@ const TattoArtistRegister = () => {
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            if (values.image && typeof values.image === "object") {
-              const imageUrl = await uploadImage(values.image);
-              values.image = imageUrl;
-            } else {
-              values.image =
-                userInformation?.image ||
-                "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
+            if (!values.image) {
+              values.image = userInformation?.image ||
+              "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
 
             if (!values.userName) {
@@ -85,7 +88,7 @@ const TattoArtistRegister = () => {
               className: "toastSuccess",
               position: toast.POSITION.BOTTOM_RIGHT,
               autoClose: 3000,
-              hideProgressBar: true,
+              hideProgressBar: false,
             });
             await axios.post(`${urlBase}/nodemailer/welcomeArtist`, {
               email: values.email,
@@ -145,6 +148,7 @@ const TattoArtistRegister = () => {
                 />
               </div>
 
+
               <div className="relative w-full">
                   <RiMailLine className="absolute left-2 top-4 text-white z-30" />
                   <Field
@@ -159,6 +163,7 @@ const TattoArtistRegister = () => {
                     className="text-red-500 text-sm"
                   />
               </div>
+
 
               <div className="relative w-full">
                 <RiHome8Line className="absolute left-2 top-4 text-white z-30" />
@@ -310,6 +315,7 @@ const TattoArtistRegister = () => {
               />
             </div>
 
+
             <div className="mb-4">
               <label htmlFor="image" className="font-bold">
                 Imagen de perfil
@@ -338,6 +344,7 @@ const TattoArtistRegister = () => {
                 </button>
               )}
             </div>
+
 
             <button
               type="submit"

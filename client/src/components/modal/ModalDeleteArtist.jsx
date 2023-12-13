@@ -19,26 +19,27 @@ const ModalDeleteArtist = () => {
   };
 
   useEffect(() => {
-    setId(data);
+    setId(data.id);
   }, [id]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       dispatch(DeleteArtists(id));
       dispatch(closeModalDeleteArtistAction());
+      await axios.post("http://localhost:3001/nodemailer/deleteAccount", {email: data.email})
       toast.success(`El artista se eliminó con éxito`, {
         className: "toastSuccess",
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
-        hideProgressBar: true,
+        hideProgressBar: false,
       });
     } catch (error) {
       toast.error(`Hubo un error al eliminar el artista`, {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
-        hideProgressBar: true,
+        hideProgressBar: false,
       });
     }
   };

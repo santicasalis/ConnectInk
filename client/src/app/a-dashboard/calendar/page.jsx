@@ -18,6 +18,9 @@ const Page = () => {
 
   const user = useSelector((state) => state.user);
   const [dayObj, setDayObj] = useState({});
+  let errorIndicator = false;
+  let errorIndicatorPost=false;
+  let actionIndicator = ""
   const router = useRouter();
   const days = [
     "Lunes",
@@ -38,7 +41,7 @@ const Page = () => {
   const [moreTime, setMoreTime] = useState({});
   const [moreExceptionTime, setMoreExceptionTime] = useState(false);
 
-  console.log(user.logedInUser.userType);
+  //console.log(user.logedInUser.userType);
 
   useEffect(() => {
     // if (!user.userType) {
@@ -251,8 +254,10 @@ const Page = () => {
           };
           try {
             await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, data);
+            actionIndicator = "update"
           } catch (error) {
             console.log(error);
+            errorIndicator = true;
           }
         } else if (initialHour && finalHour) {
           let data = {};
@@ -273,10 +278,41 @@ const Page = () => {
               finalHour,
             };
           }
-
-          await axios.post(`${URL_BASE}/timeAvailabilities`, data);
+          try {
+            await axios.post(`${URL_BASE}/timeAvailabilities`, data);
+            actionIndicator = "create"
+          } catch (error) {
+            console.error(error)
+            errorIndicatorPost=true
+          }
         }
+       
       }
+      if (!errorIndicator && actionIndicator=="update") {
+        toast.success(`Cambios guardados con éxito`, {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        });} else if (!errorIndicatorPost && actionIndicator=="create") {
+          toast.success(`Cambios creados con éxito`, {
+            className: "toastSuccess",
+            position: toast.POSITION.BOTTOM_RIGHT,
+            autoClose: 3000,
+            hideProgressBar: false,
+          });} else if (errorIndicatorPost && actionIndicator=="create") {
+            toast.error(`Error al registrar sus horarios`, {
+              className: "toastError",
+              position: toast.POSITION.BOTTOM_RIGHT,
+              autoClose: 3000,
+              hideProgressBar: false,
+            });} else if (errorIndicatorPost && actionIndicator=="update") {
+              toast.error(`Error al guardar sus cambios`, {
+                className: "toastError",
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 3000,
+                hideProgressBar: false,
+              });}
       dispatch(getUserById(user.fireBaseUser.tokenId));
     } catch (error) {
       notifyError("Error al guardar el horario:", error);
