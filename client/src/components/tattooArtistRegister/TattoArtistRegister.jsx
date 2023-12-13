@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
-import { uploadImage } from "../../app/utils/uploadImage";
 import { validationSchemaArtist } from "../../components/tattooArtistRegister/validationSchemaArtist";
 import axios from "axios";
 import { emailSignUp } from "../../app/utils/emailSignUp";
@@ -13,6 +12,8 @@ import {
   getUserById,
   getUserInformation,
 } from "../../app/redux/features/user/userActions";
+import { CldUploadWidget } from "next-cloudinary";
+import Image from "next/image";
 
 import {
   RiMailLine,
@@ -23,7 +24,7 @@ import {
   RiEyeLine,
   RiEyeOffLine,
   RiGoogleFill,
-} from "react-icons";
+} from "react-icons/ri";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
@@ -32,11 +33,15 @@ const TattoArtistRegister = () => {
   const urlBase = "http://localhost:3001";
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
+  const [image, setImage] = useState(userInformation?.image || null)
 
   useEffect(() => {
     dispatch(getAllStyles());
     setLoaded(true);
   }, []);
+  const imageLoader = ({src}) => {
+    return src
+  }
 
   return loaded ? (
     <div className="h-full">
@@ -60,13 +65,9 @@ const TattoArtistRegister = () => {
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            if (values.image && typeof values.image === "object") {
-              const imageUrl = await uploadImage(values.image);
-              values.image = imageUrl;
-            } else {
-              values.image =
-                userInformation?.image ||
-                "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
+            if (!values.image) {
+              values.image = userInformation?.image ||
+              "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg";
             }
 
             if (!values.userName) {
@@ -231,29 +232,39 @@ const TattoArtistRegister = () => {
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="image" className="font-bold">
-                Imagen de perfil
-              </label>
-              <input
-                type="file"
-                name="image"
-                onChange={(event) => {
-                  setFieldValue("image", event.currentTarget.files[0]);
-                }}
-                className="p-2 mb-3 shadow-md block w-full"
-                accept="image/png, image/jpeg"
-              />
-              {values.image && (
-                <button
-                  type="button"
-                  onClick={() => setFieldValue("image", null)}
-                  className="bg-red-500 text-white p-2 rounded"
-                >
-                  Delete Image
-                </button>
-              )}
-            </div>
+            <div className="mb-4 flex">
+                    <label htmlFor="image" className="font-rocksalt">
+                      Imagen de perfil:
+                    </label>
+                    <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
+                      {({ open }) => {
+                          return (
+                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
+                            Cargar imagen
+                          </button>
+                          );
+                      }}
+                    </CldUploadWidget>
+                    {image && 
+                    <Image 
+                    src={image}
+                    loader={imageLoader}
+                    unoptimized
+                    alt="tattoo image"
+                    height={100}
+                    width={100}
+                    />
+                    }
+                    {image && (
+                      <button
+                        type="button"
+                        onClick={() => {setFieldValue("image", null); setImage(null)}}
+                        className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                      >
+                        Delete Image
+                      </button>
+                    )}
+                  </div>
 
             <div className="relative w-full">
               <RiPhoneFill className="absolute left-2 top-4 text-white z-30" />

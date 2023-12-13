@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiUpload2Fill, RiMoreFill, RiEmotionHappyLine, RiCloseFill, RiCheckFill } from "react-icons/ri";
 import axios from "axios"
-import { uploadImage } from '../../app/utils/uploadImage';
 import Image from 'next/image';
 import {RiEdit2Line} from "react-icons/ri"
 import { closeModalCreateAction } from '../../app/redux/features/modalCreate/modalCreateAction';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {CldUploadWidget} from "next-cloudinary"
 
 const ModalCreate = () => {
   const dispatch = useDispatch();
@@ -18,13 +18,6 @@ const ModalCreate = () => {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleImageChange = async (event) => {
-    setLoading(true);
-    const imageUrl = await uploadImage(event.target.files[0])
-    setImage(imageUrl)
-    setLoading(false);
-  };
   
   const handleClose = () => {
     dispatch(closeModalCreateAction());
@@ -61,6 +54,12 @@ const ModalCreate = () => {
     
   };
 
+  function handleChangeImage(result) {
+    setLoading(true);
+    setImage(result.info.secure_url)
+    setLoading(false)
+  }
+
   const imageLoader = ({src}) => {
     return src
   }
@@ -78,11 +77,21 @@ const ModalCreate = () => {
                         <div className='grid md:grid-cols-2 grid-cols-1 items-center gap-x-10' >
 
                         <div className='flex flex-col'>
-                            <label htmlFor='post' className='w-1/2 font-newrocker flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-artistfont border-artistfont border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-artist hover:border-artist'>
+                            {/* <label htmlFor='post' className='w-1/2 font-newrocker flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-artistfont border-artistfont border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-artist hover:border-artist'>
                                 <RiUpload2Fill/>
                                 Subir imagen
-                            </label> 
-                            <input className='hidden' name='post' id='post' type="file" onChange={handleImageChange} />
+                            </label>  */}
+                            {/* <input className='hidden' name='post' id='post' type="file" onChange={handleImageChange} /> */}
+                            <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={handleChangeImage}>
+                                {({ open }) => {
+                                    return (
+                                    <button type="button" className='w-1/2 font-newrocker flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-artistfont border-artistfont border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-artist hover:border-artist' onClick={() => open()}>
+                                        <RiUpload2Fill/>
+                                        Subir imagen
+                                    </button>
+                                    );
+                                }}
+                            </CldUploadWidget>
                             <p className='text-artist text-sm mb-3'>
                             Extensiones permitidas: png, jpg, jpeg
                             </p> 

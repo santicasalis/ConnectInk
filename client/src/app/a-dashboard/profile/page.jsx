@@ -5,14 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { uploadImage } from "../../utils/uploadImage";
+import { CldUploadWidget } from "next-cloudinary";
 import axios from "axios";
 import {
   bringUserInformation,
   getUserById,
 } from "../../../app/redux/features/user/userActions";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
-import { getAuth, updatePassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -30,6 +30,7 @@ const Profile = () => {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(user.image);
   const [styleSelected, setStyleSelected] = useState([]);
+  const [image, setImage] = useState(null);
 
   console.log(user.shopName);
 
@@ -96,12 +97,13 @@ const Profile = () => {
 
     try {
       const auth = getAuth();
-      const firebaseUser = auth.currentUser;
+      const fireBaseUser = auth.currentUser;
 
-      if (firebaseUser && formData.password) {
-        await updatePassword(firebaseUser, formData.password);
+      if (fireBaseUser && formData.password) {
+        await updatePassword(fireBaseUser, formData.password);
         console.log("Contraseña actualizada con éxito en Firebase");
-      } else if (!firebaseUser) {
+      } else if (!fireBaseUser) {
+        console.log(error)
         notifyError(new Error("No hay usuario de Firebase autenticado"));
         return;
       }
@@ -113,7 +115,8 @@ const Profile = () => {
         dataToUpdate
       );
 
-      dispatch(getUserById(firebaseUser.tokenId));
+      dispatch(getUserById(fireBaseUser.uid));
+      setImage(null)
 
       if (response.status === 200) {
         dispatch(bringUserInformation(dataToUpdate));
@@ -130,6 +133,7 @@ const Profile = () => {
         });
       }
     } catch (error) {
+      console.log(error)
       toast.error(`Error al guardar cambios`, {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -141,27 +145,6 @@ const Profile = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = async (event) => {
-    const selectedFile = event.target.files[0];
-
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
-      try {
-        const imageUrl = await uploadImage(selectedFile);
-
-        setFormData({ ...formData, image: imageUrl });
-      } catch (error) {
-        console.error("Error al subir la imagen:", error);
-
-        notifyError("Error al subir la imagen");
-      }
-    }
   };
 
   const handleStyleChange = (styleName) => {
@@ -178,21 +161,36 @@ const Profile = () => {
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
+          <div className="w-1/4 ">
+            <p>Foto de perfil: </p>
+          </div>
           <div className="flex-1">
-            <div className="relative mb-2">
-              <input
-                type="file"
-                id="avatar"
-                className="hidden"
-                onChange={handleFileChange}
-                accept="image/png, image/jpeg"
-              />
+            <div className="relative mb-2 flex justify-between	items-center	">
+              <CldUploadWidget
+                uploadPreset="cloudinary-upload-images-connectInk"
+                onUpload={(result) => {
+                  setFormData({ ...formData, image: result.info.secure_url });
+                  setImage(result.info.secure_url);
+                }}
+              >
+                {({ open }) => {
+                  return (
+                    <button
+                      type="button"
+                      className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
+                      onClick={() => open()}
+                    >
+                      <RiEdit2Line />
+                    </button>
+                  );
+                }}
+              </CldUploadWidget>
 
               {user.image && (
                 <div>
                   <Image
                     unoptimized
-                    src={imagePreview}
+                    src={user.image}
                     loader={imageLoader}
                     width={80}
                     height={80}
@@ -201,12 +199,38 @@ const Profile = () => {
                 </div>
               )}
 
-              <label
+              {image && (
+                <div>
+                  <p>Nueva imagen de perfil:</p>
+                  <Image
+                    src={image}
+                    loader={imageLoader}
+                    unoptimized
+                    alt="tattoo image"
+                    height={80}
+                    width={80}
+                  />
+                </div>
+              )}
+              {image && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, image: null });
+                    setImage(null);
+                  }}
+                  className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                >
+                  Delete Image
+                </button>
+              )}
+
+              {/* <label
                 htmlFor="avatar"
                 className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
               >
                 <RiEdit2Line />
-              </label>
+              </label> */}
             </div>
             <p className="text-gray-500 text-sm"></p>
           </div>
