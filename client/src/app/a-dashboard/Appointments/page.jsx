@@ -44,6 +44,7 @@ export default function Appointments() {
                 dateAndTime={tur.dateAndTime}
                 depositPrice={tur.depositPrice}
                 CustomerId={tur.CustomerId}
+                paymentStatus={tur.paymentStatus}
               />
             </div>
           ))
