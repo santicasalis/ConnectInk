@@ -31,6 +31,8 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(user.image);
   const [styleSelected, setStyleSelected] = useState([]);
 
+  console.log(user.shopName);
+
   useEffect(() => {
     if (!user.userType) {
       router.replace("/auth");
@@ -308,7 +310,7 @@ const Profile = () => {
           <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
-                name="Estudio"
+                name="shopName"
                 type="text"
                 value={formData.shopName}
                 onChange={handleChange}
