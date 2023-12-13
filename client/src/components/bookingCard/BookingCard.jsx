@@ -52,7 +52,9 @@ const BookingCard = ({
     timeZoneName: "short",
   };
   let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
+
   const [loaded, setLoaded] = useState(false);
+
   const [response, setResponse] = useState({});
 
   useEffect(() => {
@@ -108,7 +110,9 @@ const BookingCard = ({
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
   };
 
+
   return loaded ? (
+
     <div
       className={`
         ${

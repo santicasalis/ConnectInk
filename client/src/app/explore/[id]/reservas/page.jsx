@@ -299,6 +299,7 @@ const BookAppointment = ({ params }) => {
                         }
                       );
 
+
                       const paymentMpResponse = paymentMp.data;
                       if (paymentMpResponse) {
                         setTimeout(() => {
@@ -480,6 +481,7 @@ const BookAppointment = ({ params }) => {
                         setFieldValue("image", event.currentTarget.files[0]);
                       }}
                       className="hidden "
+                      accept="image/png, image/jpeg"
                     />
                     {values.image && (
                       <button

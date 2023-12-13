@@ -6,7 +6,7 @@ import BookingCard from "../../../components/bookingCard/BookingCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import ModalDeleteAppointment from "../../../components/modal/ModalDeleteAppointment";
+import ModalDeleteAppointment from "../../../components/modal/ModalDeleteAppointment.jsx";
 import { getAllAppointments } from "../../redux/features/user/userActions";
 import Link from "next/link";
 import AdminCard from "../../../components/adminCard/AdminCard";
@@ -32,7 +32,7 @@ export default function Reservas() {
     dispatch(getAllArtists());
   }, []);
   const isOpenModalDeleteAppointment = useSelector(
-    (state) => state.modalDeleteAppointment.isOpen
+    (state) => state.ModalDeleteAppointment?.isOpen
   );
 
   useEffect(() => {

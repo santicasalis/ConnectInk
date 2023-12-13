@@ -12,6 +12,7 @@ import { getAuth, updatePassword } from "firebase/auth";
 import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { uploadImage } from "../../utils/uploadImage";
 
 const UProfile = () => {
   const user = useSelector((state) => state.user.logedInUser);
@@ -20,6 +21,7 @@ const UProfile = () => {
   const dispatch = useDispatch();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [initialData, setInitialData] = useState({});
+  const [imagePreview, setImagePreview] = useState(user.image);
 
   useEffect(() => {
     if (!user.userType) {
@@ -106,26 +108,77 @@ const UProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = async (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+      try {
+        const imageUrl = await uploadImage(selectedFile);
+
+        setFormData({ ...formData, image: imageUrl });
+      } catch (error) {
+        console.error("Error al subir la imagen:", error);
+
+        notifyError("Error al subir la imagen");
+      }
+    }
+  };
+
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
       <h1 className="text-4xl text-artistfont font-rocksalt"> Mi perfil</h1>
       <hr className="my-8 border-gray-500" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
+          <div className="w-1/4 ">
+            <Image
+              unoptimized
+              src={imagePreview || user.image}
+              loader={imageLoader}
+              width={100}
+              height={100}
+              alt={`${user.fullName} profile pic`}
+              className="rounded-full"
+            />
+            <p>vista previa</p>
+          </div>
 
-          <div className="w-1/4 flex items-center">
-            <div className=" mb-2   mx-auto">
-
-              <Image
-                src={user.image}
-                loader={imageLoader}
-                width={150}
-                height={150}
-                alt={`${user.fullName} profile pic`}
-                className="rounded-full"
+          <div className="flex-1">
+            <div className="relative mb-2">
+              <input
+                type="file"
+                id="avatar"
+                className="hidden"
+                onChange={handleFileChange}
+                accept="image/png, image/jpeg"
               />
 
+              {user.image && (
+                <div>
+                  <Image
+                    unoptimized
+                    src={imagePreview}
+                    loader={imageLoader}
+                    width={80}
+                    height={80}
+                    alt={`${user.fullName} profile pic`}
+                  />
+                </div>
+              )}
+
+              <label
+                htmlFor="avatar"
+                className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
+              >
+                <RiEdit2Line />
+              </label>
             </div>
+            <p className="text-gray-500 text-sm"></p>
           </div>
         </div>
         <div className="flex items-center mb-4">

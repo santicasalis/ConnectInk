@@ -14,14 +14,19 @@ import { FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewCard from "../../../components/reviewCard/ReviewCard";
 
-import { getArtistDetail, CleanArtist } from "../../../app/redux/features/artists/artistActions";
-import { RiMailLine, RiPhoneLine, RiMapPinLine, RiBuilding4Line } from "react-icons/ri";
+import {
+  getArtistDetail,
+  CleanArtist,
+} from "../../../app/redux/features/artists/artistActions";
+import {
+  RiMailLine,
+  RiPhoneLine,
+  RiMapPinLine,
+  RiBuilding4Line,
+} from "react-icons/ri";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
-
-
 
 export default function Page({ params }) {
   // const [loading, setLoading] = useState(true);
@@ -29,13 +34,13 @@ export default function Page({ params }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const artist = useSelector((state) => state.artists.detail);
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
 
   const user = useSelector((state) => state.user.logedInUser);
-  const [priceRanges, setPriceRanges] = useState({})
+  const [priceRanges, setPriceRanges] = useState({});
 
-  const handleAppoint = ()=>{
-    if(!user.userType){
+  const handleAppoint = () => {
+    if (!user.userType) {
       toast.error(`Deber registrarte para reservar un turno`, {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -45,17 +50,15 @@ export default function Page({ params }) {
       router.replace(`/auth`);
     } else {
       router.replace(`/explore/${params.id}/reservas`);
-
     }
-  }
+  };
 
   useEffect(() => {
-    setLoaded(true)
-  }, [])
+    setLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (params.id) {
-      // setLoading(true);
       dispatch(getArtistDetail(params.id));
     }
     return () => dispatch(CleanArtist());
@@ -63,7 +66,6 @@ export default function Page({ params }) {
 
   useEffect(() => {
     if (artist.fullName) {
-      // setLoading(false)
     }
     if (artist?.priceRanges?.length) {
       let obj = {};
@@ -85,9 +87,7 @@ export default function Page({ params }) {
   if (!artist)
     return <div className="text-center">No se encontró el tatuador</div>;
 
-  return (
-    loaded ? (
-
+  return loaded ? (
     <div className="w-full bg-secondary-900">
       <Nav />
 
@@ -122,13 +122,12 @@ export default function Page({ params }) {
                 </div>
               </div>
               <div className="flex items-center justify-center ">
-
-                  
-                    <button onClick={handleAppoint} className="border-[1px] border-primary text-primary hover:bg-primary hover:text-black font-bold py-2 px-4 rounded-lg text-[20px]">
-                      Reservar
-                    </button>
-                  
-
+                <button
+                  onClick={handleAppoint}
+                  className="border-[1px] border-primary text-primary hover:bg-primary hover:text-black font-bold py-2 px-4 rounded-lg text-[20px]"
+                >
+                  Reservar
+                </button>
               </div>
             </div>
 
@@ -187,14 +186,15 @@ export default function Page({ params }) {
                   Estilos de tatuaje:
                 </h3>
                 <div className="flex flex-wrap gap-4">
-                  {artist.tattooStyles?.length && artist?.tattooStyles?.map((style, index) => (
-                    <label
-                      key={index}
-                      className="flex items-center text-artistfont/80 border-[1px] border-artistfont/80 rounded-lg p-2"
-                    >
-                      {style}
-                    </label>
-                  ))}
+                  {artist.tattooStyles?.length &&
+                    artist?.tattooStyles?.map((style, index) => (
+                      <label
+                        key={index}
+                        className="flex items-center text-artistfont/80 border-[1px] border-artistfont/80 rounded-lg p-2"
+                      >
+                        {style}
+                      </label>
+                    ))}
                 </div>
               </div>
             </div>
@@ -336,8 +336,7 @@ export default function Page({ params }) {
         </div>
       </div>
     </div>
-    ) : (
-      <></>
-    )
+  ) : (
+    <></>
   );
 }

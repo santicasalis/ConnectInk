@@ -34,8 +34,7 @@ export default function ExplorePage() {
     setFilterSidebarVisible(true);
   }, []);
 
-  const artistConPubli = filtered.filter((ar)=> ar.publications.length > 0)
-  console.log(artistConPubli, "ppepepepepepe")
+  const artistConPubli = filtered.filter((ar) => ar.publications.length > 0);
 
   //paginado
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,24 +55,20 @@ export default function ExplorePage() {
     setFilterSidebarVisible(!filterSidebarVisible);
   };
 
-//msj
-const [noResults, setNoResults] = useState(false);
+  //msj
+  const [noResults, setNoResults] = useState(false);
 
-useEffect(() => {
-  if (artistConPubli.length === 0) {
-    setNoResults(true);
-  } else {
-    setNoResults(false);
-  }
-}, [artistConPubli]);
-
+  useEffect(() => {
+    if (artistConPubli.length === 0) {
+      setNoResults(true);
+    } else {
+      setNoResults(false);
+    }
+  }, [artistConPubli]);
 
   return (
-
     <div className="w-full bg-secondary-900">
-
-        <Nav />
-
+      <Nav />
 
       <div className="w-full">
         <section className="flex flex-col w-full justify-center items-center gap-x-1 text-center">
@@ -96,8 +91,13 @@ useEffect(() => {
               </div>
 
               <div className="flex rounded-lg  shadow-2xl  w-full relative  overflow-hidden">
-                <img className="absolute w-full h-full object-cover" src="https://media.istockphoto.com/id/1320388570/es/foto/manos-de-un-tatuador-con-guantes-negros-y-sosteniendo-una-máquina.jpg?s=612x612&w=0&k=20&c=20XaUXZaEiJ8C0877TxICFtvgwaBfmIiUoYWXVVSmxg=" />
-                <div className="w-full h-full bg-black opacity-60 absolute">  </div> 
+                <img
+                  className="absolute w-full h-full object-cover"
+                  src="https://media.istockphoto.com/id/1320388570/es/foto/manos-de-un-tatuador-con-guantes-negros-y-sosteniendo-una-máquina.jpg?s=612x612&w=0&k=20&c=20XaUXZaEiJ8C0877TxICFtvgwaBfmIiUoYWXVVSmxg="
+                />
+                <div className="w-full h-full bg-black opacity-60 absolute">
+                  {" "}
+                </div>
                 <Swiper
                   spaceBetween={30}
                   parallax={true}
@@ -112,7 +112,6 @@ useEffect(() => {
                   modules={[Parallax, Autoplay, Pagination, Navigation]}
                   className="w-full flex justify-center items-center relative text-center p-5 h-[350px] "
                 >
-
                   <SwiperSlide className=" mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont ">
                     Encuentra la belleza en la simplicidad. Un tatuaje no solo
                     decora tu piel, sino que también cuenta tu historia en las
@@ -155,36 +154,36 @@ useEffect(() => {
 
             <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
               <div className=" flex flex-col items-center scroll-content w-full overflow-hidden ">
-              {noResults ? (
+                {noResults ? (
                   <p className="text-primary text-center mt-[180px] font-rocksalt text-2xl ">
                     ¡No se encontraron coincidencias con tu búsqueda!
                   </p>
                 ) : (
                   <>
-                <Paginate
-                  artistsPerPage={artistsPerPage}
-                  totalArtists={totalArtists}
-                  currentPage={currentPage}
-                  onPageChange={onPageChange}
-                />
-                {artistsToDisplay?.map((filter) => (
-                  <div
-                    key={filter.id}
-                    className="mb-4 w-full flex flex-col items-center justify-center mr-10"
-                  >
-                    <Card
-                      id={filter.id}
-                      fullName={filter.fullName}
-                      location={filter.location}
-                      shopName={filter.shopName}
-                      publications={filter.publications}
-                      image={filter.image}
-                      reviews={filter.reviews}
+                    <Paginate
+                      artistsPerPage={artistsPerPage}
+                      totalArtists={totalArtists}
+                      currentPage={currentPage}
+                      onPageChange={onPageChange}
                     />
-                  </div>
-                ))}
-                </>
-    )}
+                    {artistsToDisplay?.map((filter) => (
+                      <div
+                        key={filter.id}
+                        className="mb-4 w-full flex flex-col items-center justify-center mr-10"
+                      >
+                        <Card
+                          id={filter.id}
+                          fullName={filter.fullName}
+                          location={filter.location}
+                          shopName={filter.shopName}
+                          publications={filter.publications}
+                          image={filter.image}
+                          reviews={filter.reviews}
+                        />
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           </div>

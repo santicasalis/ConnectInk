@@ -25,22 +25,20 @@ import {
   RiGoogleFill,
 } from "react-icons";
 
-
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
   const userInformation = useSelector((state) => state.user.fireBaseUser);
   const dispatch = useDispatch();
   const urlBase = "http://localhost:3001";
   const router = useRouter();
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     dispatch(getAllStyles());
-    setLoaded(true)
+    setLoaded(true);
   }, []);
 
-  return (
-    loaded ? 
+  return loaded ? (
     <div className="h-full">
       <Formik
         initialValues={{
@@ -244,6 +242,7 @@ const TattoArtistRegister = () => {
                   setFieldValue("image", event.currentTarget.files[0]);
                 }}
                 className="p-2 mb-3 shadow-md block w-full"
+                accept="image/png, image/jpeg"
               />
               {values.image && (
                 <button
@@ -311,8 +310,8 @@ const TattoArtistRegister = () => {
           </Form>
         )}
       </Formik>
-    </div> 
-    :
+    </div>
+  ) : (
     <></>
   );
 };
