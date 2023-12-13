@@ -48,7 +48,9 @@ const UserPostDash = ({publication}) => {
                     <div className='flex gap-x-2 p-2 items-center'>
                         <div className='rounded-full w-[32px] h-[32px] bg-red-600 overflow-hidden '>
                            <Link href={`/explore/${publication.artistId}`}>
+                            {publication.profilePic && 
                             <Image unoptimized loader={imageLoader} src={publication.profilePic} height={32} width={32} alt={publication.nameArtist} style={{width:'100%', height:'100%' , cursor:"pointer" }}/>
+                            }
                             </Link>
                         </div>
                         <Link href={`/explore/${publication.artistId}`}>
@@ -59,7 +61,9 @@ const UserPostDash = ({publication}) => {
                     
                 </div>
                 <div className="w-full flex flex-col justify-center items-center bg-secondary-100  mb-2 ">
+                    {publication.image &&
                     <Image unoptimized src={publication.image} loader={imageLoader} width={500} height={500} alt={publication.description} />
+                    }
                 </div>
                 <div  className='cursor-pointer text-[30px] flex gap-x-2 mb-2'>
                 {

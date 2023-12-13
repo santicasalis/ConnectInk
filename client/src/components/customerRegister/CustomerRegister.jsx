@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { uploadImage } from '../../app/utils/uploadImage';
 import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import { notifyError } from "../../components/notifyError/NotifyError";
@@ -27,6 +27,11 @@ const CustomerRegister = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userInformation = useSelector((state) => state.user.fireBaseUser);
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
 
   const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: "checkbox" });
@@ -44,6 +49,7 @@ const CustomerRegister = () => {
   };
 
   return (
+    loaded ? 
     <div className="w-[70%]">
       <Formik
         initialValues={{
@@ -237,6 +243,8 @@ const CustomerRegister = () => {
         )}
       </Formik>
     </div>
+    :
+    <></>
   );
 };
 

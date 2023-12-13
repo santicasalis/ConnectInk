@@ -5,11 +5,11 @@ const deleteTattooArtist = async (id) => {
   if (tattooArtistFound) {
     await TattooArtist.update(
       {
-        disabled: true,
+        disabled: !tattooArtistFound.disabled,
       },
       { where: { id: id } }
     );
-    return "Profile deleted successfully";
+    return "Update successfully";
   } else {
     return "Not found";
   }

@@ -58,6 +58,14 @@ const AdminSideBar = () => {
                 <RiMessage3Line className="text-admin" /> Estilos de tatuaje
               </Link>
             </li>
+            <li>
+              <Link
+                href="/admin-dashboard/suspended"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-admin/20 hover:bg-secondary-100 transition-colors"
+              >
+                <RiMessage3Line className="text-admin" /> Artistas suspendidos 
+              </Link>
+            </li>
           </ul>
         </div>
 

@@ -457,12 +457,13 @@ const Page = () => {
                       handleSecondInitialTimeChange(day, null);
                       handleSecondFinalTimeChange(day, null);
                     }}
-                    className="mr-4 mb-4"
+                    className="mr-4 mb-4 mt-4"
                   >
                     {moreTime[day] ? "➖" : "➕"}
                   </button>
 
                   <button onClick={() => deleteHourDay(day)}>❌</button>
+                  <hr className="mt-6 mb-6 w-[90%] border-artist/50 mx-auto"></hr>
                 </div>
               ) : (
                 <button
