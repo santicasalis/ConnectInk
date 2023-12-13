@@ -82,11 +82,11 @@ export default function ExplorePage() {
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-0 sm:gap-y-4 sm:w-full w-full">
               <div className="flex items-center sm:w-full mb-4">
                 <p className="text-center text-[20px] text-artistfont sm:w-full">
-                  "En nuestro santuario del arte corporal, cada trazo cuenta una
+                  En nuestro santuario del arte corporal, cada trazo cuenta una
                   historia, cada línea lleva consigo la esencia de un viaje
                   personal. En el lienzo de la piel, exploramos la intersección
                   entre la imaginación y la realidad, transformando ideas en
-                  tatuajes que resuenan con significado."
+                  tatuajes que resuenan con significado.
                 </p>
               </div>
 
@@ -103,7 +103,7 @@ export default function ExplorePage() {
                   parallax={true}
                   centeredSlides={true}
                   autoplay={{
-                    delay: 3500,
+                    delay: 4500,
                     disableOnInteraction: false,
                   }}
                   pagination={{
@@ -112,25 +112,22 @@ export default function ExplorePage() {
                   modules={[Parallax, Autoplay, Pagination, Navigation]}
                   className="w-full flex justify-center items-center relative text-center p-5 h-[350px] "
                 >
-                  <SwiperSlide className=" mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont ">
-                    Encuentra la belleza en la simplicidad. Un tatuaje no solo
-                    decora tu piel, sino que también cuenta tu historia en las
-                    líneas más simples.{" "}
+                  <SwiperSlide className=" mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont">
+                    Un tatuaje no solo decora tu piel, sino que también cuenta
+                    tu historia en las líneas más simples.{" "}
                   </SwiperSlide>{" "}
                   <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont ">
-                    La poesía de la tinta. Cada tatuaje es una estrofa, cada
+                    En la poesía de la tinta, cada tatuaje es una estrofa, cada
                     estrofa es una expresión. ¿Cuál será tu próximo verso?{" "}
                   </SwiperSlide>{" "}
                   <SwiperSlide className="mt-[150px] font-bold text-[20px]  w-[50%] text-artistfont">
-                    Palabras que perduran. Un tatuaje corto, una vida de
-                    significado. Exprésate con precisión, deja que tu piel hable
-                    por ti.{" "}
+                    Palabras que perduran, una vida de significado. Exprésate
+                    con precisión, deja que tu piel hable por ti.{" "}
                   </SwiperSlide>
                   //{" "}
                   <SwiperSlide className="mt-[150px] font-bold text-xl sm:text-m w-full text-artistfont  ">
-                    Menos es más. Descubre la magia de las palabras concisas.Tus
-                    tatuajes son recordatorios diarios de lo que realmente
-                    importa{" "}
+                    Tus tatuajes son testigos permanentes de lo que te motiva y
+                    te inspira a diario.{" "}
                   </SwiperSlide>
                 </Swiper>
               </div>
