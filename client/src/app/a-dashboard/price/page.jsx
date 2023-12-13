@@ -9,7 +9,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-
 import { useRouter } from "next/navigation";
 
 const Price = () => {
@@ -153,8 +152,12 @@ const Price = () => {
     try {
       await axios.put(`${URL_BASE}/priceRanges/${data.priceRangeId}`, data);
     } catch (error) {
-      notifyError(error);
-      errorIndicator = true;
+      toast.error(`Error al actualizar precios`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     }
   };
 
