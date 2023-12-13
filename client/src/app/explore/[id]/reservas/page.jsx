@@ -260,7 +260,7 @@ const BookAppointment = ({ params }) => {
       <Nav />
 
       <div className="w-full p-4 flex justify-center  text-artistfont">
-        <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden">
+        <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden p-2">
           {sent ? (
             <h1>Redireccionando a Mercado Pago para completar la reserva</h1>
           ) : (
@@ -299,8 +299,8 @@ const BookAppointment = ({ params }) => {
                         }
                       );
 
-                      const paymentMpResponse = paymentMp.data;
 
+                      const paymentMpResponse = paymentMp.data;
                       if (paymentMpResponse) {
                         setTimeout(() => {
                           window.location.href = paymentMpResponse.init_point;

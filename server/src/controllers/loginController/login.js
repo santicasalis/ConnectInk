@@ -138,6 +138,7 @@ const login = async (tokenId) => {
       timeAvailabilityExceptions: user.TimeAvailabilityExceptions?.map(
         (timeAvailabilityException) => {
           return {
+            id: timeAvailabilityException.id,
             date: timeAvailabilityException.date,
             initialHour: timeAvailabilityException.initialHour,
             finalHour: timeAvailabilityException.finalHour,
@@ -222,10 +223,9 @@ const login = async (tokenId) => {
       ],
     });
 
-
-    if(userCustomer){
-      if (userCustomer.disabled){
-        throw Error ("Cuenta baneada")
+    if (userCustomer) {
+      if (userCustomer.disabled) {
+        throw Error("Cuenta baneada");
       }
       cleanUser = {
         id: userCustomer.id,
