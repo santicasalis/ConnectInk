@@ -55,6 +55,10 @@ export default function ExplorePage() {
     setFilterSidebarVisible(!filterSidebarVisible);
   };
 
+  const resetToFirstPage = () => {
+    setCurrentPage(1);
+  };
+
   //msj
   const [noResults, setNoResults] = useState(false);
 
@@ -149,7 +153,9 @@ export default function ExplorePage() {
               >
                 {filterSidebarVisible ? "Ocultar Filtros" : "Mostrar Filtros"}
               </button>
-              {filterSidebarVisible && <FilterSideBar />}
+              {filterSidebarVisible && (
+                <FilterSideBar onFilterChange={resetToFirstPage} />
+              )}
             </div>
 
             <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">

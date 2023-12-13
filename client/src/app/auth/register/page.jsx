@@ -9,11 +9,10 @@ import { auth } from "../../../firebase";
 import { getUserInformation } from "../../../app/redux/features/user/userActions";
 import { useRouter } from "next/navigation";
 
-
 const RegistrationForm = () => {
   const [client, setClient] = useState(null);
-  const router = useRouter()
-  const user = useSelector((state) => state.user.logedInUser)
+  const router = useRouter();
+  const user = useSelector((state) => state.user.logedInUser);
 
   const styles = useSelector((state) => state.styles.names);
   const dispatch = useDispatch();

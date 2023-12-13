@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +25,7 @@ import {
   RiEyeLine,
   RiEyeOffLine,
   RiGoogleFill,
-} from "react-icons";
+} from "react-icons/ri";
 
 const TattoArtistRegister = () => {
   const styles = useSelector((state) => state.styles.names);
