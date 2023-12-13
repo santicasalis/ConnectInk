@@ -20,9 +20,15 @@ import Image from "next/image";
 import {
   RiMailLine,
   RiLock2Line,
+  RiHome8Line,
   RiUserLine,
   RiPhoneFill,
+  RiSpeakLine,
+  RiMapPin2Fill,
+  RiRoadMapLine,
+  RiInstagramLine,
   RiLockLine,
+  RiUpload2Fill,
   RiEyeLine,
   RiEyeOffLine,
   RiGoogleFill,
@@ -112,88 +118,163 @@ const TattoArtistRegister = () => {
         {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto h-full">
             <div className="info-artist mb-4">
-              <Field
-                type="text"
-                name="fullName"
-                placeholder="Nombre completo"
-                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="fullName"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+              <div className="relative w-full">
+                <RiUserLine className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="text"
+                  name="fullName"
+                  placeholder="Nombre completo"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                />
+                <ErrorMessage
+                  name="fullName"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
 
-              <Field
-                type="textarea"
-                name="description"
-                placeholder="Descripcion de tu perfil"
-                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="description"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+              <div className="relative w-full">
+                <RiSpeakLine className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="textarea"
+                  name="description"
+                  placeholder="Descripcion de tu perfil"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
 
-              <Field
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-              <Field
-                type="text"
-                name="shopName"
-                placeholder="Nombre del estudio"
-                className="p-2 mb-3 shadow-md w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="shopName"
-                component="div"
-                className="text-red-500 text-sm"
-              />
 
-              <Field
-                type="text"
-                name="address"
-                placeholder="Dirección"
-                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="address"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+              <div className="relative w-full">
+                  <RiMailLine className="absolute left-2 top-4 text-white z-30" />
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+              </div>
 
-              <Field
-                type="text"
-                name="location"
-                placeholder="Ubicación"
-                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="location"
-                component="div"
-                className="text-red-500 text-sm"
-              />
 
-              <Field
-                type="textarea"
-                name="instagram"
-                placeholder="Enlace a tu perfil de instagram"
-                className="p-2 mb-3 shadow-md  w-full bg-secondary-100 rounded-2xl"
-              />
-              <ErrorMessage
-                name="instagram"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+              <div className="relative w-full">
+                <RiHome8Line className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="text"
+                  name="shopName"
+                  placeholder="Nombre de la tienda"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                />
+                <ErrorMessage
+                  name="shopName"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+
+              <div className="relative w-full">
+                <RiMapPin2Fill className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="text"
+                  name="address"
+                  placeholder="Dirección"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                />
+                <ErrorMessage
+                  name="address"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+
+              <div className="relative w-full">
+                  <RiRoadMapLine className="absolute left-2 top-4 text-white z-30" />
+                  <Field
+                    type="text"
+                    name="location"
+                    placeholder="Ubicación"
+                    className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                  />
+                  <ErrorMessage
+                    name="location"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+              </div>
+
+              <div className="relative w-full">
+                <RiInstagramLine className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="textarea"
+                  name="instagram"
+                  placeholder="Enlace a tu perfil de instagram"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                />
+                <ErrorMessage
+                  name="instagram"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+
+              <div className="relative w-full">
+                <RiPhoneFill className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="text"
+                  name="phone"
+                  placeholder="Teléfono"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                  pattern="\d*"
+                />
+
+                <ErrorMessage
+                  name="phone"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+
+              {!userInformation?.email && (
+                <div>
+                  <div className="relative w-full">
+                      <RiLockLine className="absolute left-2 top-4 text-white z-30" />
+                      <Field
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                      />
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                  </div>
+
+                  <div className="relative w-full">
+                      <RiLockLine className="absolute left-2 top-4 text-white z-30" />
+                      <Field
+                        type="password"
+                        name="passwordConfirm"
+                        placeholder="Confirme contraseña"
+                        className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                      />
+                      <ErrorMessage
+                        name="passwordConfirm"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                  </div>
+                </div>
+              )}
 
               <h3 className="text-lg mb-3 font-bold">Estilos de tatuaje</h3>
 
@@ -234,89 +315,41 @@ const TattoArtistRegister = () => {
               />
             </div>
 
-            <div className="mb-4 flex">
-                    <label htmlFor="image" className="font-rocksalt">
-                      Imagen de perfil:
-                    </label>
-                    <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
-                      {({ open }) => {
-                          return (
-                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
-                            Cargar imagen
-                          </button>
-                          );
-                      }}
-                    </CldUploadWidget>
-                    {image && 
-                    <Image 
-                    src={image}
-                    loader={imageLoader}
-                    unoptimized
-                    alt="tattoo image"
-                    height={100}
-                    width={100}
-                    />
-                    }
-                    {image && (
-                      <button
-                        type="button"
-                        onClick={() => {setFieldValue("image", null); setImage(null)}}
-                        className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
-                      >
-                        Delete Image
-                      </button>
-                    )}
-                  </div>
 
-            <div className="relative w-full">
-              <RiPhoneFill className="absolute left-2 top-4 text-white z-30" />
-              <Field
-                type="text"
-                name="phone"
-                placeholder="Teléfono"
-                className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
-                pattern="\d*"
+            <div className="mb-4">
+              <label htmlFor="image" className="font-bold">
+                Imagen de perfil
+              </label>
+              <label htmlFor='artistImage' className='mt-3 w-1/2 font-newrocker  flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-white border-white border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-primary hover:border-primary'>
+                 <RiUpload2Fill/>
+                 Subir imagen
+              </label> 
+              <input
+                type="file"
+                id="artistImage"
+                name="image"
+                onChange={(event) => {
+                  setFieldValue("image", event.currentTarget.files[0]);
+                }}
+                className="p-2 mb-3 shadow-md hidden w-full"
+                accept="image/png, image/jpeg"
               />
-
-              <ErrorMessage
-                name="phone"
-                component="div"
-                className="text-red-500 text-sm"
-              />
+              {values.image && (
+                <button
+                  type="button"
+                  onClick={() => setFieldValue("image", null)}
+                  className="bg-red-500 text-white p-2 rounded"
+                >
+                  Delete Image
+                </button>
+              )}
             </div>
 
-            {!userInformation?.email && (
-              <div>
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder="Contraseña"
-                  className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-
-                <Field
-                  type="password"
-                  name="passwordConfirm"
-                  placeholder="Confirme contraseña"
-                  className="p-2 mb-3 shadow-md block w-full bg-secondary-100 rounded-2xl"
-                />
-                <ErrorMessage
-                  name="passwordConfirm"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-            )}
 
             <button
               type="submit"
               disabled={isSubmitting || !isValid || !dirty}
-              className="p-2 mt-5 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300 w-full"
+              className="p-2 mt-5 bg-primary text-white rounded hover:bg-primary disabled:bg-primary/30 w-full"
             >
               Registrarme
             </button>

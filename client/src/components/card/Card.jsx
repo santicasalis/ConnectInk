@@ -17,6 +17,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation, Autoplay, Parallax } from "swiper/modules";
 import Link from "next/link";
 import Star from "../Star/Star";
+import StarDetail from "../stardetail/StarDetail"
 
 export default function Card({
   id,
@@ -78,11 +79,12 @@ export default function Card({
 
           
         <div className="font-bolt text-center text-xl mt-[20px] mb-[10px] flex items-center justify-center">
-          <Star value={1} rating={rating}/>
-          <Star value={2} rating={rating}/>
-          <Star value={3} rating={rating}/>
-          <Star value={4} rating={rating}/>
-          <Star value={5} rating={rating}/>
+          <StarDetail value={1} rating={rating}/>
+          <StarDetail value={2} rating={rating}/>
+          <StarDetail value={3} rating={rating}/>
+          <StarDetail value={4} rating={rating}/>
+          <StarDetail value={5} rating={rating}/>
+          
           {
             rating != null 
             ? <p className="ml-2 text-[22px]">{rating.toFixed(1)}</p>

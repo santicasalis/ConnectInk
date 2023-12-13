@@ -102,7 +102,7 @@ const PostDashboard = ({publication, name, image}) => {
                             <textarea type='text' onChange={handleChange} value={textCommend} placeholder='Añadir comentario...' rows={2} className='flex-1 py-0 h-auto resize-none text-[16px]  outline-none bg-transparent text-artistfont '/>
                             <div className='flex gap-x-2  w-[100px] text-artistfont'>
                                 <button type='submit' className={`flex items-start pt-0.5 ${textCommend.length==0 && 'hidden'} `}>
-                                    <span className='text-red-600 text-[17px] hover:text-white'>Publicar</span>
+                                    <span className='text-artist text-[17px] hover:text-artistfont'>Publicar</span>
                                 </button>
                                 <div className='pt-1 ml-auto'>
                                     <RiEmotionHappyLine className='cursor-pointer top-0 text-[17px] text-artistfont'/>

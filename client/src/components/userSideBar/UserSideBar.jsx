@@ -42,7 +42,7 @@ const UserSideBar = () => {
             <li>
               <Link
                 href="/user-dashboard/"
-                className="flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
+                className="flex items-center rounded-md border-b-[1px] border-primary/30 font-newrocker gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
                 <RiStore3Line className="text-primary " />{" "}
                 <p className="text-artistfont">Inicio</p>
@@ -51,7 +51,7 @@ const UserSideBar = () => {
             <li>
               <Link
                 href="/user-dashboard/profile"
-                className="w-full flex items-center rounded-md border-b-[1px] border-white/20 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
+                className="w-full flex items-center rounded-md border-b-[1px] border-primary/30 font-newrocker justify-between gap-4 px-4 py-5  hover:bg-secondary-100 transition-colors"
               >
                 <span className="flex items-center gap-4 text-artistfont">
                   <RiSpeakLine className="text-primary" /> Perfil
@@ -62,7 +62,7 @@ const UserSideBar = () => {
             <li className="text-artistfont">
               <Link
                 href="/user-dashboard/reservas"
-                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-white/20 hover:bg-secondary-100 transition-colors"
+                className="flex items-center gap-4 px-4 py-5 rounded-md font-newrocker border-b-[1px] border-primary/30 hover:bg-secondary-100 transition-colors"
               >
                 <RiCalendarCheckLine className="text-primary" /> Mis turnos
               </Link>
