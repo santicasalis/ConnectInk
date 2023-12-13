@@ -6,8 +6,9 @@ const {
   TimeAvailabilityException,
   PriceRange,
   Appointment,
-  Review
+  Review,
 } = require("../../db");
+const { Op } = require("sequelize");
 
 const getTattooArtistById = async (id) => {
   const tattooArtist = await TattooArtist.findByPk(id, {
@@ -18,39 +19,77 @@ const getTattooArtistById = async (id) => {
         model: Publication,
         attributes: ["id", "description", "image", "createdAt", "updatedAt"],
         where: { disabled: false },
-        required: false
+        required: false,
       },
       {
         model: TimeAvailability,
-        attributes: ["id", "day", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
-        required: false
+        attributes: [
+          "id",
+          "day",
+          "initialHour",
+          "finalHour",
+          "secondInitialHour",
+          "secondFinalHour",
+        ],
+        required: false,
       },
       {
         model: TimeAvailabilityException,
-        attributes: ["id", "date", "initialHour", "finalHour", "secondInitialHour", "secondFinalHour"],
-        required: false
+        attributes: [
+          "id",
+          "date",
+          "initialHour",
+          "finalHour",
+          "secondInitialHour",
+          "secondFinalHour",
+        ],
+        required: false,
       },
       {
         model: PriceRange,
         attributes: ["id", "size", "priceMin", "priceMax"],
-        required: false
+        required: false,
       },
       {
         model: Appointment,
         as: "appointments",
         foreignKey: "TattooArtist_Appointment",
-        attributes: ["id", "size", "image", "bodyPlace", "description", "dateAndTime", "duration", "depositPrice", "paymentId", "paymentStatus", "Customer_Appointment"],
-        where: { disabled: false, [Op.or]: [{paymentStatus: "approved"}, {paymentStatus: "in_process"}] },
-        required: false
+        attributes: [
+          "id",
+          "size",
+          "image",
+          "bodyPlace",
+          "description",
+          "dateAndTime",
+          "duration",
+          "depositPrice",
+          "paymentId",
+          "paymentStatus",
+          "Customer_Appointment",
+        ],
+        where: {
+          disabled: false,
+          [Op.or]: [
+            { paymentStatus: "approved" },
+            { paymentStatus: "in_process" },
+          ],
+        },
+        required: false,
       },
       {
         model: Review,
         as: "reviews",
         foreignKey: "TattooArtist_Review",
-        attributes: ["id", "comment", "rating", "Customer_Review", "Appointment_Review"],
+        attributes: [
+          "id",
+          "comment",
+          "rating",
+          "Customer_Review",
+          "Appointment_Review",
+        ],
         where: { disabled: false },
-        required: false
-      }
+        required: false,
+      },
     ],
   });
 
@@ -87,8 +126,8 @@ const getTattooArtistById = async (id) => {
           day: timeAvailability.day,
           initialHour: timeAvailability.initialHour,
           finalHour: timeAvailability.finalHour,
-          secondInitialHour: timeAvailability.secondInitialHour, 
-          secondFinalHour: timeAvailability.secondFinalHour
+          secondInitialHour: timeAvailability.secondInitialHour,
+          secondFinalHour: timeAvailability.secondFinalHour,
         };
       }
     ),
@@ -99,8 +138,8 @@ const getTattooArtistById = async (id) => {
           date: timeAvailabilityException.date,
           initialHour: timeAvailabilityException.initialHour,
           finalHour: timeAvailabilityException.finalHour,
-          secondInitialHour: timeAvailabilityException.secondInitialHour, 
-          secondFinalHour: timeAvailabilityException.secondFinalHour
+          secondInitialHour: timeAvailabilityException.secondInitialHour,
+          secondFinalHour: timeAvailabilityException.secondFinalHour,
         };
       }
     ),
@@ -123,8 +162,8 @@ const getTattooArtistById = async (id) => {
         duration: appointment.duration,
         depositPrice: appointment.depositPrice,
         paymentId: appointment.paymentId,
-        CustomerId: appointment.Customer_Appointment
-      }
+        CustomerId: appointment.Customer_Appointment,
+      };
     }),
     reviews: tattooArtist.reviews?.map((review) => {
       return {
@@ -132,9 +171,9 @@ const getTattooArtistById = async (id) => {
         image: review.image,
         rating: review.rating,
         customerId: review.Customer_Review,
-        appointmentId: review.Appointment_Review
-      }
-    })
+        appointmentId: review.Appointment_Review,
+      };
+    }),
   };
 };
 

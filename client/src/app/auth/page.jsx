@@ -131,7 +131,7 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          toast.error("Cuenta baneada por basuraaaaaa", {
+          toast.error("Tu cuenta ha sido suspendida", {
             className: "toastError",
             position: toast.POSITION.BOTTOM_CENTER,
             autoClose: 3000,
@@ -142,7 +142,7 @@ const Login = () => {
         });
     } catch (createUserError) {
       dispatch(closeModalLoadingAction());
-      toast.error("Usuario y o contraseña errónea", {
+      toast.error("Usuario y/o contraseña errónea", {
         className: "toastError",
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,

@@ -20,6 +20,7 @@ export default function AdminCardSuspended({
   image,
   id,
   reviews,
+  email
 }) {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
@@ -39,6 +40,7 @@ export default function AdminCardSuspended({
  
   const handleBanneados = () => {
     dispatch(openModalDisabledArtistAction(id));
+    axios.post("http://localhost:3001/nodemailer/restoreAccount", {email})
   };
 
   useEffect(() => {

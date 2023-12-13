@@ -5,11 +5,11 @@ const deletePublication = async (id) => {
   if (publicationFound) {
     await Publication.update(
       {
-        disabled: !publicationFound.disabled,
+        disabled: true,
       },
       { where: { id: id } }
     );
-    return "update successfully";
+    return "Publication deleted successfully";
   } else {
     return "Not found";
   }
