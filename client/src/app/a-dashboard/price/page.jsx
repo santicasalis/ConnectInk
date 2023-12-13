@@ -178,6 +178,10 @@ const Price = () => {
   return (
     <div className="flex items-center justify-center h-screen ">
       <div className="bg-secondary-100 p-8 rounded-xl w-full">
+        <h1 className=" text-center font-rocksalt text-artistfont text-[28px] mb-8">
+          {" "}
+          Rango de precios
+        </h1>
         <form onSubmit={handleSubmit}>
           {Object.keys(prices).map((size) => (
             <div key={size} className="flex items-center mr-50 mb-6">
