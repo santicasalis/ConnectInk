@@ -33,10 +33,8 @@ const AdminPostDashboard = ({publication, name, image, email}) => {
         setIsLike(!isLike);
     }
 
-    const handleDelete = () => {
-        dispatch(openModalDeleteAction(publication))
-        axios.post("http://localhost:3001/nodemailer/deletePublication", {email})
-        
+    const handleDelete = async () => {
+        dispatch(openModalDeleteAction({...publication, email}))
     }
 
     const handleChange = (event) => {

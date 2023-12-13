@@ -18,14 +18,17 @@ const ModalDisabledArtist = () => {
     dispatch(closeModalDisabledArtistAction());
   };
 
+
+
   useEffect(() => {
-    setId(data);
+    setId(data.id);
   }, [id]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      dispatch(DeleteArtists(id));
+      dispatch(DeleteArtists(data.id));
+      await axios.post("http://localhost:3001/nodemailer/restoreAccount", {email: data.email})
       dispatch(closeModalDisabledArtistAction());
       toast.success(`El artista se reestableció con éxito`, {
         className: "toastSuccess",
