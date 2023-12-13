@@ -83,7 +83,12 @@ const Price = () => {
         }));
       }
     } catch (error) {
-      notifyError(error);
+      toast.error(`Error al crear precios`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     }
   };
 
