@@ -41,6 +41,10 @@ export default function Reservas() {
 
   return (
     <div className="">
+      <h1 className=" text-center font-rocksalt text-artistfont text-[28px]">
+        {" "}
+        Mis turnos
+      </h1>
       {appointment && appointment.length > 0 ? (
         [...user.appointments]
           .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
@@ -65,16 +69,17 @@ export default function Reservas() {
           )
       ) : (
         <div className="flex flex-col items-center">
-          <h5 className="text-artistfont">
-            {" "}
+          {" "}
+          <p className="text-artistfont mt-8">
             No tienes ninguna reserva aún. ¡Descubre increíbles artistas y sus
             últimas obras!
-          </h5>
-          <Link href="/explore">
-            <button className="bg-primary text-white py-2 px-4 rounded mt-4">
-              Explorar Artistas
-            </button>
-          </Link>
+          </p>{" "}
+          <br />{" "}
+          <p className="text-artistfont mr-5 ml-5 mb-5">
+            Si te gusta el trabajo de alguno de ellos, puedes acceder a su
+            perfil y reservar un turno para hacer realidad ese tatuaje que tanto
+            deseas.{" "}
+          </p>{" "}
           <div className="scroll-fade flex justify-center items-center">
             <div>
               {artist?.map((filter) => (
