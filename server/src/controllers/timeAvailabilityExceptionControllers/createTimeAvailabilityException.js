@@ -24,7 +24,7 @@ const createTimeAvailabilityException = async (
     };
   }
 
-  if(initialHour && finalHour){
+  if (initialHour && finalHour) {
     if (Number(initialHour.split(":")[0]) > Number(finalHour.split(":")[0])) {
       return {
         code: 404,
@@ -33,16 +33,21 @@ const createTimeAvailabilityException = async (
     }
   }
 
-
-  if(secondInitialHour && secondFinalHour){
-    if (Number(secondInitialHour.split(":")[0]) > Number(secondFinalHour.split(":")[0])) {
+  if (secondInitialHour && secondFinalHour) {
+    if (
+      Number(secondInitialHour.split(":")[0]) >
+      Number(secondFinalHour.split(":")[0])
+    ) {
       return {
         code: 404,
-        error: "The second initial hour must be less than the second final hour",
+        error:
+          "The second initial hour must be less than the second final hour",
       };
     }
-  
-    if (Number(finalHour.split(":")[0]) > Number(secondInitialHour.split(":")[0])) {
+
+    if (
+      Number(finalHour.split(":")[0]) > Number(secondInitialHour.split(":")[0])
+    ) {
       return {
         code: 404,
         error: "The second initial hour must be more than the final hour",
@@ -55,7 +60,7 @@ const createTimeAvailabilityException = async (
     initialHour,
     finalHour,
     secondInitialHour,
-    secondFinalHour
+    secondFinalHour,
   });
 
   tattooArtist.addTimeAvailabilityException(timeAvailabilityException);
