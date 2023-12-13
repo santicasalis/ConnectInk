@@ -13,10 +13,11 @@ const updateTattooArtistHandler = async (req, res) => {
     location,
     shopName,
     image,
+    tattooStyles
   } = req.body;
   try {
     const updatedTattooArtist = await updateTattooArtist(
-      id,
+      {id,
       fullName,
       email,
       password,
@@ -26,7 +27,8 @@ const updateTattooArtistHandler = async (req, res) => {
       address,
       location,
       shopName,
-      image
+      image,
+      tattooStyles}
     );
     res.status(200).json(updatedTattooArtist);
   } catch (error) {

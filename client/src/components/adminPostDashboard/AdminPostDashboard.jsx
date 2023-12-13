@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { openModalAction } from '../../app/redux/features/modalEdit/modalEditAction';
 import { openModalDeleteAction } from '../../app/redux/features/modalDelete/modalDeleteAction';
 
-const AdminPostDashboard = ({publication, name, image}) => {
+const AdminPostDashboard = ({publication, name, image, email}) => {
     const [isLike, setIsLike] = useState(false);
     const [textCommend, setTextCommend] = useState('');
 
@@ -31,6 +31,12 @@ const AdminPostDashboard = ({publication, name, image}) => {
 
     const handleClick = () => {
         setIsLike(!isLike);
+    }
+
+    const handleDelete = () => {
+        dispatch(openModalDeleteAction(publication))
+        axios.post("http://localhost:3001/nodemailer/deletePublication", {email})
+        
     }
 
     const handleChange = (event) => {
@@ -71,7 +77,7 @@ const AdminPostDashboard = ({publication, name, image}) => {
                                 </div>
                                 
                             </MenuItem> */}
-                            <MenuItem className='hover:bg-secondary-100 w-full h-full text-artistfont' onClick={() => dispatch(openModalDeleteAction(publication))}>
+                            <MenuItem className='hover:bg-secondary-100 w-full h-full text-artistfont' onClick={handleDelete}>
                                 <Link href='' className='flex items-center gap-2 text-sm py-1.5'>
                                     <RiDeleteBin6Fill />
                                     Eliminar
