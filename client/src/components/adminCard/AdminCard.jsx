@@ -21,6 +21,7 @@ export default function AdminCard({
   image,
   id,
   reviews,
+  email
 }) {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
@@ -38,6 +39,7 @@ export default function AdminCard({
 
   const handleBannear = () => {
     dispatch(openModalDeleteArtistAction(id));
+    axios.post("http://localhost:3001/nodemailer/deleteAccount", {email})
   };
 
   useEffect(() => {

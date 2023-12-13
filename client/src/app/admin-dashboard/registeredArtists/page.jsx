@@ -81,6 +81,7 @@ const RegisteredArtist = () => {
                           tattoos={filter.publications}
                           image={filter.image}
                           reviews={filter.reviews}
+                          email={filter.email}
                         />
                       </div>
                 ))}
