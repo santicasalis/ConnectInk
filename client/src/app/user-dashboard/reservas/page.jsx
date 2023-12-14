@@ -53,15 +53,13 @@ export default function Reservas() {
       <div className="w-full p-7 ">
         <h1 className="text-4xl text-artistfont font-rocksalt mb-8"> Mis turnos</h1>
         <hr className="border-primary/20 border-[1px]"/>
-      </div>
-
-      {appointment && appointment.length > 0 ? (
+         {appointment && appointment.length > 0 ? (
         [...user.appointments]
           .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
           .map(
             (tur) =>
               tur.paymentStatus && (
-                <div key={tur.id} className="mt-[50px]">
+                <div key={tur.id} className="h-full mt-6 flex items-center justify-center">
                   <BookingCard
                     id={tur.id}
                     bodyPlace={tur.bodyPlace}
@@ -114,6 +112,9 @@ export default function Reservas() {
           </div>
         </div>
       )}
+      </div>
+
+     
     </div>
   );
 }

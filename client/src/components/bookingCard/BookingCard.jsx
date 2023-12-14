@@ -118,84 +118,87 @@ const BookingCard = ({
   return loaded ? (
 
     <div
-      className={`
-        ${
-          paymentStatus === "in_process"
-            ? "shadow-md shadow-orange-500"
-            : paymentStatus === "approved"
-            ? "shadow-md shadow-green-500"
-            : "shadow-md shadow-red-500"
-        }`}
+      className={`bg-secondary-100 flex items-center justify-center w-[60%] h-[300px]  rounded-lg
+        `}
     >
-      <div className="bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105">
-        <div className="w-[26%] h-full   border-r-[2px] border-r-neutral-700">
-          <div className="pt-2 ">
-            <p className="flex gap-2 ml-8">
-              {" "}
-              <TbCalendarCheck className="text-primary text-[27px]" />
-              Reserva:
-            </p>
-            <p className="mt-[4px] text-center"> {fechaFormateada}</p>
+      
+        <div className="w-[25%] h-full   border-r-[2px] border-r-primary/20 p-6  ">
+          <div className="flex items-center justify-center ">
+              <p className="flex gap-2 text-[25px] mb-6 mt-4 font-rocksalt text-artistfont ">
+                  <TbCalendarCheck className="text-primary text-[27px]" />
+                  Reserva:
+              </p>
           </div>
-          <div className="pt-4">
-            <p className="flex gap-2 ml-4">
-              {" "}
-              <IoBodyOutline className="text-primary text-[27px]" />
-              Donde: {bodyPlace}
+            <p className=" text-center text-[16px] mb-6 text-artistfont"> {fechaFormateada}</p>
+          
+          {/* <div className="mb-4 flex items-center justify-center">
+            <p className="flex gap-2  font-rocksalt text-[16px]">
+              <IoBodyOutline className="text-primary text-[22px]" />
+              Donde : <span className="text-[14px] font-sans">{bodyPlace}</span>
             </p>
-          </div>
-          <div className="pt-4">
-            <p className=" flex gap-2 ml-4 ">
+          </div> */}
+          <div className="flex items-center justify-center mb-10">
+            <p className=" flex gap-2 text-[16px] font-rocksalt text-artistfont  ">
               <MdOutlineAttachMoney className="text-primary text-[27px]" />
-              Seña: {depositPrice}
+              Seña: <span className="font-sans text-[14px] text-artistfont">${depositPrice}</span>
             </p>
           </div>
-          <div className="mt-[35px] ml-4 ">
-            <p className="font-rocksalt text-[18px]">
-              Connect<span className="text-primary">Ink.</span>
-            </p>
-          </div>
+          <div>
+          {paymentStatus &&
+            (paymentStatus === "approved" ? (
+              <p className="text-green-800 bg-secondary-900/50 rounded-lg py-2 text-center">Pago aprobado</p>
+            ) : paymentStatus === "in_process" ? (
+              <p className="text-orange-600 bg-secondary-900/50 rounded-lg py-2 text-center">Pago pendiente</p>
+            ) : paymentStatus === "rejected" ? (
+              <p className="text-red-600 bg-secondary-900/50 rounded-lg py-2 text-center">Pago rechazado. Trendrás que volver a reservar un turno</p>
+            ) : (
+              <p>Error al procesar el pago, intentelo mas tarde</p>
+            ))}
+        </div>
+          
         </div>
 
-        <div>
+        <div className="w-[50%] h-full ml-2 ">
           {response.id && (
-            <div>
+            <div >
+              
               <div>
-                <p className="text-center mb-[10px] text-2xl flex items-center justify-center gap-2 font-rocksalt">
-                  <FaMapPin className="text-primary" /> Dirección:
-                </p>
-                <p className="text-center">{response.address}</p>
-                <p className="text-center">{response.location}</p>
-              </div>
-              <div>
-                <p className="text-center mb-[15px] text-2xl mt-4 font-rocksalt">
-                  Artista:
-                </p>
-                <div className="flex justify-center items-center gap-2">
+                
+                <div className="flex items-center mt-6 gap-2 mb-6 border-b-primary/20 border-b-[1px] h-full  ">
                   {response.image && (
                     <Image
                       unoptimized
                       src={response.image}
                       loader={imageLoader}
-                      width={80}
-                      height={80}
+                      width={120}
+                      height={120}
                       alt={`${response.fullName} profile pic`}
-                      className=" rounded-full"
+                      className=" rounded-full mb-6"
                     />
                   )}
 
-                  <p className="text-center">{response.fullName}</p>
+                  <p className="text-center text-[30px] font-newrocker text-artistfont">{response.fullName}</p>
+                  <div className="flex items-center justify-center">
+            <button onClick={handleReview} className=" ml-6 text-black border-[1px] flex gap-x-1 items-center border-primary/50 hover:border-primary text-[15px] bg-primary rounded-lg px-2 py-1">Dejar reseña</button>
+          </div>
                 </div>
+              </div>
+              <div>
+                <p className="text-center mb-6 text-[25px] flex items-center justify-center gap-2 font-rocksalt text-artistfont ">
+                  <FaMapPin className="text-primary" /> Dirección:
+                </p>
+                <p className="text-center text-[20px] mb-2 text-artistfont">{response.address}</p>
+                <p className="text-center text-[20px] text-artistfont">{response.location}</p>
               </div>
             </div>
           )}
         </div>
-        <div className=" w-[20%] mr-4">
-          <div className="flex items-end justify-end">
+        <div className=" w-[25%] h-full ">
+          <div className="flex items-end justify-end mr-2 ">
             <Menu
               menuButton={
                 <MenuButton>
-                  <RiMoreFill className="text-white text-[25px] cursor-pointer hover:bg-secondary-100" />
+                  <RiMoreFill className="text-artistfont text-[25px] cursor-pointer hover:bg-secondary-100" />
                 </MenuButton>
               }
               transition
@@ -211,39 +214,30 @@ const BookingCard = ({
             </Menu>
           </div>
 
-          <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
-          <p className="text-center mt-2 ">Tamaño: {size}</p>
-          <p className="text-center mt-2 ">Duracion:{duration}</p>
-          <p className="text-center mt-2">Tu diseño:</p>
-          <div className="flex justify-center items-center mt-2">
+          <p className="text-center text-2xl font-rocksalt text-artistfont mb-3">Detalles:</p>
+          <p className="text-center mb-3 font-rocksalt text-artistfont">Tamaño: {size}</p>
+          <p className="text-center mb-3 font-rocksalt text-artistfont">Duracion:{duration}</p>
+          <p className="text-center mb-3 font-rocksalt text-artistfont">Tu diseño:</p>
+          <div className="flex justify-center items-center mb-3">
             {image && (
               <Image
                 unoptimized
                 src={image}
                 loader={imageLoader}
-                width={50}
-                height={50}
+                width={120}
+                height={120}
                 alt={"Tu Tattoo"}
                 className=" rounded-full"
               />
             )}
           </div>
+          
+          
         </div>
-        <button onClick={handleReview}>Dejar reseña</button>
+        
 
-        <div>
-          {paymentStatus &&
-            (paymentStatus === "approved" ? (
-              <p>Pago aprobado</p>
-            ) : paymentStatus === "in_process" ? (
-              <p>Pago pendiente</p>
-            ) : paymentStatus === "rejected" ? (
-              <p>Pago rechazado. Trendrás que volver a reservar un turno</p>
-            ) : (
-              <p>Error al procesar el pago, intentelo mas tarde</p>
-            ))}
-        </div>
-      </div>
+        
+      
     </div>
   ) : (
     <></>
