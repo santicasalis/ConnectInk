@@ -10,8 +10,8 @@ const StarReviews = ({value, rating}) => {
     <>
         {
             painted
-            ? <RiStarSFill className='text-primary text-[25px] '/>
-            : <RiStarLine className='text-primary text-[21px] ml-[3px] mr-[1px] '/>
+            ? <RiStarSFill className='text-artist text-[25px] '/>
+            : <RiStarLine className='text-artist text-[21px] ml-[3px] mr-[1px] '/>
         }
     </>
   )

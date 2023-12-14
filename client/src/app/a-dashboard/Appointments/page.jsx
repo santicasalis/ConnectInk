@@ -33,7 +33,7 @@ export default function Appointments() {
         <h1 className="text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]"> Mis turnos</h1>
       </div>
       {appointment && appointment.length > 0 ? (
-        [...user.appointments]
+        [...user?.appointments]
           .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
           .map((tur) => (
             <div className="mt-[50px]">
