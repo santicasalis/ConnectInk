@@ -56,6 +56,7 @@ const Suspended = () => {
   const noResults = artistsToDisplay.length === 0;
 
   return (
+
     <div>
       {/* <PaginateAdmin
           artistsPerPage={artistsPerPage}
