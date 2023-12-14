@@ -35,11 +35,11 @@ const BookAppointment = ({ params }) => {
   const [sent, setSent] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
 
-  const imageLoader = ({src}) => {
-    return src
-  }
+  const imageLoader = ({ src }) => {
+    return src;
+  };
 
   const durations = {
     Pequeño: 1,
@@ -283,7 +283,6 @@ const BookAppointment = ({ params }) => {
               validationSchema={validationSchema}
               onSubmit={async (values, { setSubmitting }) => {
                 try {
-
                   try {
                     const createResponse = await axios.post(
                       `${URL_BASE}/appointments`,
@@ -301,7 +300,6 @@ const BookAppointment = ({ params }) => {
                         }
                       );
 
-
                       const paymentMpResponse = paymentMp.data;
                       if (paymentMpResponse) {
                         setTimeout(() => {
@@ -313,7 +311,12 @@ const BookAppointment = ({ params }) => {
                       console.log(error);
                     }
                   } catch (error) {
-                    console.log(error);
+                    toast.error(error.response.data.error, {
+                      className: "toastError",
+                      position: toast.POSITION.BOTTOM_RIGHT,
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                    });
                   }
                 } catch (error) {
                   console.log(error);
@@ -331,7 +334,7 @@ const BookAppointment = ({ params }) => {
                         className="font-rocksalt text-lg text-artistfont"
                         htmlFor="size"
                       >
-                        Selecciona una opción:
+                        Selecciona un tamaño:
                       </label>
                       <Field
                         as="select"
@@ -339,7 +342,7 @@ const BookAppointment = ({ params }) => {
                         className=" text-artistfont  bg-secondary-100 text-[15px] ml-4 rounded-md p-2"
                       >
                         <option value="" disabled>
-                          Selecciona una opcion
+                          Selecciona un tamaño
                         </option>
 
                         <option className="text-artistfont" value="Pequeño">
@@ -397,7 +400,7 @@ const BookAppointment = ({ params }) => {
                     </label>
                     <p className="text-[9px]">
                       {" "}
-                      *Describa en el mayor detalle posible el tatuaje a
+                      *Describe con el mayor detalle posible el tatuaje a
                       realizar
                     </p>
                     <Field
@@ -411,7 +414,7 @@ const BookAppointment = ({ params }) => {
                       component="div"
                       className="text-red-500 text-sm"
                     />
-                    <label>Fecha Seleccionada:</label>
+                    <label>Fecha seleccionada:</label>
                     <Field name="dateAndTime">
                       {({ field, form }) => (
                         <div>
@@ -429,7 +432,7 @@ const BookAppointment = ({ params }) => {
                           <div className="text-black">
                             {showTime && (
                               <div className="text-artistfont font-rocksalt text-sm mt-8  ">
-                                <p>Horario del comienzo del turno:</p>
+                                <p>Horario de comienzo del turno:</p>
                                 <select
                                   name="dateTime"
                                   value={selectedTime}
@@ -468,30 +471,43 @@ const BookAppointment = ({ params }) => {
                     <label htmlFor="image" className="font-rocksalt">
                       Imagen de referencia:
                     </label>
-                    <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
+                    <CldUploadWidget
+                      uploadPreset="cloudinary-upload-images-connectInk"
+                      onUpload={(result) => {
+                        values.image = result.info.secure_url;
+                        setImage(result.info.secure_url);
+                      }}
+                    >
                       {({ open }) => {
-                          return (
-                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
+                        return (
+                          <button
+                            type="button"
+                            className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
+                            onClick={() => open()}
+                          >
                             <MdFileUpload className="mr-2 " />
                             Cargar
                           </button>
-                          );
+                        );
                       }}
                     </CldUploadWidget>
-                    {image && 
-                    <Image 
-                    src={image}
-                    loader={imageLoader}
-                    unoptimized
-                    alt="tattoo image"
-                    height={100}
-                    width={100}
-                    />
-                    }
+                    {image && (
+                      <Image
+                        src={image}
+                        loader={imageLoader}
+                        unoptimized
+                        alt="tattoo image"
+                        height={100}
+                        width={100}
+                      />
+                    )}
                     {image && (
                       <button
                         type="button"
-                        onClick={() => {setFieldValue("image", null); setImage(null)}}
+                        onClick={() => {
+                          setFieldValue("image", null);
+                          setImage(null);
+                        }}
                         className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
                       >
                         Delete Image
