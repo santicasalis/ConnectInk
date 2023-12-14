@@ -12,14 +12,20 @@ import {
   getUserById,
 } from "../../../app/redux/features/user/userActions";
 
-import { RiEyeLine, RiEyeOffLine, RiSave3Fill  } from "react-icons/ri";
+import { RiEyeLine, RiEyeOffLine, RiSave3Fill} from "react-icons/ri";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  updatePassword,
+} from "firebase/auth";
 
-import { getAuth, signInWithEmailAndPassword, updatePassword } from "firebase/auth";
+
 
 import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { getAllStyles } from "../../redux/features/styles/stylesActions";
+import { validateInput } from "./validations";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -34,8 +40,6 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(user.image);
   const [styleSelected, setStyleSelected] = useState([]);
   const [image, setImage] = useState(null);
-
-  console.log(user.shopName);
 
   useEffect(() => {
     if (!user.userType) {
@@ -62,6 +66,7 @@ const Profile = () => {
     password: user.password,
     tattooStyles: user.tattooStyles,
   });
+  const [errors, setErrors] = useState({});
 
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -106,7 +111,7 @@ const Profile = () => {
         await updatePassword(fireBaseUser, formData.password);
         console.log("Contraseña actualizada con éxito en Firebase");
       } else if (!fireBaseUser) {
-        console.log(error)
+        console.log(error);
         notifyError(new Error("No hay usuario de Firebase autenticado"));
         return;
       }
@@ -117,9 +122,10 @@ const Profile = () => {
         `http://localhost:3001/tattooArtists/${user.id}`,
         dataToUpdate
       );
+      console.log(dataToUpdate);
 
       dispatch(getUserById(fireBaseUser.uid));
-      setImage(null)
+      setImage(null);
 
       if (response.status === 200) {
         dispatch(bringUserInformation(dataToUpdate));
@@ -136,7 +142,7 @@ const Profile = () => {
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(`Error al guardar cambios`, {
         className: "toastError",
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -148,6 +154,7 @@ const Profile = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors(validateInput({ ...formData, [e.target.name]: e.target.value }));
   };
 
   const handleStyleChange = (styleName) => {
@@ -161,8 +168,11 @@ const Profile = () => {
   return (
     <div className="bg-secondary-900 p-8 rounded-xl w-full shadow-lg shadow-artist/50">
       <h1 className="text-4xl font-rocksalt"> Mi perfil</h1>
+
       <hr className="my-8 border-artist/30" />
-      <form onSubmit={handleUpdate}>
+      <form>
+
+    
         <div className="flex items-center mb-6">
           <div className="w-1/4 ">
             <p>Foto de perfil: </p>
@@ -227,13 +237,6 @@ const Profile = () => {
                   Delete Image
                 </button>
               )}
-
-              {/* <label
-                htmlFor="avatar"
-                className="absolute bg-secondary-900 p-2 left-24 -top-2 rounded-full cursor-pointer hover:bg-secondary-100"
-              >
-                <RiEdit2Line />
-              </label> */}
             </div>
             <p className="text-gray-500 text-sm"></p>
           </div>
@@ -244,7 +247,7 @@ const Profile = () => {
               Nombre Completo: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex items-center gap-4">
+          <div className="flex-1 flex flex-col   gap-4">
             <div className="w-full">
               <input
                 name="fullName"
@@ -254,8 +257,13 @@ const Profile = () => {
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
               />
             </div>
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.fullName}</p>
+            </div>
           </div>
         </div>
+
         <div className="flex items-center mb-4">
           <div className="w-1/5">
             <p>
@@ -267,6 +275,7 @@ const Profile = () => {
               <input
                 name="email"
                 type="text"
+                readOnly
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
@@ -280,7 +289,7 @@ const Profile = () => {
               Celular: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex items-center gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <div className="w-full">
               <input
                 name="phone"
@@ -290,6 +299,10 @@ const Profile = () => {
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
               />
             </div>
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.phone}</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-4">
@@ -298,7 +311,7 @@ const Profile = () => {
               Dirección: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex items-center gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <div className="w-full">
               <input
                 name="address"
@@ -308,6 +321,10 @@ const Profile = () => {
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
               />
             </div>
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.address}</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-4">
@@ -316,7 +333,7 @@ const Profile = () => {
               Localidad: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex items-center gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <div className="w-full">
               <input
                 name="location"
@@ -326,6 +343,10 @@ const Profile = () => {
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
               />
             </div>
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.location}</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-4">
@@ -334,7 +355,7 @@ const Profile = () => {
               Estudio: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex items-center gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <div className="w-full">
               <input
                 name="shopName"
@@ -344,13 +365,17 @@ const Profile = () => {
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
               />
             </div>
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.shopName}</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-4">
           <div className="w-1/5">
             <p>Instagram:</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col">
             <input
               name="instagram"
               type="text"
@@ -358,6 +383,10 @@ const Profile = () => {
               onChange={handleChange}
               className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
             />
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.instagram}</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-4">
@@ -455,10 +484,29 @@ const Profile = () => {
         </div>
 
         <button
-          className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
-          type="submit"
-        >
-          <RiSave3Fill className="text-[25px]"/> Guardar cambios
+
+         className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
+         
+          type="button"
+          style={{
+            cursor:
+              Object.keys(errors).length === 0 ? "pointer" : "not-allowed",
+          }}
+          onClick={(e) => {
+            if (Object.keys(errors).length === 0) {
+              handleUpdate(e);
+            } else {
+              toast.error(`Debes completar los campos con errores`, {
+                className: "toastError",
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 3000,
+                hideProgressBar: false,
+              });
+            }
+          }}
+        > <RiSave3Fill className="text-[25px]"/>
+          Guardar cambios
+
         </button>
       </form>
     </div>
