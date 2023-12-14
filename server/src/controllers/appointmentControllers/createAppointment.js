@@ -40,17 +40,40 @@ const createAppointment = async ({
   //chequea que exista el tatuador
   const tattooArtist = await TattooArtist.findByPk(tattooArtistId);
   if (tattooArtist === null) {
-    return { code: 404, error: "Tattoo artist not found" };
+    return { code: 404, error: "Artista no encontrado" };
   }
 
   //chequea que exista el cliente
   const customer = await Customer.findByPk(customerId);
   if (customer === null) {
-    return { code: 404, error: "Customer not found" };
+    return { code: 404, error: "Cliente no encontrado" };
+  }
+
+  //chequea que el cliente no tenga un turno ese día
+  let dateToCompare = dateAndTime.split("T");
+  let appointmentCustomer = await Appointment.findAll({
+    where: {
+      Customer_Appointment: customerId,
+      dateAndTime: {
+        [Op.between]: [
+          new Date(dateToCompare[0] + "T00:00:00.000Z"),
+          new Date(dateToCompare[0] + "T23:59:59.999Z"),
+        ],
+      },
+      paymentStatus: { [Op.or]: ["approved", "in_process"] },
+      disabled: false,
+    },
+  });
+
+  //si existe no le deja pedir otro turno
+  if (appointmentCustomer.length) {
+    return {
+      code: 404,
+      error: "No podés sacar dos turnos para el mismo día",
+    };
   }
 
   //busca los turnos existentes para esa fecha, con estado de pago aprobado o pendiente
-  let dateToCompare = dateAndTime.split("T");
   let appointmentsExist = await Appointment.findAll({
     where: {
       TattooArtist_Appointment: tattooArtistId,
@@ -66,7 +89,7 @@ const createAppointment = async ({
   });
 
   //si existen, chequea que no coincida algún turno existente con el que se intenta crear
-  if (appointmentsExist !== null) {
+  if (appointmentsExist.length) {
     const dateOrTime = dateAndTime.split("T");
     const hourSplit = Number(dateOrTime[1].split(":")[0]);
     for (let i = 0; i < appointmentsExist.length; i++) {
@@ -80,8 +103,7 @@ const createAppointment = async ({
       ) {
         return {
           code: 404,
-          error:
-            "The tattoo artist already has an appointment scheduled at that time",
+          error: "El artista ya tiene un turno agendado para ese horario",
         };
       }
     }
@@ -99,7 +121,7 @@ const createAppointment = async ({
   });
   //si no tiene disponibilidad horaria cargada ese día dice que ese día no está disponible
   if (possibleAvialability === null) {
-    return { code: 404, error: "The tattoo artist doesn't work that day" };
+    return { code: 404, error: "El artista no trabaja ese día" };
   }
   // si existe disponibilidad horaria, se queda con los horarios cargados para ese día
   let initialHour = possibleAvialability.initialHour;
@@ -117,8 +139,7 @@ const createAppointment = async ({
   if (possibleException && possibleException.initialHour === null) {
     return {
       code: 400,
-      error:
-        "The tattoo artist doesn't work that date or has a special schedule",
+      error: "El artista no trabaja esa fecha o trabaja en un horario especial",
     };
   }
   //si esa fecha sí trabaja, se queda con los horarios cargados para ese día
@@ -127,7 +148,6 @@ const createAppointment = async ({
     finalHour = possibleException.finalHour;
     secondInitialHour = possibleException.secondInitialHour;
     secondFinalHour = possibleException.secondFinalHour;
-    console.log(initialHour, finalHour, secondFinalHour, secondInitialHour)
   }
 
   //comparar las horas
@@ -138,7 +158,7 @@ const createAppointment = async ({
   ) {
     return {
       code: 400,
-      error: "The tattoo artist starts working later",
+      error: "El artista empieza a trabajar más tarde",
     };
   }
   // caso la hora del turno sea entre las horas que el tatuador trabaja, error
@@ -151,7 +171,7 @@ const createAppointment = async ({
     ) {
       return {
         code: 400,
-        error: "The tattoo artist doesn't work during that hour",
+        error: "El artista no trabaja durante esa hora",
       };
     }
     //caso la hora del turno sea después de la hora que el tatuador termina, error
@@ -161,13 +181,11 @@ const createAppointment = async ({
     ) {
       return {
         code: 400,
-        error: "The tattoo artist finishes work early",
+        error: "El artista termina de trabajar más temprano",
       };
     }
   }
   //caso la hora del turno sea después de la hora que el tatuador termina, error
-  console.log("1", Number(dateOrTime[1].split(":")[0]));
-  console.log("2", Number(finalHour.split(":")[0]) + 3);
   if (secondInitialHour === null) {
     if (
       Number(dateOrTime[1].split(":")[0]) >
@@ -175,7 +193,7 @@ const createAppointment = async ({
     ) {
       return {
         code: 400,
-        error: "The tattoo artist finishes work early",
+        error: "El artista termina de trabajar más temprano",
       };
     }
   }
@@ -189,25 +207,17 @@ const createAppointment = async ({
     const secondFinalHourSplit = Number(secondFinalHour.split(":")[0]);
     if (hourSplit > secondInitialHourSplit + 3) {
       if (hourSplit + sizesAndDurations[size] > secondFinalHourSplit + 3) {
-        return { code: 400, error: "1 The appointment must start earlier" };
+        return { code: 400, error: "El turno debe comenzar antes" };
       }
     }
     if (hourSplit < finalHourSplit + 3) {
       if (hourSplit + sizesAndDurations[size] > finalHourSplit + 3) {
-        return { code: 400, error: "2 The appointment must start earlier" };
+        return { code: 400, error: "El turno debe comenzar antes" };
       }
     }
   } else if (secondInitialHour === null) {
     if (hourSplit + sizesAndDurations[size] > finalHourSplit + 3) {
-      console.log(
-        "Hora split ",
-        hourSplit,
-        "size ",
-        sizesAndDurations[size],
-        "final hour ",
-        finalHourSplit + 3
-      );
-      return { code: 400, error: "3 The appointment must start earlier" };
+      return { code: 400, error: "El turno debe comenzar antes" };
     }
   }
 
@@ -225,7 +235,7 @@ const createAppointment = async ({
     if (!priceRangeFound) {
       return {
         code: 404,
-        error: "Price range not found, the deposit price cannot be calculated",
+        error: "El rango de precios para ese tamaño no está disponible",
       };
     }
     const depositAmount = priceRangeFound.priceMin / 2;
@@ -244,7 +254,7 @@ const createAppointment = async ({
       });
       return {
         code: 201,
-        message: "Appointment created successfully",
+        message: "Turno creado exitosamente",
         data: appointment,
       };
     } catch (error) {

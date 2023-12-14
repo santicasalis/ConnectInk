@@ -111,12 +111,10 @@ const BookingCard = ({
 
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
 
-    dispatch(getUserById(fireBaseUser.tokenId))
+    dispatch(getUserById(fireBaseUser.tokenId));
   };
 
-
   return loaded ? (
-
     <div
       className={`
         ${
@@ -213,7 +211,7 @@ const BookingCard = ({
 
           <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
           <p className="text-center mt-2 ">Tamaño: {size}</p>
-          <p className="text-center mt-2 ">Duracion:{duration}</p>
+          <p className="text-center mt-2 ">Duración:{duration}</p>
           <p className="text-center mt-2">Tu diseño:</p>
           <div className="flex justify-center items-center mt-2">
             {image && (
