@@ -13,9 +13,14 @@ import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { CldUploadWidget } from "next-cloudinary";
+import {
+  validateName,
+  validatePassword,
+  comparePasswords,
+} from "./validations.js";
 
 const UProfile = () => {
-  const user = useSelector((state) => state.user.logedInUser);  
+  const user = useSelector((state) => state.user.logedInUser);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
@@ -23,6 +28,9 @@ const UProfile = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [initialData, setInitialData] = useState({});
   const [image, setImage] = useState(null);
+  const [nameError, setNameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   useEffect(() => {
     if (!user.userType) {
@@ -88,7 +96,7 @@ const UProfile = () => {
         updatedFields
       );
 
-      setImage(null)
+      setImage(null);
 
       if (response.status === 200) {
         dispatch(bringUserInformation(updatedFields));
@@ -113,6 +121,31 @@ const UProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleNameChange = (e) => {
+    const newValue = e.target.value;
+    setFormData({ ...formData, fullName: newValue });
+    const errorMessage = validateName(newValue);
+    setNameError(errorMessage);
+    setIsNameValid(!errorMessage);
+  };
+
+  const handlePasswordChange = (e) => {
+    const newValue = e.target.value;
+    setFormData({ ...formData, password: newValue });
+    const errorMessage = validatePassword(newValue);
+    setPasswordError(errorMessage);
+    setIsPasswordValid(!errorMessage);
+    setArePasswordsEqual(comparePasswords(newValue, confirmPassword));
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const newValue = e.target.value;
+    setConfirmPassword(newValue);
+    const errorMessage = comparePasswords(formData.password, newValue);
+    setConfirmPasswordError(errorMessage);
+    setArePasswordsEqual(!errorMessage);
+  };
+
   return (
     <div className="bg-secondary-100 p-8 rounded-xl w-full">
       <h1 className="text-4xl text-artistfont font-rocksalt"> Mi perfil</h1>
@@ -121,7 +154,7 @@ const UProfile = () => {
         <div className="flex items-center mb-6">
           <div className="flex-1">
             <div className="relative mb-2">
-            <CldUploadWidget
+              <CldUploadWidget
                 uploadPreset="cloudinary-upload-images-connectInk"
                 onUpload={(result) => {
                   setFormData({ ...formData, image: result.info.secure_url });
@@ -195,9 +228,10 @@ const UProfile = () => {
                 name="fullName"
                 type="text"
                 value={formData.fullName}
-                onChange={handleChange}
+                onChange={handleNameChange}
                 className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 text-artistfont cursor-default"
               />
+              {nameError && <p className="text-red-500">{nameError}</p>}
             </div>
           </div>
         </div>
@@ -213,6 +247,7 @@ const UProfile = () => {
               <input
                 name="email"
                 type="text"
+                readOnly
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full text-artistfont py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
@@ -230,9 +265,10 @@ const UProfile = () => {
               name="password"
               type={showPassword ? "text" : "password"}
               value={formData.password}
-              onChange={handleChange}
+              onChange={handlePasswordChange}
               className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
             />
+            {passwordError && <p className="text-red-500">{passwordError}</p>}
             <span
               className="ml-4 cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
@@ -250,9 +286,13 @@ const UProfile = () => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={handleConfirmPasswordChange}
               className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default text-artistfont"
             />
+            {confirmPasswordError && (
+              <p className="text-red-500">{confirmPasswordError}</p>
+            )}
+
             <span
               className="ml-4 cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -266,8 +306,8 @@ const UProfile = () => {
           <button
             className="mx-auto mt-6 border-[1px] border-primary/50 hover:bg-primary/75 rounded-md px-2 py-3 "
             type="submit"
+            disabled={nameError || passwordError || confirmPasswordError}
           >
-            {" "}
             GUARDAR CAMBIOS
           </button>
         </div>
