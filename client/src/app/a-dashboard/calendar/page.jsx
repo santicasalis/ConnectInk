@@ -404,16 +404,18 @@ const Page = () => {
   return (
     <div className="bg-secondary-900 rounded w-full shadow-lg shadow-artist">
       <div className=" text-center">
-      <div className=" w-full px-10 mb-10">
-        <h1 className="text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]"> Disponibilidad Horaria</h1>
-      </div>
+      <div className="w-full px-10 mb-10 ">
+  <h1 className="text-4xl font-rocksalt w-full py-10 text-left ">Disponibilidad Horaria</h1>
+  <p className="text-left mb-1">Establecer o modificar horarios <a href="#horarios" className="text-artist underline"> aquí</a></p> 
+  <p className="text-left mb-5 pb-2 border-transparent border-b-artist/30 border-[1px]">Añadir excepciones <a href="#excepciones" className="text-artist underline   "> aquí </a></p>
+</div>
         <div className="flex items-center justify-center ">
-          <hr className="mt-6 mb-6 w-[90%] border-artist/50 "></hr>
+          
         </div>
 
         {days.map((day) => {
           return (
-            <div key={day} className="">
+            <div key={day} className="" id="horarios">
               <h4 className="text-xl mb-4 font-rocksalt">{day}</h4>
               {showHours[day] ? (
                 <div className="">
@@ -456,7 +458,7 @@ const Page = () => {
                       <label>
                         Inicio:
                         <select
-                          className="bg-transparent border-[1px] border-artist/40 ml-4 rounded-md p-2"
+                          className="bg-transparent border-[0.5px] border-artist/40 ml-4 rounded-md p-2"
                           defaultValue={dayObj[day]?.secondInitialHour || ""}
                           onChange={(e) =>
                             handleSecondInitialTimeChange(day, e.target.value)
@@ -499,7 +501,7 @@ const Page = () => {
                   </button>
 
                   <button onClick={() => deleteHourDay(day)}>❌</button>
-                  <hr className="mt-6 mb-6 w-[90%] border-artist/50 mx-auto"></hr>
+                  <hr className="mt-6 mb-6 w-[50%] border-artist/50 mx-auto"></hr>
                 </div>
               ) : (
                 <button
@@ -523,10 +525,12 @@ const Page = () => {
         <hr className="mt-6 mb-6 w-[90%] border-artist/50"></hr>
       </div>
 
-      <div className="">
-        <h3 className="text-[26px] font-rocksalt text-center mt-4 mb-6">
+      <div className="text-center" id="excepciones"> 
+      <div className="w-full px-10 mb-10 ">
+        <h3 className="text-4xl font-rocksalt w-full py-10 text-left">
           Excepciones
         </h3>
+        </div>
         <ul className="ml-10 mt-4">
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
@@ -668,7 +672,7 @@ const Page = () => {
                     <p>Fecha no laboral</p>
                   )}
                   <div className="flex items-center justify-center ">
-                    <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr>
+                    {/* <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr> */}
                   </div>
                 </div>
               )

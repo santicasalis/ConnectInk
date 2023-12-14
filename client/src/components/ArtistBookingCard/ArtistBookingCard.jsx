@@ -26,7 +26,7 @@ import { current } from '@reduxjs/toolkit';
 import { getUserById } from "../../app/redux/features/user/userActions";
 
 
-const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
+const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId , paymentStatus}) => {
     const dispatch = useDispatch();
     const imageLoader = ({src}) => {
         return src

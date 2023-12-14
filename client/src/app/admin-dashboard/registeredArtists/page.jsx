@@ -26,27 +26,25 @@ const RegisteredArtist = () => {
     dispatch(getAllArtists());
   }, []);
 
-  useEffect(() => {
-    setArtistsToDisplay(filtered.slice(
-      indexOfFirstArtist,
-      indexOfLastArtist
-    ))
-  }, [isOpen])
 
+  const artistConPubli = filtered.filter((ar) => ar.publications.length > 0);
   //paginado
   const [currentPage, setCurrentPage] = useState(1);
   const artistsPerPage = 5;
   const indexOfLastArtist = currentPage * artistsPerPage;
   const indexOfFirstArtist = indexOfLastArtist - artistsPerPage;
-  const [artistsToDisplay, setArtistsToDisplay] = useState(filtered.slice(
+
+  const artistsToDisplay = artistConPubli.slice(
     indexOfFirstArtist,
     indexOfLastArtist
-  ))
+  );
 
-  const totalArtists = filtered.length;
- 
-  const onPageChange = (pageNumber) => {
+  const totalArtists = artistConPubli.length;
+   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+  const resetToFirstPage = () => {
+    setCurrentPage(1);
   };
 
   return (
@@ -57,7 +55,7 @@ const RegisteredArtist = () => {
       <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2 text-artistfont">
 
       <div className='w-full'>
-       <AdminTopBarOptions />
+       <AdminTopBarOptions onFilterChange={resetToFirstPage} />
        </div>
       <div className="scroll-fade md:w-3/4 flex flex-wrap gap-x-2">
 

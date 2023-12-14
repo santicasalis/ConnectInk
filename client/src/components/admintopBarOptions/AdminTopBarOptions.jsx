@@ -12,7 +12,7 @@ import { FaMapPin, FaRegStar } from "react-icons/fa";
 import { getAllStyles } from "../../app/redux/features/styles/stylesActions";
 import { OrderAllArtistsRating } from "../../app/redux/features/artists/artistActions";
 
-const TopBarOptions = () => {
+const TopBarOptions = ({ onFilterChange }) => {
   const dispatch = useDispatch();
   const styles = useSelector((state) => state.styles.names);
   const { people, filtered } = useSelector((state) => state.artists);
@@ -35,6 +35,7 @@ const TopBarOptions = () => {
       ...filters,
       [event.target.name]: value,
     });
+    onFilterChange()
   };
 
   const handleSubmit = (event) => {
@@ -75,6 +76,7 @@ const TopBarOptions = () => {
       tattooStyle: [],
     });
     setStyleSelected([]);
+    setRatingOrder("reset")
   };
 
   return (
@@ -94,6 +96,8 @@ const TopBarOptions = () => {
             id="name"
             name="name"
             onChange={handleChange}
+            value={filters.name}
+            placeholder="Buscar por nombre"
           />
         </div>
         <div className="flex flex-col items-center justify-center mb-8 gap">
@@ -109,6 +113,8 @@ const TopBarOptions = () => {
             id="city"
             name="location"
             onChange={handleChange}
+            value={filters.location}
+            placeholder="Buscar por ciudad"
           />
         </div>
         <div className="flex flex-col items-center justify-center mb-8">
