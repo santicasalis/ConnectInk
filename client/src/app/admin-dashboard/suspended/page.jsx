@@ -57,13 +57,9 @@ const Suspended = () => {
 
   return (
 
-    <div>
-      {/* <PaginateAdmin
-          artistsPerPage={artistsPerPage}
-          totalArtists={totalArtists}
-          currentPage={currentPage}
-          onPageChange={onPageChange}
-        /> */}
+    <div className="bg-secondary-900 p-8 rounded-xl w-full shadow-lg shadow-admin/50 h-full">
+      <h1 className="text-4xl text-artistfont font-rocksalt"> Artistas Suspendidos</h1>
+      <hr className="my-8 border-admin/30" />
       <div className="scroll-fade flex justify-center items-center">
         <div>
           {noResults ? (

@@ -275,7 +275,7 @@ const TattoArtistRegister = () => {
                 </div>
               )}
 
-              <h3 className="text-lg mb-3 font-bold">Estilos de tatuaje</h3>
+              <h3 className=" mb-3 font-bold font-newrocker text-[20px]">Estilos de tatuaje</h3>
 
               <FieldArray
                 name="tattooStyle"
@@ -315,51 +315,55 @@ const TattoArtistRegister = () => {
             </div>
 
             <div className="mb-4 flex flex-col">
-              <label htmlFor="image" className="font-rocksalt">
+              <label htmlFor="image" className="font-newrocker mb-6 text-[22px]">
                 Imagen de perfil:
               </label>
-              <CldUploadWidget
-                uploadPreset="cloudinary-upload-images-connectInk"
-                onUpload={(result) => {
-                  values.image = result.info.secure_url;
-                  setImage(result.info.secure_url);
-                }}
-              >
-                {({ open }) => {
-                  return (
+              <div className="flex items-center  gap-x-3">
+                <CldUploadWidget
+                  uploadPreset="cloudinary-upload-images-connectInk"
+                  onUpload={(result) => {
+                    values.image = result.info.secure_url;
+                    setImage(result.info.secure_url);
+                  }}
+                >
+                  {({ open }) => {
+                    return (
+                      <button
+                        type="button"
+                        className="border-[1px] px-4 py-2 h-[60px] text-[16px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 "
+                        onClick={() => open()}
+                      >
+                        <RiUpload2Fill />
+                        Subir imagen
+                      </button>
+                    );
+                  }}
+                </CldUploadWidget>
+                <div className="flex flex-col">
+                  {image && (
+                    <Image
+                      src={image}
+                      loader={imageLoader}
+                      unoptimized
+                      alt="tattoo image"
+                      height={120}
+                      width={120}
+                    />
+                  )}
+                  {image && (
                     <button
                       type="button"
-                      className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
-                      onClick={() => open()}
+                      onClick={() => {
+                        setFieldValue("image", null);
+                        setImage(null);
+                      }}
+                      className="bg-red-500 text-white p-2 rounded  text-[15px]"
                     >
-                      <RiUpload2Fill />
-                      Subir imagen
+                      Quitar Imagen
                     </button>
-                  );
-                }}
-              </CldUploadWidget>
-              {image && (
-                <Image
-                  src={image}
-                  loader={imageLoader}
-                  unoptimized
-                  alt="tattoo image"
-                  height={100}
-                  width={100}
-                />
-              )}
-              {image && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFieldValue("image", null);
-                    setImage(null);
-                  }}
-                  className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
-                >
-                  Quitar Imagen
-                </button>
-              )}
+                  )}
+                </div>
+              </div>
             </div>
 
             <button

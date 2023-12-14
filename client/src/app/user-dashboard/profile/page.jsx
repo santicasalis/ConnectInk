@@ -154,7 +154,7 @@ const UProfile = () => {
         <div className="flex items-center mb-6">
           <div className="flex-1">
             <div className="relative mb-2">
-              <CldUploadWidget
+            <CldUploadWidget
                 uploadPreset="cloudinary-upload-images-connectInk"
                 onUpload={(result) => {
                   setFormData({ ...formData, image: result.info.secure_url });
@@ -228,12 +228,9 @@ const UProfile = () => {
                 name="fullName"
                 type="text"
                 value={formData.fullName}
-
-                onChange={handleNameChange}
-                className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-900 text-artistfont cursor-default"
-
+                onChange={handleChange}
+                className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 text-artistfont cursor-default"
               />
-              {nameError && <p className="text-red-500">{nameError}</p>}
             </div>
           </div>
         </div>
@@ -249,7 +246,6 @@ const UProfile = () => {
               <input
                 name="email"
                 type="text"
-                readOnly
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full text-artistfont py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
@@ -269,15 +265,12 @@ const UProfile = () => {
               name="password"
               type={showPassword ? "text" : "password"}
               value={formData.password}
+              onChange={handleChange}
 
-              onChange={handlePasswordChange}
-              className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default"
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
             />
-            {passwordError && <p className="text-red-500">{passwordError}</p>}
-            <span
-              className="ml-4 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
+
+            <span className="absolute right-2 top-3 text-[20px] text-primary" onClick={() => setShowPassword(!showPassword)}>
 
               {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
@@ -292,20 +285,11 @@ const UProfile = () => {
             <input
               type={showPassword ? "text" : "password"}
               value={confirmPassword}
-
-              onChange={handleConfirmPasswordChange}
-              className="w-[calc(50%-2rem)] py-3 px-4 outline-none rounded-lg bg-secondary-900 cursor-default text-artistfont"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default text-artistfont"
             />
-            {confirmPasswordError && (
-              <p className="text-red-500">{confirmPasswordError}</p>
-            )}
-
-            <span
-              className="ml-4 cursor-pointer"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? <RiEyeLine /> : <RiEyeOffLine />}
-
+            <span className="absolute right-2 top-3 text-[20px] text-primary" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
         </div>
@@ -314,12 +298,9 @@ const UProfile = () => {
             className="text-black border-[1px] flex gap-x-1 items-center border-primary/50 hover:border-primary text-[17px] bg-primary rounded-lg px-4 py-3 "
 
             type="submit"
-            disabled={nameError || passwordError || confirmPasswordError}
           >
-
             <RiSave3Fill />
             Guardar cambios
-
           </button>
         </div>
       </form>
