@@ -24,6 +24,8 @@ import { openModalDeleteAppointmentAction } from "../../app/redux/features/modal
 import { useRouter } from "next/navigation";
 import { notifyError } from "../../components/notifyError/NotifyError";
 import { getUserById } from "../../app/redux/features/user/userActions";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const BookingCard = ({
   paymentStatus,
@@ -78,13 +80,17 @@ const BookingCard = ({
   }, []);
 
   const handleReview = () => {
-    // if (new Date(dateAndTime).valueOf() > Date.now()) {
-    //   console.log(id, tattooArtistId);
-    //   //hacer un toast que diga que todavia no se puede hacer la reseña porque no paso la cita
-    // } else {
-
-    router.push(`reservas/critica/${id}/${tattooArtistId}`);
-    // }
+    if (new Date(dateAndTime).valueOf() > Date.now()) {
+      console.log(id, tattooArtistId);
+      toast.error(`Todavía no puedes dejar una reseña`, {
+        className: "toastError",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+    } else {
+      router.push(`reservas/critica/${id}/${tattooArtistId}`);
+    }
   };
 
   const handleDeleteAppointment = async () => {
