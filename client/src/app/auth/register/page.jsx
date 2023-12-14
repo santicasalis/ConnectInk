@@ -9,11 +9,10 @@ import { auth } from "../../../firebase";
 import { getUserInformation } from "../../../app/redux/features/user/userActions";
 import { useRouter } from "next/navigation";
 
-
 const RegistrationForm = () => {
   const [client, setClient] = useState(null);
-  const router = useRouter()
-  const user = useSelector((state) => state.user.logedInUser)
+  const router = useRouter();
+  const user = useSelector((state) => state.user.logedInUser);
 
   const styles = useSelector((state) => state.styles.names);
   const dispatch = useDispatch();
@@ -29,9 +28,9 @@ const RegistrationForm = () => {
 
   return (
     <div className="bg-secondary-900/90 flex opacity-90 absolute h-[80vh] rounded-3xl w-full xl:w-1/2 lg:w-1/3 md:w-1/2">
-      <div className="w-[35%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">
-        <h2 className="font-rocksalt text-[40px] text-white/90 mb-2">
-          Registrate{" "}
+      <div className="w-[37%] border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8">
+        <h2 className="font-rocksalt text-[35px] text-white/90 mb-2">
+          Registrate
         </h2>
         <p className="text-primary/80 mb-4">como:</p>
         <div className="flex mb-4">

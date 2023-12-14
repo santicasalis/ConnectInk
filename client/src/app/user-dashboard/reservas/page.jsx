@@ -48,11 +48,13 @@ export default function Reservas() {
   }, [isOpenModalDeleteAppointment]);
 
   return (
-    <div className="">
-      <h1 className=" text-center font-rocksalt text-artistfont text-[28px]">
-        {" "}
-        Mis turnos
-      </h1>
+
+    <div className="bg-secondary-900 w-full rounded-xl shadow-lg shadow-primary/50">
+      <div className="w-full p-7 ">
+        <h1 className="text-4xl text-artistfont font-rocksalt mb-8"> Mis turnos</h1>
+        <hr className="border-primary/20 border-[1px]"/>
+      </div>
+
       {appointment && appointment.length > 0 ? (
         [...user.appointments]
           .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
@@ -78,17 +80,17 @@ export default function Reservas() {
       ) : (
         <div className="flex flex-col items-center">
 
-          {" "}
-          <p className="text-artistfont mt-8">
-            No tienes ninguna reserva aún. ¡Descubre increíbles artistas y sus
-            últimas obras!
-          </p>{" "}
-          <br />{" "}
-          <p className="text-artistfont mr-5 ml-5 mb-5">
-            Si te gusta el trabajo de alguno de ellos, puedes acceder a su
-            perfil y reservar un turno para hacer realidad ese tatuaje que tanto
-            deseas.{" "}
-          </p>{" "}
+          <div className="flex flex-col py-8 px-3 items-center justify-center bg-secondary-100/40 shadow-inner shadow-primary/10 rounded-xl">
+            <h5 className="text-artistfont font-newrocker text-[22px] mb-8 ">
+              "No tienes ninguna reserva aún. ¡Descubre increíbles artistas y sus
+              últimas obras!"
+            </h5>
+            <Link href="/explore">
+              <button className="border-primary border-[1.5px] hover:border-primary/60 text-primary text-[17px] py-3 px-4 rounded-lg">
+                Explorar Artistas
+              </button>
+            </Link>
+          </div>
 
           <div className="scroll-fade flex justify-center items-center">
             <div>
