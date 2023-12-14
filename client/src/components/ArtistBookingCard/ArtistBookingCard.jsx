@@ -26,7 +26,7 @@ import { current } from '@reduxjs/toolkit';
 import { getUserById } from "../../app/redux/features/user/userActions";
 
 
-const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId}) => {
+const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId, paymentStatus}) => {
     const dispatch = useDispatch();
     const imageLoader = ({src}) => {
         return src
@@ -90,71 +90,67 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
   };
 
   return (
-    <div
-      className={`
-        ${
+    <div className="w-full h-full flex items-center justify-center">
+      <div className={`bg-secondary-100 w-[60%] h-full rounded flex mb-8 shadow-artist shadow-sm   ${
           paymentStatus === "in_process"
-            ? "shadow-md shadow-orange-500"
+            ? ""
             : paymentStatus === "approved"
-            ? "shadow-md shadow-green-500"
-            : "shadow-md shadow-red-500"
-        }`}
-    >
-      <div className="bg-secondary-900 w-[830px] h-[250px] rounded flex transition-transform hover:scale-105">
-        <div className="w-[26%] h-full   border-r-[2px] border-r-neutral-700">
-          <div className="pt-2 ">
-            <p className="flex gap-2 ml-8 text-xl">
-              {" "}
-              <TbCalendarCheck className="text-primary text-[27px]" />
-              Reserva:
-            </p>
-            <p className="mt-[4px] text-center"> {fechaFormateada}</p>
-          </div>
-          {/* <div className='pt-4'>
-                <p className='flex gap-2 ml-4'> <IoBodyOutline className='text-primary text-[27px]'/>Donde: {bodyPlace}</p>
-                
-            </div> */}
-          <div className="pt-10">
-            <p className=" flex gap-[2px] ml-6 items-center ">
-              <MdOutlineAttachMoney className="text-primary text-[27px]" />
-              Seña: {depositPrice}
-            </p>
-          </div>
-          <div className="ml-4 mt-[50px]">
-            <p className="font-rocksalt text-[18px]">
-              Connect<span className="text-primary">Ink.</span>
-            </p>
-          </div>
+            ? ""
+            : ""
+        }`}>
+          <div className="w-[25%] my-8 border-r-[1px] border-r-artist/10 p-4">
+            <div>
+              <p className="text-artistfont text-[22px] flex gap-2 items-center justify-center mb-8 font-rocksalt "> 
+                    <TbCalendarCheck className="text-artist text-[27px]" /> Reserva: </p>
+              <p className="text-center text-artistfont mb-4"> {fechaFormateada}</p>
+            </div>
+              <div className="flex items-center justify-center mb-8">
+                  <MdOutlineAttachMoney className="text-artist text-[27px]" />
+                    <p className="text-artistfont text-[22px] font-rocksalt">   Seña: <span className="text-[19px] font-mono">${depositPrice}</span></p>
+              </div>
+          
+            <div className="text-[16px] text-artistfont text-center">
+                {paymentStatus &&
+                  (paymentStatus === "approved" ? (
+                    <p className="text-green-800 bg-secondary-900/50 rounded-lg py-2">Pago aprobado</p>
+                  ) : paymentStatus === "in_process" ? (
+                    <p className="text-orange-600 bg-secondary-900/50 rounded-lg py-2">Pago pendiente</p>
+                  ) : paymentStatus === "rejected" ? (
+                    <p className="text-red-800 bg-secondary-900/50 rounded-lg py-2">Pago rechazado. Trendrás que volver a reservar un turno</p>
+                  ) : (
+                    <p>Error al procesar el pago, intentelo mas tarde</p>
+                  ))}
+            </div>
         </div>
-        <div className=" w-[65%] mt-4">
+        <div className=" w-[50%]">
           <div>
-            {/* <p className='ml-6 text-2xl mt-2 font-rocksalt'>Cliente:</p> */}
-            <div className="ml-6 flex items-center mt-2  gap-2">
+           
+            <div className="ml-6 flex items-center mt-6 gap-2 mb-6 border-b-artist/10 border-b-[1px] pb-3">
               {response.image && (
                 <Image
                   unoptimized
                   src={response.image}
                   loader={imageLoader}
-                  width={80}
-                  height={80}
+                  width={120}
+                  height={120}
                   alt={`${response.fullName} profile pic`}
-                  className=" rounded-full"
+                  className=" rounded-full "
                 />
               )}
-              <p className="text-center text-[18px]">{response.fullName}</p>
+              <p className="ml-4 text-center font-newrocker text-[28px] text-artistfont">{response.fullName}</p>
             </div>
             <div className="ml-6 mt-4 ">
-              <h1 className="text-[19px] font-rocksalt">Descripcion:</h1>
+              <h1 className="text-[19px] font-rocksalt text-artistfont">Descripción del Tatauje:</h1>
               <p className="mt-4">{description}</p>
             </div>
           </div>
         </div>
-        <div className=" w-[20%] mr-4">
+        <div className=" w-[25%] mr-4">
           <div className="flex items-end justify-end">
             <Menu
               menuButton={
                 <MenuButton>
-                  <RiMoreFill className="text-white text-[25px] cursor-pointer hover:bg-secondary-100" />
+                  <RiMoreFill className="text-artistfont text-[25px] cursor-pointer hover:bg-secondary-100" />
                 </MenuButton>
               }
               transition
@@ -171,36 +167,24 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
             </Menu>
           </div>
 
-          <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
-          <p className="text-center mt-2 ">Tamaño: {size}</p>
-          <p className="text-center mt-2 ">Duracion:{duration}</p>
-          <p className="text-center mt-2">Boceto:</p>
+          <h1 className="text-center text-[27px] font-rocksalt mt-2 mb-8">Detalles:</h1>
+          <p className="text-center font-rocksalt mb-2 text-artistfont ">Tamaño:<span className="font-sans">    {size}</span></p>
+          <p className="text-center font-rocksalt mb-2 text-artistfont ">Duracion: <span className="font-sans">{duration} hs</span></p>
+          <p className="text-center font-rocksalt mb-2 text-artistfont ">Boceto:</p>
           <div className="flex justify-center items-center mt-2">
             {image && (
               <Image
                 unoptimized
                 src={image}
                 loader={imageLoader}
-                width={70}
-                height={70}
-                alt={"Tu Tattoo"}
+                width={140}
+                height={140}
+                alt={"No hay boceto"}
                 className=" rounded-full"
               />
             )}
           </div>
 
-          <div>
-            {paymentStatus &&
-              (paymentStatus === "approved" ? (
-                <p>Pago aprobado</p>
-              ) : paymentStatus === "in_process" ? (
-                <p>Pago pendiente</p>
-              ) : paymentStatus === "rejected" ? (
-                <p>Pago rechazado. Trendrás que volver a reservar un turno</p>
-              ) : (
-                <p>Error al procesar el pago, intentelo mas tarde</p>
-              ))}
-          </div>
         </div>
       </div>
     </div>
