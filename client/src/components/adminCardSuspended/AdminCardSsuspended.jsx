@@ -3,7 +3,7 @@ import { SlOptions } from "react-icons/sl";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import { RiMoreFill, RiEyeLine, RiStarLine, RiStarSFill } from "react-icons/ri";
+import { RiMoreFill, RiEyeLine, RiStarLine, RiStarSFill, RiMapPin2Fill, RiHome8Fill } from "react-icons/ri";
 import { MdBlock } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -51,9 +51,9 @@ export default function AdminCardSuspended({
   };
 
   return (
-    <div className="bg-secondary-900/50 w-[550px]  ml-[10px] mb-[10px] rounded-xl pb-5">
-      <div className="flex gap-x-1 items-center p-4">
-        <div className="w-[90px] h-[90px] rounded-full">
+    <div className="bg-secondary-100/50 w-[550px]   mb-[10px] rounded-xl pb-5 shadow-inner shadow-admin/10">
+      <div className="flex gap-x-1 items-center p-4 mb-7">
+        <div className="w-[70px] h-[70px] rounded-full">
           <Image
             unoptimized
             className="rounded-full object-cover w-full h-full"
@@ -79,7 +79,7 @@ export default function AdminCardSuspended({
             transition
             menuClassName={"hover:bg-red text-red-500"}
           >
-            <MenuItem>
+            <MenuItem >
               <button
                 onClick={handleBanneados}
                 className="flex items-center gap-2 text-sm py-1.5"
@@ -92,10 +92,12 @@ export default function AdminCardSuspended({
         </div>
       </div>
 
-      <div className="font-bolt text-center text-xl mt-[20px] font-newrocker ">
+      <div className=" w-full justify-center flex items-center text-[25px] gap-x-1">
+        <RiMapPin2Fill className="text-admin"/>
         {shopName}
       </div>
-      <div className="font-bolt text-center text-xl mt-[20px] font-newrocker">
+      <div className="font-bolt items-center justify-center flex text-xl mt-[20px] font-newrocker gap-x-1  w-full">
+        <RiHome8Fill className="text-admin text-[25px]" />
         {location}
       </div>
 

@@ -20,7 +20,7 @@ const reviews = () => {
   useEffect(() => {}, [user]);
 
   return (
-    <div className="bg-secondary-900 p-8 rounded-xl w-full h-full shadow-lg shadow-artist/50">
+    <div className="bg-secondary-900 p-8 rounded-xl w-full shadow-lg shadow-artist/50 pb-10">
     <div className=" w-full px-10">
       <h1 className=" text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]">
         Mis Reseñas

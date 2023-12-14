@@ -125,52 +125,56 @@ const CustomerRegister = () => {
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
 
-<div className="mb-4 flex flex-col">
-              <label htmlFor="image" className="font-rocksalt">
+    <div className="mb-4 flex flex-col">
+              <label htmlFor="image" className="font-newrocker text-[22px] ">
                 Imagen de perfil:
               </label>
-              <CldUploadWidget
-                uploadPreset="cloudinary-upload-images-connectInk"
-                onUpload={(result) => {
-                  values.image = result.info.secure_url;
-                  setImage(result.info.secure_url);
-                }}
-              >
-                {({ open }) => {
-                  return (
+              <div className="flex gap-x-2 items-center">
+                <CldUploadWidget
+                  uploadPreset="cloudinary-upload-images-connectInk"
+                  onUpload={(result) => {
+                    values.image = result.info.secure_url;
+                    setImage(result.info.secure_url);
+                  }}
+                >
+                  {({ open }) => {
+                    return (
+                      <button
+                        type="button"
+                        className="border-[1px] p-2 w-[150px] h-[50px] text-[15px] cursor-pointer mt-3 rounded-md flex gap-x-1 items-center hover:bg-primary/30 "
+                        onClick={() => open()}
+                      >
+                        <RiUpload2Fill />
+                        Subir imagen
+                      </button>
+                    );
+                  }}
+                </CldUploadWidget>
+                <div className="flex flex-col">
+                  {image && (
+                    <Image
+                      src={image}
+                      loader={imageLoader}
+                      unoptimized
+                      alt="tattoo image"
+                      height={120}
+                      width={120}
+                    />
+                  )}
+                  {image && (
                     <button
                       type="button"
-                      className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
-                      onClick={() => open()}
+                      onClick={() => {
+                        setFieldValue("image", null);
+                        setImage(null);
+                      }}
+                      className="bg-red-500 text-white p-2 rounded  text-[15px]  "
                     >
-                      <RiUpload2Fill />
-                      Subir imagen
+                      Quitar Imagen
                     </button>
-                  );
-                }}
-              </CldUploadWidget>
-              {image && (
-                <Image
-                  src={image}
-                  loader={imageLoader}
-                  unoptimized
-                  alt="tattoo image"
-                  height={100}
-                  width={100}
-                />
-              )}
-              {image && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFieldValue("image", null);
-                    setImage(null);
-                  }}
-                  className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
-                >
-                  Quitar Imagen
-                </button>
-              )}
+                  )}
+                </div>
+              </div>
             </div>
 
 

@@ -72,7 +72,7 @@ const Header = () => {
           <Menu
             menuButton={
               <MenuButton className="flex items-center gap-x-2 hover:bg-secondary-100 py-2 px-4 rounded-lg">
-                {/* <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
                   {user.image && 
                   <Image
                     unoptimized
@@ -86,9 +86,10 @@ const Header = () => {
                     width={40}
                     height={40}
                     alt={user.fullName}
+                    className="object-cover"
                   />
                   }
-                </div> */}
+                </div>
 
                 <span className="text-artistfont">{`${user.fullName}`}</span>
 
