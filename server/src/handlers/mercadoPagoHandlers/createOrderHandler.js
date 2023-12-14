@@ -19,7 +19,7 @@ const createOrderHandler = async (req, res) => {
             title: "Pago de seña para la reserva del turno",
             quantity: 1,
             unit_price: depositPrice,
-            currency_id: "BRL",
+            currency_id: "ARS",
             description: description,
           },
         ],
@@ -29,7 +29,7 @@ const createOrderHandler = async (req, res) => {
           success: `http://localhost:3001/payments/result/${id}`,
         },
         notification_url:
-          "https://deploy-92s48i7g8-victor-alejo-guzmans-projects.vercel.app/payments/webhook",
+          "https://webhook.site/aba5ed31-610a-4241-8b81-131b4e3025bc/payments/webhook",
       },
     };
     const response = await payment.create(preference);
