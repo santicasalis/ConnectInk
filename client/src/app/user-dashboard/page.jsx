@@ -58,9 +58,9 @@ function UDashboard() {
   }, []);
 
   return (
-    <div className="bg-secondary-900 p-8 rounded-xl w-full">
-      <h1 className="text-4xl text-artistfont"> Inicio </h1>
-      <hr className="my-8 border-gray-500" />
+    <div className="bg-secondary-900 p-8 rounded-xl w-full shadow-primary/50 shadow-lg">
+      <h1 className="text-4xl text-artistfont font-rocksalt"> Inicio </h1>
+      <hr className="my-8 border-primary/30" />
       <div className="flex flex-col items-center w-full ">
         {posts.map((post) => {
           return <UserPostDash publication={post} />;
