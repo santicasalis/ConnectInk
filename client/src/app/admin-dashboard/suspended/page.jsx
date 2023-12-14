@@ -46,7 +46,7 @@ const Suspended = () => {
 
 
   return (
-    <div>
+    <div className=''>
        {/* <PaginateAdmin
           artistsPerPage={artistsPerPage}
           totalArtists={totalArtists}

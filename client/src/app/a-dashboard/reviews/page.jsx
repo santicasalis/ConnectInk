@@ -1,12 +1,13 @@
 "use client";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-
+import { useRouter } from "next/navigation";
 import ArtistReview from "../../../components/ArtistReview/ArtistReview";
 
 const reviews = () => {
   const user = useSelector((state) => state.user.logedInUser);
   console.log(user, "revev");
+  const router = useRouter()
 
   useEffect(() => {
     if (!user.userType) {
@@ -19,8 +20,9 @@ const reviews = () => {
   useEffect(() => {}, [user]);
 
   return (
-    <div className=" w-full h-full">
-      <h1 className=" text-center font-rocksalt text-artistfont text-[28px]">
+    <div className="bg-secondary-900 p-8 rounded-xl w-full h-full shadow-lg shadow-artist/50">
+    <div className=" w-full px-10">
+      <h1 className=" text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]">
         Mis Reseñas
       </h1>
       <div className="w-full h-full">
@@ -40,6 +42,7 @@ const reviews = () => {
           <p className="text-center  font-rocksalt text text-3xl text-artist/80 mt-[180px]">¡No tienes ninguna reseña aún! </p>
         )}
       </div>
+    </div>
     </div>
   );
 };
