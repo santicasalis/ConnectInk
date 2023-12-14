@@ -14,13 +14,19 @@ import axios from "axios";
 import Link from "next/link";
 
 import { notifyError } from "../../../../../components/notifyError/NotifyError";
+import { CldUploadWidget } from "next-cloudinary";
+import Image from "next/image";
 
 const Critica = ({ params }) => {
   const [appointmentId, tattooArtistId] = params.data;
   const [sent, setSent] = useState(false);
   const user = useSelector((state) => state.user.logedInUser);
   const router = useRouter();
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
+
+  const imageLoader = ({ src }) => {
+    return src;
+  };
 
   useEffect(() => {
     if (!user.userType) {
@@ -75,14 +81,16 @@ const Critica = ({ params }) => {
           }}
         >
           {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
-            <Form className="flex flex-col  p-5 max-w-xl mx-auto h-[50%] bg-secondary-900 rounded shadow-md shadow-primary mt-8">
+            <Form className="flex flex-col  p-5 max-w-xl mx-auto h-auto bg-secondary-900 rounded shadow-primary shadow-lg mt-8">
               <div>
-                <label
-                  className="font-rocksalt text-[22px] text-artistfont text-center mt-6"
-                  htmlFor="rating"
-                >
-                  ¿Que calificaion le darías a la experiencia?
-                </label>
+                <div className="flex item-center justify-center">
+                  <label
+                    className="font-rocksalt text-[22px] text-artistfont text-center mt-6 leading-9"
+                    htmlFor="rating"
+                  >
+                    ¿Que valoración le darías a la experiencia?
+                  </label>
+                </div>
                 <Field name="rating">
                   {({ field, form }) => (
                     <div className="flex items-center justify-center">
@@ -104,7 +112,7 @@ const Critica = ({ params }) => {
               <div className="info-artist mb-4">
                 <div className=" m-6">
                   <label className="text-[17px] text-artistfont" htmlFor="size">
-                    Deja tu opinion sobre la experiencia:
+                    Deja tu opinión sobre la experiencia:
                   </label>
                   <Field
                     type="textarea"
@@ -120,48 +128,62 @@ const Critica = ({ params }) => {
                 </div>
               </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="image"
-                  className="font-bold m-6 text-[17px] text-artistfont"
+              <label
+                htmlFor="image"
+                className="font-bold m-2 text-[17px] text-artistfont ml-6"
+              >
+                Si quieres, puedes dejar una foto del resultado:
+              </label>
+              <div className="flex items-center justify-center gap-[20px] items-center mb-4">
+                <CldUploadWidget
+                  uploadPreset="cloudinary-upload-images-connectInk"
+                  onUpload={(result) => {
+                    values.image = result.info.secure_url;
+                    setImage(result.info.secure_url);
+                  }}
                 >
-                  Si quieres, puedes dejar una foto del resultado!
-                </label>
-                <CldUploadWidget uploadPreset="cloudinary-upload-images-connectInk" onUpload={(result) => {values.image = result.info.secure_url; setImage(result.info.secure_url)}}>
-                      {({ open }) => {
-                          return (
-                          <button type="button" className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold" onClick={() => open()}>
-                            <MdFileUpload className="mr-2 " />
-                            Cargar
-                          </button>
-                          );
-                      }}
-                    </CldUploadWidget>
-                    {image && 
-                    <Image 
+                  {({ open }) => {
+                    return (
+                      <div className="text-center ">
+                        <button
+                          type="button"
+                          className="border-[1px] p-2 w-[100%] text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
+                          onClick={() => open()}
+                        >
+                          Cargar
+                        </button>
+                      </div>
+                    );
+                  }}
+                </CldUploadWidget>
+                {image && (
+                  <Image
                     src={image}
                     loader={imageLoader}
                     unoptimized
                     alt="tattoo image"
                     height={100}
                     width={100}
-                    />
-                    }
-                    {image && (
-                      <button
-                        type="button"
-                        onClick={() => {setFieldValue("image", null); setImage(null)}}
-                        className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
-                      >
-                        Delete Image
-                      </button>
-                    )}
+                  />
+                )}
+                {image && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFieldValue("image", null);
+                      setImage(null);
+                    }}
+                    className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
+                  >
+                    Delete Image
+                  </button>
+                )}
               </div>
               <div className="flex items-center justify-center">
                 <button
                   type="submit"
                   disabled={isSubmitting || !isValid || !dirty}
-                  className="border-[1px] border-primary rounded w-[35%] hover:bg-primary/50 transition-transform hover:scale-105 "
+                  className="border-[1px] border-primary text-primary hover:bg-primary hover:text-black font-bold py-2 px-4 rounded-lg text-[20px] "
                 >
                   Dejar reseña
                 </button>

@@ -77,7 +77,13 @@ const login = async (tokenId) => {
           "paymentStatus",
           "Customer_Appointment",
         ],
-        where: { disabled: false, [Op.or]: [{paymentStatus: "approved"}, {paymentStatus: "in_process"}] },
+        where: {
+          disabled: false,
+          [Op.or]: [
+            { paymentStatus: "approved" },
+            { paymentStatus: "in_process" },
+          ],
+        },
         required: false,
       },
       {
@@ -203,7 +209,14 @@ const login = async (tokenId) => {
             "TattooArtist_Appointment",
             "paymentStatus",
           ],
-          where: { disabled: false, [Op.or]: [{paymentStatus: "approved"}, {paymentStatus: "in_process"}]},
+          where: {
+            disabled: false,
+            [Op.or]: [
+              { paymentStatus: "approved" },
+              { paymentStatus: "in_process" },
+              { paymentStatus: "rejected" },
+            ],
+          },
           required: false,
         },
         {

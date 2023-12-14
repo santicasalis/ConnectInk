@@ -111,12 +111,10 @@ const BookingCard = ({
 
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
 
-    dispatch(getUserById(fireBaseUser.tokenId))
+    dispatch(getUserById(fireBaseUser.tokenId));
   };
 
-
   return loaded ? (
-
     <div
       className={`
         ${
