@@ -125,31 +125,50 @@ const CustomerRegister = () => {
         {({ isSubmitting, isValid, setFieldValue, dirty, values }) => (
           <Form className="flex flex-col shadow-lg p-5 max-w-xl mx-auto">
 
-            <div className="mb-4">
-              <label htmlFor="image" className="font-bold mb-3">
-                Imagen de Perfil
+<div className="mb-4 flex flex-col">
+              <label htmlFor="image" className="font-rocksalt">
+                Imagen de perfil:
               </label>
-              <label htmlFor='customerImage' className='mt-3 w-1/2 font-newrocker  flex gap-x-1.5 items-center mb-1 text-[17px] px-4 py-3 cursor-pointer bg-secondary-900/70 text-white border-white border-[1px] rounded-lg hover:shadow-lg hover:bg-secondary-900 hover:text-primary hover:border-primary'>
-                 <RiUpload2Fill/>
-                 Subir imagen
-              </label> 
-              <input
-                type="file"
-                id="customerImage"
-                name="image"
-                onChange={(event) => {
-                  setFieldValue("image", event.currentTarget.files[0]);
+              <CldUploadWidget
+                uploadPreset="cloudinary-upload-images-connectInk"
+                onUpload={(result) => {
+                  values.image = result.info.secure_url;
+                  setImage(result.info.secure_url);
                 }}
-                className="p-2 mb-3 shadow-md  w-full hidden"
-                accept="image/png, image/jpeg"
-              />
-              {values.image && (
+              >
+                {({ open }) => {
+                  return (
+                    <button
+                      type="button"
+                      className="border-[1px] p-2 w-[97px]  text-[15px] cursor-pointer mt-3 rounded-md flex items-center hover:bg-primary/30 hover:font-bold"
+                      onClick={() => open()}
+                    >
+                      <RiUpload2Fill />
+                      Subir imagen
+                    </button>
+                  );
+                }}
+              </CldUploadWidget>
+              {image && (
+                <Image
+                  src={image}
+                  loader={imageLoader}
+                  unoptimized
+                  alt="tattoo image"
+                  height={100}
+                  width={100}
+                />
+              )}
+              {image && (
                 <button
                   type="button"
-                  onClick={() => setFieldValue("image", null)}
-                  className="bg-red-500 text-white p-2 rounded"
+                  onClick={() => {
+                    setFieldValue("image", null);
+                    setImage(null);
+                  }}
+                  className="bg-red-500 text-white p-2 rounded w-[20%] text-[15px] mt-3 "
                 >
-                  Delete Image
+                  Quitar Imagen
                 </button>
               )}
             </div>
