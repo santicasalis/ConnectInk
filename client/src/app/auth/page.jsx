@@ -153,30 +153,27 @@ const Login = () => {
 
   return (
     <div className="bg-secondary-900/90 opacity-90 flex  border-[1px] border-white/10  absolute rounded-3xl  w-1/2 items-center justify-center">
-       <div className="flex flex-col w-[40%] border-r-[1px] border-r-white/10 p-3">
+      <div className="flex flex-col w-[40%] border-r-[1px] border-r-white/10 p-3">
         <div className="mt-4 ml-4 mb-10 w-full">
-            <Link
-              href="/"
-              className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2 w-[150px]"
-            >
-              <RiReplyLine className=" " />
-              Volver al inicio
-            </Link>
-          </div>
-        
+          <Link
+            href="/"
+            className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2 w-[150px]"
+          >
+            <RiReplyLine className=" " />
+            Volver al inicio
+          </Link>
+        </div>
+
         <div className="w-full h-[550px] border-transparent relative  flex flex-col items-center justify-center text-center px-8 ">
           <h2 className="font-rocksalt text-[40px] text-white/90 mb-2 absolute top-[calc(25%-50px)]">
             Te damos la bienvenida!
           </h2>
-          <p className="text-primary/80 mb-8">
-            Si no tienes cuenta, registrate aquí
-          </p>
           <Link href="/auth/register">
-            <span className=" text-[17px] py-3 px-5 border-[1px] border-primary rounded-3xl text-primary cursor-pointer hover:bg-primary/90 hover:text-white transition-colors">
+            <p className=" text-[17px] py-3 px-5 border-[1px] border-primary rounded-3xl text-primary cursor-pointer hover:bg-primary/90 hover:text-white transition-colors mt-20">
               Registrarse
-            </span>
+            </p>
           </Link>
-        </div> 
+        </div>
       </div>
       {console.log(user)}
       <div className=" w-[40%] flex-1 flex flex-col items-center justify-center">
