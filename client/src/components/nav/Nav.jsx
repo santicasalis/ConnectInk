@@ -81,7 +81,7 @@ export default function Nav() {
                     style={{
                       borderRadius: "50%",
                     }}
-                    className={`w-[40px] h-[40px] rounded-full`}
+                    className={`w-[40px] h-[40px] rounded-full object-cover`}
                   />
                 ) : (
                   <span
