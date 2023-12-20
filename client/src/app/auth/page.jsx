@@ -166,17 +166,15 @@ const Login = () => {
         
         <div className="w-full md:h-[550px] md:mb[0px] mb-10 border-transparent relative  flex flex-col items-center justify-center text-center px-8 ">
           <h2 className="font-rocksalt text-[40px] text-white/90 mb-2 md:absolute md:top-[calc(25%-50px)]">
+
             Te damos la bienvenida!
           </h2>
-          <p className="text-primary/80 mb-8">
-            Si no tienes cuenta, registrate aquí
-          </p>
           <Link href="/auth/register">
-            <span className=" text-[17px] py-3 px-5 border-[1px] border-primary rounded-3xl text-primary cursor-pointer hover:bg-primary/90 hover:text-white transition-colors">
+            <p className=" text-[17px] py-3 px-5 border-[1px] border-primary rounded-3xl text-primary cursor-pointer hover:bg-primary/90 hover:text-white transition-colors mt-20">
               Registrarse
-            </span>
+            </p>
           </Link>
-        </div> 
+        </div>
       </div>
       {console.log(user)}
       <div className=" md:w-[40%] w-[100%] flex-1 flex flex-col items-center justify-center">
