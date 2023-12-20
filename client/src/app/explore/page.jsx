@@ -71,11 +71,11 @@ export default function ExplorePage() {
   }, [artistConPubli]);
 
   return (
-    <div className="w-full bg-secondary-900">
+    <div className="max-w-full bg-secondary-900">
       <Nav />
 
-      <div className="w-full">
-        <section className="flex flex-col w-full justify-center items-center gap-x-1 text-center">
+      <div className="max-w-full">
+        <div className="flex flex-col w-full justify-center items-center gap-x-1 text-center">
           <div className="w-[80%] sm:flex sm:flex-col sm:justify-center sm:items-center">
             <div className="w-full mb-9">
               <h2 className="font-bold  text-[50px] font-newrocker  text-artistfont">
@@ -137,13 +137,13 @@ export default function ExplorePage() {
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
         <hr className="mt-[50px] border-primary/40 ml-[50px] mr-[50px]"></hr>
 
-        <section className="flex w-full ">
-          <div className="w-full flex flex-col md:flex-row justify-center mt-8 ml-10 my-4 gap-x-4">
-            <div className="md:w-1/4 flex flex-col items-center">
+        <div className="flex max-w-full ">
+          <div className="w-full flex flex-col md:flex-row justify-center mt-8 lg:ml-10 ml-5 my-4 gap-x-4">
+            <div className="md:w-[400px] w-[90%] flex flex-col items-center">
               <button
                 onClick={handleToggleFilterSidebar}
                 className="sm:inline-block md:hidden text-white text-xl mb-4"
@@ -155,14 +155,14 @@ export default function ExplorePage() {
               )}
             </div>
 
-            <div className="scroll-fade flex flex-1 flex-wrap gap-x-2">
-              <div className=" flex flex-col items-center scroll-content w-full overflow-hidden ">
+            <div className="scroll-fade flex max-w-full flex-wrap gap-x-2">
+              <div className=" flex flex-col items-center scroll-content w-full  ">
                 {noResults ? (
                   <p className="text-primary text-center mt-[180px] font-rocksalt text-2xl ">
                     ¡No se encontraron coincidencias con tu búsqueda!
                   </p>
                 ) : (
-                  <>
+                  <div className="max-w-full flex flex-col p-2">
                     <Paginate
                       artistsPerPage={artistsPerPage}
                       totalArtists={totalArtists}
@@ -170,10 +170,6 @@ export default function ExplorePage() {
                       onPageChange={onPageChange}
                     />
                     {artistsToDisplay?.map((filter) => (
-                      <div
-                        key={filter.id}
-                        className="mb-4 w-full flex flex-col items-center justify-center mr-10"
-                      >
                         <Card
                           id={filter.id}
                           fullName={filter.fullName}
@@ -183,14 +179,13 @@ export default function ExplorePage() {
                           image={filter.image}
                           reviews={filter.reviews}
                         />
-                      </div>
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

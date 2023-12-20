@@ -53,7 +53,7 @@ export default function Card({
   },[reviews])
 
   return (
-    <div className="w-[1000px] mb-5 mr-4 ml-4 pb-4 border-b-primary/50 border-transparent border-[1px]  transition-transform transform ">
+    <div className="xl:w-[800px] max-w-full mb-5 pb-4 border-b-primary/50 border-transparent border-[1px]  ">
       <div className="w-full py-3">
         <div className="flex flex-row justify-between items-center ">
           <Link href={`/explore/${id}`}>

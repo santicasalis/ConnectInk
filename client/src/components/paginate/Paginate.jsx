@@ -13,7 +13,7 @@ const Paginate = ({
   }
 
   return (
-    <div className='flex justify-center mt-4 mb-9  text-primary text-xl font-bold  focus:outline-none"'>
+    <div className='flex justify-center mt-4 mb-9 max-w-full text-primary text-xl font-bold  focus:outline-none'>
       <nav>
         <ul className="flex space-x-2">
           {currentPage > 1 && (

@@ -152,9 +152,9 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-secondary-900/90 opacity-90 flex  border-[1px] border-white/10  absolute rounded-3xl  w-1/2 items-center justify-center">
-       <div className="flex flex-col w-[40%] border-r-[1px] border-r-white/10 p-3">
-        <div className="mt-4 ml-4 mb-10 w-full">
+    <div className="bg-secondary-900/90 opacity-90 md:flex-row flex-col flex  border-[1px] border-white/10   rounded-3xl  xl:w-[900px] lg:w-[90%]  sm:w-[100%] w-[100%] items-center justify-center">
+       <div className="flex flex-col md:w-[40%] w-[100%] border-r-[1px] border-r-white/10 p-3">
+        <div className="mt-4 ml-4 md:mb-10 mb-4  w-full  text-artistfont">
             <Link
               href="/"
               className="flex items-center gap-x-1 hover:bg-secondary-100 rounded-lg p-2 w-[150px]"
@@ -164,8 +164,8 @@ const Login = () => {
             </Link>
           </div>
         
-        <div className="w-full h-[550px] border-transparent relative  flex flex-col items-center justify-center text-center px-8 ">
-          <h2 className="font-rocksalt text-[40px] text-white/90 mb-2 absolute top-[calc(25%-50px)]">
+        <div className="w-full md:h-[550px] md:mb[0px] mb-10 border-transparent relative  flex flex-col items-center justify-center text-center px-8 ">
+          <h2 className="font-rocksalt text-[40px] text-white/90 mb-2 md:absolute md:top-[calc(25%-50px)]">
             Te damos la bienvenida!
           </h2>
           <p className="text-primary/80 mb-8">
@@ -179,7 +179,7 @@ const Login = () => {
         </div> 
       </div>
       {console.log(user)}
-      <div className=" w-[40%] flex-1 flex flex-col items-center justify-center">
+      <div className=" md:w-[40%] w-[100%] flex-1 flex flex-col items-center justify-center">
         <h2 className="font-rocksalt text-[40px] text-white/90 mb-4">
           Inicia Sesión
         </h2>
@@ -191,7 +191,7 @@ const Login = () => {
         </button>
         <p className="mb-4">O inicia sesión con tu cuenta</p>
 
-        <form onSubmit={handleSubmit} className="mb-7 w-[60%]">
+        <form onSubmit={handleSubmit} className="mb-7 md:w-[60%] w-[90%]">
           <div className="relative mb-3">
             <RiMailLine className="absolute left-2 top-4 text-white/80" />
             <input
@@ -240,7 +240,7 @@ const Login = () => {
         >
           ¿Has olvidado tu contraseña?{" "}
         </p>
-        <div className=" h-80vh border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8 ">
+        <div className=" border-transparent border-r-[1px] border-r-white/10 flex flex-col items-center justify-center text-center px-8 ">
           <p className="text-primary/80 mb-6">
             ¿No tenés una cuenta? Registrate GRATIS
           </p>
