@@ -36,3 +36,8 @@ export function validateInput(formData) {
 
   return errors;
 }
+
+if (formData.cbu.length === 0) {
+  errors.cbu =
+    "Es necesario completar el CBU para recibir transferencias de dinero";
+}

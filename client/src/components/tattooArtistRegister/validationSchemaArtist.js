@@ -32,4 +32,11 @@ export const validationSchemaArtist = Yup.object().shape({
         .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden")
         .max(30),
   }),
+
+  cbu: Yup.string()
+    .required(
+      "Es necesario completar el CBU para recibir transferencias de dinero"
+    )
+    .matches(/^[0-9]+$/, "El CBU solo debe contener números")
+    .length(22, "El CBU debe tener 22 dígitos"),
 });

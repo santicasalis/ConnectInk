@@ -13,7 +13,8 @@ const createTattooArtist = async (
   location,
   shopName,
   image,
-  tattooStyle
+  tattooStyle,
+  cbu
 ) => {
   const newTattooArtist = await TattooArtist.create({
     tokenId,
@@ -27,6 +28,7 @@ const createTattooArtist = async (
     location,
     shopName,
     image,
+    cbu,
   });
 
   const allTattooStyles = await TattooStyle.findAll({
