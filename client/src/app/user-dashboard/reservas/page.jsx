@@ -58,16 +58,26 @@ export default function Reservas() {
           Mis turnos
         </h1>
         <hr className="border-primary/20 border-[1px]" />
-        {appointment && appointment.length > 0 ? (
-          [...user.appointments]
-            .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
-            .map(
-              (tur) =>
-                tur.paymentStatus && (
-                  <div
-                    key={tur.id}
-                    className="h-full mt-6 flex items-center justify-center text-[#FDECDA]"
-                  >
+
+        {appointment &&
+          appointment.length > 0 &&
+          user?.appointments &&
+          user?.appointments.some(
+            (tur) =>
+              new Date(tur.dateAndTime) >= new Date() &&
+              tur.paymentStatus != "rejected"
+          ) && (
+            <>
+              <h4 className="text-artistfont text-center text-xl m-6 font-rocksalt">
+                Próximos turnos
+              </h4>
+              {user?.appointments
+                .filter((tur) => new Date(tur.dateAndTime) >= new Date())
+                .sort(
+                  (a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime)
+                )
+                .map((tur) => (
+                  <div className="h-full flex items-center justify-center text-[#FDECDA] mt-3">
                     <BookingCard
                       id={tur.id}
                       bodyPlace={tur.bodyPlace}
@@ -81,9 +91,47 @@ export default function Reservas() {
                       paymentStatus={tur.paymentStatus}
                     />
                   </div>
+                ))}
+            </>
+          )}
+
+        {appointment &&
+          appointment.length > 0 &&
+          user?.appointments &&
+          user?.appointments.some(
+            (tur) =>
+              new Date(tur.dateAndTime) < new Date() &&
+              tur.paymentStatus != "rejected"
+          ) && (
+            <>
+              <h4 className="text-artistfont text-center text-xl m-6 font-rocksalt">
+                Turnos pasados
+              </h4>
+              {user?.appointments
+                .filter((tur) => new Date(tur.dateAndTime) < new Date())
+                .sort(
+                  (a, b) => new Date(b.dateAndTime) - new Date(a.dateAndTime)
                 )
-            )
-        ) : (
+                .map((tur) => (
+                  <div className="h-full flex items-center justify-center text-[#FDECDA] mt-3">
+                    <BookingCard
+                      id={tur.id}
+                      bodyPlace={tur.bodyPlace}
+                      description={tur.description}
+                      duration={tur.duration}
+                      image={tur.image}
+                      size={tur.size}
+                      dateAndTime={tur.dateAndTime}
+                      depositPrice={tur.depositPrice}
+                      tattooArtistId={tur.tattooArtistId}
+                      paymentStatus={tur.paymentStatus}
+                    />
+                  </div>
+                ))}
+            </>
+          )}
+
+        {appointment && appointment.length === 0 && (
           <div className="flex flex-col items-center">
             <div className="flex flex-col py-8 px-3 items-center justify-center">
               <h5 className="text-artistfont font-newrocker text-[22px] mb-8 text-center leading-7">

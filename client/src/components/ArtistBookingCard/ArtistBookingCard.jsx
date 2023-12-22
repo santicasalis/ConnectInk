@@ -101,8 +101,7 @@ const ArtistBookingCard = ({
   return (
     <div
       className={`bg-secondary-100 flex flex-col items-center justify-center w-[90%] rounded-lg ${
-        (paymentStatus === "in_process" || paymentStatus === "approved") &&
-        date >= new Date()
+        paymentStatus === "in_process" || paymentStatus === "approved"
           ? ""
           : "hidden"
       }`}
