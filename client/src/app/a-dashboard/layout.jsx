@@ -6,12 +6,15 @@ import SideBar from "../../components/sidebar/SideBar";
 import Header from "../../components/header/Header";
 const Modal = dynamic(() => import("../../components/modal/Modal"));
 const ModalCreate = dynamic(() => import("../../components/modal/ModalCreate"));
-const ModalDeletePost = dynamic(() => import("../../components/modal/ModalDeletePost"));
-const ModalDeleteAppointment = dynamic(()=> import("../../components/modal/ModalDeleteAppointment"));
+const ModalDeletePost = dynamic(() =>
+  import("../../components/modal/ModalDeletePost")
+);
+const ModalDeleteAppointment = dynamic(() =>
+  import("../../components/modal/ModalDeleteAppointment")
+);
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../redux/features/user/userActions";
 import { useEffect } from "react";
-
 
 export default function DashboardLayout({ children }) {
   const isModalEditOpen = useSelector((state) => state.modalEdit.isOpen);
@@ -26,7 +29,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     dispatch(getUserById(fireBaseUser.tokenId));
   }, [fireBaseUser]);
-  
+
   return (
     <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6 relative">
       {isModalEditOpen && <Modal className="absolute" />}
@@ -38,7 +41,7 @@ export default function DashboardLayout({ children }) {
       <SideBar />
       <div className="xl:col-span-5 ">
         <Header />
-        <div className="h-[92vh] overflow-y-scroll p-8 flex flex-col items-center font-bold text-artistfont text-sm w-full">
+        <div className="h-[92vh] overflow-y-scroll md:p-8 p-0 flex flex-col items-center font-bold text-artistfont text-sm w-full">
           {children}
         </div>
       </div>

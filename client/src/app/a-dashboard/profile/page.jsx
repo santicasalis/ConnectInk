@@ -172,11 +172,11 @@ const Profile = () => {
       <hr className="my-8 border-artist/30" />
       <form>
         <div className="flex items-center mb-6">
-          <div className="w-1/4 ">
+          <div className="sm:w-1/5 w-2/5">
             <p>Foto de perfil: </p>
           </div>
           <div className="flex-1">
-            <div className="relative mb-2 flex justify-between	items-center	">
+            <div className="relative mb-2 flex justify-between items-center">
               <CldUploadWidget
                 uploadPreset="cloudinary-upload-images-connectInk"
                 onUpload={(result) => {
@@ -240,12 +240,12 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Nombre Completo: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex flex-col   gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <div className="w-full">
               <input
                 name="fullName"
@@ -263,7 +263,7 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Email: <span className="text-red-500">*</span>
             </p>
@@ -282,7 +282,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Celular: <span className="text-red-500">*</span>
             </p>
@@ -304,7 +304,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Dirección: <span className="text-red-500">*</span>
             </p>
@@ -326,7 +326,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Localidad: <span className="text-red-500">*</span>
             </p>
@@ -371,7 +371,7 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Estudio: <span className="text-red-500">*</span>
             </p>
@@ -393,7 +393,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>Instagram:</p>
           </div>
           <div className="flex-1 flex flex-col">
@@ -411,7 +411,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>Descripción:</p>
           </div>
           <div className="flex-1">
@@ -425,7 +425,9 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+
+          <div className="sm:w-1/5 w-2/5">
+
             <p>
               Nueva Contraseña: <span className="text-red-500">*</span>
             </p>
@@ -448,7 +450,9 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+
+          <div className="sm:w-1/5 w-2/5">
+
             <p>
               Confirmar Nueva Contraseña:{" "}
               <span className="text-red-500">*</span>
@@ -470,8 +474,9 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="flex mb-8">
-          <div className="w-1/4">
+        <div className="flex items-center mb-8">
+          <div className="sm:w-[25%] w-[68%]">
+
             <label htmlFor="">
               Estilos actuales <span className="text-red-500">*</span>
             </label>
@@ -536,7 +541,6 @@ const Profile = () => {
           }}
         >
           {" "}
-          <RiSave3Fill className="text-[25px]" />
           Guardar cambios
         </button>
       </form>

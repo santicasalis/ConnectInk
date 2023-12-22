@@ -22,31 +22,38 @@ import Image from "next/image";
 import { openModalDeleteAppointmentAction } from "../../app/redux/features/modalDeleteAppointment/modalDeleteAppointmentAction";
 import Link from "next/link";
 import { notifyError } from "../notifyError/NotifyError";
-import { current } from '@reduxjs/toolkit';
+import { current } from "@reduxjs/toolkit";
 import { getUserById } from "../../app/redux/features/user/userActions";
 
+const ArtistBookingCard = ({
+  id,
+  bodyPlace,
+  description,
+  duration,
+  image,
+  size,
+  dateAndTime,
+  depositPrice,
+  CustomerId,
+  paymentStatus,
+}) => {
+  const dispatch = useDispatch();
+  const imageLoader = ({ src }) => {
+    return src;
+  };
+  const user = useSelector((state) => state.user.logedInUser);
+  const fireBaseUser = useSelector((state) => state.user.fireBaseUser);
 
-
-const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, dateAndTime, depositPrice, CustomerId , paymentStatus}) => {
-
-    const dispatch = useDispatch();
-    const imageLoader = ({src}) => {
-        return src
-      }
-    const user = useSelector((state)=>state.user.logedInUser)
-    const fireBaseUser = useSelector((state)=>state.user.fireBaseUser)
-    
-        
-    let date = new Date(dateAndTime) 
-    let opcionesFormato = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
-        hour: 'numeric',
-        minute: 'numeric',
-        timeZoneName: 'short' 
-    };
-    let fechaFormateada = date.toLocaleDateString('es-ES', opcionesFormato)
+  let date = new Date(dateAndTime);
+  let opcionesFormato = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZoneName: "short",
+  };
+  let fechaFormateada = date.toLocaleDateString("es-ES", opcionesFormato);
 
   const [response, setResponse] = useState({});
 
@@ -88,105 +95,123 @@ const ArtistBookingCard = ({id, bodyPlace, description, duration, image, size, d
     };
 
     await axios.post("http://localhost:3001/nodemailer/cancelDate", data);
-    dispatch(getUserById(fireBaseUser.tokenId))
+    dispatch(getUserById(fireBaseUser.tokenId));
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className={`bg-secondary-100 w-[60%] h-full rounded flex mb-8 shadow-artist shadow-sm   ${
-          paymentStatus === "in_process"
-            ? ""
-            : paymentStatus === "approved"
-            ? ""
-            : ""
-        }`}>
-          <div className="w-[25%] my-8 border-r-[1px] border-r-artist/10 p-4">
-            <div>
-              <p className="text-artistfont text-[22px] flex gap-2 items-center justify-center mb-8 font-rocksalt "> 
-                    <TbCalendarCheck className="text-artist text-[27px]" /> Reserva: </p>
-              <p className="text-center text-artistfont mb-4"> {fechaFormateada}</p>
-            </div>
-              <div className="flex items-center justify-center mb-8">
-                  <MdOutlineAttachMoney className="text-artist text-[27px]" />
-                    <p className="text-artistfont text-[22px] font-rocksalt">   Seña: <span className="text-[19px] font-mono">${depositPrice}</span></p>
-              </div>
-          
-            <div className="text-[16px] text-artistfont text-center">
-                {paymentStatus &&
-                  (paymentStatus === "approved" ? (
-                    <p className="text-green-800 bg-secondary-900/50 rounded-lg py-2">Pago aprobado</p>
-                  ) : paymentStatus === "in_process" ? (
-                    <p className="text-orange-600 bg-secondary-900/50 rounded-lg py-2">Pago pendiente</p>
-                  ) : paymentStatus === "rejected" ? (
-                    <p className="text-red-800 bg-secondary-900/50 rounded-lg py-2">Pago rechazado. Trendrás que volver a reservar un turno</p>
-                  ) : (
-                    <p>Error al procesar el pago, intentelo mas tarde</p>
-                  ))}
-            </div>
-        </div>
-        <div className=" w-[50%]">
+    <div
+      className={`bg-secondary-100 flex flex-col items-center justify-center w-[90%] rounded-lg ${
+        (paymentStatus === "in_process" || paymentStatus === "approved") &&
+        date >= new Date()
+          ? ""
+          : "hidden"
+      }`}
+    >
+      <div className="h-[25px] w-full flex justify-end pr-4">
+        <Menu
+          menuButton={
+            <MenuButton>
+              <RiMoreFill className="text-artistfont text-[25px] cursor-pointer hover:bg-secondary-100" />
+            </MenuButton>
+          }
+          transition
+          menuStyle={{ backgroundColor: "#252524", color: "white" }}
+          menuClassName={"hover:bg-secondary-900 hover:text-black-900"}
+        >
+          <MenuItem
+            className="hover:bg-secondary-100 w-full h-full"
+            onClick={handleCancelation}
+          >
+            <RiDeleteBin6Fill />
+            Cancelar Reserva
+          </MenuItem>
+        </Menu>
+      </div>
+      <div className="w-full flex lg:flex-row flex-col">
+        <div className="lg:w-[300px] w-full h-full border-r-[2px] border-r-artist/20 p-6">
+          <div className="flex items-center justify-center">
+            <p className="flex gap-2 text-[25px] mb-6 mt-4 font-rocksalt text-artistfont">
+              <TbCalendarCheck className="text-artist text-[27px]" />
+              Reserva:
+            </p>
+          </div>
+          <p className="text-center text-[16px] mb-6 text-artistfont">
+            {" "}
+            {fechaFormateada}
+          </p>
+          <div className="flex items-center justify-center mb-8">
+            <p className="flex gap-2 text-[16px] font-rocksalt text-artistfont">
+              <MdOutlineAttachMoney className="text-artist text-[27px]" />
+              Seña:{" "}
+              <span className="font-sans text-[14px] text-artistfont">
+                ${depositPrice}
+              </span>
+            </p>
+          </div>
           <div>
-           
-            <div className="ml-6 flex items-center mt-6 gap-2 mb-6 border-b-artist/10 border-b-[1px] pb-3">
+            {paymentStatus &&
+              (paymentStatus === "approved" ? (
+                <p className="text-green-800 bg-secondary-900/50 rounded-lg py-2 text-center">
+                  Pago aprobado
+                </p>
+              ) : paymentStatus === "in_process" ? (
+                <p className="text-orange-600 bg-secondary-900/50 rounded-lg py-2">
+                  Pago pendiente
+                </p>
+              ) : paymentStatus === "rejected" ? (
+                <p className="text-red-800 bg-secondary-900/50 rounded-lg py-2">
+                  Pago rechazado. Trendrás que volver a reservar un turno
+                </p>
+              ) : (
+                <p>Error al procesar el pago, intentalo más tarde</p>
+              ))}
+          </div>
+        </div>
+
+        <div className="lg:w-[50%] w-full h-full ml-2 items-center justify-center">
+          <div className="flex md:flex-row flex-col items-center justify-center mt-6 gap-2 mb-6 h-full">
+            <div className="flex justify-center items-center gap-x-1">
               {response.image && (
-                <Image
-                  unoptimized
-                  src={response.image}
-                  loader={imageLoader}
-                  width={120}
-                  height={120}
-                  alt={`${response.fullName} profile pic`}
-                  className=" rounded-full "
-                />
+                <div className="md:w-[90px] w-[45px] md:h-[90px] h-[45px] rounded-full overflow-hidden">
+                  <Image
+                    unoptimized
+                    src={response.image}
+                    loader={imageLoader}
+                    width={90}
+                    height={90}
+                    alt={`${response.fullName} foto de perfil`}
+                    className="w-full h-full rounded-full mb-6 object-cover"
+                  />
+                </div>
               )}
-              <p className="ml-4 text-center font-newrocker text-[28px] text-artistfont">{response.fullName}</p>
-            </div>
-            <div className="ml-6 mt-4 ">
-              <h1 className="text-[19px] font-rocksalt text-artistfont">Descripción del Tatauje:</h1>
-              <p className="mt-4">{description}</p>
+              <p className="text-center md:text-[30px] text-[17px] font-newrocker text-artistfont">
+                {response.fullName}
+              </p>
             </div>
           </div>
         </div>
-        <div className=" w-[25%] mr-4">
-          <div className="flex items-end justify-end">
-            <Menu
-              menuButton={
-                <MenuButton>
-                  <RiMoreFill className="text-artistfont text-[25px] cursor-pointer hover:bg-secondary-100" />
-                </MenuButton>
-              }
-              transition
-              menuStyle={{ backgroundColor: "#252524", color: "white" }}
-              menuClassName={"hover:bg-secondary-900 hover:text-black-900"}
-            >
-              <MenuItem
-                className="hover:bg-secondary-100 w-full h-full"
-                onClick={handleCancelation}
-              >
-                <RiDeleteBin6Fill />
-                Cancelar Reserva
-              </MenuItem>
-            </Menu>
-          </div>
 
-          <h1 className="text-center text-[27px] font-rocksalt mt-2 mb-8">Detalles:</h1>
-          <p className="text-center font-rocksalt mb-2 text-artistfont ">Tamaño:<span className="font-sans">    {size}</span></p>
-          <p className="text-center font-rocksalt mb-2 text-artistfont ">Duracion: <span className="font-sans">{duration} hs</span></p>
-          <p className="text-center font-rocksalt mb-2 text-artistfont ">Boceto:</p>
+        <div className="lg:w-[40%] w-full h-full flex flex-col justify-center items-center p-5">
+          <h1 className="text-center text-[27px] font-rocksalt mt-2 mb-8">
+            Detalles:
+          </h1>
+          <p className="text-center mt-2">Tamaño: {size}</p>
+          <p className="text-center mt-2">Duración: {duration} h.</p>
+          <p className="text-center mt-2">Descipción: {description}</p>
+          <p className="text-center mt-2">Diseño:</p>
           <div className="flex justify-center items-center mt-2">
             {image && (
               <Image
                 unoptimized
                 src={image}
                 loader={imageLoader}
-                width={140}
-                height={140}
-                alt={"No hay boceto"}
-                className=" rounded-full"
+                width={120}
+                height={120}
+                alt={"Diseño"}
+                className="rounded-full"
               />
             )}
           </div>
-
         </div>
       </div>
     </div>

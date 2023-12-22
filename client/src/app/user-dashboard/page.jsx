@@ -13,21 +13,20 @@ import { notifyError } from "../../components/notifyError/NotifyError";
 function UDashboard() {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
-  const router = useRouter()
+  const router = useRouter();
 
   const user = useSelector((state) => state.user.logedInUser);
-// const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
+  // const fireBaseUser = useSelector((state) => state.user.fireBaseUser)
 
-
-// useEffect (() => {
-// dispatch(getUserById(fireBaseUser.tokenId))
-// },[fireBaseUser])
+  // useEffect (() => {
+  // dispatch(getUserById(fireBaseUser.tokenId))
+  // },[fireBaseUser])
 
   useEffect(() => {
-    if(!user.userType){
-      router.replace("/auth")
-    } else if(user.userType !== "customer"){
-      router.replace("/")
+    if (!user.userType) {
+      router.replace("/auth");
+    } else if (user.userType !== "customer") {
+      router.replace("/");
     }
     const fetchData = async () => {
       try {
@@ -58,8 +57,11 @@ function UDashboard() {
   }, []);
 
   return (
-    <div className="bg-secondary-900 p-8 rounded-xl w-full shadow-primary/50 shadow-lg">
-      <h1 className="text-4xl text-artistfont font-rocksalt"> Inicio </h1>
+    <div className="bg-secondary-900 md:p-8 p-1 md:rounded-xl w-full shadow-primary/50 shadow-lg">
+      <h1 className="text-4xl text-artistfont font-rocksalt md:pl-5 pl-4 pt-4">
+        {" "}
+        Inicio{" "}
+      </h1>
       <hr className="my-8 border-primary/30" />
       <div className="flex flex-col items-center w-full ">
         {posts.map((post) => {

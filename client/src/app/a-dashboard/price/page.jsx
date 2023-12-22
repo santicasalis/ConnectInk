@@ -177,7 +177,10 @@ const Price = () => {
   return (
     <div className="flex flex-col items-center justify-center  bg-secondary-900 w-full rounded-lg shadow-artist/50 shadow-lg">
       <div className=" w-full px-10">
-        <h1 className="text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]"> Rango de Precios</h1>
+        <h1 className="text-4xl font-rocksalt w-full py-10 text-left border-transparent border-b-artist/30 border-[1px]">
+          {" "}
+          Rango de Precios
+        </h1>
       </div>
       <div className=" p-8 rounded-xl w-full">
         <form onSubmit={handleSubmit}>
@@ -224,7 +227,7 @@ const Price = () => {
           <div className="flex justify-center mt-8">
             <button
               type="submit"
-              className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer"
+              className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
             >
               Guardar Precios
             </button>
