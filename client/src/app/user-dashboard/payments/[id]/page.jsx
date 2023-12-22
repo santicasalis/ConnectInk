@@ -67,8 +67,8 @@ export default function Reservas({ params }) {
   }, [tattooArtist]);
 
   return (
-    <div className="bg-secondary-900 h-[300px] rounded w-[40%] shadow-primary shadow-lg">
-      <div className="flex item-center justify-center w-full">
+    <div className="bg-secondary-900 h-full w-full rounded ">
+      <div className="flex item-center justify-center w-full shadow-primary shadow-lg">
         <h1 className="text-artistfont text-4l font-rocksalt m-3 p-4">
           RESULTADO DE LA TRANSACCIÓN
         </h1>

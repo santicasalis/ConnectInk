@@ -262,10 +262,10 @@ const BookAppointment = ({ params }) => {
   };
 
   return (
-    <div className=" w-full bg-secondary-900  ">
+    <div className=" w-full  bg-secondary-900  ">
       <Nav />
 
-      <div className="w-full p-4 flex justify-center  text-artistfont">
+      <div className="w-full h-full p-4 flex justify-center  text-artistfont">
         <div className=" rounded-xl  border-primary border-[1px] shadow-lg shadow-primary overflow-hidden p-2">
           {sent ? (
             <h1>Redireccionando a Mercado Pago para completar la reserva</h1>
