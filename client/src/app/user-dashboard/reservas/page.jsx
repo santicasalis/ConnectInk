@@ -58,9 +58,7 @@ export default function Reservas() {
           Mis turnos
         </h1>
         <hr className="border-primary/20 border-[1px]" />
-        {appointment &&
-        appointment.length > 0 &&
-        appointment.dateAndTime >= new Date() ? (
+        {appointment && appointment.length > 0 ? (
           [...user.appointments]
             .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
             .map(

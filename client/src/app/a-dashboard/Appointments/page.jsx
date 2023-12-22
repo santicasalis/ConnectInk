@@ -27,6 +27,8 @@ export default function Appointments() {
     dispatch(getUserById(fireBaseUser.tokenId));
   }, [isOpen]);
 
+  console.log(appointment.dateAndTime);
+  console.log(new Date());
   return (
     <div className=" bg-secondary-900 w-full rounded-xl shadow-artist/50 shadow-lg">
       <div className="w-full p-7">
@@ -35,9 +37,7 @@ export default function Appointments() {
           Mis turnos
         </h1>
         <hr className="border-artist/20 border-[1px]" />
-        {appointment &&
-        appointment.length > 0 &&
-        appointment.dateAndTime >= new Date() ? (
+        {appointment && appointment.length > 0 ? (
           [...user?.appointments]
             .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
             .map((tur) => (
