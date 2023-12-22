@@ -63,6 +63,7 @@ const Profile = () => {
     description: user.description,
     password: user.password,
     tattooStyles: user.tattooStyles,
+    cbu: user.cbu,
   });
   const [errors, setErrors] = useState({});
 
@@ -80,6 +81,7 @@ const Profile = () => {
       image: user.image,
       instagram: user.instagram,
       description: user.description,
+      cbu: user.cbu,
     });
     setStyleSelected(user?.tattooStyles?.map((style) => style));
   }, [user]);
@@ -345,6 +347,29 @@ const Profile = () => {
             </div>
           </div>
         </div>
+
+        <div className="flex items-center mb-4">
+          <div className="w-1/5">
+            <p>
+              CBU (Código Bancario Único):{" "}
+              <span className="text-red-500">*</span>
+            </p>
+          </div>
+          <div className="flex-1 flex flex-col">
+            <input
+              name="cbu"
+              type="text"
+              value={formData.cbu}
+              onChange={handleChange}
+              className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
+            />
+            <div>
+              {" "}
+              <p className="text-red-500">{errors?.cbu}</p>
+            </div>
+          </div>
+        </div>
+
         <div className="flex items-center mb-4">
           <div className="sm:w-1/5 w-2/5">
             <p>
@@ -400,7 +425,9 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
+
           <div className="sm:w-1/5 w-2/5">
+
             <p>
               Nueva Contraseña: <span className="text-red-500">*</span>
             </p>
@@ -423,7 +450,9 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center mb-4">
+
           <div className="sm:w-1/5 w-2/5">
+
             <p>
               Confirmar Nueva Contraseña:{" "}
               <span className="text-red-500">*</span>
@@ -447,6 +476,7 @@ const Profile = () => {
 
         <div className="flex items-center mb-8">
           <div className="sm:w-[25%] w-[68%]">
+
             <label htmlFor="">
               Estilos actuales <span className="text-red-500">*</span>
             </label>

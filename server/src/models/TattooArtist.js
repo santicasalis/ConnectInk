@@ -54,6 +54,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      cbu: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       image: {
         type: DataTypes.STRING,
         isUrl: true,
@@ -67,7 +71,7 @@ module.exports = (sequelize) => {
       userType: {
         type: DataTypes.STRING,
         defaultValue: "artist",
-      }
+      },
     },
     { timestamps: false }
   );

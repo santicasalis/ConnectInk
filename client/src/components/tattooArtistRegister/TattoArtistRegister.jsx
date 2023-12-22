@@ -69,6 +69,7 @@ const TattoArtistRegister = () => {
           tokenId: userInformation?.tokenId || "",
           description: "",
           instagram: "",
+          cbu: "",
         }}
         validationSchema={validationSchemaArtist}
         onSubmit={async (values, { setSubmitting }) => {
@@ -241,6 +242,21 @@ const TattoArtistRegister = () => {
                 />
               </div>
 
+              <div className="relative w-full">
+                <RiBankLine className="absolute left-2 top-4 text-white z-30" />
+                <Field
+                  type="text"
+                  name="cbu"
+                  placeholder="CBU (Código Bancario Único)"
+                  className="p-3 pl-7 mb-3 shadow-md bg-secondary-100 rounded-2xl relative w-full"
+                />
+                <ErrorMessage
+                  name="cbu"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+
               {!userInformation?.email && (
                 <div>
                   <div className="relative w-full">
@@ -275,7 +291,9 @@ const TattoArtistRegister = () => {
                 </div>
               )}
 
-              <h3 className=" mb-3 font-bold font-newrocker text-[20px]">Estilos de tatuaje</h3>
+              <h3 className=" mb-3 font-bold font-newrocker text-[20px]">
+                Estilos de tatuaje
+              </h3>
 
               <FieldArray
                 name="tattooStyle"
@@ -315,7 +333,10 @@ const TattoArtistRegister = () => {
             </div>
 
             <div className="mb-4 flex flex-col">
-              <label htmlFor="image" className="font-newrocker mb-6 text-[22px]">
+              <label
+                htmlFor="image"
+                className="font-newrocker mb-6 text-[22px]"
+              >
                 Imagen de perfil:
               </label>
               <div className="flex items-center  gap-x-3">
