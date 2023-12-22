@@ -3,7 +3,7 @@
 import { RiEdit2Line } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
-import { RiEyeLine, RiEyeOffLine, RiSave3Fill  } from "react-icons/ri";
+import { RiEyeLine, RiEyeOffLine, RiSave3Fill } from "react-icons/ri";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { bringUserInformation } from "../../../app/redux/features/user/userActions";
@@ -152,9 +152,12 @@ const UProfile = () => {
       <hr className="my-8 border-primary/30" />
       <form onSubmit={handleUpdate}>
         <div className="flex items-center mb-6">
+          <div className="sm:w-1/5 w-2/5">
+            <p className="text-artistfont">Foto de perfil: </p>
+          </div>
           <div className="flex-1">
-            <div className="relative mb-2">
-            <CldUploadWidget
+            <div className="relative mb-2 flex justify-between items-center">
+              <CldUploadWidget
                 uploadPreset="cloudinary-upload-images-connectInk"
                 onUpload={(result) => {
                   setFormData({ ...formData, image: result.info.secure_url });
@@ -217,12 +220,12 @@ const UProfile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/4">
+          <div className="sm:w-1/5 w-2/5">
             <p className="text-artistfont">
               Nombre Completo: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className=" w-1/2 flex items-center gap-4">
+          <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
                 name="fullName"
@@ -236,12 +239,12 @@ const UProfile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/4">
+          <div className="sm:w-1/5 w-2/5">
             <p className="text-artistfont">
               Email: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className=" w-1/2 flex items-center gap-4">
+          <div className="flex-1 flex items-center gap-4">
             <div className="w-full">
               <input
                 name="email"
@@ -255,51 +258,52 @@ const UProfile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/4">
+          <div className="sm:w-1/5 w-2/5">
             <p className="text-artistfont">Nueva Contraseña:</p>
           </div>
 
-          <div className=" relative w-1/2">
-
+          <div className="flex-1 relative">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
-
               className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default"
             />
 
-            <span className="absolute right-2 top-3 text-[20px] text-primary" onClick={() => setShowPassword(!showPassword)}>
-
+            <span
+              className="absolute right-2 top-3 text-[20px] text-primary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
         </div>
 
         <div className="flex items-center mb-8">
-          <div className="w-1/4">
+          <div className="sm:w-1/5 w-2/5">
             <p className="text-artistfont">Confirmar Nueva Contraseña:</p>
           </div>
-          <div className=" w-1/2 relative">
+          <div className="flex-1 relative">
             <input
               type={showPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full py-3 px-4 outline-none rounded-lg bg-secondary-100 cursor-default text-artistfont"
             />
-            <span className="absolute right-2 top-3 text-[20px] text-primary" onClick={() => setShowPassword(!showPassword)}>
+            <span
+              className="absolute right-2 top-3 text-[20px] text-primary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
             </span>
           </div>
         </div>
         <div className=" mb-2 w-full flex items-center justify-center">
           <button
-            className="text-black border-[1px] flex gap-x-1 items-center border-primary/50 hover:border-primary text-[17px] bg-primary rounded-lg px-4 py-3 "
-
+            className="bg-primary text-[20px] font-newrocker mb-8 hover:bg-primary/70 flex items-center justify-center gap-x-1 border-primary border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
             type="submit"
           >
-            <RiSave3Fill />
             Guardar cambios
           </button>
         </div>

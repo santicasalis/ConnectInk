@@ -52,13 +52,15 @@ export default function Reservas() {
 
   return (
     <div className="bg-secondary-900 w-full rounded-xl shadow-lg shadow-primary/50">
-      <div className="w-full p-7 ">
+      <div className="w-full p-7">
         <h1 className="text-4xl text-artistfont font-rocksalt mb-8">
           {" "}
           Mis turnos
         </h1>
         <hr className="border-primary/20 border-[1px]" />
-        {appointment && appointment.length > 0 ? (
+        {appointment &&
+        appointment.length > 0 &&
+        appointment.dateAndTime >= new Date() ? (
           [...user.appointments]
             .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
             .map(
@@ -85,10 +87,10 @@ export default function Reservas() {
             )
         ) : (
           <div className="flex flex-col items-center">
-            <div className="flex flex-col py-8 px-3 items-center justify-center bg-secondary-100/40 shadow-inner shadow-primary/10 rounded-xl">
-              <h5 className="text-artistfont font-newrocker text-[22px] mb-8 ">
-                "No tienes ninguna reserva aún. ¡Descubre increíbles artistas y
-                sus últimas obras!"
+            <div className="flex flex-col py-8 px-3 items-center justify-center">
+              <h5 className="text-artistfont font-newrocker text-[22px] mb-8 text-center leading-7">
+                No tienes ninguna reserva aún. ¡Descubre increíbles artistas y
+                sus últimas obras!
               </h5>
               <Link href="/explore">
                 <button className="border-primary border-[1.5px] hover:border-primary/60 text-primary text-[17px] py-3 px-4 rounded-lg">

@@ -19,8 +19,8 @@ const Page = () => {
   const user = useSelector((state) => state.user);
   const [dayObj, setDayObj] = useState({});
   let errorIndicator = false;
-  let errorIndicatorPost=false;
-  let actionIndicator = ""
+  let errorIndicatorPost = false;
+  let actionIndicator = "";
   const router = useRouter();
   const days = [
     "Lunes",
@@ -254,7 +254,7 @@ const Page = () => {
           };
           try {
             await axios.put(`${URL_BASE}/timeAvailabilities/${id}`, data);
-            actionIndicator = "update"
+            actionIndicator = "update";
           } catch (error) {
             console.log(error);
             errorIndicator = true;
@@ -280,39 +280,42 @@ const Page = () => {
           }
           try {
             await axios.post(`${URL_BASE}/timeAvailabilities`, data);
-            actionIndicator = "create"
+            actionIndicator = "create";
           } catch (error) {
-            console.error(error)
-            errorIndicatorPost=true
+            console.error(error);
+            errorIndicatorPost = true;
           }
         }
-       
       }
-      if (!errorIndicator && actionIndicator=="update") {
+      if (!errorIndicator && actionIndicator == "update") {
         toast.success(`Cambios guardados con éxito`, {
           className: "toastSuccess",
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: 3000,
           hideProgressBar: false,
-        });} else if (!errorIndicatorPost && actionIndicator=="create") {
-          toast.success(`Cambios creados con éxito`, {
-            className: "toastSuccess",
-            position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: 3000,
-            hideProgressBar: false,
-          });} else if (errorIndicatorPost && actionIndicator=="create") {
-            toast.error(`Error al registrar sus horarios`, {
-              className: "toastError",
-              position: toast.POSITION.BOTTOM_RIGHT,
-              autoClose: 3000,
-              hideProgressBar: false,
-            });} else if (errorIndicatorPost && actionIndicator=="update") {
-              toast.error(`Error al guardar sus cambios`, {
-                className: "toastError",
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: false,
-              });}
+        });
+      } else if (!errorIndicatorPost && actionIndicator == "create") {
+        toast.success(`Cambios creados con éxito`, {
+          className: "toastSuccess",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        });
+      } else if (errorIndicatorPost && actionIndicator == "create") {
+        toast.error(`Error al registrar sus horarios`, {
+          className: "toastError",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        });
+      } else if (errorIndicatorPost && actionIndicator == "update") {
+        toast.error(`Error al guardar sus cambios`, {
+          className: "toastError",
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+          hideProgressBar: false,
+        });
+      }
       dispatch(getUserById(user.fireBaseUser.tokenId));
     } catch (error) {
       notifyError("Error al guardar el horario:", error);
@@ -403,15 +406,27 @@ const Page = () => {
 
   return (
     <div className="bg-secondary-900 rounded w-full shadow-lg shadow-artist">
-      <div className=" text-center">
-      <div className="w-full px-10 mb-10 ">
-  <h1 className="text-4xl font-rocksalt w-full py-10 text-left ">Disponibilidad Horaria</h1>
-  <p className="text-left mb-1">Establecer o modificar horarios <a href="#horarios" className="text-artist underline"> aquí</a></p> 
-  <p className="text-left mb-5 pb-2 border-transparent border-b-artist/30 border-[1px]">Añadir excepciones <a href="#excepciones" className="text-artist underline   "> aquí </a></p>
-</div>
-        <div className="flex items-center justify-center ">
-          
+      <div className="text-center">
+        <div className="w-full px-10 mb-10 ">
+          <h1 className="text-4xl font-rocksalt w-full py-10 text-left ">
+            Disponibilidad Horaria
+          </h1>
+          <p className="text-left mb-1">
+            Establecer o modificar horarios{" "}
+            <a href="#horarios" className="text-artist underline">
+              {" "}
+              aquí
+            </a>
+          </p>
+          <p className="text-left mb-5 pb-2 border-transparent border-b-artist/30 border-[1px]">
+            Añadir excepciones{" "}
+            <a href="#excepciones" className="text-artist underline   ">
+              {" "}
+              aquí{" "}
+            </a>
+          </p>
         </div>
+        <div className="flex items-center justify-center "></div>
 
         {days.map((day) => {
           return (
@@ -516,7 +531,7 @@ const Page = () => {
         })}
         <button
           onClick={saveTimeAvailability}
-          className="hover:bg-artist font-rocksalt gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer my-2"
+          className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
         >
           Guardar Horarios
         </button>
@@ -525,13 +540,13 @@ const Page = () => {
         <hr className="mt-6 mb-6 w-[90%] border-artist/50"></hr>
       </div>
 
-      <div className="text-center" id="excepciones"> 
-      <div className="w-full px-10 mb-10 ">
-        <h3 className="text-4xl font-rocksalt w-full py-10 text-left">
-          Excepciones
-        </h3>
+      <div id="excepciones">
+        <div className="w-full px-7 mb-7">
+          <h3 className="text-4xl font-rocksalt w-full py-5 text-left">
+            Excepciones
+          </h3>
         </div>
-        <ul className="ml-10 mt-4">
+        <ul className="md:ml-10 ml-4 mt-4 mr-4">
           <li className="mt-2 flex gap-2 text-artistfont">
             <TbPointFilled className="text-artist" />
             Si en alguna fecha específica vas a trabajar en un horario diferente
@@ -628,10 +643,10 @@ const Page = () => {
             )}
           </div>
         )}
-        <div className="flex items-center justify-center mt-8 mr-6">
+        <div className="flex items-center justify-center mt-8">
           <button
             onClick={addTimeException}
-            className="hover:bg-artist font-rocksalt gap-1 border-artist text-gray-300 border-[1px] px-2 py-3 rounded-md cursor-pointer mb-4 ml-4"
+            className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
             disabled={
               !newException.initialHour ||
               (!newException.finalHour &&
@@ -672,7 +687,9 @@ const Page = () => {
                     <p>Fecha no laboral</p>
                   )}
                   <div className="flex items-center justify-center ">
-                    {/* <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr> */}
+                    {
+                      <hr className="mt-6 mb-6 w-[90%] border-secondary-100"></hr>
+                    }
                   </div>
                 </div>
               )
