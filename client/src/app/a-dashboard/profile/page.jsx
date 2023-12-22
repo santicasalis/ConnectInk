@@ -12,14 +12,12 @@ import {
   getUserById,
 } from "../../../app/redux/features/user/userActions";
 
-import { RiEyeLine, RiEyeOffLine, RiSave3Fill} from "react-icons/ri";
+import { RiEyeLine, RiEyeOffLine, RiSave3Fill } from "react-icons/ri";
 import {
   getAuth,
   signInWithEmailAndPassword,
   updatePassword,
 } from "firebase/auth";
-
-
 
 import { notifyError } from "../../../components/notifyError/NotifyError";
 import "react-toastify/dist/ReactToastify.css";
@@ -171,14 +169,12 @@ const Profile = () => {
 
       <hr className="my-8 border-artist/30" />
       <form>
-
-    
         <div className="flex items-center mb-6">
-          <div className="w-1/4 ">
+          <div className="sm:w-1/5 w-2/5">
             <p>Foto de perfil: </p>
           </div>
           <div className="flex-1">
-            <div className="relative mb-2 flex justify-between	items-center	">
+            <div className="relative mb-2 flex justify-between items-center">
               <CldUploadWidget
                 uploadPreset="cloudinary-upload-images-connectInk"
                 onUpload={(result) => {
@@ -242,12 +238,12 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Nombre Completo: <span className="text-red-500">*</span>
             </p>
           </div>
-          <div className="flex-1 flex flex-col   gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <div className="w-full">
               <input
                 name="fullName"
@@ -265,7 +261,7 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Email: <span className="text-red-500">*</span>
             </p>
@@ -284,7 +280,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Celular: <span className="text-red-500">*</span>
             </p>
@@ -306,7 +302,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Dirección: <span className="text-red-500">*</span>
             </p>
@@ -328,7 +324,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Localidad: <span className="text-red-500">*</span>
             </p>
@@ -350,7 +346,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>
               Estudio: <span className="text-red-500">*</span>
             </p>
@@ -372,7 +368,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>Instagram:</p>
           </div>
           <div className="flex-1 flex flex-col">
@@ -390,7 +386,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
+          <div className="sm:w-1/5 w-2/5">
             <p>Descripción:</p>
           </div>
           <div className="flex-1">
@@ -404,8 +400,10 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
-            <p>Nueva Contraseña: <span className="text-red-500">*</span></p>
+          <div className="sm:w-1/5 w-2/5">
+            <p>
+              Nueva Contraseña: <span className="text-red-500">*</span>
+            </p>
           </div>
           <div className="flex-1 relative">
             <input
@@ -425,8 +423,11 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="w-1/5">
-            <p>Confirmar Nueva Contraseña: <span className="text-red-500">*</span></p>
+          <div className="sm:w-1/5 w-2/5">
+            <p>
+              Confirmar Nueva Contraseña:{" "}
+              <span className="text-red-500">*</span>
+            </p>
           </div>
           <div className="flex-1 relative">
             <input
@@ -444,13 +445,19 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="flex mb-8">
-          <div className="w-1/4">
-            <label htmlFor="">Estilos actuales <span className="text-red-500">*</span></label>
+        <div className="flex items-center mb-8">
+          <div className="sm:w-[25%] w-[68%]">
+            <label htmlFor="">
+              Estilos actuales <span className="text-red-500">*</span>
+            </label>
           </div>
           <div className="bg-secondary-100 flex flex-wrap gap-x-2 rounded-lg w-full p-3">
             {user?.tattooStyles?.map((userStyle) => {
-              return <div className="flex gap-x-2 rounded-md border-[1px] border-artistfont p-2 text-artistfont">{userStyle}</div>;
+              return (
+                <div className="flex gap-x-2 rounded-md border-[1px] border-artistfont p-2 text-artistfont">
+                  {userStyle}
+                </div>
+              );
             })}
           </div>
         </div>
@@ -460,7 +467,7 @@ const Profile = () => {
             className="text-2xl font-weight:800 text-artistfont flex items-center gap-4 px-4 py-1 justify-center mb-3 font-newrocker text-[25px]"
             htmlFor="style"
           >
-            Selecciona tus estilos de Tatuaje: 
+            Selecciona tus estilos de Tatuaje:
           </label>
           <div className="flex flex-wrap w-3/4  p-6 rounded-lg  justify-center gap-4 mb-8">
             {styles?.map((style) => {
@@ -484,9 +491,7 @@ const Profile = () => {
         </div>
 
         <button
-
-         className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
-         
+          className="bg-artist text-[20px] font-newrocker mb-8 hover:bg-artist/70 flex items-center justify-center gap-x-1 border-artist text-artistfont/80 border-[1px] px-2 py-3 rounded-md cursor-pointer mx-auto"
           type="button"
           style={{
             cursor:
@@ -504,9 +509,9 @@ const Profile = () => {
               });
             }
           }}
-        > <RiSave3Fill className="text-[25px]"/>
+        >
+          {" "}
           Guardar cambios
-
         </button>
       </form>
     </div>
