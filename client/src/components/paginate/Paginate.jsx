@@ -13,9 +13,9 @@ const Paginate = ({
   }
 
   return (
-    <div className='flex justify-center mt-4 mb-9 max-w-full text-primary text-xl font-bold  focus:outline-none'>
-      <nav>
-        <ul className="flex space-x-2">
+    <div className='flex justify-center mt-4 mb-9 w-full text-primary text-xl font-bold  focus:outline-none'>
+      <nav className="">
+        <ul className="flex gap-x-1">
           {currentPage > 1 && (
             <li className="flex items-center">
               <button onClick={() => onPageChange(currentPage - 1)}>

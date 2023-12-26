@@ -28,7 +28,7 @@ const PostsDashboard = () => {
   }, [user?.publications]);
 
   return (
-    <div className="flex flex-col items-center w-full ">
+    <div className="flex flex-col items-center w-full">
       {filteredSortedPublications.length > 0 ? (
         filteredSortedPublications.map((publication) => (
           <PostDashboard

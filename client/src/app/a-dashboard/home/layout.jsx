@@ -13,12 +13,12 @@ export default function HomeLayout({ children }) {
     dispatch(openModalCreateAction());
   }
     return (
-      <div className='bg-secondary-900 p-8 rounded-xl w-full shadow-artist/70 shadow-lg'>
+      <div className='bg-secondary-900 p-8 md:rounded-xl w-full shadow-artist/70 shadow-lg'>
           <div className="flex justify-between ">
               <h1 className='text-4xl font-rocksalt text-artistfont/80'>Inicio</h1>
-              <span onClick={handleClick} className="hover:bg-artist font-rocksalt  flex items-center justify-center gap-1 border-artist text-artistfont border-[1px] px-2 py-3 rounded-md cursor-pointer">
+              <span onClick={handleClick} className="hover:bg-artist  sm:text-[18px] text-[12px] flex items-center justify-center gap-1 border-artist text-artistfont border-[1px] px-2 py-3 rounded-md cursor-pointer">
                   <RiAddFill className="font-bold "/>
-                  Crear Publicacion
+                  Crear Publicación
               </span>
           </div>
          

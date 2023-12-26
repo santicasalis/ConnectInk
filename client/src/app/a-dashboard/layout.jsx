@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }) {
       <SideBar />
       <div className="xl:col-span-5 ">
         <Header />
-        <div className="h-[92vh] overflow-y-scroll p-8 flex flex-col items-center font-bold text-artistfont text-sm w-full">
+        <div className="h-[92vh] overflow-y-scroll md:p-8 p-0 flex flex-col items-center font-bold text-artistfont text-sm w-full">
           {children}
         </div>
       </div>

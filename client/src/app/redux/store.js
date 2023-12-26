@@ -15,6 +15,8 @@ import ModalDeleteAppointmentReducer from "./features/modalDeleteAppointment/mod
 import ModalLoadingReducer from "./features/modalLoading/ModalLoadingSlice";
 import ModalCreateStyleReducer from "./features/modalCreateStyle/modalCreateStyleSlice";
 import ModalDisabledArtistReducer from "./features/modalDisabledArtist/modalDisabledArtistSlice";
+import CommmentsReducer from "./features/comments/commentsSlice";
+import ModalDetailPostReducer from "./features/modalDetailPost/modalDetailPostSlice";
 export const store = configureStore({
   reducer: {
     artists: artistReducer,
@@ -31,5 +33,7 @@ export const store = configureStore({
     modalLoading: ModalLoadingReducer,
     modalCreateStyle: ModalCreateStyleReducer,
     modalDisabledArtist: ModalDisabledArtistReducer,
+    comments:CommmentsReducer,
+    modalDetailPost:ModalDetailPostReducer,
   },
 });

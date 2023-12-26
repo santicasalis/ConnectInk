@@ -53,8 +53,8 @@ export default function Card({
   },[reviews])
 
   return (
-    <div className="xl:w-[800px] max-w-full mb-5 pb-4 border-b-primary/50 border-transparent border-[1px]  ">
-      <div className="w-full py-3">
+    <div className="xl:w-[800px] w-[95%] mb-5 pb-4 border-b-primary/50 border-transparent border-[1px]">
+      <div className="w-full py-3 ">
         <div className="flex flex-row justify-between items-center ">
           <Link href={`/explore/${id}`}>
             <div className="flex  items-center gap-x-2 ">
@@ -94,7 +94,7 @@ export default function Card({
         </div>
       </div>
 
-      <div className="w-full h-[400px] mb-4">
+      <div className="w-full h-[400px] mb-4 ">
         <Swiper
           spaceBetween={25}
           parallax={true}
