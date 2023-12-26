@@ -56,7 +56,7 @@ module.exports = (sequelize) => {
       },
       cbu: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       image: {
         type: DataTypes.STRING,
