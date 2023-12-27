@@ -1,11 +1,11 @@
 "use client";
 
-
 import Link from 'next/link'
 import React from 'react'
 import axios from 'axios';
 import { Menu, MenuItem, MenuButton} from '@szhsin/react-menu';
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   RiHeart3Line,
   RiHeart3Fill,
@@ -23,30 +23,28 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { openModalAction } from "../../app/redux/features/modalEdit/modalEditAction";
 import { openModalDeleteAction } from "../../app/redux/features/modalDelete/modalDeleteAction";
-
-
-const UserPostDash = ({ publication }) => {
+import { openModalDetailPostAction } from '../../app/redux/features/modalDetailPost/modaDetailPostActions';
+import { postCommentAction } from '../../app/redux/features/comments/commentsActions';
+const UserPostDash = ({ publication , userId}) => {
   const [isLike, setIsLike] = useState(false);
   const [textCommend, setTextCommend] = useState("");
 
-
   const dispatch = useDispatch();
-
   const removeAboutAgo = (distance) => {
     return distance.replace(/(?:about|ago)/gi, "").trim();
   };
-
   const formatDistance = (date) => {
     const distance = formatDistanceToNow(new Date(date), { addSuffix: true });
     const cleanedDistance = removeAboutAgo(distance);
     return cleanedDistance;
   };
-
   const handleClick = () => {
     setIsLike(!isLike);
   };
-
-    const handleSubmit = (event) => {
+  const handleChange = (event) => {
+    setTextCommend(event.target.value);
+  }
+  const handleSubmit = (event) => {
         event.preventDefault();
         try {
             dispatch(postCommentAction({
@@ -70,7 +68,7 @@ const UserPostDash = ({ publication }) => {
             });
             setTextCommend('');
         }
-    }
+  }
 
 
     const imageLoader = ({src}) => {
@@ -177,7 +175,7 @@ const UserPostDash = ({ publication }) => {
           ) : (
             <RiHeart3Line onClick={handleClick} />
           )}
-          <RiMessage3Line />
+          <RiMessage3Line  onClick={()=>dispatch(openModalDetailPostAction({publication,userId }))}/>
         </div>
         <div className="flex flex-col">
           <p className="mb-1 text-artistfont sm:text-[14px] text-[12px]">
@@ -189,10 +187,10 @@ const UserPostDash = ({ publication }) => {
             </span>
             {publication?.description}
           </p>
-          <p className="text-artistfont/50 sm:text-[14px] text-[12px] cursor-pointer mb-1">
+          <p className="text-artistfont/50 sm:text-[14px] text-[12px] cursor-pointer mb-1" onClick={()=>dispatch(openModalDetailPostAction({publication,userId }))}>
             Ver comentarios
           </p>
-          <form className="m-0 p-0">
+          <form className="m-0 p-0" onSubmit={handleSubmit}>
             <div className="flex justify-between gap-x-3">
               <textarea
                 type="text"
