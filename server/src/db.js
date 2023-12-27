@@ -10,7 +10,6 @@ const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
 });
-
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
