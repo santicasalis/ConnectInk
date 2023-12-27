@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, INTEGER } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("Publication", {
@@ -20,6 +20,11 @@ module.exports = (sequelize) => {
     disabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    likes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: true,
     },
   });
 };
