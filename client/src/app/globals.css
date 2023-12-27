@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #29292a; 
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; 
+}
+
+html{
+  margin: 0;
+  padding: 0;
+  
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; 
+  scrollbar-width: thin; 
+  scrollbar-color: #4a5568 #2d3748; 
+}
+
+/*Toast*/
+.toastSuccess{
+  background-color: rgb(19, 19, 20)!important;
+  color: rgb(186, 249, 167)mportant;
+  font-size: 19px!important;
+  border-radius: 9px!important;
+  font-family: 'Inter', sans-serif!important;
+  font-family: 'Kenia', sans-serif!important;
+  font-family: 'Montserrat', sans-serif!important;
+  font-family: 'Russo One', sans-serif!important;
+  box-shadow: 0 0 0 3px rgba(115, 250, 103, 0.2)!important;
+}
+
+.toastError{
+  background-color: rgb(20, 20, 20)!important;
+  color: rgb(251, 127, 143)!important;
+  font-size: 19px!important;
+  border-radius: 9px!important;
+  font-family: 'Inter', sans-serif!important;
+  font-family: 'Kenia', sans-serif!important;
+  font-family: 'Montserrat', sans-serif!important;
+  font-family: 'Russo One', sans-serif!important;
+  box-shadow: 0 0 0 3px rgba(250, 103, 122, 0.2)!important;
+}
+.custom-gradient{
+  background: linear-gradient(to bottom, #101010, rgba(0, 0, 0, 0.7));
+}
+
+.custom-gradient-login{
+  background: linear-gradient(to bottom, #101010, rgba(0, 0, 0, 0.7));
+}
+
+.custom-gradient-reviews{
+  background: linear-gradient(to bottom, transparent, rgba(13, 12, 12, 0.8));
+}
+
+.gotic{
+  font-family: 'UnifrakturMaguntia', cursive!important;
+}

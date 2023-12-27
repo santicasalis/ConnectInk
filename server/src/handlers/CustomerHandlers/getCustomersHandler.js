@@ -6,7 +6,7 @@ const getCustomersHandler = async (req, res) => {
     if (customers.length) {
       res.status(200).json(customers);
     } else {
-      res.status(400).json({ message: "non-existent clients" });
+      res.status(400).json({ message: "Customers not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

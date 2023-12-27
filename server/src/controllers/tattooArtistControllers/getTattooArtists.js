@@ -2,8 +2,7 @@ const {
   TattooArtist,
   TattooStyle,
   Publication,
-  TimeAvailability,
-  TimeAvailabilityException,
+  Review,
 } = require("../../db");
 
 const getTattooArtists = async () => {
@@ -13,15 +12,17 @@ const getTattooArtists = async () => {
       { model: TattooStyle, attributes: ["name"] },
       {
         model: Publication,
-        attributes: ["description", "image", "createdAt", "updatedAt"],
+        attributes: ["id","description", "image", "createdAt", "updatedAt"],
+        where: { disabled: false },
+        required: false
       },
       {
-        model: TimeAvailability,
-        attributes: ["day", "initialHour", "finalHour"],
-      },
-      {
-        model: TimeAvailabilityException,
-        attributes: ["date", "initialHour", "finalHour"],
+        model: Review,
+        as: "reviews",
+        foreignKey: "TattooArtist_Review",
+        attributes: ["rating", "comment"],
+        where: { disabled: false },
+        required: false
       },
     ],
   });
@@ -40,32 +41,21 @@ const getTattooArtists = async () => {
     tattooStyles: tattooArtist.TattooStyles?.map(
       (tattooStyle) => tattooStyle.name
     ),
-    publications: tattooArtist.Publications?.map((publication) => {
+    publications: tattooArtist.Publications?.filter((publication) => !publication.disabled).map((publication) => {
       return {
+        id: publication.id,
         description: publication.description,
         image: publication.image,
         createdAt: publication.createdAt,
         updatedAt: publication.updatedAt,
       };
     }),
-    timeAvailabilities: tattooArtist.TimeAvailabilities?.map(
-      (timeAvailability) => {
-        return {
-          day: timeAvailability.day,
-          initialHour: timeAvailability.initialHour,
-          finalHour: timeAvailability.finalHour,
-        };
+    reviews: tattooArtist.reviews?.map((review) => {
+      return {
+        comment: review.comment,
+        rating: review.rating,
       }
-    ),
-    timeAvailabilityExceptions: tattooArtist.TimeAvailabilityExceptions?.map(
-      (timeAvailabilityException) => {
-        return {
-          date: timeAvailabilityException.date,
-          initialHour: timeAvailabilityException.initialHour,
-          finalHour: timeAvailabilityException.finalHour,
-        };
-      }
-    ),
+    })
   }));
 
   return tattooArtistCleaner;

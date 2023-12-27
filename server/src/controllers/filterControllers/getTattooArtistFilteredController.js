@@ -1,4 +1,4 @@
-const { TattooArtist, TattooStyle, Publication } = require("../../db");
+const { TattooArtist, TattooStyle, Publication, Review } = require("../../db");
 const { Op } = require("sequelize");
 
 const getTattooArtistFiltered = async (location, name, styles) => {
@@ -24,7 +24,20 @@ const getTattooArtistFiltered = async (location, name, styles) => {
               },
             },
           },
-          { model: Publication, attributes: ["description", "image"] },
+          {
+            model: Publication,
+            attributes: ["description", "image"],
+            where: { disabled: false },
+            required: false
+          },
+          {
+            model: Review,
+            as: "reviews",
+            foreignKey: "TattooArtist_Review",
+            attributes: ["rating"],
+            where: { disabled: false },
+            required: false,
+          },
         ],
       });
 
@@ -34,6 +47,7 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         email: artist.email,
         phone: artist.phone,
         instagram: artist.instagram,
+        reviews: artist.reviews,
         description: artist.description,
         location: artist.location,
         address: artist.address,
@@ -47,6 +61,12 @@ const getTattooArtistFiltered = async (location, name, styles) => {
           return {
             description: publication.description,
             image: publication.image,
+          };
+        }),
+        reviews: artist.reviews?.map((review) => {
+          console.log(review, "reviewssssss");
+          return {
+            rating: review.rating,
           };
         }),
       }));
@@ -69,7 +89,20 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         },
         include: [
           { model: TattooStyle, attributes: ["name"] },
-          { model: Publication, attributes: ["description", "image"] },
+          {
+            model: Publication,
+            attributes: ["description", "image"],
+            where: { disabled: false },
+            required: false
+          },
+          {
+            model: Review,
+            as: "reviews",
+            foreignKey: "TattooArtist_Review",
+            attributes: ["rating"],
+            where: { disabled: false },
+            required: false,
+          },
         ],
       });
 
@@ -79,6 +112,7 @@ const getTattooArtistFiltered = async (location, name, styles) => {
         email: artist.email,
         phone: artist.phone,
         instagram: artist.instagram,
+        reviews: artist.reviews,
         description: artist.description,
         location: artist.location,
         address: artist.address,
@@ -92,6 +126,11 @@ const getTattooArtistFiltered = async (location, name, styles) => {
           return {
             description: publication.description,
             image: publication.image,
+          };
+        }),
+        reviews: artist.reviews?.map((review) => {
+          return {
+            rating: review.rating,
           };
         }),
       }));

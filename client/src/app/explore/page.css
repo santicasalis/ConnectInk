@@ -1,0 +1,33 @@
+.scroll-fade {
+  position: relative;
+  overflow: hidden;
+  /* height: 555px;  */
+}
+
+.scroll-content {
+  overflow-y: auto;
+  height: 100%; 
+  scrollbar-width: none;
+}
+
+
+.scroll-fade::before,
+.scroll-fade::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px; 
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* .scroll-fade::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.scroll-fade::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(255,255,255,0) 100%);
+} */

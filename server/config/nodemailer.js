@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 transporter
     .verify()
-    .then(() => console.log("todo bien"))
+    .then()
     .catch((error) => console.error(error))
 
 module.exports = transporter

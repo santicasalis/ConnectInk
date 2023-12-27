@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
@@ -54,6 +55,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      cbu: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       image: {
         type: DataTypes.STRING,
         isUrl: true,
@@ -63,6 +68,10 @@ module.exports = (sequelize) => {
       disabled: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      userType: {
+        type: DataTypes.STRING,
+        defaultValue: "artist",
       },
     },
     { timestamps: false }

@@ -11,6 +11,6 @@ timeAvailabilityRouter.get("/", getTimeAvailabilityHandler);
 timeAvailabilityRouter.get("/:id", getTimeAvailabilityByIdHandler);
 timeAvailabilityRouter.delete("/:id", deleteTimeAvailabilityHandler);
 timeAvailabilityRouter.post("/", createTimeAvailabilityHandler);
-timeAvailabilityRouter.put("/", updateTimeAvailabilityHandler);
+timeAvailabilityRouter.put("/:id", updateTimeAvailabilityHandler);
 
 module.exports = timeAvailabilityRouter;

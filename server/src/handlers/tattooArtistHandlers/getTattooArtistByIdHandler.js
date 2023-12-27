@@ -10,6 +10,7 @@ const getTattooArtistByIdHandler = async (req, res) => {
       res.status(404).json({ message: "Tattoo Artist not found" });
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 };

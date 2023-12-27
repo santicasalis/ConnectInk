@@ -1,9 +1,9 @@
-const {Appointment} = require("../../db")
+const { Appointment } = require("../../db");
 
-async function getAppointmentController(){
-    const Appointments = Appointment.findAll()
+async function getAppointmentController() {
+  const appointments = Appointment.findAll({ where: { disabled: false } });
 
-    return Appointments
+  return appointments;
 }
 
-module.exports = getAppointmentController
+module.exports = getAppointmentController;

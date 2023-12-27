@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("Publication", {
@@ -6,10 +7,6 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      allowNull: false,
-    },
-    title: {
-      type: DataTypes.STRING,
       allowNull: false,
     },
     description: {

@@ -14,6 +14,7 @@ const createTattooArtistHandler = async (req, res) => {
     shopName,
     image,
     tattooStyle,
+    cbu,
   } = req.body;
   try {
     const newTattooArtist = await createTattooArtist(
@@ -28,7 +29,8 @@ const createTattooArtistHandler = async (req, res) => {
       location,
       shopName,
       image,
-      tattooStyle
+      tattooStyle,
+      cbu
     );
     res.status(201).json(newTattooArtist);
   } catch (error) {

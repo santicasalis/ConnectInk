@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("Review", {
@@ -18,7 +19,7 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     disabled: {

@@ -11,7 +11,10 @@ module.exports = (sequelize) => {
     },
     tokenId:{
       type: DataTypes.STRING
+    tokenId:{
+      type: DataTypes.STRING
     },
+    fullName: {
     fullName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -37,10 +40,21 @@ module.exports = (sequelize) => {
       isUrl: true,
       defaultValue:
       "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
+      allowNull: true,
+    },
+    image: {
+      type: DataTypes.STRING,
+      isUrl: true,
+      defaultValue:
+      "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg",
     },
     disabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    userType: {
+      type: DataTypes.STRING,
+      defaultValue: "customer",
     }
   },
     { timestamps: false }
