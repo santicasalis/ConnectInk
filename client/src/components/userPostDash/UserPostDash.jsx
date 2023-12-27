@@ -41,9 +41,6 @@ const UserPostDash = ({ publication , userId}) => {
   const handleClick = () => {
     setIsLike(!isLike);
   };
-  const handleChange = (event) => {
-    setTextCommend(event.target.value);
-  }
   const handleSubmit = (event) => {
         event.preventDefault();
         try {

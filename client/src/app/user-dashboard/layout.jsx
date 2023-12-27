@@ -27,24 +27,16 @@ export default function DashboardLayout({ children }) {
 
 
     return (
-          <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6 relative">
-                { isOpenModalDeleteAppointmentUser && <ModalDeleteAppointment className='absolute' /> }
-                { isOpenModalDetailPost && <ModalDetailPost className='absolute' /> }
-                <UserSideBar />
-                <div className="xl:col-span-5 ">
-                    <Header/>
-                    <div className="h-[92vh] overflow-y-scroll p-8 flex flex-col items-center font-bold text-gray-300 text-sm w-full">
-                        {children}
-                    </div>
-
-
-      <UserSideBar />
-      <div className="xl:col-span-5 ">
-        <Header />
-        <div className="h-[92vh] overflow-y-scroll md:p-8 p-0 flex flex-col items-center font-bold text-gray-300 text-sm w-full">
-          {children}
+        <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6 relative">
+              { isOpenModalDeleteAppointmentUser && <ModalDeleteAppointment className='absolute' /> }
+              { isOpenModalDetailPost && <ModalDetailPost className='absolute' /> }
+              <UserSideBar />
+              <div className="xl:col-span-5 ">
+                  <Header/>
+                  <div className="h-[92vh] overflow-y-scroll p-8 flex flex-col items-center font-bold text-gray-300 text-sm w-full">
+                      {children}
+                  </div>
+              </div>
         </div>
-      </div>
-    </div>
   );
 }
