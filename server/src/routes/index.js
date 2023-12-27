@@ -38,7 +38,7 @@ router.use("/customerDisabled", customerRouterDisabled);
 router.use("/payments", mercadoPagoRouter);
 
 //router.use("/payment", mercadoPagoRouter);
-//router.use("/comments", commentRouter);
+router.use("/comments", commentRouter);
 
 
 module.exports = router;

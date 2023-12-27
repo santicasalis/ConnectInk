@@ -141,9 +141,8 @@ export default function ExplorePage() {
 
         <hr className="mt-[50px] border-primary/40 ml-[50px] mr-[50px]"></hr>
 
-        <div className="flex max-w-full ">
-          <div className="w-full flex flex-col md:flex-row justify-center mt-8 lg:ml-10 ml-5 my-4 gap-x-4">
-            <div className="md:w-[400px] w-[90%] flex flex-col items-center">
+        <div className="w-full flex flex-col md:flex-row justify-center md:items-start items-center mt-8  my-4 gap-x-4 ">
+            <div className="lg:w-[400px] md:w-[300px] w-[90%] flex flex-col items-center">
               <button
                 onClick={handleToggleFilterSidebar}
                 className="sm:inline-block md:hidden text-white text-xl mb-4"
@@ -155,14 +154,13 @@ export default function ExplorePage() {
               )}
             </div>
 
-            <div className="scroll-fade flex max-w-full flex-wrap gap-x-2">
-              <div className=" flex flex-col items-center scroll-content w-full  ">
+            <div className="scroll-fade flex  md:flex-1 w-full flex-wrap gap-x-2 ">
                 {noResults ? (
                   <p className="text-primary text-center mt-[180px] font-rocksalt text-2xl ">
                     ¡No se encontraron coincidencias con tu búsqueda!
                   </p>
                 ) : (
-                  <div className="max-w-full flex flex-col p-2">
+                  <div className="w-full flex flex-col justify-center items-center">
                     <Paginate
                       artistsPerPage={artistsPerPage}
                       totalArtists={totalArtists}
@@ -182,9 +180,7 @@ export default function ExplorePage() {
                     ))}
                   </div>
                 )}
-              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>

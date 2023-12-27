@@ -65,7 +65,7 @@ function UDashboard() {
       <hr className="my-8 border-primary/30" />
       <div className="flex flex-col items-center w-full ">
         {posts.map((post) => {
-          return <UserPostDash publication={post} />;
+          return <UserPostDash publication={post} userId = {user.id}/>
         })}
       </div>
     </div>
