@@ -30,8 +30,14 @@ export function validateInput(formData) {
   if (formData.address.length === 0) {
     errors.address = "La dirección es requerida";
   }
+
   if (formData.location.length === 0) {
     errors.location = "La localidad es requerida";
+  }
+
+  if (formData.cbu.length === 0) {
+    errors.cbu =
+      "Es necesario completar el CBU para recibir transferencias de dinero";
   }
 
   return errors;

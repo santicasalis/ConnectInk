@@ -122,109 +122,123 @@ const BookingCard = ({
 
   return loaded ? (
     <div
-      className={`bg-secondary-100 flex items-center justify-center w-[60%] h-[300px]  rounded-lg
-        `}
+      className={`bg-secondary-100 flex flex-col items-center justify-center w-[90%] rounded-lg
+      ${
+        paymentStatus === "in_process" || paymentStatus === "approved"
+          ? ""
+          : "hidden"
+      }`}
     >
-      
-        <div className="w-[25%] h-full   border-r-[2px] border-r-primary/20 p-6  ">
-          <div className="flex items-center justify-center ">
-              <p className="flex gap-2 text-[25px] mb-6 mt-4 font-rocksalt text-artistfont ">
-                  <TbCalendarCheck className="text-primary text-[27px]" />
-                  Reserva:
-              </p>
-          </div>
-            <p className=" text-center text-[16px] mb-6 text-artistfont"> {fechaFormateada}</p>
-          
-          {/* <div className="mb-4 flex items-center justify-center">
-            <p className="flex gap-2  font-rocksalt text-[16px]">
-              <IoBodyOutline className="text-primary text-[22px]" />
-              Donde : <span className="text-[14px] font-sans">{bodyPlace}</span>
+      <div className="h-[25px] w-full flex justify-end pr-4">
+        <Menu
+          menuButton={
+            <MenuButton>
+              <RiMoreFill className="text-artistfont text-[25px] cursor-pointer hover:bg-secondary-100" />
+            </MenuButton>
+          }
+          transition
+          menuStyle={{ backgroundColor: "#252524", color: "white" }}
+          menuClassName={"hover:bg-secondary-900 hover:text-black-900"}
+        >
+          <MenuItem className="hover:bg-secondary-100 w-full h-full">
+            <RiDeleteBin6Fill />
+            <button onClick={handleDeleteAppointment}>Cancelar Reserva</button>
+          </MenuItem>
+        </Menu>
+      </div>
+      <div className="w-full flex lg:flex-row flex-col">
+        <div className="lg:w-[200px] w-full h-full border-r-[2px] border-r-primary/20 p-6">
+          <div className="flex items-center justify-center">
+            <p className="flex gap-2 text-[25px] mb-6 mt-4 font-rocksalt text-artistfont">
+              <TbCalendarCheck className="text-primary text-[27px]" />
+              Reserva:
             </p>
-          </div> */}
-          <div className="flex items-center justify-center mb-10">
-            <p className=" flex gap-2 text-[16px] font-rocksalt text-artistfont  ">
+          </div>
+          <p className="text-center text-[16px] mb-6 text-artistfont">
+            {" "}
+            {fechaFormateada}
+          </p>
+          <div className="flex items-center justify-center mb-8">
+            <p className="flex gap-2 text-[16px] font-rocksalt text-artistfont">
               <MdOutlineAttachMoney className="text-primary text-[27px]" />
-              Seña: <span className="font-sans text-[14px] text-artistfont">${depositPrice}</span>
+              Seña:{" "}
+              <span className="font-sans text-[14px] text-artistfont">
+                ${depositPrice}
+              </span>
             </p>
           </div>
           <div>
-          {paymentStatus &&
-            (paymentStatus === "approved" ? (
-              <p className="text-green-800 bg-secondary-900/50 rounded-lg py-2 text-center">Pago aprobado</p>
-            ) : paymentStatus === "in_process" ? (
-              <p className="text-orange-600 bg-secondary-900/50 rounded-lg py-2 text-center">Pago pendiente</p>
-            ) : paymentStatus === "rejected" ? (
-              <p className="text-red-600 bg-secondary-900/50 rounded-lg py-2 text-center">Pago rechazado. Trendrás que volver a reservar un turno</p>
-            ) : (
-              <p>Error al procesar el pago, intentelo mas tarde</p>
-            ))}
-        </div>
-          
-        </div>
-
-        <div className="w-[50%] h-full ml-2 ">
-          {response.id && (
-            <div >
-              
-              <div>
-                
-                <div className="flex items-center mt-6 gap-2 mb-6 border-b-primary/20 border-b-[1px] h-full  ">
-                  {response.image && (
-                    <Image
-                      unoptimized
-                      src={response.image}
-                      loader={imageLoader}
-                      width={120}
-                      height={120}
-                      alt={`${response.fullName} profile pic`}
-                      className=" rounded-full mb-6"
-                    />
-                  )}
-
-                  <p className="text-center text-[30px] font-newrocker text-artistfont">{response.fullName}</p>
-                  <div className="flex items-center justify-center">
-            <button onClick={handleReview} className=" ml-6 text-black border-[1px] flex gap-x-1 items-center border-primary/50 hover:border-primary text-[15px] bg-primary rounded-lg px-2 py-1">Dejar reseña</button>
+            {paymentStatus &&
+              (paymentStatus === "approved" ? (
+                <p className="text-green-800 bg-secondary-900/50 rounded-lg py-2 text-center">
+                  Pago aprobado
+                </p>
+              ) : paymentStatus === "in_process" ? (
+                <p className="text-orange-600 bg-secondary-900/50 rounded-lg py-2 text-center">
+                  Pago pendiente
+                </p>
+              ) : paymentStatus === "rejected" ? (
+                <p className="text-red-600 bg-secondary-900/50 rounded-lg py-2 text-center">
+                  Pago rechazado. Trendrás que volver a reservar un turno
+                </p>
+              ) : (
+                <p>Error al procesar el pago, intentelo mas tarde</p>
+              ))}
           </div>
+        </div>
+
+        <div className="lg:w-[50%] w-full h-full ml-2 items-center justify-center">
+          {response.id && (
+            <div className="w-full items-center justify-center">
+              <div className="flex md:flex-row flex-col items-center justify-center mt-6 gap-2 mb-6 h-full">
+                <div className="flex justify-center items-center gap-x-1">
+                  {response.image && (
+                    <div className="md:w-[90px] w-[45px] md:h-[90px] h-[45px] rounded-full overflow-hidden">
+                      <Image
+                        unoptimized
+                        src={response.image}
+                        loader={imageLoader}
+                        width={90}
+                        height={90}
+                        alt={`${response.fullName} foto de perfil`}
+                        className="w-full h-full rounded-full mb-6 object-cover"
+                      />
+                    </div>
+                  )}
+                  <p className="text-center md:text-[30px] text-[17px] font-newrocker text-artistfont">
+                    {response.fullName}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    onClick={handleReview}
+                    className=" ml-6 text-black border-[1px] flex gap-x-1 items-center border-primary/50 hover:border-primary text-[15px] bg-primary rounded-lg px-2 py-1"
+                  >
+                    Dejar reseña
+                  </button>
                 </div>
               </div>
-              <div>
+              <div className="w-full p-5">
                 <p className="text-center mb-6 text-[25px] flex items-center justify-center gap-2 font-rocksalt text-artistfont ">
                   <FaMapPin className="text-primary" /> Dirección:
                 </p>
-                <p className="text-center text-[20px] mb-2 text-artistfont">{response.address}</p>
-                <p className="text-center text-[20px] text-artistfont">{response.location}</p>
+                <p className="text-center text-[16px] mb-2 text-artistfont">
+                  {response.address}, {response.location}
+                </p>
               </div>
             </div>
           )}
         </div>
-        <div className=" w-[25%] h-full ">
-          <div className="flex items-end justify-end mr-2 ">
-            <Menu
-              menuButton={
-                <MenuButton>
-                  <RiMoreFill className="text-artistfont text-[25px] cursor-pointer hover:bg-secondary-100" />
-                </MenuButton>
-              }
-              transition
-              menuStyle={{ backgroundColor: "#252524", color: "white" }}
-              menuClassName={"hover:bg-secondary-900 hover:text-black-900"}
-            >
-              <MenuItem className="hover:bg-secondary-100 w-full h-full">
-                <RiDeleteBin6Fill />
-                <button onClick={handleDeleteAppointment}>
-                  Cancelar Reserva
-                </button>
-              </MenuItem>
-            </Menu>
-          </div>
 
-
-          <p className="text-center text-2xl font-rocksalt mt-2">Detalles:</p>
-          <p className="text-center mt-2 ">Tamaño: {size}</p>
-          <p className="text-center mt-2 ">Duración:{duration}</p>
+        <div className="lg:w-[25%] w-full h-full flex flex-col justify-center items-center p-5">
+          <h1 className="text-center text-[27px] font-rocksalt mt-2 mb-8">
+            Detalles:
+          </h1>
+          <p className="text-center mt-2">Tamaño: {size}</p>
+          <p className="text-center mt-2">Duración: {duration} h.</p>
+          <p className="text-center mt-2">Descipción: {description}</p>
           <p className="text-center mt-2">Tu diseño:</p>
           <div className="flex justify-center items-center mt-2">
-
             {image && (
               <Image
                 unoptimized
@@ -232,18 +246,13 @@ const BookingCard = ({
                 loader={imageLoader}
                 width={120}
                 height={120}
-                alt={"Tu Tattoo"}
-                className=" rounded-full"
+                alt={"Tu diseño"}
+                className="rounded-full"
               />
             )}
           </div>
-          
-          
         </div>
-        
-
-        
-      
+      </div>
     </div>
   ) : (
     <></>

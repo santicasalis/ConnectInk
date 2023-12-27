@@ -52,22 +52,32 @@ export default function Reservas() {
 
   return (
     <div className="bg-secondary-900 w-full rounded-xl shadow-lg shadow-primary/50">
-      <div className="w-full p-7 ">
+      <div className="w-full p-7">
         <h1 className="text-4xl text-artistfont font-rocksalt mb-8">
           {" "}
           Mis turnos
         </h1>
         <hr className="border-primary/20 border-[1px]" />
-        {appointment && appointment.length > 0 ? (
-          [...user.appointments]
-            .sort((a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime))
-            .map(
-              (tur) =>
-                tur.paymentStatus && (
-                  <div
-                    key={tur.id}
-                    className="h-full mt-6 flex items-center justify-center text-[#FDECDA]"
-                  >
+
+        {appointment &&
+          appointment.length > 0 &&
+          user?.appointments &&
+          user?.appointments.some(
+            (tur) =>
+              new Date(tur.dateAndTime) >= new Date() &&
+              tur.paymentStatus != "rejected"
+          ) && (
+            <>
+              <h4 className="text-artistfont text-center text-xl m-6 font-rocksalt">
+                Próximos turnos
+              </h4>
+              {user?.appointments
+                .filter((tur) => new Date(tur.dateAndTime) >= new Date())
+                .sort(
+                  (a, b) => new Date(a.dateAndTime) - new Date(b.dateAndTime)
+                )
+                .map((tur) => (
+                  <div className="h-full flex items-center justify-center text-[#FDECDA] mt-3">
                     <BookingCard
                       id={tur.id}
                       bodyPlace={tur.bodyPlace}
@@ -81,14 +91,52 @@ export default function Reservas() {
                       paymentStatus={tur.paymentStatus}
                     />
                   </div>
+                ))}
+            </>
+          )}
+
+        {appointment &&
+          appointment.length > 0 &&
+          user?.appointments &&
+          user?.appointments.some(
+            (tur) =>
+              new Date(tur.dateAndTime) < new Date() &&
+              tur.paymentStatus != "rejected"
+          ) && (
+            <>
+              <h4 className="text-artistfont text-center text-xl m-6 font-rocksalt">
+                Turnos pasados
+              </h4>
+              {user?.appointments
+                .filter((tur) => new Date(tur.dateAndTime) < new Date())
+                .sort(
+                  (a, b) => new Date(b.dateAndTime) - new Date(a.dateAndTime)
                 )
-            )
-        ) : (
+                .map((tur) => (
+                  <div className="h-full flex items-center justify-center text-[#FDECDA] mt-3">
+                    <BookingCard
+                      id={tur.id}
+                      bodyPlace={tur.bodyPlace}
+                      description={tur.description}
+                      duration={tur.duration}
+                      image={tur.image}
+                      size={tur.size}
+                      dateAndTime={tur.dateAndTime}
+                      depositPrice={tur.depositPrice}
+                      tattooArtistId={tur.tattooArtistId}
+                      paymentStatus={tur.paymentStatus}
+                    />
+                  </div>
+                ))}
+            </>
+          )}
+
+        {appointment && appointment.length === 0 && (
           <div className="flex flex-col items-center">
-            <div className="flex flex-col py-8 px-3 items-center justify-center bg-secondary-100/40 shadow-inner shadow-primary/10 rounded-xl">
-              <h5 className="text-artistfont font-newrocker text-[22px] mb-8 ">
-                "No tienes ninguna reserva aún. ¡Descubre increíbles artistas y
-                sus últimas obras!"
+            <div className="flex flex-col py-8 px-3 items-center justify-center">
+              <h5 className="text-artistfont font-newrocker text-[22px] mb-8 text-center leading-7">
+                No tienes ninguna reserva aún. ¡Descubre increíbles artistas y
+                sus últimas obras!
               </h5>
               <Link href="/explore">
                 <button className="border-primary border-[1.5px] hover:border-primary/60 text-primary text-[17px] py-3 px-4 rounded-lg">

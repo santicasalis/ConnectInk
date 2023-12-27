@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import UserSideBar from "../../components/userSideBar/UserSideBar";
 import Header from "../../components/header/Header";
@@ -11,7 +11,6 @@ const ModalDetailPost = dynamic(()=> import('../../components/modal/ModalDetailP
 import { getUserById } from "../redux/features/user/userActions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
 
 export default function DashboardLayout({ children }) {
     const isOpenModalDeleteAppointmentUser = useSelector((state) => state.modalDeleteAppointment.isOpen);
@@ -40,4 +39,3 @@ export default function DashboardLayout({ children }) {
           </div>
     )
 }
-  
