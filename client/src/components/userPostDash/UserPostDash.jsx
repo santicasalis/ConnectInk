@@ -73,6 +73,10 @@ const UserPostDash = ({ publication }) => {
     }
 
 
+  const handleChange = (event) => {
+    setTextCommend(event.target.value);
+  };
+
     const imageLoader = ({src}) => {
         return src
     }
